@@ -1,4 +1,4 @@
-package com.fake_orgasm0;
+package com.fake_orgasm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
