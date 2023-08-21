@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework:spring-context:6.1.0-M4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.springframework" artifactId="spring-context" version="6.1.0-M4" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/6.1.0-M4/6582319450d306ef3a5a38e5128fb0bdd90890e9/spring-context-6.1.0-M4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/6.1.0-M4/63fc8a614fb78b99cf0aa7c034fc3d740a0d49bd/spring-context-6.1.0-M4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
