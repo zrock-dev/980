@@ -1,3 +1,4 @@
+'use client';
 const Booking = () => {
 	return <div>Booking</div>;
 };
