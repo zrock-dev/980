@@ -1,12 +1,19 @@
-import './globals.css';
-import { Inter } from 'next/font/google';
+import Navbar from '@/components/navbar/Navbar';
+import '../styles/globals.css';
+import { Quattrocento_Sans } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const quattrocentoSans = Quattrocento_Sans({
+	weight: ['400', '700'],
+	subsets: ['latin']
+});
 
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>{children}</body>
+			<body className={quattrocentoSans.className}>
+				<Navbar />
+				{children}
+			</body>
 		</html>
 	);
 }
