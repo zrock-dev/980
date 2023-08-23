@@ -76,6 +76,7 @@ export const SearcherContainer = styled.div`
 
 	border: 2px solid ${GRAYTWO};
 	border-radius: 20px;
+	transition: all ease 200ms;
 
 	& input {
 		width: 100%;
@@ -93,6 +94,7 @@ export const SearchSuggestions = styled.div`
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	display: none;
 
 	width: 100%;
 	top: 140%;
