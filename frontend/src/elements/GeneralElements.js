@@ -15,3 +15,11 @@ export const GeneralButton = styled.button`
 export const Icon980 = styled.img`
 	max-height: 7vh;
 `;
+
+export const Title980 = styled.span`
+	font-size: 30px;
+	font-weight: 700;
+	font-style: italic;
+
+	color: ${BLUE}
+`;

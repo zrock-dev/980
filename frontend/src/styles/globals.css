@@ -31,7 +31,12 @@ a {
 	text-decoration: none;
 }
 
+input:focus {
+	outline: none;
+}
+
 button {
 	border: none;
 	cursor: pointer;
+	background-color: transparent;
 }
