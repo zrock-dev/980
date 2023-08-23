@@ -11,3 +11,7 @@ export const GeneralButton = styled.button`
 	background-color: ${BLUE};
 	text-transform: capitalize;
 `;
+
+export const Icon980 = styled.img`
+	max-height: 7vh;
+`;
