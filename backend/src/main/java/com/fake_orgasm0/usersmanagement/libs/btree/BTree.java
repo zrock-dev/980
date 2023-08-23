@@ -14,18 +14,19 @@ public class BTree<T extends Comparable<T>> {
     public Node<T> root;
 
     /**
-     * Constructs a new B-tree with the given order.
+     * Constructs a BTree object with the specified degree.
      *
-     * @param order The order of the B-tree.
+     * @param order The degree of the BTree. Must be a positive integer greater than 2.
+     * @throws IllegalArgumentException If the provided degree is not a positive integer greater than 2.
      */
     public BTree(int order) {
+        if (order <= 1) throw new IllegalArgumentException("Order must be greater than 1");
         this.order = order;
         this.root = new Node<>(order);
         this.root.setSize(0);
         root.setLeaf(true);
     }
 
-    // ... (rest of the code)
 
     /**
      * Searches for a specific key in the B-tree.
@@ -60,11 +61,13 @@ public class BTree<T extends Comparable<T>> {
      * Searches for a specific key in the B-tree.
      *
      * @param key The key to search for.
-     * @return The key if found, otherwise null.
+     * @return The key if found, otherwise null. Returns null also if the key is found but its associated node's value is null.
+     * @throws IllegalArgumentException If the provided key is null.
      */
     public T searchKey(T key) {
+        if (key == null) throw new IllegalArgumentException("Key cannot be null");
         Node<T> node = search(root, key);
-
+        if(node==null)return null;
         for (int i = 0; i < node.getSize(); i++) {
             if (node.getKey(i).compareTo(key) == 0) {
                 return node.getKey(i);
@@ -106,11 +109,13 @@ public class BTree<T extends Comparable<T>> {
 
 
     /**
-     * Inserts a key into the B-tree.
+     * Inserts a key into the B-tree. The B-tree structure might be modified to accommodate the new key.
      *
      * @param key The key to insert.
+     * @throws IllegalArgumentException If the provided key is null.
      */
     public void insert(final T key) {
+        if (key == null) throw new IllegalArgumentException("Key cannot be null");
         Node<T> r = root;
         if (r.getSize() == 2 * order - 1) {
             Node<T> node = new Node<>(order);
@@ -168,7 +173,7 @@ public class BTree<T extends Comparable<T>> {
         this.printTree(root);
     }
 
-    private void printTree(Node<T> x) {
+    public void printTree(Node<T> x) {
         if(x == null)return;
         for (int i = 0; i < x.getSize(); i++) {
             System.out.print(x.getKey(i)+ " ");
@@ -356,12 +361,14 @@ public class BTree<T extends Comparable<T>> {
     }
 
     /**
-     * Removes a key from the B-tree.
+     * Removes a key from the B-tree if it exists.
      *
      * @param key The key to remove.
      * @return True if the key was found and removed, false otherwise.
+     * @throws IllegalArgumentException If the provided key is null.
      */
     public boolean remove(T key) {
+        if (key == null) throw new IllegalArgumentException("Key cannot be null");
         Node<T> x = search(root, key);
         if (x == null) return false;
         remove(root, key);
