@@ -6,3 +6,4 @@ pluginManagement {
 	}
 }
 rootProject.name = '980'
+enableFeaturePreview "STABLE_CONFIGURATION_CACHE"
