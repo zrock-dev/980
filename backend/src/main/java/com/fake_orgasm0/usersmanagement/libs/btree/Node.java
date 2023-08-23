@@ -115,7 +115,7 @@ public class Node<T extends Comparable<T>> {
      * @return a size increased
      */
     public int increaseSize() {
-         size++;
+        size++;
         return size;
     }
 
