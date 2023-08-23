@@ -1,15 +1,38 @@
 'use client';
-import Link from 'next/link';
+import { Icon980 } from '@/elements/GeneralElements';
+import {
+	NavbarContainer,
+	NavbarOptionContainer
+} from '@/elements/navbar/Navbar';
+import { usePathname } from 'next/navigation';
+
+import NavOption from './NavOption';
 
 const Navbar = () => {
+	const pathname = usePathname();
+
 	return (
-		<div>
-			<img src="/icon-980.png" alt="980" />
-			<Link href={'/'}>Home</Link>
-			<Link href={'/users'}>Users</Link>
-			<Link href={'/booking'}>Booking</Link>
-			<Link href={'/money-exchange'}>Money exchange</Link>
-		</div>
+		<NavbarContainer>
+			<Icon980 src="/icon-980.png" alt="980" />
+			<NavbarOptionContainer>
+				<NavOption route={'/'} title={'Home'} selected={pathname === '/'} />
+				<NavOption
+					route={'/users'}
+					title={'Users'}
+					selected={pathname.includes('/users')}
+				/>
+				<NavOption
+					route={'/booking'}
+					title={'Booking'}
+					selected={pathname.includes('/booking')}
+				/>
+				<NavOption
+					route={'/money-exchange'}
+					title={'Money exchange'}
+					selected={pathname === '/money-exchange'}
+				/>
+			</NavbarOptionContainer>
+		</NavbarContainer>
 	);
 };
 
