@@ -1,4 +1,4 @@
-import { NavOptionRoute } from '@/elements/navbar/NavOption';
+import { NavOptionRoute } from '@/elements/Navbar';
 
 const NavOption = ({ route, title, selected }) => {
 	return (
