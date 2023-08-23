@@ -3,10 +3,11 @@ import { Icon980 } from '@/elements/GeneralElements';
 import {
 	NavbarContainer,
 	NavbarOptionContainer
-} from '@/elements/navbar/Navbar';
+} from '@/elements/Navbar';
 import { usePathname } from 'next/navigation';
 
 import NavOption from './NavOption';
+import Searcher from './Searcher';
 
 const Navbar = () => {
 	const pathname = usePathname();
@@ -32,6 +33,7 @@ const Navbar = () => {
 					selected={pathname === '/money-exchange'}
 				/>
 			</NavbarOptionContainer>
+			<Searcher />
 		</NavbarContainer>
 	);
 };
