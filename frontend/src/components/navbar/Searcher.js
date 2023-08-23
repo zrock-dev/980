@@ -1,11 +1,12 @@
+import { SearcherContainer } from '@/elements/Navbar';
 import MagnifyingGlass from '@/icons/MagnifyingGlass';
 
 const Searcher = () => {
 	return (
-		<div>
+		<SearcherContainer>
 			<input type="text" placeholder="Search" />
 			<button>{<MagnifyingGlass />}</button>
-		</div>
+		</SearcherContainer>
 	);
 };
 
