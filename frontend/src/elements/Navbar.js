@@ -1,4 +1,4 @@
-import { BLACKONE, BLUE, GRAYONE, GRAYTWO, WHITE } from '@/styles/colors';
+import { BLACKONE, BLACKTWO, BLUE, GRAYONE, GRAYTWO, WHITE } from '@/styles/colors';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import Link from 'next/link';
@@ -7,7 +7,6 @@ export const NavbarContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	overflow: hidden;
 
 	width: 100%;
 	padding: 15px 40px 15px 40px;
@@ -67,9 +66,9 @@ export const NavOptionRoute = styled(Link)`
 `;
 
 export const SearcherContainer = styled.div`
+	position: relative;
 	display: flex;
 	justify-content: space-between;
-	overflow: hidden;
 	gap: 10px;
 
 	min-width: 300px;
@@ -86,5 +85,32 @@ export const SearcherContainer = styled.div`
 
 	& svg {
 		fill: ${GRAYONE};
+	}
+`;
+
+export const SearchSuggestions = styled.div`
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+
+	width: 100%;
+	top: 140%;
+	left: 0;
+
+	border-radius: 20px;
+	border: 2px solid ${BLUE};
+	background-color: ${WHITE};
+`;
+
+export const SearchSuggestion = styled.button`
+	text-align: left;
+	padding: 10px;
+
+	color: ${BLACKTWO};
+	transition: all ease 200ms;
+
+	&:hover {
+		background-color: ${GRAYTWO};
 	}
 `;
