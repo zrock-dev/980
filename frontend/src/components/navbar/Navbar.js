@@ -1,6 +1,7 @@
 'use client';
-import { Icon980 } from '@/elements/GeneralElements';
+import { Icon980, Title980 } from '@/elements/GeneralElements';
 import {
+	NavTitle,
 	NavbarContainer,
 	NavbarOptionContainer
 } from '@/elements/Navbar';
@@ -14,7 +15,10 @@ const Navbar = () => {
 
 	return (
 		<NavbarContainer>
-			<Icon980 src="/icon-980.png" alt="980" />
+			<NavTitle href={'/'}>
+				<Icon980 src="/icon-980.png" alt="980" />
+				<Title980>980</Title980>
+			</NavTitle>
 			<NavbarOptionContainer>
 				<NavOption route={'/'} title={'Home'} selected={pathname === '/'} />
 				<NavOption
