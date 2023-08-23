@@ -1,5 +1,5 @@
 import { BLUE, WHITE } from '@/styles/colors';
-import { styled } from 'styled-components';
+import styled from '@emotion/styled';
 
 export const GeneralButton = styled.button`
 	font-size: ${(props) => (props.size ? props.size : '1em')};
