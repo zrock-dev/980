@@ -6,7 +6,22 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) {
+    /**
+     *
+     */
+    // todo: Application class should be ignored by the checkstyle since
+    // its simplicity.
+    protected Application() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This is the main function of the application it is meant to
+     * start the whole app.
+     *
+     * @param args It does not expect any args as parameter.
+     */
+    public static void main(final String[] args) {
         SpringApplication.run(Application.class, args);
     }
 }
