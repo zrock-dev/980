@@ -1,15 +1,19 @@
+import { getUserSuggestion } from '@/backend/User';
 import {
 	SearcherContainer,
 	SearchSuggestion,
 	SearchSuggestions
 } from '@/elements/Navbar';
 import MagnifyingGlass from '@/icons/MagnifyingGlass';
+import Xmark from '@/icons/Xmark';
 import { BLUE, GRAYTWO } from '@/styles/colors';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Searcher = () => {
 	const searchContainer = useRef(null);
 	const suggestionsContainer = useRef(null);
+	const [inputSearch, setInputSearch] = useState('');
+	const [suggestions, setSuggestions] = useState([]);
 
 	const showSuggestions = () => {
 		if (searchContainer.current && suggestionsContainer.current) {
@@ -25,24 +29,44 @@ const Searcher = () => {
 		}
 	};
 
+	const renderSuggestions = () => {
+		return (
+			<SearchSuggestions ref={suggestionsContainer}>
+				{suggestions.map((suggestion) => (
+					<SearchSuggestion
+						onFocus={showSuggestions}
+						onClick={() => setInputSearch(suggestion)}
+					>
+						<MagnifyingGlass />
+						<span>{suggestion}</span>
+					</SearchSuggestion>
+				))}
+			</SearchSuggestions>
+		);
+	};
+
+	useEffect(() => {
+		getUserSuggestion(inputSearch).then((data) => {
+			setSuggestions(data);
+		});
+	}, [inputSearch]);
+
 	return (
 		<SearcherContainer ref={searchContainer}>
 			<input
 				type="text"
 				placeholder="Search"
+				value={inputSearch}
+				onChange={(event) => setInputSearch(event.target.value)}
 				onFocus={showSuggestions}
 				onBlur={hideSuggestions}
 			/>
+			<button onClick={() => setInputSearch('')} onFocus={showSuggestions}>
+				{<Xmark />}
+			</button>
 			<button>{<MagnifyingGlass />}</button>
 
-			<SearchSuggestions ref={suggestionsContainer}>
-				<SearchSuggestion>Luiggy Mamani</SearchSuggestion>
-				<SearchSuggestion>Luiggy Mamani</SearchSuggestion>
-				<SearchSuggestion>Luiggy Mamani</SearchSuggestion>
-				<SearchSuggestion>Luiggy Mamani</SearchSuggestion>
-				<SearchSuggestion>Luiggy Mamani</SearchSuggestion>
-				<SearchSuggestion>Luiggy Mamani</SearchSuggestion>
-			</SearchSuggestions>
+			{renderSuggestions()}
 		</SearcherContainer>
 	);
 };

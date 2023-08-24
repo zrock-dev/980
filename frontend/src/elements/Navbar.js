@@ -115,6 +115,8 @@ export const SearchSuggestions = styled.div`
 `;
 
 export const SearchSuggestion = styled.button`
+	display: flex;
+	gap: 8px;
 	text-align: left;
 	padding: 10px;
 

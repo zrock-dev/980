@@ -21,5 +21,33 @@ export const Title980 = styled.span`
 	font-weight: 700;
 	font-style: italic;
 
-	color: ${BLUE}
+	color: ${BLUE};
+`;
+
+export const Loader = styled.span`
+	transform: rotateZ(45deg);
+	perspective: 1000px;
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+	color: ${BLUE};
+
+	&::before,
+	&::after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: inherit;
+		height: inherit;
+		border-radius: 50%;
+		transform: rotateX(70deg);
+		animation: 1s spin linear infinite;
+	}
+	&::after {
+		color: #ff3d00;
+		transform: rotateY(70deg);
+		animation-delay: 0.4s;
+	}
 `;
