@@ -1,6 +1,5 @@
 package com.fake_orgasm.usersmanagement.model;
 
-import com.fake_orgasm.usersmanagement.model.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,12 +15,33 @@ import java.util.List;
  * the program and to be able to manage this information.
  */
 public class User {
+    /**
+     * Id of the user.
+     */
     private int id;
+    /**
+     * The name of the user.
+     */
     private String name;
+    /**
+     * The last name of the user.
+     */
     private String lastName;
+    /**
+     * Date birth of the user.
+     */
     private Date dateBirth;
+    /**
+     * Id list of the flights.
+     */
     private List<Integer> flights;
+    /**
+     * The category of the user.
+     */
     private Category category;
+    /**
+     * The country of the user.
+     */
     private String country;
 
     /**
