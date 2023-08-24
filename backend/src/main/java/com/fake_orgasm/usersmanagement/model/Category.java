@@ -5,7 +5,7 @@ package com.fake_orgasm.usersmanagement.model;
  */
 public enum Category {
     /**
-     * These are the existing user type categories
+     * These are the existing user type categories.
      */
     VIP, FREQUENT_PASSENGER, REGULAR_PASSENGER
 }
