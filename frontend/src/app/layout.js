@@ -1,6 +1,7 @@
 import Navbar from '@/components/navbar/Navbar';
 import CoinChangeForm from '@/components/coin-change/CoinChangeForm';
 import '../styles/globals.css';
+import '../styles/coin-change.css'
 import { Quattrocento_Sans } from 'next/font/google';
 
 const quattrocentoSans = Quattrocento_Sans({
