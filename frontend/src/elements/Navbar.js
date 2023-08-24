@@ -1,4 +1,11 @@
-import { BLACKONE, BLACKTWO, BLUE, GRAYONE, GRAYTWO, WHITE } from '@/styles/colors';
+import {
+	BLACKONE,
+	BLACKTWO,
+	BLUE,
+	GRAYONE,
+	GRAYTWO,
+	WHITE
+} from '@/styles/colors';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import Link from 'next/link';
@@ -93,9 +100,10 @@ export const SearchSuggestions = styled.div`
 	position: absolute;
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
+	overflow: auto;
 	display: none;
 
+	max-height: 60vh;
 	width: 100%;
 	top: 140%;
 	left: 0;
@@ -103,6 +111,7 @@ export const SearchSuggestions = styled.div`
 	border-radius: 20px;
 	border: 2px solid ${BLUE};
 	background-color: ${WHITE};
+	animation: showModal 200ms linear;
 `;
 
 export const SearchSuggestion = styled.button`
@@ -110,7 +119,7 @@ export const SearchSuggestion = styled.button`
 	padding: 10px;
 
 	color: ${BLACKTWO};
-	transition: all ease 200ms;
+	transition: all ease 100ms;
 
 	&:hover {
 		background-color: ${GRAYTWO};

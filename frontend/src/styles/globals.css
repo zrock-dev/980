@@ -40,3 +40,15 @@ button {
 	cursor: pointer;
 	background-color: transparent;
 }
+
+@keyframes showModal {
+	0% {
+		opacity: 0;
+	}
+	75% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 1;
+	}
+}
