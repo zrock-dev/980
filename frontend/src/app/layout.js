@@ -1,4 +1,5 @@
-import MainContainer from '@/components/MainContainer';
+import Navbar from '@/components/navbar/Navbar';
+import CoinChangeForm from '@/components/coin-change/CoinChangeForm';
 import '../styles/globals.css';
 import { Quattrocento_Sans } from 'next/font/google';
 
@@ -11,7 +12,8 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={quattrocentoSans.className}>
-				<MainContainer children={children} />
+				<CoinChangeForm/>
+				{children}
 			</body>
 		</html>
 	);
