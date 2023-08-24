@@ -1,27 +1,28 @@
 package com.fake_orgasm.btree;
 
-
-import com.fake_orgasm.usersmanagement.libs.btree.BTree;
-import com.fake_orgasm.usersmanagement.libs.btree.Node;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.fake_orgasm.usersmanagement.libs.btree.BTree;
+import com.fake_orgasm.usersmanagement.libs.btree.Node;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for testing deletion functionality of the BTree.
  */
-
 public class BTreeDeleteTest {
 
+    /**
+     * bTree ds.
+     */
     private BTree<Integer> bTree;
 
+    /**
+     * Initializes the BTree instance before each test method.
+     */
     @BeforeEach
     public void setUp() {
         bTree = new BTree<>(5);
@@ -59,12 +60,38 @@ public class BTreeDeleteTest {
     }
 
     /**
-     * Test case for testing deletion involving a large split of nodes in the BTree.
+     * Test case for testing deletion involving
+     * a large split of nodes in the BTree.
      */
     @Test
     public void largeSplitCase() {
-        List<Integer> list = Arrays.asList(1, 9, 32, 3, 53, 43, 44, 57, 67, 7, 45, 34, 23, 12, 23, 56, 73, 65, 49, 85, 89, 64, 54, 75, 77, 49);
-        list.forEach(key -> bTree.insert(key));
+
+        bTree.insert(1);
+        bTree.insert(9);
+        bTree.insert(32);
+        bTree.insert(3);
+        bTree.insert(53);
+        bTree.insert(43);
+        bTree.insert(44);
+        bTree.insert(57);
+        bTree.insert(67);
+        bTree.insert(7);
+        bTree.insert(45);
+        bTree.insert(34);
+        bTree.insert(23);
+        bTree.insert(12);
+        bTree.insert(23);
+        bTree.insert(56);
+        bTree.insert(73);
+        bTree.insert(65);
+        bTree.insert(49);
+        bTree.insert(85);
+        bTree.insert(89);
+        bTree.insert(64);
+        bTree.insert(54);
+        bTree.insert(75);
+        bTree.insert(77);
+        bTree.insert(49);
 
         bTree.remove(9);
         bTree.remove(32);
@@ -77,19 +104,16 @@ public class BTreeDeleteTest {
         bTree.remove(75);
         bTree.remove(77);
 
-
         Node<Integer> root = bTree.getRoot();
         assertEquals(2, root.getSize());
         assertEquals(Integer.valueOf(43), root.getKey(0));
         assertEquals(Integer.valueOf(54), root.getKey(1));
-
 
         assertEquals(3, root.getSize() + 1);
 
         Node<Integer> firstChild = root.getChild(0);
         Node<Integer> secondChild = root.getChild(1);
         Node<Integer> thirdChild = root.getChild(2);
-
 
         assertEquals(6, firstChild.getSize());
         assertTrue(firstChild.isLeaf());
@@ -114,7 +138,5 @@ public class BTreeDeleteTest {
         assertEquals(Integer.valueOf(65), thirdChild.getKey(1));
         assertEquals(Integer.valueOf(67), thirdChild.getKey(2));
         assertEquals(Integer.valueOf(73), thirdChild.getKey(3));
-
-
     }
 }

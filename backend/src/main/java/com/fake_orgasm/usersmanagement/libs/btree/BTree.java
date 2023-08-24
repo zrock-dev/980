@@ -3,30 +3,38 @@ package com.fake_orgasm.usersmanagement.libs.btree;
 import lombok.Getter;
 
 /**
- * A B-tree implementation.
+ * A B-tree implementation that allows efficient storage and retrieval of sorted data.
  *
  * @param <T> The type of elements stored in the B-tree, must be comparable.
  */
 @Getter
 public class BTree<T extends Comparable<T>> {
 
+    /**
+     * The order of the B-tree node.
+     */
     private final int order;
-    public Node<T> root;
+    /**
+     * The root node of the B-tree.
+     */
+    private Node<T> root;
 
     /**
      * Constructs a BTree object with the specified degree.
      *
-     * @param order The degree of the BTree. Must be a positive integer greater than 2.
-     * @throws IllegalArgumentException If the provided degree is not a positive integer greater than 2.
+     * @param degree The degree of the BTree.
+     *               Must be a positive integer greater than 2.
+     * @throws IllegalArgumentException If degree is than 2.
      */
-    public BTree(int order) {
-        if (order <= 1) throw new IllegalArgumentException("Order must be greater than 1");
-        this.order = order;
-        this.root = new Node<>(order);
+    public BTree(final int degree) {
+        if (degree <= 1) {
+            throw new IllegalArgumentException("Order must be greater than 1");
+        }
+        this.order = degree;
+        this.root = new Node<>(degree);
         this.root.setSize(0);
-        root.setLeaf(true);
+        this.root.setLeaf(true);
     }
-
 
     /**
      * Searches for a specific key in the B-tree.
@@ -35,7 +43,7 @@ public class BTree<T extends Comparable<T>> {
      * @param key  The key to search for.
      * @return The node containing the key or null if not found.
      */
-    private Node<T> search(Node<T> node, T key) {
+    private Node<T> search(final Node<T> node, final T key) {
         if (node == null) {
             return null;
         }
@@ -61,13 +69,19 @@ public class BTree<T extends Comparable<T>> {
      * Searches for a specific key in the B-tree.
      *
      * @param key The key to search for.
-     * @return The key if found, otherwise null. Returns null also if the key is found but its associated node's value is null.
+     * @return The key if found, otherwise null.
+     * Returns null also if the key is found
+     * but its associated node's value is null.
      * @throws IllegalArgumentException If the provided key is null.
      */
-    public T searchKey(T key) {
-        if (key == null) throw new IllegalArgumentException("Key cannot be null");
+    public T searchKey(final T key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Key cannot be null");
+        }
         Node<T> node = search(root, key);
-        if(node==null)return null;
+        if (node == null) {
+            return null;
+        }
         for (int i = 0; i < node.getSize(); i++) {
             if (node.getKey(i).compareTo(key) == 0) {
                 return node.getKey(i);
@@ -83,7 +97,7 @@ public class BTree<T extends Comparable<T>> {
      * @param pos The position where the split is occurring.
      * @param y   The child node being split.
      */
-    private void split(Node<T> x, int pos, Node<T> y) {
+    private void split(final Node<T> x, final int pos, final Node<T> y) {
         Node<T> z = new Node<>(order);
         z.setLeaf(y.isLeaf());
         z.setSize(order - 1);
@@ -107,15 +121,18 @@ public class BTree<T extends Comparable<T>> {
         x.setSize(x.increaseSize());
     }
 
-
     /**
-     * Inserts a key into the B-tree. The B-tree structure might be modified to accommodate the new key.
+     * Inserts a key into the B-tree.
+     * The B-tree structure might be
+     * modified to accommodate the new key.
      *
      * @param key The key to insert.
      * @throws IllegalArgumentException If the provided key is null.
      */
     public void insert(final T key) {
-        if (key == null) throw new IllegalArgumentException("Key cannot be null");
+        if (key == null) {
+            throw new IllegalArgumentException("Key cannot be null");
+        }
         Node<T> r = root;
         if (r.getSize() == 2 * order - 1) {
             Node<T> node = new Node<>(order);
@@ -131,17 +148,19 @@ public class BTree<T extends Comparable<T>> {
     }
 
     /**
-     * Inserts a new key into the B-tree starting from the specified subtree node.
+     * Inserts a new key into the B-tree starting
+     * from the specified subtree node.
      *
      * @param key  The key to be inserted.
      * @param node The starting node of the subtree.
      */
-    private void insertIntoSubtree(Node<T> node, T key) {
+    private void insertIntoSubtree(final Node<T> node, final T key) {
 
         if (node.isLeaf()) {
-            int i;
-            for (i = node.getSize() - 1; i >= 0 && key.compareTo(node.getKey(i)) < 0; i--) {
+            int i = node.getSize() - 1;
+            while (i >= 0 && key.compareTo(node.getKey(i)) < 0) {
                 node.setKey(i + 1, node.getKey(i));
+                i--;
             }
 
             node.setKey(i + 1, key);
@@ -161,22 +180,28 @@ public class BTree<T extends Comparable<T>> {
             }
             insertIntoSubtree(node.getChild(i), key);
         }
-
     }
 
-
     /**
-     * Prints the entire B-tree structure by recursively traversing and printing each node's keys.
+     * Prints the entire B-tree structure by recursively
+     * traversing and printing each node's keys.
      * The tree is printed in an indented format to show hierarchy.
      */
     public void printTree() {
         this.printTree(root);
     }
 
-    public void printTree(Node<T> x) {
-        if(x == null)return;
+    /**
+     * Prints the keys of the B-tree in a depth-first manner.
+     *
+     * @param x The node from which to start printing.
+     */
+    public void printTree(final Node<T> x) {
+        if (x == null) {
+            return;
+        }
         for (int i = 0; i < x.getSize(); i++) {
-            System.out.print(x.getKey(i)+ " ");
+            System.out.print(x.getKey(i) + " ");
         }
         if (!x.isLeaf()) {
             for (int i = 0; i < x.getSize() + 1; i++) {
@@ -185,179 +210,218 @@ public class BTree<T extends Comparable<T>> {
         }
     }
 
-
     /**
      * Removes a key from the B-tree starting from the given node.
      *
-     * @param x   The current node being considered.
-     * @param key The key to remove.
+     * @param node The current node being considered.
+     * @param key  The key to remove.
      */
-
-    private void remove(Node<T> x, T key) {
-        int pos = x.find(key);
+    private void remove(final Node<T> node, final T key) {
+        int pos = node.find(key);
         if (pos != -1) {
-            if (x.isLeaf()) {
-                int i = 0;
-                while (i < x.getSize() && x.getKeys()[i].compareTo(key) != 0) {
-                    i++;
-                }
-
-                for (; i < x.getSize(); i++) {
-                    if (i != 2 * order - 2) {
-                        x.getKeys()[i] = x.getKeys()[i + 1];
-                    }
-                }
-                x.decreaseSize();
-
+            if (node.isLeaf()) {
+                removeKeyFromLeaf(node, pos);
             } else {
-                Node<T> pred = x.getChildren()[pos];
-                T predKey;
-                if (pred.getSize() >= order) {
-                    while (true) {
-                        if (pred.isLeaf()) {
-                            predKey = pred.getKeys()[pred.getSize() - 1];
-                            break;
-                        } else {
-                            pred = pred.getChildren()[pred.getSize()];
-                        }
-                    }
-                    remove(pred, predKey);
-                    x.getKeys()[pos] = predKey;
-                    return;
-                }
-
-                Node<T> nextNode = x.getChildren()[pos + 1];
-                if (nextNode.getSize() >= order) {
-                    T nextKey = nextNode.getKeys()[0];
-                    if (!nextNode.isLeaf()) {
-                        nextNode = nextNode.getChildren()[0];
-                        while (true) {
-                            if (nextNode.isLeaf()) {
-                                nextKey = nextNode.getKeys()[nextNode.getSize() - 1];
-                                break;
-                            } else nextNode = nextNode.getChildren()[nextNode.getSize()];
-                        }
-                    }
-
-                    remove(nextNode, nextKey);
-                    x.getKeys()[pos] = nextKey;
-                    return;
-                }
-
-                int temp = pred.getSize() + 1;
-                pred.getKeys()[pred.increaseSize()] = x.getKeys()[pos];
-                for (int i = 0, j = pred.getSize(); i < nextNode.getSize(); i++) {
-                    pred.getKeys()[j++] = nextNode.getKeys()[i];
-                    pred.increaseSize();
-                }
-                for (int i = 0; i < nextNode.getSize() + 1; i++) {
-                    pred.getChildren()[temp++] = nextNode.getChildren()[i];
-                }
-
-                x.getChildren()[pos] = pred;
-                for (int i = pos; i < x.getSize(); i++) {
-                    if (i != 2 * order - 2) {
-                        x.getChildren()[i] = x.getChildren()[i + 1];
-                    }
-                }
-
-                x.decreaseSize();
-                x.decreaseSize();
-                if (x.getSize() == 0) {
-                    if (x == root) {
-                        root = x.getChildren()[0];
-                    }
-                }
-                remove(pred, key);
-
+                remFromNonLeaf(node, pos, key);
             }
         } else {
-            for (pos = 0; pos < x.getSize(); pos++) {
-                if (x.getKeys()[pos].compareTo(key) > 0) break;
-            }
-            Node<T> tmp = x.getChildren()[pos];
-            if (tmp.getSize() >= order) {
-                remove(tmp, key);
-                return;
-            }
-
-            Node<T> nb;
-            T divider;
-
-            if (pos != x.getSize() && x.getChildren()[pos + 1].getSize() >= order) {
-                divider = x.getKeys()[pos];
-                nb = x.getChildren()[pos + 1];
-                x.getKeys()[pos] = nb.getKeys()[0];
-                tmp.getKeys()[tmp.getSize()+1] = divider;
-                tmp.getChildren()[tmp.getSize()] = nb.getChildren()[0];
-                for (int i = 1; i < nb.getSize(); i++) {
-                    nb.getKeys()[i - 1] = nb.getKeys()[i];
-                }
-                for (int i = 1; i <= nb.getSize(); i++) {
-                    nb.getChildren()[i - 1] = nb.getChildren()[i];
-                }
-                nb.decreaseSize();
-
-                remove(tmp, key);
-            } else if (pos != 0 && x.getChildren()[pos - 1].getSize() >= order) {
-
-                divider = x.getKeys()[pos - 1];
-                nb = x.getChildren()[pos - 1];
-                x.getKeys()[pos - 1] = nb.getKeys()[nb.getSize() - 1];
-                Node<T> child = nb.getChildren()[nb.getSize()];
-                nb.decreaseSize();
-                for (int i = tmp.getSize(); i > 0; i--) {
-                    tmp.getKeys()[i] = tmp.getKeys()[i - 1];
-                }
-                tmp.getKeys()[0] = divider;
-                for (int i = tmp.getSize() + 1; i > 0; i--) {
-                    tmp.getChildren()[i] = tmp.getChildren()[i - 1];
-                }
-                tmp.getChildren()[0] = child;
-                tmp.increaseSize();
-                remove(tmp, key);
-            } else {
-                Node<T> lt;
-                Node<T> rt;
-
-                if (pos != x.getSize()) {
-                    divider = x.getKeys()[pos];
-                    lt = x.getChildren()[pos];
-                    rt = x.getChildren()[pos + 1];
-                } else {
-                    divider = x.getKeys()[pos - 1];
-                    rt = x.getChildren()[pos];
-                    lt = x.getChildren()[pos - 1];
-                    pos--;
-                }
-
-                for (int i = pos; i < x.getSize() - 1; i++) {
-                    x.getKeys()[i] = x.getKeys()[i + 1];
-                }
-
-                for (int i = pos + 1; i < x.getSize(); i++) {
-                    x.getChildren()[i] = x.getChildren()[i + 1];
-                }
-
-                x.decreaseSize();
-                lt.getKeys()[lt.getSize()+1] = divider;
-
-                for (int i = 0, j = lt.getSize(); i < rt.getSize() + 1; i++, j++) {
-                    if (i < rt.getSize()) {
-                        lt.getKeys()[j] = rt.getKeys()[i];
-                    }
-                    lt.getChildren()[j] = rt.getChildren()[i];
-                }
-                lt.setSize(lt.getSize()+rt.getSize());
-                if (x.getSize() == 0) {
-                    if (x == root) {
-                        root = x.getChildren()[0];
-                    }
-                }
-                remove(lt, key);
-            }
-
+            removeKeyFromChild(node, key);
         }
+    }
+
+    /**
+     * Removes a key from a leaf node of the B-tree.
+     *
+     * @param node The leaf node from which to remove the key.
+     * @param pos  The position of the key to be removed in the node.
+     */
+    private void removeKeyFromLeaf(final Node<T> node, final int pos) {
+        for (int i = pos; i < node.getSize() - 1; i++) {
+            node.setKey(i, node.getKey(i + 1));
+        }
+        node.decreaseSize();
+    }
+
+    /**
+     * Removes a key from a non-leaf node of the B-tree.
+     *
+     * @param node The non-leaf node from which to remove the key.
+     * @param pos  The position of the key to be removed in the node.
+     * @param key  The key to be removed.
+     */
+    private void remFromNonLeaf(final Node<T> node, final int pos, final T key) {
+        Node<T> pred = node.getChild(pos);
+        if (pred.getSize() >= order) {
+            T predKey = findPredecessorKey(pred);
+            remove(pred, predKey);
+            node.setKey(pos, predKey);
+        } else {
+            Node<T> nextNode = node.getChild(pos + 1);
+            if (nextNode.getSize() >= order) {
+                T nextKey = findSuccessorKey(nextNode);
+                remove(nextNode, nextKey);
+                node.setKey(pos, nextKey);
+            } else {
+                mergeNodes(node, pos, pred, nextNode);
+                remove(pred, key);
+            }
+        }
+    }
+
+    /**
+     * Removes a key from a child node of the B-tree node.
+     *
+     * @param node The parent node containing the child node.
+     * @param key  The key to be removed from the child node.
+     */
+    private void removeKeyFromChild(final Node<T> node, final T key) {
+        int pos;
+        for (pos = 0; pos < node.getSize(); pos++) {
+            if (node.getKey(pos).compareTo(key) > 0) {
+                break;
+            }
+        }
+        Node<T> child = node.getChild(pos);
+        if (child.getSize() >= order) {
+            remove(child, key);
+        } else {
+            handleUnderflow(node, child, pos);
+            remove(child, key);
+        }
+    }
+
+    /**
+     * Finds the predecessor key of a given node in the B-tree.
+     *
+     * @param node The node for which to find the predecessor key.
+     * @return The predecessor key of the given node.
+     */
+    private T findPredecessorKey(final Node<T> node) {
+        Node<T> predNode = node;
+        while (!predNode.isLeaf()) {
+            predNode = predNode.getChild(predNode.getSize());
+        }
+        return predNode.getKey(predNode.getSize() - 1);
+    }
+
+    /**
+     * Finds the successor key of a given node in the B-tree.
+     *
+     * @param node The node for which to find the successor key.
+     * @return The successor key of the given node.
+     */
+    private T findSuccessorKey(final Node<T> node) {
+        Node<T> sucNode = node;
+        while (!sucNode.isLeaf()) {
+            sucNode = sucNode.getChild(0);
+        }
+        return sucNode.getKey(0);
+    }
+
+    /**
+     * Merges two nodes and updates keys in the parent node.
+     *
+     * @param parent     The parent node containing the merging nodes.
+     * @param pos        The position of the leftChild in the parent.
+     * @param leftChild  The left child node to merge.
+     * @param rightChild The right child node to merge.
+     */
+    private void mergeNodes(Node<T> parent, int pos, Node<T> leftChild, Node<T> rightChild) {
+        leftChild.setKey(leftChild.getSize(), parent.getKey(pos));
+        int index;
+        for (int i = 0; i < rightChild.getSize(); i++) {
+            index = leftChild.getSize() + 1 + i;
+            leftChild.setKey(index, rightChild.getKey(i));
+        }
+        for (int i = 0; i <= rightChild.getSize(); i++) {
+            index = leftChild.getSize() + 1 + i;
+            leftChild.setChild(index, rightChild.getChild(i));
+        }
+        leftChild.setSize(leftChild.getSize() + 1 + rightChild.getSize());
+        int removeIndex = pos + 1;
+        while (parent.getSize() > removeIndex) {
+            parent.setChild(removeIndex, parent.getChild(removeIndex + 1));
+        }
+        parent.decreaseSize();
+        if (parent.getSize() == 0 && parent == root) {
+            root = leftChild;
+        }
+    }
+
+    /**
+     * Handles the underflow condition in a parent node and its child nodes.
+     *
+     * @param parent The parent node with underflow condition.
+     * @param child  The child node with underflow condition.
+     * @param pos    The position of the child node in the parent.
+     */
+    private void handleUnderflow(final Node<T> parent, final Node<T> child, final int pos) {
+        Node<T> leftSibling = pos > 0 ? parent.getChild(pos - 1) : null;
+        Node<T> rightSibling = null;
+        if (pos < parent.getSize()) {
+            rightSibling = parent.getChild(pos + 1);
+        }
+
+        if (leftSibling != null && leftSibling.getSize() >= order) {
+            redLeftSib(parent, child, leftSibling, pos);
+        } else if (rightSibling != null && rightSibling.getSize() >= order) {
+            redRightSib(parent, child, rightSibling, pos);
+        } else if (leftSibling != null) {
+            mergeNodes(parent, pos - 1, leftSibling, child);
+        } else if (rightSibling != null) {
+            mergeNodes(parent, pos, child, rightSibling);
+        }
+    }
+
+    /**
+     * Redistributes keys from a left sibling node to a child node.
+     *
+     * @param parent      The parent node containing
+     *                    the child and sibling nodes.
+     * @param child       The child node receiving redistributed keys.
+     * @param leftSibling The left sibling node providing keys.
+     * @param pos         The position of the child node in the parent.
+     */
+    private void redLeftSib(Node<T> parent, Node<T> child, Node<T> leftSibling, int pos) {
+        for (int i = child.getSize(); i > 0; i--) {
+            child.setKey(i, child.getKey(i - 1));
+        }
+        child.setKey(0, parent.getKey(pos - 1));
+        parent.setKey(pos - 1, leftSibling.getKey(leftSibling.getSize() - 1));
+        if (!child.isLeaf()) {
+            for (int i = child.getSize() + 1; i > 0; i--) {
+                child.setChild(i, child.getChild(i - 1));
+            }
+            child.setChild(0, leftSibling.getChild(leftSibling.getSize()));
+        }
+        child.increaseSize();
+        leftSibling.decreaseSize();
+    }
+
+    /**
+     * Redistributes keys from a right sibling
+     * node to a child node.
+     *
+     * @param par       The parent node containing the child
+     *                     and sibling nodes.
+     * @param child        The child node receiving redistributed keys.
+     * @param right The right sibling node providing keys.
+     * @param pos          The position of the child node in the parent.
+     */
+    private void redRightSib(Node<T> par, Node<T> child, Node<T> right, int pos) {
+        child.setKey(child.getSize(), par.getKey(pos));
+        par.setKey(pos, right.getKey(0));
+        for (int i = 0; i < right.getSize() - 1; i++) {
+            right.setKey(i, right.getKey(i + 1));
+        }
+        if (!right.isLeaf()) {
+            child.setChild(child.getSize() + 1, right.getChild(0));
+            for (int i = 0; i < right.getSize(); i++) {
+                right.setChild(i, right.getChild(i + 1));
+            }
+        }
+        child.increaseSize();
+        right.decreaseSize();
     }
 
     /**
@@ -367,10 +431,14 @@ public class BTree<T extends Comparable<T>> {
      * @return True if the key was found and removed, false otherwise.
      * @throws IllegalArgumentException If the provided key is null.
      */
-    public boolean remove(T key) {
-        if (key == null) throw new IllegalArgumentException("Key cannot be null");
+    public boolean remove(final T key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Key cannot be null");
+        }
         Node<T> x = search(root, key);
-        if (x == null) return false;
+        if (x == null) {
+            return false;
+        }
         remove(root, key);
         return true;
     }

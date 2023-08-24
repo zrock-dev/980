@@ -1,17 +1,17 @@
 package com.fake_orgasm.btree;
 
-import com.fake_orgasm.usersmanagement.libs.btree.BTree;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.fake_orgasm.usersmanagement.libs.btree.BTree;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for general methods and behavior of the BTree class.
  */
 public class BTreeExceptions {
     /**
-     * Test case for verifying that creating a BTree with an invalid order throws an exception.
+     * Test case for verifying that creating a BTree
+     * with an invalid order throws an exception.
      */
     @Test
     public void testInvalidOrderThrowsException() {
@@ -19,7 +19,8 @@ public class BTreeExceptions {
     }
 
     /**
-     * Test case for verifying that inserting a null key into the BTree throws an exception.
+     * Test case for verifying that inserting a null key
+     * into the BTree throws an exception.
      */
     @Test
     public void testInsertNullKeyThrowsException() {
@@ -28,7 +29,8 @@ public class BTreeExceptions {
     }
 
     /**
-     * Test case for verifying that attempting to delete a null key from the BTree throws an exception.
+     * Test case for verifying that attempting to delete
+     * a null key from the BTree throws an exception.
      */
     @Test
     public void testDeleteNullKeyThrowsException() {
