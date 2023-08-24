@@ -1,5 +1,6 @@
-package PassengerManager.Model;
+package com.fake_orgasm.usersmanagement.model;
 
+import com.fake_orgasm.usersmanagement.model.Category;
 import lombok.Getter;
 import lombok.Setter;
 
