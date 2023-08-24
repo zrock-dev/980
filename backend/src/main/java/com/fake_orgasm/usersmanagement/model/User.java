@@ -30,7 +30,8 @@ public class User {
      * @param category Category receives the category of the user.
      * @param country String receives the country of the user.
      */
-    public User(int id, String name, String lastName, Date dateBirth, Category category, String country) {
+    public User(int id, String name, String lastName,
+                Date dateBirth, Category category, String country) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
