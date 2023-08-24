@@ -1,25 +1,25 @@
 package com.fake_orgasm.btree;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fake_orgasm.usersmanagement.libs.btree.BTree;
 import com.fake_orgasm.usersmanagement.libs.btree.Node;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-
 /**
  * Test class for testing insertion functionality of the BTree.
  */
 public class BTreeInsertTest {
-
+    /**
+     * Btree ds.
+     */
     private BTree<Integer> bTree;
 
+    /**
+     * Initializes the BTree instance before each test method.
+     */
     @BeforeEach
     public void setUp() {
         bTree = new BTree<>(3);
@@ -50,7 +50,6 @@ public class BTreeInsertTest {
         bTree.insert(6);
         bTree.insert(8);
 
-
         Node<Integer> root = bTree.getRoot();
         assertEquals(1, root.getSize());
         assertEquals(Integer.valueOf(4), root.getKey(0));
@@ -70,7 +69,6 @@ public class BTreeInsertTest {
         assertEquals(Integer.valueOf(6), rightChild.getKey(1));
         assertEquals(Integer.valueOf(7), rightChild.getKey(2));
         assertEquals(Integer.valueOf(8), rightChild.getKey(3));
-
     }
 
     /**
@@ -78,20 +76,28 @@ public class BTreeInsertTest {
      */
     @Test
     public void basicSplitInsertCase() {
-        List<Integer> list = Arrays.asList(190, 57, 89, 90, 121, 170, 35, 48, 91, 22, 126, 132, 80);
         bTree = new BTree<>(5);
-        list.forEach(key -> bTree.insert(key));
-
+        bTree.insert(190);
+        bTree.insert(57);
+        bTree.insert(89);
+        bTree.insert(90);
+        bTree.insert(121);
+        bTree.insert(170);
+        bTree.insert(35);
+        bTree.insert(48);
+        bTree.insert(91);
+        bTree.insert(22);
+        bTree.insert(126);
+        bTree.insert(132);
+        bTree.insert(80);
 
         Node<Integer> root = bTree.getRoot();
         assertEquals(1, root.getSize());
 
         assertEquals(Integer.valueOf(90), root.getKey(0));
 
-
         Node<Integer> firstChild = root.getChild(0);
         Node<Integer> secondChild = root.getChild(1);
-
 
         assertEquals(6, firstChild.getSize());
         assertTrue(firstChild.isLeaf());
@@ -112,7 +118,5 @@ public class BTreeInsertTest {
         assertEquals(Integer.valueOf(132), secondChild.getKey(3));
         assertEquals(Integer.valueOf(170), secondChild.getKey(4));
         assertEquals(Integer.valueOf(190), secondChild.getKey(5));
-
-
     }
 }
