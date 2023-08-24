@@ -235,7 +235,7 @@ public class BTree<T extends Comparable<T>> {
      * @param node The leaf node from which to remove the key.
      * @param pos  The position of the key to be removed in the node.
      */
-    private void removeKeyFromLeaf(final Node<T> node, final int pos) {
+    private void removeKeyFromLeaf(Node<T> node, int pos) {
         for (int i = pos; i < node.getSize() - 1; i++) {
             node.setKey(i, node.getKey(i + 1));
         }
@@ -249,7 +249,7 @@ public class BTree<T extends Comparable<T>> {
      * @param pos  The position of the key to be removed in the node.
      * @param key  The key to be removed.
      */
-    private void remFromNonLeaf(final Node<T> node, final int pos, final T key) {
+    private void remFromNonLeaf(Node<T> node, int pos, T key) {
         Node<T> pred = node.getChild(pos);
         if (pred.getSize() >= order) {
             T predKey = findPredecessorKey(pred);
@@ -402,26 +402,26 @@ public class BTree<T extends Comparable<T>> {
      * Redistributes keys from a right sibling
      * node to a child node.
      *
-     * @param par       The parent node containing the child
-     *                     and sibling nodes.
-     * @param child        The child node receiving redistributed keys.
-     * @param right The right sibling node providing keys.
-     * @param pos          The position of the child node in the parent.
+     * @param parent   The parent node containing the child
+     *              and sibling nodes.
+     * @param child The child node receiving redistributed keys.
+     * @param rightChild The right sibling node providing keys.
+     * @param pos   The position of the child node in the parent.
      */
-    private void redRightSib(Node<T> par, Node<T> child, Node<T> right, int pos) {
-        child.setKey(child.getSize(), par.getKey(pos));
-        par.setKey(pos, right.getKey(0));
-        for (int i = 0; i < right.getSize() - 1; i++) {
-            right.setKey(i, right.getKey(i + 1));
+    private void redRightSib(Node<T> parent, Node<T> child, Node<T> rightChild, int pos) {
+        child.setKey(child.getSize(), parent.getKey(pos));
+        parent.setKey(pos, rightChild.getKey(0));
+        for (int i = 0; i < rightChild.getSize() - 1; i++) {
+            rightChild.setKey(i, rightChild.getKey(i + 1));
         }
-        if (!right.isLeaf()) {
-            child.setChild(child.getSize() + 1, right.getChild(0));
-            for (int i = 0; i < right.getSize(); i++) {
-                right.setChild(i, right.getChild(i + 1));
+        if (!rightChild.isLeaf()) {
+            child.setChild(child.getSize() + 1, rightChild.getChild(0));
+            for (int i = 0; i < rightChild.getSize(); i++) {
+                rightChild.setChild(i, rightChild.getChild(i + 1));
             }
         }
         child.increaseSize();
-        right.decreaseSize();
+        rightChild.decreaseSize();
     }
 
     /**
