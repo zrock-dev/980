@@ -1,9 +1,10 @@
-package com.fake_orgasm0.bTree;
+package com.fake_orgasm.btree;
 
-import com.fake_orgasm0.usersmanagement.libs.btree.BTree;
-import org.junit.Test;
+import com.fake_orgasm.usersmanagement.libs.btree.BTree;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 /**
  * Test class for general methods and behavior of the BTree class.

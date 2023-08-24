@@ -1,16 +1,18 @@
-package com.fake_orgasm0.bTree;
+package com.fake_orgasm.btree;
 
 
-import com.fake_orgasm0.usersmanagement.libs.btree.BTree;
-import com.fake_orgasm0.usersmanagement.libs.btree.Node;
-import org.junit.Before;
-import org.junit.Test;
+import com.fake_orgasm.usersmanagement.libs.btree.BTree;
+import com.fake_orgasm.usersmanagement.libs.btree.Node;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 /**
  * Test class for testing deletion functionality of the BTree.
@@ -20,7 +22,7 @@ public class BTreeDeleteTest {
 
     private BTree<Integer> bTree;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         bTree = new BTree<>(5);
     }

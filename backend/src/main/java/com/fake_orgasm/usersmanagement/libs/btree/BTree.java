@@ -1,4 +1,4 @@
-package com.fake_orgasm0.usersmanagement.libs.btree;
+package com.fake_orgasm.usersmanagement.libs.btree;
 
 import lombok.Getter;
 

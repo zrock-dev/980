@@ -1,12 +1,14 @@
-package com.fake_orgasm0.bTree;
+package com.fake_orgasm.btree;
 
-import com.fake_orgasm0.usersmanagement.libs.btree.BTree;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import com.fake_orgasm.usersmanagement.libs.btree.BTree;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Test class for testing search functionality of the BTree.
@@ -15,7 +17,7 @@ public class BTreeSearchTest {
 
     private BTree<Integer> bTree;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         bTree = new BTree<>(4);
         List<Integer> list = Arrays.asList(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150);
@@ -28,7 +30,7 @@ public class BTreeSearchTest {
     @Test
     public void testSearchExistingKey() {
         int actualResult = bTree.searchKey(20);
-        Assert.assertEquals(20, actualResult);
+        assertEquals(20, actualResult);
     }
 
     /**
@@ -37,7 +39,7 @@ public class BTreeSearchTest {
     @Test
     public void testSearchNonExistingKey() {
         Integer actualResult = bTree.searchKey(25);
-        Assert.assertNull(actualResult);
+        assertNull(actualResult);
     }
 
     /**
@@ -47,7 +49,7 @@ public class BTreeSearchTest {
     public void testSearchKeyInEmptyTree() {
         bTree = new BTree<>(4);
         Integer actualResult = bTree.searchKey(20);
-        Assert.assertNull(actualResult);
+       assertNull(actualResult);
     }
 
     /**
@@ -57,6 +59,6 @@ public class BTreeSearchTest {
     public void testSearchKeyAfterInsert() {
         bTree.insert(25);
         int actualResult = bTree.searchKey(25);
-        Assert.assertEquals(25, actualResult);
+        assertEquals(25, actualResult);
     }
 }
