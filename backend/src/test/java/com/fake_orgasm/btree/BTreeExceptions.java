@@ -2,7 +2,7 @@ package com.fake_orgasm.btree;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.fake_orgasm.user_management.libs.btree.BTree;
+import com.fake_orgasm.users_management.libs.btree.BTree;
 import org.junit.jupiter.api.Test;
 
 /**
