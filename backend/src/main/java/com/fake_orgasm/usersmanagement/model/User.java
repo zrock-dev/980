@@ -5,6 +5,9 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * This class is a data structure that represent a user.
+ */
 @Getter
 @Setter
 public class User {
