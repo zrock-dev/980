@@ -1,4 +1,4 @@
-package com.fake_orgasm.currencyexchange.libs.maxheap;
+package com.fake_orgasm.currency_exchange.libs.maxheap;
 
 /**
  * A Max Heap implementation that allows search data basing on priority values.

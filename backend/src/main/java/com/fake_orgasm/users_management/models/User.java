@@ -1,4 +1,4 @@
-package com.fake_orgasm.usersmanagement.models;
+package com.fake_orgasm.users_management.models;
 
 /**
  * This is a modal class for a user.

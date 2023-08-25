@@ -1,7 +1,7 @@
-package com.fake_orgasm.usersmanagement.services;
+package com.fake_orgasm.users_management.services;
 
-import com.fake_orgasm.usersmanagement.libs.btree.BTree;
-import com.fake_orgasm.usersmanagement.models.User;
+import com.fake_orgasm.users_management.libs.btree.BTree;
+import com.fake_orgasm.users_management.models.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,4 +1,4 @@
-package com.fake_orgasm.usersmanagement.services.exceptions;
+package com.fake_orgasm.users_management.services.exceptions;
 
 /**
  * Exception thrown when a user's properties are incomplete.

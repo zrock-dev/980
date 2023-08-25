@@ -2,7 +2,7 @@ package com.fake_orgasm.maxheap;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.fake_orgasm.currencyexchange.libs.maxheap.MaxHeap;
+import com.fake_orgasm.currency_exchange.libs.maxheap.MaxHeap;
 import org.junit.jupiter.api.Test;
 
 /**
