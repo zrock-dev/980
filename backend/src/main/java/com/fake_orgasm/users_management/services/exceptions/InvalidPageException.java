@@ -1,4 +1,4 @@
-package com.fake_orgasm.usersmanagement.services.exceptions;
+package com.fake_orgasm.users_management.services.exceptions;
 
 /**
  * Exception thrown when an invalid page number is provided.
