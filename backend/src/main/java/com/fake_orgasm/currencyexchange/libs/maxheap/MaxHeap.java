@@ -1,24 +1,35 @@
 package com.fake_orgasm.currencyexchange.libs.maxheap;
 
 /**
- * A Max Heap implementation that allows search data basing on priority values
+ * A Max Heap implementation that allows search data basing on priority values.
  * @param <T> Type of values stored on Heap, must be comparable.
  */
 public class MaxHeap<T extends Comparable<T>> {
 
+    /**
+     * Local array to represent heap.
+     */
     private final T[] array;
+
+    /**
+     * Integer to represent heap size.
+     */
     private int size;
-    private final int capacity;
+
+    /**
+     * Integer to restrict heap capacity.
+     */
+    private int capacity;
 
     /**
      * Construct a heap with specified capacity.
-     * @param capacity is maximum capacity of heap.
+     * @param maxCapacity is maximum capacity of heap.
      */
-    public MaxHeap(int capacity) {
-        if (capacity <= 0) {
+    public MaxHeap(int maxCapacity) {
+        if (maxCapacity <= 0) {
             throw new IllegalArgumentException("Capacity must be greater than 0");
         }
-        this.capacity = capacity;
+        this.capacity = maxCapacity;
         this.size = 0;
         this.array = (T[]) new Comparable[capacity];
     }
@@ -28,7 +39,9 @@ public class MaxHeap<T extends Comparable<T>> {
      * @param value Is value to be inserted.
      */
     public void insert(T value) {
-        if (size == capacity) throw new IndexOutOfBoundsException("Heap capacity exceeded");
+        if (size == capacity) {
+            throw new IndexOutOfBoundsException("Heap capacity exceeded");
+        }
 
         array[size] = value;
         size++;
@@ -36,7 +49,7 @@ public class MaxHeap<T extends Comparable<T>> {
         int currentIdx = size - 1;
         int parentIdx = (currentIdx - 1) / 2;
 
-        while (currentIdx > 0 && array[currentIdx].compareTo(array[parentIdx])>0) {
+        while (currentIdx > 0 && array[currentIdx].compareTo(array[parentIdx]) > 0) {
             swap(currentIdx, parentIdx);
             currentIdx = parentIdx;
             parentIdx = (currentIdx - 1) / 2;
@@ -48,7 +61,10 @@ public class MaxHeap<T extends Comparable<T>> {
      * @return Max element stored.
      */
     public T peek() {
-        if (size == 0) return null;
+        if (size == 0) {
+            return null;
+        }
+
         int indexToRemove = 0;
         T value = array[0];
         array[indexToRemove] = array[size - 1];
@@ -61,10 +77,9 @@ public class MaxHeap<T extends Comparable<T>> {
             int rightChildIdx = 2 * currentIdx + 2;
             int largestIdx = currentIdx;
 
-            if (leftChildIdx < size && array[leftChildIdx].compareTo(array[largestIdx])> 0 ) {
+            if (leftChildIdx < size && valueInHeapArrayIsMajor(leftChildIdx, largestIdx)) {
                 largestIdx = leftChildIdx;
-            }
-            else if (rightChildIdx < size && array[rightChildIdx].compareTo(array[largestIdx]) > 0) {
+            } else if (rightChildIdx < size && valueInHeapArrayIsMajor(rightChildIdx, largestIdx)) {
                 largestIdx = rightChildIdx;
             }
 
@@ -78,11 +93,20 @@ public class MaxHeap<T extends Comparable<T>> {
         return value;
     }
 
+    /**
+     * Method to determine if the i-th element in array is major than j-th one.
+     * @param firstIndex Is i-th element.
+     * @param secondIndex Is j-th element.
+     * @return Comparator result.
+     */
+    private boolean valueInHeapArrayIsMajor(int firstIndex, int secondIndex) {
+        return array[firstIndex].compareTo(array[secondIndex]) > 0;
+    }
 
     /**
-     * Method to exchange to elements on heap
-     * @param i is i-th of array
-     * @param j is j-th of array
+     * Method to exchange to elements on heap.
+     * @param i is i-th of array.
+     * @param j is j-th of array.
      */
     private void swap(int i, int j) {
         T temp = array[i];
