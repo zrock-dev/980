@@ -3,8 +3,8 @@ package com.fake_orgasm.btree;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.fake_orgasm.usersmanagement.libs.btree.BTree;
-import com.fake_orgasm.usersmanagement.libs.btree.Node;
+import com.fake_orgasm.user_management.libs.btree.BTree;
+import com.fake_orgasm.user_management.libs.btree.Node;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
