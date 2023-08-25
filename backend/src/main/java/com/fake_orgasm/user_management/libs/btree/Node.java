@@ -1,4 +1,4 @@
-package com.fake_orgasm.usersmanagement.libs.btree;
+package com.fake_orgasm.user_management.libs.btree;
 
 import java.util.Arrays;
 import lombok.Getter;

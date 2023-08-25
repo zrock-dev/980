@@ -1,4 +1,4 @@
-package com.fake_orgasm.usersmanagement.model;
+package com.fake_orgasm.user_management.model;
 
 import java.util.Date;
 import java.util.List;
