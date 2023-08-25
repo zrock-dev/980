@@ -1,4 +1,4 @@
-package com.fake_orgasm.currencyexchange.models;
+package com.fake_orgasm.currency_exchange.models;
 
 import java.util.ArrayList;
 import java.util.Collection;

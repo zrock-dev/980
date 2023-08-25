@@ -2,8 +2,8 @@ package com.fake_orgasm.maxheap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fake_orgasm.currencyexchange.libs.maxheap.MaxHeap;
-import com.fake_orgasm.currencyexchange.models.ExchangeRates;
+import com.fake_orgasm.currency_exchange.libs.maxheap.MaxHeap;
+import com.fake_orgasm.currency_exchange.models.ExchangeRates;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

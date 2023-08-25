@@ -1,8 +1,8 @@
-package com.fake_orgasm.usersmanagement.services;
+package com.fake_orgasm.users_management.services;
 
-import com.fake_orgasm.usersmanagement.models.User;
-import com.fake_orgasm.usersmanagement.services.exceptions.IncompleteUserException;
-import com.fake_orgasm.usersmanagement.services.exceptions.InvalidPageException;
+import com.fake_orgasm.users_management.models.User;
+import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
+import com.fake_orgasm.users_management.services.exceptions.InvalidPageException;
 import java.util.List;
 
 /**
