@@ -28,15 +28,15 @@ public class User {
      *
      * @param id int receives the id of the user.
      * @param name String receives the name of the user.
-     * @param lastName String receives the last name of the user.
+     * @param lastNam String receives the last name of the user.
      * @param dateBirth Date receives the date birth of the user.
      * @param cat Category receives the category of the user.
      * @param country String receives the country of the user.
      */
-    public User(int id, String name, String lastName, Date dateBirth, Category cat, String country){
+    public User(int id, String name, String lastNam, Date dateBirth, Category cat, String country) {
         this.id = id;
         this.name = name;
-        this.lastName = lastName;
+        this.lastName = lastNam;
         this.dateBirth = dateBirth;
         this.category = cat;
         this.country = country;
