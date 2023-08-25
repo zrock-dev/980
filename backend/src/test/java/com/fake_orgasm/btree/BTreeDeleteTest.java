@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fake_orgasm.user_management.libs.btree.BTree;
 import com.fake_orgasm.user_management.libs.btree.Node;
+import com.fake_orgasm.users_management.libs.btree.BTree;
+import com.fake_orgasm.users_management.libs.btree.Node;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
