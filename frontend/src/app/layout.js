@@ -1,7 +1,7 @@
 import Navbar from '@/components/navbar/Navbar';
 import CoinChangeForm from '@/components/coin-change/CoinChangeForm';
+import CoinChangeOperationDisplayer from '@/components/coin-change/CoinChangeOperationDisplayer';
 import '../styles/globals.css';
-import '../styles/coin-change.css'
 import { Quattrocento_Sans } from 'next/font/google';
 
 const quattrocentoSans = Quattrocento_Sans({
@@ -13,6 +13,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={quattrocentoSans.className}>
+				<CoinChangeOperationDisplayer/>
 				<CoinChangeForm/>
 				{children}
 			</body>

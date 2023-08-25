@@ -152,4 +152,13 @@
     background-color: #0056b3;
   }
   
+  @media (max-width: 1400px) {
+    .option-buttons{
+      display: none;
+    }
+    .form-container{
+      padding: 20px;
+    }
+
+  }
   
