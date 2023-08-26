@@ -19,18 +19,18 @@ public class UserTest {
         User user5 = new User(123, "Simon", "Lopez", new Date(), Category.VIP, "Bolivia");
 
         int currentResult = user1.compareTo(user2);
-        Assertions.assertEquals(-1, currentResult);
+        Assertions.assertEquals(1, currentResult);
 
         currentResult = user1.compareTo(user3);
-        Assertions.assertEquals(-1, currentResult);
+        Assertions.assertEquals(1, currentResult);
 
         currentResult = user3.compareTo(user1);
-        Assertions.assertEquals(1, currentResult);
+        Assertions.assertEquals(-1, currentResult);
 
         currentResult = user1.compareTo(user4);
         Assertions.assertEquals(-2, currentResult);
 
         currentResult = user1.compareTo(user5);
-        Assertions.assertEquals(1, currentResult);
+        Assertions.assertEquals(-1, currentResult);
     }
 }

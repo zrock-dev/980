@@ -103,9 +103,9 @@ public class User implements Comparable<User> {
         for (int i = 0; i < nameUser.length && resultCompare == 0; i++) {
             if (nameUser[i] != ' ') {
                 if ((int) nameUser[i] < (int) nameUserCompared[i]) {
-                    resultCompare = 1;
-                } else if ((int) nameUser[i] > (int) nameUserCompared[i]) {
                     resultCompare = -1;
+                } else if ((int) nameUser[i] > (int) nameUserCompared[i]) {
+                    resultCompare = 1;
                 }
             }
         }
