@@ -76,11 +76,21 @@ public class User implements Comparable<User> {
     }
 
     /**
+     * @return return the full name of the user.
+     */
+    public String getFullName() {
+        return name + " " + lastName;
+    }
+
+    /**
      * This method compare the actual user with other user.
-     * This method use the category as parameter of compare, return a positive
-     * value if the current user  has a higher category than the
-     * compared user, and return a negative value in the other case,
-     * return 0 when the user have the same category.
+     * This method compares the names of the users to verify that they are in
+     * alphabetical order, it returns 1 when the current user is alphabetically
+     * higher than the compared user, when the opposite happens it returns -1,
+     * in case both users have the same name it compares the user id to verify
+     * that they are different users, if they are users with the same name but
+     * different id it returns -2 and in case they are equal in all the mentioned
+     * aspects it returns 0.
      *
      * @param o the object to be compared.
      * @return int result of the comparative.
@@ -88,10 +98,21 @@ public class User implements Comparable<User> {
     @Override
     public int compareTo(User o) {
         int resultCompare = 0;
-        if (this.category.getPriorityNumber() < o.category.getPriorityNumber()) {
-            resultCompare = 1;
-        } else if (this.category.getPriorityNumber() > o.category.getPriorityNumber()) {
-            resultCompare = -1;
+        char[] nameUser = getFullName().toCharArray();
+        char[] nameUserCompared = o.getFullName().toCharArray();
+        for (int i = 0; i < nameUser.length && resultCompare == 0; i++) {
+            if (nameUser[i] != ' ') {
+                if ((int) nameUser[i] < (int) nameUserCompared[i]) {
+                    resultCompare = 1;
+                } else if ((int) nameUser[i] > (int) nameUserCompared[i]) {
+                    resultCompare = -1;
+                }
+            }
+        }
+        if (resultCompare == 0) {
+            if (this.id != o.getId()) {
+                resultCompare = -2;
+            }
         }
         return resultCompare;
     }
