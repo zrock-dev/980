@@ -96,7 +96,7 @@ public class User implements Comparable<User> {
     @Override
     public int compareTo(User o) {
         int resultCompare = 0;
-        resultCompare = getFullName().compareTo(o.getFullName())*(-1);
+        resultCompare = getFullName().compareTo(o.getFullName()) * (-1);
         if (resultCompare == 0) {
             if (this.id != o.getId()) {
                 resultCompare = -1;
