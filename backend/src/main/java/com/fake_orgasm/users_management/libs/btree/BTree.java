@@ -1,4 +1,4 @@
-package com.fake_orgasm.usersmanagement.libs.btree;
+package com.fake_orgasm.users_management.libs.btree;
 
 import lombok.Getter;
 
@@ -20,7 +20,7 @@ public class BTree<T extends Comparable<T>> {
     private Node<T> root;
 
     /**
-     * Constructs a BTree object with the specified degree.
+     * Constructs a btree object with the specified degree.
      *
      * @param degree The degree of the BTree.
      *               Must be a positive integer greater than 2.
