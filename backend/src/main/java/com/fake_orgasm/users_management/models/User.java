@@ -88,9 +88,7 @@ public class User implements Comparable<User> {
      * alphabetical order, it returns a positive value when the current user is alphabetically
      * higher than the compared user, when the opposite happens it returns the negative value,
      * in case both users have the same name it compares the user id to verify
-     * that they are different users, if they are users with the same name but
-     * different id it returns -2 and in case they are equal in all the mentioned
-     * aspects it returns 0.
+     * that they are different users and return the negative value if are different.
      *
      * @param o the object to be compared.
      * @return int result of the comparative.
@@ -101,7 +99,7 @@ public class User implements Comparable<User> {
         resultCompare = getFullName().compareTo(o.getFullName())*(-1);
         if (resultCompare == 0) {
             if (this.id != o.getId()) {
-                resultCompare = -2;
+                resultCompare = -1;
             }
         }
         return resultCompare;
