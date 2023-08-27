@@ -32,5 +32,6 @@ public class UserTest {
 
         currentResult = user1.compareTo(user5) > 0;
         Assertions.assertTrue(currentResult);
+
     }
 }
