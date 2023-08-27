@@ -1,8 +1,15 @@
 package com.fake_orgasm.users_management.models;
 
+import java.util.Date;
+import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * This is a modal class for a user.
  */
+@Getter
+@Setter
 public class User implements Comparable<User> {
     /**
      * Compares this object with the specified object for order.  Returns a
@@ -36,9 +43,65 @@ public class User implements Comparable<User> {
      * @throws NullPointerException if the specified object is null
      * @throws ClassCastException   if the specified object's type prevents it
      *                              from being compared to this object.
+     *
+     */
+    private int id;
+
+    private String name;
+    private String lastName;
+    private Date dateBirth;
+    private List<Integer> flights;
+    private Category category;
+    private String country;
+    /**
+     * This is the constructor of the class.
+     * <p>
+     * The constructor receives all the necessary parameters to correctly
+     * represent the User data structure within the program.
+     *
+     * @param id int receives the id of the user.
+     * @param name String receives the name of the user.
+     * @param lastNam String receives the last name of the user.
+     * @param dateBirth Date receives the date birth of the user.
+     * @param cat Category receives the category of the user.
+     * @param country String receives the country of the user.
+     */
+    public User(int id, String name, String lastNam, Date dateBirth, Category cat, String country) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastNam;
+        this.dateBirth = dateBirth;
+        this.category = cat;
+        this.country = country;
+    }
+
+    /**
+     * @return return the full name of the user.
+     */
+    public String getFullName() {
+        return name + " " + lastName;
+    }
+
+    /**
+     * This method compare the actual user with other user.
+     * This method compares the names of the users to verify that they are in
+     * alphabetical order, it returns a positive value when the current user is alphabetically
+     * higher than the compared user, when the opposite happens it returns the negative value,
+     * in case both users have the same name it compares the user id to verify
+     * that they are different users and return the negative value if are different.
+     *
+     * @param o the object to be compared.
+     * @return int result of the comparative.
      */
     @Override
     public int compareTo(User o) {
-        return 0;
+        int resultCompare = 0;
+        resultCompare = getFullName().compareTo(o.getFullName()) * (-1);
+        if (resultCompare == 0) {
+            if (this.id != o.getId()) {
+                resultCompare = -1;
+            }
+        }
+        return resultCompare;
     }
 }
