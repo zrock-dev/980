@@ -85,8 +85,8 @@ public class User implements Comparable<User> {
     /**
      * This method compare the actual user with other user.
      * This method compares the names of the users to verify that they are in
-     * alphabetical order, it returns 1 when the current user is alphabetically
-     * higher than the compared user, when the opposite happens it returns -1,
+     * alphabetical order, it returns a positive value when the current user is alphabetically
+     * higher than the compared user, when the opposite happens it returns the negative value,
      * in case both users have the same name it compares the user id to verify
      * that they are different users, if they are users with the same name but
      * different id it returns -2 and in case they are equal in all the mentioned
@@ -98,17 +98,7 @@ public class User implements Comparable<User> {
     @Override
     public int compareTo(User o) {
         int resultCompare = 0;
-        char[] nameUser = getFullName().toCharArray();
-        char[] nameUserCompared = o.getFullName().toCharArray();
-        for (int i = 0; i < nameUser.length && resultCompare == 0; i++) {
-            if (nameUser[i] != ' ') {
-                if ((int) nameUser[i] < (int) nameUserCompared[i]) {
-                    resultCompare = 1;
-                } else if ((int) nameUser[i] > (int) nameUserCompared[i]) {
-                    resultCompare = -1;
-                }
-            }
-        }
+        resultCompare = getFullName().compareTo(o.getFullName())*(-1);
         if (resultCompare == 0) {
             if (this.id != o.getId()) {
                 resultCompare = -2;
