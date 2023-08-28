@@ -148,6 +148,6 @@ public class Node<T extends Comparable<T>> {
      */
     @Override
     public String toString() {
-        return Arrays.asList(keys).toString();
+        return Arrays.asList(keys).toString() + size;
     }
 }
