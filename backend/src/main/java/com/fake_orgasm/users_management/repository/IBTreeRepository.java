@@ -3,7 +3,7 @@ package com.fake_orgasm.users_management.repository;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.User;
 
-public interface IBTreeRepository <T extends Comparable<T>> {
+public interface IBTreeRepository {
     /**
      * Save a node in the secondary memory.
      *
@@ -34,5 +34,5 @@ public interface IBTreeRepository <T extends Comparable<T>> {
      * @param id id node to remove.
      * @return Node found.
      */
-    Node<T> readNodeById(int id);
+    Node<User> readNodeById(int id);
 }
