@@ -1,10 +1,12 @@
 package com.fake_orgasm.generator.flight_history_generator;
 
+import com.fake_orgasm.users_management.models.Category;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides functionality to generate flight history data.
+ * This is the flight history generator class.
  */
 public final class FlightHistoryGenerator {
     private static FlightHistoryGenerator instance = null;
@@ -40,7 +42,7 @@ public final class FlightHistoryGenerator {
      * @param n The number of flight histories to generate.
      * @return A list of personalized flight histories.
      */
-    public List<FlightHistory> generateCustomFlights(Airport dp, Airport dt, Priority prio, int n) {
+    public List<FlightHistory> generateCustomFlights(Airport dp, Airport dt, Category prio, int n) {
         List<FlightHistory> flightHistories = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             flightHistories.add(new FlightHistory(dp, dt, prio));
@@ -60,7 +62,7 @@ public final class FlightHistoryGenerator {
         if (departureAirport == null) {
             return new ArrayList<>();
         }
-        return generateCustomFlights(departureAirport, getRandomAirport(), Priority.NORMAL, n);
+        return generateCustomFlights(departureAirport, getRandomAirport(), Category.REGULAR_PASSENGER, n);
     }
 
     /**
@@ -72,26 +74,22 @@ public final class FlightHistoryGenerator {
      */
     public List<FlightHistory> generateFlightByDestination(String dtName, int num) {
         Airport destAir = findAirportByName(dtName);
-        Priority prio = Priority.NORMAL;
+        Category cat = Category.REGULAR_PASSENGER;
         if (destAir == null) {
             return new ArrayList<>();
         }
-        return generateCustomFlights(getRandomAirport(), destAir, prio, num);
+        return generateCustomFlights(getRandomAirport(), destAir, cat, num);
     }
 
     /**
      * This method generates a list of flight history instances by priority.
      *
-     * @param priority The ticket priority string.
+     * @param cat The cat string.
      * @param n The number of flight histories to generate.
      * @return A list of flight histories with the specified priority.
      */
-    public List<FlightHistory> generateFlightHistoriesByPriority(String priority, int n) {
-        Priority prio = parsePriority(priority);
-        if (prio == null) {
-            return new ArrayList<>();
-        }
-        return generateCustomFlights(getRandomAirport(), getRandomAirport(), prio, n);
+    public List<FlightHistory> generateFlightHistoriesByCategory(Category cat, int n) {
+        return generateCustomFlights(getRandomAirport(), getRandomAirport(), cat, n);
     }
 
     /**
@@ -116,9 +114,9 @@ public final class FlightHistoryGenerator {
             destinationAirport = getRandomAirport();
         } while (departureAirport == destinationAirport);
 
-        Priority ticketType = Priority.values()[(int) (Math.random() * Priority.values().length)];
+        Category cat = Category.values()[(int) (Math.random() * Category.values().length)];
 
-        return new FlightHistory(departureAirport, destinationAirport, ticketType);
+        return new FlightHistory(departureAirport, destinationAirport, cat);
     }
 
     /**
@@ -134,20 +132,6 @@ public final class FlightHistoryGenerator {
             }
         }
         return null;
-    }
-
-    /**
-     * This method parses a ticket type string and returns the corresponding Priority.
-     *
-     * @param ticketTypeString The ticket priority string.
-     * @return The corresponding Priority or null if parsing fails.
-     */
-    private Priority parsePriority(String ticketTypeString) {
-        try {
-            return Priority.valueOf(ticketTypeString);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
     }
 
     /**
