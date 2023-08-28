@@ -22,6 +22,8 @@ import lombok.Setter;
 @Setter
 public class Node<T extends Comparable<T>> {
 
+    private int id;
+
     /**
      * The number of keys currently stored in the node.
      */
