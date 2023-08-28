@@ -12,12 +12,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-@Getter
-@Setter
 /**
  * This is the airport loader class.
  *
  */
+@Getter
+@Setter
 public final class AirportLoader {
     private static AirportLoader instance = null;
     private List<Airport> airports;

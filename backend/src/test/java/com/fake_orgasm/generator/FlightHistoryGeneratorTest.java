@@ -6,10 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.fake_orgasm.generator.flight_history_generator.Airport;
 import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.generator.flight_history_generator.FlightHistoryGenerator;
-
-import java.util.List;
-
 import com.fake_orgasm.users_management.models.Category;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -60,7 +58,8 @@ public class FlightHistoryGeneratorTest {
 
     @Test
     void flightHistoryGeneratorBytPriorityTest() {
-        var airports = flightHistoryGenerator.generateFlightHistoriesByCategory(Category.VIP, 50000);
+        Category cat = Category.VIP;
+        var airports = flightHistoryGenerator.generateFlightHistoriesByCategory(cat, 50000);
         assertEquals(50000, airports.size());
         assertEquals(1, airports.get(0).getTicketType().getPriorityNumber());
         assertEquals(1, airports.get(10).getTicketType().getPriorityNumber());
