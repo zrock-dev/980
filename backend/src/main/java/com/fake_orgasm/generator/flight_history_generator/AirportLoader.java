@@ -5,11 +5,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+@Getter
+@Setter
 public final class AirportLoader {
     private static AirportLoader instance = null;
     private List<Airport> airports;
@@ -31,15 +35,6 @@ public final class AirportLoader {
             instance = new AirportLoader();
         }
         return instance;
-    }
-
-    /**
-     * This method returns a list of loaded airports.
-     *
-     * @return The list of loaded airports.
-     */
-    public List<Airport> getAirports() {
-        return airports;
     }
 
     /**
