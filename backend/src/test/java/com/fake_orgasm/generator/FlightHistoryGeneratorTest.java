@@ -32,7 +32,7 @@ public class FlightHistoryGeneratorTest {
     @Test
     void flightHistoryGeneratorByDepartureTest() {
         String dp = "El Alto International Airport";
-        int n =  50000;
+        int n = 50000;
         var flights = flightHistoryGenerator.generateFlightByDepartureAirport(dp, n);
         assertEquals(50000, flights.size());
 
@@ -70,8 +70,8 @@ public class FlightHistoryGeneratorTest {
 
     @Test
     void flightHistoryGeneratorByDestinationTest() {
-        String dt= "Leonardo da Vinci–Fiumicino Airport";
-        int n =  50000;
+        String dt = "Leonardo da Vinci–Fiumicino Airport";
+        int n = 50000;
         var flights = flightHistoryGenerator.generateFlightByDestination(dt, n);
         assertEquals(50000, flights.size());
         assertEquals(
