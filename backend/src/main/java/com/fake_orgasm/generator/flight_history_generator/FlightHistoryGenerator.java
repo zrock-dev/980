@@ -1,12 +1,12 @@
 package com.fake_orgasm.generator.flight_history_generator;
 
 import com.fake_orgasm.users_management.models.Category;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This is the flight history generator class.
+ *
  */
 public final class FlightHistoryGenerator {
     private static FlightHistoryGenerator instance = null;
@@ -58,11 +58,12 @@ public final class FlightHistoryGenerator {
      * @return A list of flight histories with the specified departure airport.
      */
     public List<FlightHistory> generateFlightByDepartureAirport(String deparName, int n) {
-        Airport departureAirport = findAirportByName(deparName);
-        if (departureAirport == null) {
+        Airport dpt = findAirportByName(deparName);
+        Category cat = Category.REGULAR_PASSENGER;
+        if (dpt == null) {
             return new ArrayList<>();
         }
-        return generateCustomFlights(departureAirport, getRandomAirport(), Category.REGULAR_PASSENGER, n);
+        return generateCustomFlights(dpt, getRandomAirport(), cat, n);
     }
 
     /**

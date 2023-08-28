@@ -4,12 +4,12 @@ import com.fake_orgasm.users_management.models.Category;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-
 /**
  *This is the flight history class.
+ *
  */
+@Getter
+@Setter
 public class FlightHistory {
     private Airport departureAirport;
     private Airport destinationAirport;

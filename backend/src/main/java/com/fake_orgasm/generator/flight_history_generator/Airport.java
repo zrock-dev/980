@@ -3,11 +3,12 @@ package com.fake_orgasm.generator.flight_history_generator;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 /**
  * This class is the airport model.
+ *
  */
+@Getter
+@Setter
 public class Airport {
     private String airportName;
     private String country;
