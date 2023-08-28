@@ -1,7 +1,13 @@
 package com.fake_orgasm.users_management.repository;
 
 import com.fake_orgasm.users_management.libs.btree.Node;
+import com.fake_orgasm.users_management.models.User;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,6 +15,12 @@ import java.nio.file.Paths;
 
 public class BTreeRepository implements IBTreeRepository{
     private final String PATH_USERS_DATABASE = System.getProperty("user.home")+"/980/DataBase/Users";
+    private JsonFactory jsonFactory;
+
+    public BTreeRepository(){
+        jsonFactory = new JsonFactory();
+
+    }
     private void createRootDirectory(){
         String directoryProject = System.getProperty("user.home")+"/980";
         createDirectory(directoryProject);
@@ -35,8 +47,44 @@ public class BTreeRepository implements IBTreeRepository{
      * @return result of the operation.
      */
     @Override
-    public boolean saveNode(Node node) {
+    public boolean saveNode(Node<User> node) {
+        String nameFile = String.valueOf(node.getId());
+        nameFile = PATH_USERS_DATABASE+"/"+nameFile;
+        File file = new File(nameFile);
+        FileOutputStream fileOutputStream;
+        try {
+            fileOutputStream = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        JsonGenerator jsonGenerator;
+        try {
+            jsonGenerator = jsonFactory.createGenerator(fileOutputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeNumberField("id", node.getId());
+            jsonGenerator.writeNumberField("size", node.getSize());
+            jsonGenerator.writeNumberField("order", node.getOrder());
+            jsonGenerator.writeBooleanField("leaf", node.isLeaf());
+            jsonGenerator.writeStartArray();
+            for(User user : node.getKeys()){
+                writeUser(user, jsonGenerator);
+            }
+
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+
         return false;
+    }
+
+    private void writeUser(User user, JsonGenerator generator) throws IOException {
+        generator.writeStartObject();
+        generator.
     }
 
     /**
@@ -71,4 +119,5 @@ public class BTreeRepository implements IBTreeRepository{
     public Node readNodeById(int id) {
         return null;
     }
+
 }
