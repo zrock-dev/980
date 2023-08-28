@@ -45,6 +45,8 @@ public class Node<T extends Comparable<T>> {
      */
     private final Node<T>[] children;
 
+    private int[] idChildren;
+
     /**
      * A boolean flag indicating whether the node is a leaf node or not.
      */
@@ -150,6 +152,6 @@ public class Node<T extends Comparable<T>> {
      */
     @Override
     public String toString() {
-        return Arrays.asList(keys).toString();
+        return Arrays.asList(keys).toString() + size;
     }
 }

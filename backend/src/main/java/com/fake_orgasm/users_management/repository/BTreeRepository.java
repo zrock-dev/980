@@ -68,11 +68,16 @@ public class BTreeRepository implements IBTreeRepository{
             jsonGenerator.writeNumberField("id", node.getId());
             jsonGenerator.writeNumberField("size", node.getSize());
             jsonGenerator.writeNumberField("order", node.getOrder());
-            jsonGenerator.writeBooleanField("leaf", node.isLeaf());
             jsonGenerator.writeStartArray();
             for(User user : node.getKeys()){
                 writeUser(user, jsonGenerator);
             }
+            jsonGenerator.writeEndArray();
+            jsonGenerator.writeStartArray();
+            for(Integer currenId : node.getIdChildren()){
+                jsonGenerator.writeNumber(currenId);
+            }
+            jsonGenerator.writeBooleanField("leaf", node.isLeaf());
 
 
         }catch (Exception e){
@@ -84,7 +89,20 @@ public class BTreeRepository implements IBTreeRepository{
 
     private void writeUser(User user, JsonGenerator generator) throws IOException {
         generator.writeStartObject();
-        generator.
+        generator.writeStringField("name", user.getName());
+        generator.writeStringField("lastName", user.getLastName());
+        generator.writeStringField("dateBirth", user.getDateBirth().toString());
+        generator.writeStartArray();
+        for(Integer currentFlightId : user.getFlights()){
+            generator.writeNumber(currentFlightId);
+        }
+        generator.writeEndArray();
+        generator.writeStringField("category", user.getCategory().name());
+        generator.writeStringField("country", user.getCountry());
+    }
+
+    private void writeFlightsUser(){
+
     }
 
     /**
