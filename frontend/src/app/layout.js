@@ -1,4 +1,4 @@
-import Navbar from '@/components/navbar/Navbar';
+import MainContainer from '@/components/MainContainer';
 import '../styles/globals.css';
 import { Quattrocento_Sans } from 'next/font/google';
 
@@ -11,8 +11,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={quattrocentoSans.className}>
-				<Navbar />
-				{children}
+				<MainContainer children={children} />
 			</body>
 		</html>
 	);
