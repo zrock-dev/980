@@ -11,6 +11,11 @@ public enum Priority {
         this.priority = value;
     }
 
+    /**
+     * This method gets the priority as string.
+     *
+     * @return The String priority
+     */
     public String getPriority() {
         return priority;
     }
