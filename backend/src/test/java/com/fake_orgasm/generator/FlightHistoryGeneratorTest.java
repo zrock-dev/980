@@ -6,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.fake_orgasm.generator.flight_history_generator.Airport;
 import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.generator.flight_history_generator.FlightHistoryGenerator;
-import com.fake_orgasm.generator.flight_history_generator.Priority;
+
 import java.util.List;
+
+import com.fake_orgasm.users_management.models.Category;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,14 +60,14 @@ public class FlightHistoryGeneratorTest {
 
     @Test
     void flightHistoryGeneratorBytPriorityTest() {
-        var airports = flightHistoryGenerator.generateFlightHistoriesByPriority("VIP", 50000);
+        var airports = flightHistoryGenerator.generateFlightHistoriesByCategory(Category.VIP, 50000);
         assertEquals(50000, airports.size());
-        assertEquals("priority vip", airports.get(0).getTicketType().getPriority());
-        assertEquals("priority vip", airports.get(10).getTicketType().getPriority());
-        assertEquals("priority vip", airports.get(100).getTicketType().getPriority());
-        assertEquals("priority vip", airports.get(1000).getTicketType().getPriority());
-        assertEquals("priority vip", airports.get(10000).getTicketType().getPriority());
-        assertEquals("priority vip", airports.get(49999).getTicketType().getPriority());
+        assertEquals(1, airports.get(0).getTicketType().getPriorityNumber());
+        assertEquals(1, airports.get(10).getTicketType().getPriorityNumber());
+        assertEquals(1, airports.get(100).getTicketType().getPriorityNumber());
+        assertEquals(1, airports.get(1000).getTicketType().getPriorityNumber());
+        assertEquals(1, airports.get(10000).getTicketType().getPriorityNumber());
+        assertEquals(1, airports.get(49999).getTicketType().getPriorityNumber());
     }
 
     @Test
@@ -98,12 +100,12 @@ public class FlightHistoryGeneratorTest {
     void flightHistoryGeneratorPersonalizedTest() {
         Airport d = new Airport("Real Madrid Airport", "Spain", "Madrid");
         Airport dep = new Airport("Barcelona Airport", "Spain", "Barcelona");
-        Priority p = Priority.NORMAL;
+        Category p = Category.REGULAR_PASSENGER;
         var flights = flightHistoryGenerator.generateCustomFlights(dep, d, p, 50000);
         assertEquals(50000, flights.size());
 
         assertEquals(d.getAirportName(), flights.get(0).getDestinationAirport().getAirportName());
         assertEquals(dep.getAirportName(), flights.get(0).getDepartureAirport().getAirportName());
-        assertEquals(Priority.NORMAL, flights.get(0).getTicketType());
+        assertEquals(Category.REGULAR_PASSENGER, flights.get(0).getTicketType());
     }
 }

@@ -14,6 +14,10 @@ import org.json.simple.parser.ParseException;
 
 @Getter
 @Setter
+/**
+ * This is the airport loader class.
+ *
+ */
 public final class AirportLoader {
     private static AirportLoader instance = null;
     private List<Airport> airports;

@@ -5,6 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+/**
+ * This class is the airport model.
+ */
 public class Airport {
     private String airportName;
     private String country;
