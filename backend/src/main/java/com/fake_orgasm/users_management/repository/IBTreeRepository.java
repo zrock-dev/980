@@ -7,7 +7,7 @@ import com.fake_orgasm.users_management.libs.btree.Node;
  *
  * @param <T> The type of data to be stored and read in the nodes.
  */
-public interface IBTreeRepository <T extends Comparable<T>>{
+public interface IBTreeRepository<T extends Comparable<T>> {
     /**
      * Save a node in the secondary memory.
      *
@@ -40,4 +40,3 @@ public interface IBTreeRepository <T extends Comparable<T>>{
      */
     Node<T> readNodeById(int id);
 }
-
