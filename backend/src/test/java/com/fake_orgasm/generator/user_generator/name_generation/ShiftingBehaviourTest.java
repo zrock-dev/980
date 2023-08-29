@@ -1,14 +1,13 @@
 package com.fake_orgasm.generator.user_generator.name_generation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class ShiftingBehaviourTest {
 
@@ -23,7 +22,8 @@ public class ShiftingBehaviourTest {
     @Test
     void checkGenerationGoal() {
         UserNameGenerator userNameGenerator = new UserNameGenerator();
-        int maxGenerationLimit = (int) Math.pow(UserNameGenerator.GENERATION_CHUNK_SIZE, UserNameGenerator.GENERATION_STACKS);
+        int maxGenerationLimit =
+                (int) Math.pow(UserNameGenerator.GENERATION_CHUNK_SIZE, UserNameGenerator.GENERATION_STACKS);
         int chunksAmount = 1;
 
         List<User> users = new ArrayList<>();
