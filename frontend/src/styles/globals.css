@@ -31,7 +31,70 @@ a {
 	text-decoration: none;
 }
 
+input:focus {
+	outline: none;
+}
+
 button {
 	border: none;
 	cursor: pointer;
+	background-color: transparent;
+}
+
+@keyframes showModal {
+	0% {
+		opacity: 0;
+	}
+	75% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes rotate {
+	0% {
+		transform: translate(-50%, -50%) rotateZ(0deg);
+	}
+	100% {
+		transform: translate(-50%, -50%) rotateZ(360deg);
+	}
+}
+
+@keyframes rotateccw {
+	0% {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+	100% {
+		transform: translate(-50%, -50%) rotate(-360deg);
+	}
+}
+
+@keyframes spin {
+	0%,
+	100% {
+		box-shadow: 0.2em 0px 0 0px currentcolor;
+	}
+	12% {
+		box-shadow: 0.2em 0.2em 0 0 currentcolor;
+	}
+	25% {
+		box-shadow: 0 0.2em 0 0px currentcolor;
+	}
+	37% {
+		box-shadow: -0.2em 0.2em 0 0 currentcolor;
+	}
+	50% {
+		box-shadow: -0.2em 0 0 0 currentcolor;
+	}
+	62% {
+		box-shadow: -0.2em -0.2em 0 0 currentcolor;
+	}
+	75% {
+		box-shadow: 0px -0.2em 0 0 currentcolor;
+	}
+	87% {
+		box-shadow: 0.2em -0.2em 0 0 currentcolor;
+	}
 }
