@@ -1,6 +1,6 @@
 package com.fake_orgasm.generator.user_generator.combinatory_parts;
 
-import com.fake_orgasm.generator.user_generator.UserGenerator;
+import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.generator.utils.FileReader;
 import com.fake_orgasm.generator.utils.Notifiable;
 
@@ -20,7 +20,7 @@ public abstract class Piece {
     public Piece(FileReader fileReader, Notifiable neighbor) {
         this.fileReader = fileReader;
         this.neighbor = neighbor;
-        this.items = new ArrayList<>(UserGenerator.GENERATION_CHUNK_SIZE);
+        this.items = new ArrayList<>(UserNameGenerator.GENERATION_CHUNK_SIZE);
 
         current = null;
     }
@@ -29,7 +29,7 @@ public abstract class Piece {
 
     public boolean shift() throws IOException {
         boolean success = true;
-        for (int i = 0; i < UserGenerator.GENERATION_CHUNK_SIZE; i++) {
+        for (int i = 0; i < UserNameGenerator.GENERATION_CHUNK_SIZE; i++) {
             if (!fileReader.hasNext()) {
                 fileReader.load();
             }

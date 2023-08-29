@@ -1,6 +1,6 @@
 package com.fake_orgasm.generator.user_generator.name_generation;
 
-import com.fake_orgasm.generator.user_generator.UserGenerator;
+import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.users_management.models.User;
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +13,14 @@ public class FirstLastNameTest {
 
     @Test
     void checkRepetitionValidity() {
-        int maxGenerationLimit = (int) Math.pow(UserGenerator.GENERATION_CHUNK_SIZE, 2);
-        UserGenerator userGenerator = new UserGenerator();
-        HashMap<String, Integer> hashMap = new HashMap<>(UserGenerator.GENERATION_CHUNK_SIZE);
+        int maxGenerationLimit = (int) Math.pow(UserNameGenerator.GENERATION_CHUNK_SIZE, 2);
+        UserNameGenerator userNameGenerator = new UserNameGenerator();
+        HashMap<String, Integer> hashMap = new HashMap<>(UserNameGenerator.GENERATION_CHUNK_SIZE);
 
         User user;
         List<User> tmp = new ArrayList<>();
         for (int i = 0; i < maxGenerationLimit; i++) {
-            user = userGenerator.make();
+            user = userNameGenerator.make();
             tmp.add(user);
             String firstLastName = user.getFirstLastName();
             assertNotNull(firstLastName);
@@ -28,13 +28,13 @@ public class FirstLastNameTest {
                 Integer repetitionsCount = hashMap.get(firstLastName);
                 repetitionsCount++;
                 hashMap.put(firstLastName, repetitionsCount);
-                assertFalse(repetitionsCount > UserGenerator.GENERATION_CHUNK_SIZE, String.format("The first last name repetitions count: %d is not under the repetitions threshold\n", repetitionsCount));
+                assertFalse(repetitionsCount > UserNameGenerator.GENERATION_CHUNK_SIZE, String.format("The first last name repetitions count: %d is not under the repetitions threshold\n", repetitionsCount));
             } else {
                 hashMap.put(firstLastName, 1);
             }
         }
 
-        assertEquals(UserGenerator.GENERATION_CHUNK_SIZE, hashMap.size());
+        assertEquals(UserNameGenerator.GENERATION_CHUNK_SIZE, hashMap.size());
 
         int anchor = 0;
         for (Integer value : hashMap.values()) {
@@ -46,18 +46,18 @@ public class FirstLastNameTest {
 
     @Test
     void patternValidity() {
-        int maxGenerationLimit = (int) Math.pow(UserGenerator.GENERATION_CHUNK_SIZE, 2);
+        int maxGenerationLimit = (int) Math.pow(UserNameGenerator.GENERATION_CHUNK_SIZE, 2);
         List<Integer> availableJumps = new ArrayList<>(maxGenerationLimit);
         for (int i = 1; i <= maxGenerationLimit; i++) {
-            availableJumps.add((UserGenerator.GENERATION_CHUNK_SIZE * i) - 1);
+            availableJumps.add((UserNameGenerator.GENERATION_CHUNK_SIZE * i) - 1);
         }
 
-        UserGenerator userGenerator = new UserGenerator();
+        UserNameGenerator userNameGenerator = new UserNameGenerator();
         Set<String> pattern = new HashSet<>();
         User user;
         List<User> tmp = new ArrayList<>();
         for (int i = 0; i < maxGenerationLimit; i++) {
-            user = userGenerator.make();
+            user = userNameGenerator.make();
             String firstLastName = user.getFirstLastName();
             assertNotNull(firstLastName);
             tmp.add(user);
@@ -65,22 +65,22 @@ public class FirstLastNameTest {
                 assertTrue(pattern.add(firstLastName), String.format("Name: %s is repeated\n", firstLastName));
             }
         }
-        assertEquals(UserGenerator.GENERATION_CHUNK_SIZE, pattern.size());
+        assertEquals(UserNameGenerator.GENERATION_CHUNK_SIZE, pattern.size());
     }
 
     @Test
     void firstLastNamePop() {
-        int maxGenerationLimit = (int) Math.pow(UserGenerator.GENERATION_CHUNK_SIZE, 3);
+        int maxGenerationLimit = (int) Math.pow(UserNameGenerator.GENERATION_CHUNK_SIZE, 3);
         List<Integer> availableJumps = new ArrayList<>(maxGenerationLimit);
         for (int i = 1; i <= maxGenerationLimit; i++) {
-            availableJumps.add((UserGenerator.GENERATION_CHUNK_SIZE * i) - 1);
+            availableJumps.add((UserNameGenerator.GENERATION_CHUNK_SIZE * i) - 1);
         }
 
-        UserGenerator userGenerator = new UserGenerator();
+        UserNameGenerator userNameGenerator = new UserNameGenerator();
         List<String> names = new ArrayList<>();
         User user;
         for (int i = 0; i < maxGenerationLimit; i++) {
-            user = userGenerator.make();
+            user = userNameGenerator.make();
             String firstLastName = user.getFirstLastName();
             assertNotNull(firstLastName);
             if (availableJumps.contains(i)) {
@@ -88,11 +88,11 @@ public class FirstLastNameTest {
             }
         }
 
-        int availableNames = (int) Math.pow(UserGenerator.GENERATION_CHUNK_SIZE, 2);
+        int availableNames = (int) Math.pow(UserNameGenerator.GENERATION_CHUNK_SIZE, 2);
         assertEquals(availableNames, names.size());
 
         List<String> pattern = new ArrayList<>();
-        for (int i = 0; i < UserGenerator.GENERATION_CHUNK_SIZE; i++) {
+        for (int i = 0; i < UserNameGenerator.GENERATION_CHUNK_SIZE; i++) {
             String name = names.get(i);
             assertFalse(pattern.contains(name), String.format("Name: %s is repeated\n", name));
             pattern.add(name);

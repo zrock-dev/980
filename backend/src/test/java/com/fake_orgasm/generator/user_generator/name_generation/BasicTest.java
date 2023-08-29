@@ -1,6 +1,6 @@
 package com.fake_orgasm.generator.user_generator.name_generation;
 
-import com.fake_orgasm.generator.user_generator.UserGenerator;
+import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.users_management.models.User;
 import org.junit.jupiter.api.Test;
 
@@ -12,14 +12,14 @@ public class BasicTest {
 
     @Test
     void verifyNameIsComplete() {
-        UserGenerator userGenerator = new UserGenerator();
-        User user = userGenerator.make();
+        UserNameGenerator userNameGenerator = new UserNameGenerator();
+        User user = userNameGenerator.make();
         String fullName = user.getFullName();
         String[] words = fullName.split("\\s");
 
         assertNotNull(user);
         assertNotEquals("", fullName);
-        assertEquals(UserGenerator.GENERATION_STACKS, words.length);
+        assertEquals(UserNameGenerator.GENERATION_STACKS, words.length);
     }
 
     public static void checkPattern(List<String> pattern, Iterator<String> items){

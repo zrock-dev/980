@@ -1,6 +1,6 @@
 package com.fake_orgasm.generator.utils;
 
-import com.fake_orgasm.generator.user_generator.UserGenerator;
+import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class ResourcesIntegrityTest {
 
     private void checkFile(String fileName) {
         try {
-            FileReader fileReader = new FileReader(String.format("%s/%s.txt", UserGenerator.GENERATOR_ROOT, fileName));
+            FileReader fileReader = new FileReader(String.format("%s/%s.txt", UserNameGenerator.GENERATOR_ROOT, fileName));
             Set<String> items = new HashSet<>();
             while (fileReader.hasNext()) {
                 String item = fileReader.nextLine();
