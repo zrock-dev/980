@@ -1,10 +1,12 @@
-package com.fake_orgasm.generator.flight_history_generator;
+package com.fake_orgasm.flights_management;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fake_orgasm.flights_management.models.Airport;
 import lombok.Getter;
 import lombok.Setter;
 import org.json.simple.JSONArray;
@@ -98,7 +100,7 @@ public final class AirportLoader {
         int i = 0;
         for (Airport airport : airports) {
             i++;
-            System.out.println(i + "). " + airport.getAirportName() + " - " + airport.getCountry());
+            System.out.println(i + "). " + airport.getName() + " - " + airport.getCountry());
         }
     }
 }

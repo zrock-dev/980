@@ -1,28 +1,28 @@
-package com.fake_orgasm.generator.flight_history_generator;
+package com.fake_orgasm.flights_management.models;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * This class is the airport model.
- *
  */
 @Getter
 @Setter
 public class Airport {
-    private String airportName;
+    private String id;
+    private String name;
     private String country;
     private String state;
 
     /**
      * This is the constructor for this class.
      *
-     * @param airportName The name of the airport.
+     * @param name The name of the airport.
      * @param country     The country where the airport is located.
      * @param state       The state where the airport is located.
      */
-    public Airport(String airportName, String country, String state) {
-        this.airportName = airportName;
+    public Airport(String name, String country, String state) {
+        this.name = name;
         this.country = country;
         this.state = state;
     }

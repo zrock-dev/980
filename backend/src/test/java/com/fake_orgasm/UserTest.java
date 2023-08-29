@@ -1,6 +1,6 @@
 package com.fake_orgasm;
 
-import com.fake_orgasm.users_management.models.Category;
+import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;

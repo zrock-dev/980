@@ -2,8 +2,8 @@ package com.fake_orgasm.generator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fake_orgasm.generator.flight_history_generator.Airport;
-import com.fake_orgasm.generator.flight_history_generator.AirportLoader;
+import com.fake_orgasm.flights_management.models.Airport;
+import com.fake_orgasm.flights_management.AirportLoader;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +25,12 @@ public class AirportLoaderTest {
         assertEquals(100, airports.size());
 
         Airport firstAirport = airports.get(0);
-        assertEquals("John F. Kennedy International Airport", firstAirport.getAirportName());
+        assertEquals("John F. Kennedy International Airport", firstAirport.getName());
         assertEquals("United States", firstAirport.getCountry());
         assertEquals("New York", firstAirport.getState());
 
         Airport lastAirport = airports.get(99);
-        assertEquals("Zurich Airport", lastAirport.getAirportName());
+        assertEquals("Zurich Airport", lastAirport.getName());
         assertEquals("Switzerland", lastAirport.getCountry());
         assertEquals("Zurich", lastAirport.getState());
     }
@@ -158,7 +158,7 @@ public class AirportLoaderTest {
             actualListStringBuilder
                     .append((i + 1))
                     .append("). ")
-                    .append(airports.get(i).getAirportName())
+                    .append(airports.get(i).getName())
                     .append(" - ")
                     .append(airports.get(i).getCountry())
                     .append("\n");

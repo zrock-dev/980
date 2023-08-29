@@ -1,6 +1,9 @@
-package com.fake_orgasm.generator.flight_history_generator;
+package com.fake_orgasm.flights_management.generator;
 
-import com.fake_orgasm.users_management.models.Category;
+import com.fake_orgasm.flights_management.AirportLoader;
+import com.fake_orgasm.flights_management.models.Airport;
+import com.fake_orgasm.flights_management.models.Flight;
+import com.fake_orgasm.flights_management.models.Category;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +28,8 @@ public final class FlightHistoryGenerator {
      * @param numHistoriesToGenerate The number of flight histories to generate.
      * @return A list of randomly generated flight histories.
      */
-    public List<FlightHistory> generateFlightHistories(int numHistoriesToGenerate) {
-        List<FlightHistory> flightHistories = new ArrayList<>();
+    public List<Flight> generateFlightHistories(int numHistoriesToGenerate) {
+        List<Flight> flightHistories = new ArrayList<>();
         for (int i = 0; i < numHistoriesToGenerate; i++) {
             flightHistories.add(generateRandomFlightHistory());
         }
@@ -42,10 +45,10 @@ public final class FlightHistoryGenerator {
      * @param n The number of flight histories to generate.
      * @return A list of personalized flight histories.
      */
-    public List<FlightHistory> generateCustomFlights(Airport dp, Airport dt, Category prio, int n) {
-        List<FlightHistory> flightHistories = new ArrayList<>();
+    public List<Flight> generateCustomFlights(Airport dp, Airport dt, Category prio, int n) {
+        List<Flight> flightHistories = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            flightHistories.add(new FlightHistory(dp, dt, prio));
+            flightHistories.add(new Flight(dp, dt, prio));
         }
         return flightHistories;
     }
@@ -57,7 +60,7 @@ public final class FlightHistoryGenerator {
      * @param n The number of flight histories to generate.
      * @return A list of flight histories with the specified departure airport.
      */
-    public List<FlightHistory> generateFlightByDepartureAirport(String deparName, int n) {
+    public List<Flight> generateFlightByDepartureAirport(String deparName, int n) {
         Airport dpt = findAirportByName(deparName);
         Category cat = Category.REGULAR_PASSENGER;
         if (dpt == null) {
@@ -73,7 +76,7 @@ public final class FlightHistoryGenerator {
      * @param num The number of flight histories to generate.
      * @return A list of flight histories with the specified destination airport.
      */
-    public List<FlightHistory> generateFlightByDestination(String dtName, int num) {
+    public List<Flight> generateFlightByDestination(String dtName, int num) {
         Airport destAir = findAirportByName(dtName);
         Category cat = Category.REGULAR_PASSENGER;
         if (destAir == null) {
@@ -89,7 +92,7 @@ public final class FlightHistoryGenerator {
      * @param n The number of flight histories to generate.
      * @return A list of flight histories with the specified priority.
      */
-    public List<FlightHistory> generateFlightHistoriesByCategory(Category cat, int n) {
+    public List<Flight> generateFlightHistoriesByCategory(Category cat, int n) {
         return generateCustomFlights(getRandomAirport(), getRandomAirport(), cat, n);
     }
 
@@ -107,7 +110,7 @@ public final class FlightHistoryGenerator {
      *
      * @return A randomly generated flight history.
      */
-    public FlightHistory generateRandomFlightHistory() {
+    private Flight generateRandomFlightHistory() {
         Airport departureAirport = getRandomAirport();
         Airport destinationAirport;
 
@@ -117,7 +120,8 @@ public final class FlightHistoryGenerator {
 
         Category cat = Category.values()[(int) (Math.random() * Category.values().length)];
 
-        return new FlightHistory(departureAirport, destinationAirport, cat);
+//        return new Flight(departureAirport, destinationAirport, cat);
+        return null;
     }
 
     /**
@@ -128,7 +132,7 @@ public final class FlightHistoryGenerator {
      */
     private Airport findAirportByName(String airportName) {
         for (Airport airport : airports) {
-            if (airport.getAirportName().equals(airportName)) {
+            if (airport.getName().equals(airportName)) {
                 return airport;
             }
         }

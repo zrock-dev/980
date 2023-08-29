@@ -1,10 +1,10 @@
 package com.fake_orgasm.users_management.models;
 
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+
+import com.fake_orgasm.flights_management.models.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,8 +13,41 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public final class User implements Comparable<User> {
+public class User implements Comparable<User> {
 
+    /**
+     * Compares this object with the specified object for order.  Returns a
+     * negative integer, zero, or a positive integer as this object is less
+     * than, equal to, or greater than the specified object.
+     *
+     * <p>The implementor must ensure {@link Integer#signum
+     * signum}{@code (x.compareTo(y)) == -signum(y.compareTo(x))} for
+     * all {@code x} and {@code y}.  (This implies that {@code
+     * x.compareTo(y)} must throw an exception if and only if {@code
+     * y.compareTo(x)} throws an exception.)
+     *
+     * <p>The implementor must also ensure that the relation is transitive:
+     * {@code (x.compareTo(y) > 0 && y.compareTo(z) > 0)} implies
+     * {@code x.compareTo(z) > 0}.
+     *
+     * <p>Finally, the implementor must ensure that {@code
+     * x.compareTo(y)==0} implies that {@code signum(x.compareTo(z))
+     * == signum(y.compareTo(z))}, for all {@code z}.
+     *
+     * <p> It is strongly recommended, but <i>not</i> strictly required that
+     * {@code (x.compareTo(y)==0) == (x.equals(y))}.  Generally speaking, any
+     * class that implements the {@code Comparable} interface and violates
+     * this condition should clearly indicate this fact.  The recommended
+     * language is "Note: this class has a natural ordering that is
+     * inconsistent with equals."
+     *
+     * @param o the object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object
+     * is less than, equal to, or greater than the specified object.
+     * @throws NullPointerException if the specified object is null
+     * @throws ClassCastException   if the specified object's type prevents it
+     * from being compared to this object.
+     */
     private int id;
     private String firstName;
     private String secondName;
@@ -24,25 +57,25 @@ public final class User implements Comparable<User> {
     private List<FlightHistory> flights;
     private Category category;
     private String country;
+    private List<String> tickets;
 
     /**
      * Constructs a new User object with the provided information.
      *
-     * @param id        The unique identifier for the user.
-     * @param firstName The first name of the user.
-     * @param lastNam   The last name of the user.
-     * @param dateBirth The date of birth of the user.
-     * @param cat       The category of the user.
-     * @param country   The country of the user.
+     * @param id        int receives the id of the user.
+     * @param name      String receives the name of the user.
+     * @param lastName  String receives the last name of the user.
+     * @param birthdate Date receives the date birth of the user.
+     * @param ci        Category receives the category of the user.
      */
-    public User(int id, String firstName, String lastNam, LocalDate dateBirth, Category cat, String country) {
+    public User(int id, String name, String lastName,
+                Date birthdate, int ci) {
         this.id = id;
-        this.firstName = firstName;
-        this.firstLastName = lastNam;
-        this.dateBirth = dateBirth;
-        this.category = cat;
-        this.country = country;
-        this.flights = new ArrayList<>();
+        this.name = name;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.ci = ci;
+        this.tickets = new ArrayList<>();
     }
 
     /**
@@ -101,37 +134,7 @@ public final class User implements Comparable<User> {
         }
         return resultCompare;
     }
-
-    /**
-     * Compares this user to another object for equality.
-     *
-     * @param obj The object to compare to.
-     * @return True if the objects are equal, false otherwise.
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-
-        User comparison = (User) obj;
-        boolean nameComparison = Objects.equals(firstName, comparison.firstName);
-        boolean firstLastNameComparison = Objects.equals(firstLastName, comparison.firstLastName);
-        boolean secondLastNameComparison = Objects.equals(secondLastName, comparison.secondLastName);
-        return nameComparison && firstLastNameComparison && secondLastNameComparison;
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "User-> name: " + firstName + ", LastName:" + firstLastName + " " + secondLastName + ", flights="
-                + flights;
-    }
 }
+=======
+}
+>>>>>>> 3a81eb8 (refactor: models refactored to book flights)
