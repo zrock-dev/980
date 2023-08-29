@@ -1,5 +1,6 @@
 package com.fake_orgasm.users_management.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import lombok.Getter;
@@ -73,6 +74,7 @@ public class User implements Comparable<User> {
         this.dateBirth = dateBirth;
         this.category = cat;
         this.country = country;
+        this.flights = new ArrayList<>();
     }
 
     /**

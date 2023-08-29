@@ -67,6 +67,8 @@ public class Node<T extends Comparable<T>> {
         this.children = (Node<T>[]) new Node<?>[2 * degree];
         this.leaf = true;
         this.size = 0;
+        this.id = this.hashCode();
+        this.idChildren = new int[children.length];
     }
 
     /**
