@@ -1,4 +1,4 @@
-package com.fake_orgasm.generator.user_generator.name_generation;
+package com.fake_orgasm.generator.user_generator;
 
 import com.fake_orgasm.generator.user_generator.UserGenerator;
 import org.junit.jupiter.api.Test;
