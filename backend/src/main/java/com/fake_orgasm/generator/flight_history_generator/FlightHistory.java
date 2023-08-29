@@ -27,4 +27,9 @@ public class FlightHistory {
         this.destinationAirport = destinationAirport;
         this.ticketType = priority;
     }
+
+    @Override
+    public String toString() {
+        return "DepartureAirport:" + departureAirport.getAirportName() + ", DestinationAirport: " + destinationAirport.getAirportName() + ", TicketType: " + ticketType ;
+    }
 }
