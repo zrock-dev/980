@@ -15,6 +15,7 @@ import java.util.Objects;
 public class User implements Comparable<User> {
 
     private int id;
+    private long citizen_id;
     private String firstName;
     private String secondName;
     private String firstLastName;

@@ -1,6 +1,6 @@
 package com.fake_orgasm.generator.user_generator.name_generation;
 
-import com.fake_orgasm.generator.user_generator.UserGenerator;
+import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.users_management.models.User;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class FirstNameTest {
     @Test
     void checkRepetitionsValidity() {
-        int maxGenerationLimit = (int) Math.pow(UserGenerator.GENERATION_CHUNK_SIZE, UserGenerator.GENERATION_STACKS);
+        int maxGenerationLimit = (int) Math.pow(UserNameGenerator.GENERATION_CHUNK_SIZE, UserNameGenerator.GENERATION_STACKS);
         HashMap<String, Integer> nameRepetitions = new HashMap<>();
-        UserGenerator userGenerator = new UserGenerator();
+        UserNameGenerator userNameGenerator = new UserNameGenerator();
         User user;
         for (int i = 0; i < maxGenerationLimit; i++) {
-            user = userGenerator.make();
+            user = userNameGenerator.make();
             String name = user.getFirstName();
 
             if (nameRepetitions.containsKey(name)) {
