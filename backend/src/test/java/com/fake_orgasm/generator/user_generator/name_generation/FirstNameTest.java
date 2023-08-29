@@ -1,17 +1,17 @@
 package com.fake_orgasm.generator.user_generator.name_generation;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import org.junit.jupiter.api.Test;
 
 public class FirstNameTest {
     @Test
     void checkRepetitionsValidity() {
-        int maxGenerationLimit = (int) Math.pow(UserNameGenerator.GENERATION_CHUNK_SIZE, UserNameGenerator.GENERATION_STACKS);
+        int maxGenerationLimit =
+                (int) Math.pow(UserNameGenerator.GENERATION_CHUNK_SIZE, UserNameGenerator.GENERATION_STACKS);
         HashMap<String, Integer> nameRepetitions = new HashMap<>();
         UserNameGenerator userNameGenerator = new UserNameGenerator();
         User user;
@@ -24,9 +24,9 @@ public class FirstNameTest {
                 repetitions++;
                 assertFalse(
                         repetitions > maxGenerationLimit,
-                        String.format("The name %s repetitions count: %d is not under the repetitions threshold\n",
-                                name, repetitions)
-                );
+                        String.format(
+                                "The name %s repetitions count: %d is not under the repetitions threshold\n",
+                                name, repetitions));
                 nameRepetitions.put(name, repetitions);
             } else {
                 nameRepetitions.put(name, 1);

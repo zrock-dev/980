@@ -1,20 +1,34 @@
 package com.fake_orgasm.generator.user_generator;
 
-import com.fake_orgasm.generator.utils.FileReader;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.Administrator;
-import com.fake_orgasm.generator.utils.Notifiable;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.CoreWorker;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.Piece;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.Worker;
+import com.fake_orgasm.generator.utils.FileReader;
+import com.fake_orgasm.generator.utils.Notifiable;
 import com.fake_orgasm.users_management.models.User;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
+/**
+ * The UserNameGenerator class is responsible for generating usernames for User instances.
+ * It combines various components to construct usernames in a structured manner.
+ */
 public class UserNameGenerator implements Notifiable {
+    /**
+     * The root directory for the generator resources.
+     */
     public static String GENERATOR_ROOT = "src/main/resources/generation";
+
+    /**
+     * The number of username candidates generated in a single chunk.
+     */
     public static int GENERATION_CHUNK_SIZE = 32;
+
+    /**
+     * The number of stacks used for username generation.
+     */
     public static int GENERATION_STACKS = 4;
 
     private Administrator administrator;
@@ -25,20 +39,34 @@ public class UserNameGenerator implements Notifiable {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     * Initializes a new instance of the UserNameGenerator class.
+     * Sets up the worker components for username generation.
+     */
     public UserNameGenerator() {
         try {
-            firstNames = new Worker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "first_name_pool")), this);
-            secondNames = new Worker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "second_name_pool")), firstNames);
-            firstLastNames = new Worker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "first_last_name_pool")), secondNames);
-            secondLastNames = new CoreWorker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "second_last_name_pool")), firstLastNames);
+            firstNames =
+                    new Worker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "first_name_pool")), this);
+            secondNames = new Worker(
+                    new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "second_name_pool")), firstNames);
+            firstLastNames = new Worker(
+                    new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "first_last_name_pool")), secondNames);
+            secondLastNames = new CoreWorker(
+                    new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "second_last_name_pool")),
+                    firstLastNames);
 
-            administrator = new Administrator(new Piece[]{firstNames, secondNames, firstLastNames, secondLastNames});
+            administrator = new Administrator(new Piece[] {firstNames, secondNames, firstLastNames, secondLastNames});
             administrator.startup();
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
+    /**
+     * Generates a new User instance with a generated username.
+     *
+     * @return A User instance with a generated username.
+     */
     public User make() {
         String secondLastName = secondLastNames.next();
         String firstLastName = firstLastNames.next();

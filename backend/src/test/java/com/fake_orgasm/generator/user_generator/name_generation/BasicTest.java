@@ -1,12 +1,11 @@
 package com.fake_orgasm.generator.user_generator.name_generation;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.Test;
-
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class BasicTest {
 
@@ -22,10 +21,10 @@ public class BasicTest {
         assertEquals(UserNameGenerator.GENERATION_STACKS, words.length);
     }
 
-    public static void checkPattern(List<String> pattern, Iterator<String> items){
+    public static void checkPattern(List<String> pattern, Iterator<String> items) {
         Iterator<String> patternIterator = pattern.iterator();
-        while (items.hasNext()){
-            if (!patternIterator.hasNext()){
+        while (items.hasNext()) {
+            if (!patternIterator.hasNext()) {
                 patternIterator = pattern.iterator();
             }
             String name = items.next();
