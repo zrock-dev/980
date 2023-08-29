@@ -7,12 +7,14 @@ import com.fake_orgasm.generator.generator_backbone.utils.InputValidator;
  */
 public class GeneratorUI {
     private InputValidator inputValidator;
+    private GeneratorBackbone generatorBackbone;
 
     /**
      * This method is the class constructor.
      */
     public GeneratorUI() {
         inputValidator = new InputValidator();
+        generatorBackbone = new GeneratorBackbone();
     }
 
     /**
@@ -60,10 +62,15 @@ public class GeneratorUI {
             case 1:
                 int numUsers = inputValidator.validateNumber(1, 1000000);
                 System.out.println("Generating " + numUsers + " user data...");
+                generatorBackbone.generateUsers(numUsers);
                 break;
             case 2:
                 int numHistories = inputValidator.validateNumber(1, 1000000);
+                long m = System.currentTimeMillis();
                 System.out.println("Generating " + numHistories + " flight histories...");
+                generatorBackbone.generateFlightHistories(numHistories);
+                long z = System.currentTimeMillis();
+                System.out.println((z-m)/ 1000.0 + "milis");
                 break;
             case 3:
                 System.out.println("Charging user data...");

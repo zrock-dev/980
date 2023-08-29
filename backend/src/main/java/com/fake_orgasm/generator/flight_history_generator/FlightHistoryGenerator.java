@@ -107,7 +107,7 @@ public final class FlightHistoryGenerator {
      *
      * @return A randomly generated flight history.
      */
-    private FlightHistory generateRandomFlightHistory() {
+    public FlightHistory generateRandomFlightHistory() {
         Airport departureAirport = getRandomAirport();
         Airport destinationAirport;
 
