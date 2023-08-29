@@ -4,6 +4,7 @@ import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.User;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,33 +13,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BTreeRepository implements IBTreeRepository{
-    private final String PATH_USERS_DATABASE = System.getProperty("user.home")+"/980/DataBase/Users";
+public class BTreeRepository implements IBTreeRepository<User>{
+    private final String PATH_USERS_DATABASE = "../backend/src/main/resources/DataBase/Users";
     private JsonFactory jsonFactory;
 
     public BTreeRepository(){
         jsonFactory = new JsonFactory();
 
-    }
-    private void createRootDirectory(){
-        String directoryProject = System.getProperty("user.home")+"/980";
-        createDirectory(directoryProject);
-        String directoryDataBase = System.getProperty("user.home")+"/980/DataBase";
-        createDirectory(directoryDataBase);
-        String directoryUsers =  System.getProperty("user.home")+"/980/DataBase/Users";
-        createDirectory(directoryUsers);
-    }
-
-    private void createDirectory(String pathDirectory){
-        Path path = Paths.get(pathDirectory);
-        if (!Files.exists(path)) {
-            try {
-                Files.createDirectories(path);
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
     }
     /**
      * Save a node in the secondary memory.
@@ -49,42 +33,36 @@ public class BTreeRepository implements IBTreeRepository{
     @Override
     public boolean saveNode(Node<User> node) {
         String nameFile = String.valueOf(node.getId());
-        nameFile = PATH_USERS_DATABASE+"/"+nameFile;
+        nameFile = PATH_USERS_DATABASE+"/"+nameFile+".json";
         File file = new File(nameFile);
         FileOutputStream fileOutputStream;
-        try {
-            fileOutputStream = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
         JsonGenerator jsonGenerator;
         try {
+            fileOutputStream = new FileOutputStream(file);
             jsonGenerator = jsonFactory.createGenerator(fileOutputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeNumberField("id", node.getId());
             jsonGenerator.writeNumberField("size", node.getSize());
             jsonGenerator.writeNumberField("order", node.getOrder());
+            jsonGenerator.writeFieldName("keys");
             jsonGenerator.writeStartArray();
-            for(User user : node.getKeys()){
-                writeUser(user, jsonGenerator);
+            for(int i = 0; i < node.getSize(); i++){
+                writeUser(node.getKey(i), jsonGenerator);
             }
             jsonGenerator.writeEndArray();
+            jsonGenerator.writeFieldName("idChildren");
             jsonGenerator.writeStartArray();
             for(Integer currenId : node.getIdChildren()){
                 jsonGenerator.writeNumber(currenId);
             }
+            jsonGenerator.writeEndArray();
             jsonGenerator.writeBooleanField("leaf", node.isLeaf());
-
-
-        }catch (Exception e){
-            e.getMessage();
+            jsonGenerator.writeEndObject();
+            jsonGenerator.close();
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        return false;
     }
 
     private void writeUser(User user, JsonGenerator generator) throws IOException {
@@ -92,6 +70,7 @@ public class BTreeRepository implements IBTreeRepository{
         generator.writeStringField("name", user.getName());
         generator.writeStringField("lastName", user.getLastName());
         generator.writeStringField("dateBirth", user.getDateBirth().toString());
+        generator.writeFieldName("flights");
         generator.writeStartArray();
         for(Integer currentFlightId : user.getFlights()){
             generator.writeNumber(currentFlightId);
@@ -99,10 +78,7 @@ public class BTreeRepository implements IBTreeRepository{
         generator.writeEndArray();
         generator.writeStringField("category", user.getCategory().name());
         generator.writeStringField("country", user.getCountry());
-    }
-
-    private void writeFlightsUser(){
-
+        generator.writeEndObject();
     }
 
     /**
@@ -135,6 +111,17 @@ public class BTreeRepository implements IBTreeRepository{
      */
     @Override
     public Node readNodeById(int id) {
+        String pathFile = PATH_USERS_DATABASE+"/"+id+".json";
+        File file = new File(pathFile);
+        if(file.exists()){
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                Node<User> dataObject = objectMapper.readValue(file, Node.class);
+                System.out.println(dataObject);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
