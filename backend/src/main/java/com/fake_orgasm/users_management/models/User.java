@@ -1,10 +1,11 @@
 package com.fake_orgasm.users_management.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * This is a modal class for a user.
@@ -14,7 +15,8 @@ import lombok.Setter;
 public class User implements Comparable<User> {
 
     private int id;
-    private String name;
+    private String firstName;
+    private String secondName;
     private String firstLastName;
     private String secondLastName;
     private Date dateBirth;
@@ -28,24 +30,25 @@ public class User implements Comparable<User> {
      * The constructor receives all the necessary parameters to correctly
      * represent the User data structure within the program.
      *
-     * @param id int receives the id of the user.
-     * @param name String receives the name of the user.
-     * @param lastNam String receives the last name of the user.
+     * @param id        int receives the id of the user.
+     * @param firstName String receives the name of the user.
+     * @param lastNam   String receives the last name of the user.
      * @param dateBirth Date receives the date birth of the user.
-     * @param cat Category receives the category of the user.
-     * @param country String receives the country of the user.
+     * @param cat       Category receives the category of the user.
+     * @param country   String receives the country of the user.
      */
-    public User(int id, String name, String lastNam, Date dateBirth, Category cat, String country) {
+    public User(int id, String firstName, String lastNam, Date dateBirth, Category cat, String country) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
         this.firstLastName = lastNam;
         this.dateBirth = dateBirth;
         this.category = cat;
         this.country = country;
     }
 
-    public User(String name, String firstLastName, String secondLastName) {
-        this.name = name;
+    public User(String firstName, String secondName,String firstLastName, String secondLastName) {
+        this.firstName = firstName;
+        this.secondName = secondName;
         this.firstLastName = firstLastName;
         this.secondLastName = secondLastName;
     }
@@ -54,7 +57,7 @@ public class User implements Comparable<User> {
      * @return return the full name of the user.
      */
     public String getFullName() {
-        return String.format("%s %s %s", name, firstLastName, secondLastName);
+        return String.format("%s %s %s %s", firstName, secondName, firstLastName, secondLastName);
     }
 
     /**
@@ -92,7 +95,7 @@ public class User implements Comparable<User> {
 
         User comparison = (User) obj;
 
-        boolean nameComparison = Objects.equals(name, comparison.name);
+        boolean nameComparison = Objects.equals(firstName, comparison.firstName);
         boolean firstLastNameComparison = Objects.equals(firstLastName, comparison.firstLastName);
         boolean secondLastNameComparison = Objects.equals(secondLastName, comparison.secondLastName);
 
