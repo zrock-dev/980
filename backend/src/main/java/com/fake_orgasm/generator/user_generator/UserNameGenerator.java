@@ -11,10 +11,15 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The UserNameGenerator class is responsible for generating usernames for User instances.
+ * It combines various components to construct usernames in a structured manner.
+ */
 public class UserNameGenerator implements Notifiable {
-    public static String GENERATOR_ROOT = "src/main/resources/generation";
-    public static int GENERATION_CHUNK_SIZE = 32;
-    public static int GENERATION_STACKS = 4;
+
+    public static final String GENERATOR_ROOT = "src/main/resources/generation";
+    public static final int GENERATION_CHUNK_SIZE = 32;
+    public static final int GENERATION_STACKS = 4;
 
     private Administrator administrator;
     private CoreWorker secondLastNames;
@@ -24,6 +29,10 @@ public class UserNameGenerator implements Notifiable {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     * Initializes a new instance of the UserNameGenerator class.
+     * Sets up the worker components for username generation.
+     */
     public UserNameGenerator() {
         try {
             firstNames =
@@ -43,6 +52,11 @@ public class UserNameGenerator implements Notifiable {
         }
     }
 
+    /**
+     * Generates a new User instance with a generated username.
+     *
+     * @return A User instance with a generated username.
+     */
     public User make() {
         String secondLastName = secondLastNames.next();
         String firstLastName = firstLastNames.next();
