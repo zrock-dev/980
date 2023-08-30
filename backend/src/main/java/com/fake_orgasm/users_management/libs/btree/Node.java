@@ -2,11 +2,9 @@ package com.fake_orgasm.users_management.libs.btree;
 
 import com.fake_orgasm.users_management.repository.NodeDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -81,7 +79,7 @@ public class Node<T extends Comparable<T>> {
         this.size = 0;
         UUID randomUUID = UUID.randomUUID();
         this.id = randomUUID.toString();
-        this.idChildren = new String[2*degree];
+        this.idChildren = new String[2 * degree];
     }
 
     /**
@@ -121,7 +119,6 @@ public class Node<T extends Comparable<T>> {
      * @param index the index of the child
      * @return the ID of the child at the specified index
      */
-
     public String getIdChild(int index) {
         return idChildren[index];
     }
@@ -134,8 +131,8 @@ public class Node<T extends Comparable<T>> {
      */
     public void setChild(final int index, final Node<T> child) {
         children[index] = child;
-        if(child!=null){
-            idChildren[index]=child.getId();
+        if (child != null) {
+            idChildren[index] = child.getId();
         }
     }
 
@@ -183,10 +180,16 @@ public class Node<T extends Comparable<T>> {
     public String toString() {
         return Arrays.asList(keys).toString() + size;
     }
+
+    /**
+     * Prints the structure of the B-tree starting from this node.
+     *
+     * @param prefix The prefix string for indentation in the printed output.
+     */
     public void printTree(String prefix) {
-        System.out.println(prefix + "|__ " + new ArrayList(Arrays.asList(keys))+" "+size);
+        System.out.println(prefix + "|__ " + new ArrayList(Arrays.asList(keys)) + " " + size);
         Node<T> node;
-        for (int i = 0; i <=size; i++) {
+        for (int i = 0; i <= size; i++) {
             String childPrefix = prefix + (i == size - 1 ? "    " : "|   ");
             node = this.children[i];
             if (node != null) {

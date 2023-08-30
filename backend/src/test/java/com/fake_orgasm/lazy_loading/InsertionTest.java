@@ -4,13 +4,9 @@ import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
-import org.junit.jupiter.api.Test;
-
-
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Random;
+import org.junit.jupiter.api.Test;
 
 public class InsertionTest {
 
@@ -18,18 +14,18 @@ public class InsertionTest {
     private User createRandomUser() {
         Random random = new Random();
 
-        String[] firstNames = {"Alice", "Bob", "Charlie", "David", "Ella", "Frank", "Grace", "Henry", "Isabel", "Jack"};
-        String[] lastNames = {"Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor"};
+        String[] names = {"Alice", "Bob", "Char", "David", "Ella", "Frank", "Grace", "Henry", "Isa", "Jack"};
+        String[] lastNames = {"Smith", "Xi", "Wo", "Jones", "Brown", "Davis", "Mi", "Willa", "Moore", "Tay"};
         Category[] categories = {Category.REGULAR_PASSENGER, Category.VIP, Category.FREQUENT_PASSENGER};
-        String[] countries = {"USA", "Canada", "UK", "Australia", "France", "Germany", "Japan", "Brazil", "China", "India"};
+        String[] countries = {"USA", "Canada", "UK", "Australia", "France", "Germany", "Japan", "Brazil"};
 
-        String firstName = firstNames[random.nextInt(firstNames.length)];
+        String firstName = names[random.nextInt(names.length)];
         String lastName = lastNames[random.nextInt(lastNames.length)];
         LocalDate localDate = LocalDate.of(2004, 04, 25);
         Category category = categories[random.nextInt(categories.length)];
         String country = countries[random.nextInt(countries.length)];
 
-        return new User( hashCode(), firstName, lastName, localDate, category, country);
+        return new User(hashCode(), firstName, lastName, localDate, category, country);
     }
 
     /**
@@ -43,13 +39,12 @@ public class InsertionTest {
     public void insertTest() {
         BTree<User> bTree = new BTree<>(40, new BTreeRepository());
 
-
         long start = System.nanoTime();
         for (int i = 0; i <= 100; i++) {
             bTree.insert(createRandomUser());
         }
         long end = System.nanoTime();
-        System.out.println((end-start)/1e+9);
+        System.out.println((end - start) / 1e+9);
 
         // 100k users = 12s
         // 1M users = 120s = 2 min
@@ -59,14 +54,12 @@ public class InsertionTest {
     /**
      * This function is a test case for the search functionality.
      */
-
     @Test
     public void searchTest() {
         BTree<User> bTree = new BTree<>(40, new BTreeRepository());
-        for(int i = 0 ; i< 1000; i ++){
+        for (int i = 0; i < 1000; i++) {
             bTree.searchKey(createRandomUser());
         }
         bTree.getRoot().printTree("");
     }
-
 }
