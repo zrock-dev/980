@@ -1,8 +1,10 @@
 package com.fake_orgasm.users_management.models;
 
+import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +24,7 @@ public class User implements Comparable<User> {
     private String secondLastName;
     private String dateBirth;
 
-    private List<Integer> flights;
+    private List<FlightHistory> flights;
     private Category category;
     private String country;
 
@@ -46,6 +48,7 @@ public class User implements Comparable<User> {
         this.dateBirth = dateBirth;
         this.category = cat;
         this.country = country;
+        this.flights = new ArrayList<>();
     }
 
     public User(String firstName, String secondName, String firstLastName, String secondLastName) {
@@ -53,6 +56,10 @@ public class User implements Comparable<User> {
         this.secondName = secondName;
         this.firstLastName = firstLastName;
         this.secondLastName = secondLastName;
+        this.flights = new ArrayList<>();
+    }
+    public void addFlightHistory(FlightHistory flightHistory){
+        flights.add(flightHistory);
     }
 
     /**
@@ -102,5 +109,9 @@ public class User implements Comparable<User> {
         boolean secondLastNameComparison = Objects.equals(secondLastName, comparison.secondLastName);
 
         return nameComparison && firstLastNameComparison && secondLastNameComparison;
+    }
+    @Override
+    public String toString() {
+        return "User-> name: " + firstName + ", LastName:" + firstLastName +" "+ secondLastName +  ", flights=" + flights;
     }
 }

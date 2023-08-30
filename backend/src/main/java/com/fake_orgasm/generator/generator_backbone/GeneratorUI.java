@@ -36,9 +36,6 @@ public class GeneratorUI {
     public void displayMenu() {
         System.out.println("Menu:");
         System.out.println("1. Generate user data");
-        System.out.println("2. Generate flight histories");
-        System.out.println("3. View user data");
-        System.out.println("4. View flight histories");
         System.out.println("0. Exit");
     }
 
@@ -49,7 +46,7 @@ public class GeneratorUI {
      */
     public int getUserChoice() {
         System.out.print("Enter your choice: ");
-        return inputValidator.validateNumber(0, 4);
+        return inputValidator.validateNumber(0, 1);
     }
 
     /**
@@ -63,20 +60,6 @@ public class GeneratorUI {
                 int numUsers = inputValidator.validateNumber(1, 1000000);
                 System.out.println("Generating " + numUsers + " user data...");
                 generatorBackbone.generateUsers(numUsers);
-                break;
-            case 2:
-                int numHistories = inputValidator.validateNumber(1, 1000000);
-                long m = System.currentTimeMillis();
-                System.out.println("Generating " + numHistories + " flight histories...");
-                generatorBackbone.generateFlightHistories(numHistories);
-                long z = System.currentTimeMillis();
-                System.out.println((z-m)/ 1000.0 + "milis");
-                break;
-            case 3:
-                System.out.println("Charging user data...");
-                break;
-            case 4:
-                System.out.println("Charging flights...");
                 break;
             case 0:
                 System.out.println("Exiting...");

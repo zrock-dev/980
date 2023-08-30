@@ -30,6 +30,6 @@ public class FlightHistory {
 
     @Override
     public String toString() {
-        return "DepartureAirport:" + departureAirport.getAirportName() + ", DestinationAirport: " + destinationAirport.getAirportName() + ", TicketType: " + ticketType ;
+        return "{ DepartureAirport:" + departureAirport.getAirportName() + ", DestinationAirport: " + destinationAirport.getAirportName() + ", TicketType: " + ticketType +" }";
     }
 }
