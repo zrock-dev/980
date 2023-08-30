@@ -1,16 +1,15 @@
 package com.fake_orgasm.generator.user_generator;
 
-import com.fake_orgasm.generator.utils.FileReader;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.Administrator;
-import com.fake_orgasm.generator.utils.Notifiable;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.CoreWorker;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.Piece;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.Worker;
+import com.fake_orgasm.generator.utils.FileReader;
+import com.fake_orgasm.generator.utils.Notifiable;
 import com.fake_orgasm.users_management.models.User;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 public class UserNameGenerator implements Notifiable {
     public static String GENERATOR_ROOT = "src/main/resources/generation";
@@ -27,12 +26,17 @@ public class UserNameGenerator implements Notifiable {
 
     public UserNameGenerator() {
         try {
-            firstNames = new Worker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "first_name_pool")), this);
-            secondNames = new Worker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "second_name_pool")), firstNames);
-            firstLastNames = new Worker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "first_last_name_pool")), secondNames);
-            secondLastNames = new CoreWorker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "second_last_name_pool")), firstLastNames);
+            firstNames =
+                    new Worker(new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "first_name_pool")), this);
+            secondNames = new Worker(
+                    new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "second_name_pool")), firstNames);
+            firstLastNames = new Worker(
+                    new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "first_last_name_pool")), secondNames);
+            secondLastNames = new CoreWorker(
+                    new FileReader(String.format("%s/%s.txt", GENERATOR_ROOT, "second_last_name_pool")),
+                    firstLastNames);
 
-            administrator = new Administrator(new Piece[]{firstNames, secondNames, firstLastNames, secondLastNames});
+            administrator = new Administrator(new Piece[] {firstNames, secondNames, firstLastNames, secondLastNames});
             administrator.startup();
         } catch (IOException e) {
             logger.error(e.getMessage(), e);

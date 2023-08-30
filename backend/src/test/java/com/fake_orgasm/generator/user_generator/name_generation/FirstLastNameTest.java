@@ -1,13 +1,12 @@
 package com.fake_orgasm.generator.user_generator.name_generation;
 
-import com.fake_orgasm.generator.user_generator.UserNameGenerator;
-import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.Test;
-
-import java.util.*;
-
 import static com.fake_orgasm.generator.user_generator.name_generation.BasicTest.checkPattern;
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.fake_orgasm.generator.user_generator.UserNameGenerator;
+import com.fake_orgasm.users_management.models.User;
+import java.util.*;
+import org.junit.jupiter.api.Test;
 
 public class FirstLastNameTest {
 
@@ -28,7 +27,11 @@ public class FirstLastNameTest {
                 Integer repetitionsCount = hashMap.get(firstLastName);
                 repetitionsCount++;
                 hashMap.put(firstLastName, repetitionsCount);
-                assertFalse(repetitionsCount > UserNameGenerator.GENERATION_CHUNK_SIZE, String.format("The first last name repetitions count: %d is not under the repetitions threshold\n", repetitionsCount));
+                assertFalse(
+                        repetitionsCount > UserNameGenerator.GENERATION_CHUNK_SIZE,
+                        String.format(
+                                "The first last name repetitions count: %d is not under the repetitions threshold\n",
+                                repetitionsCount));
             } else {
                 hashMap.put(firstLastName, 1);
             }
@@ -41,7 +44,6 @@ public class FirstLastNameTest {
             anchor += value;
         }
         assertEquals(maxGenerationLimit, anchor);
-
     }
 
     @Test

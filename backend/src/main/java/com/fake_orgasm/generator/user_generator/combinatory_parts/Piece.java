@@ -3,7 +3,6 @@ package com.fake_orgasm.generator.user_generator.combinatory_parts;
 import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.generator.utils.FileReader;
 import com.fake_orgasm.generator.utils.Notifiable;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -28,8 +28,17 @@ public class FlightHistory {
         this.ticketType = priority;
     }
 
+    /**
+     * This is the toString method
+     *
+     * @return a string of the class
+     */
     @Override
     public String toString() {
-        return "{ DepartureAirport:" + departureAirport.getAirportName() + ", DestinationAirport: " + destinationAirport.getAirportName() + ", TicketType: " + ticketType +" }";
+        return "{ DepartureAirport:" + departureAirport.getAirportName()
+                + ", DestinationAirport: "
+                + destinationAirport.getAirportName()
+                + ", TicketType: "
+                + ticketType + " }";
     }
 }

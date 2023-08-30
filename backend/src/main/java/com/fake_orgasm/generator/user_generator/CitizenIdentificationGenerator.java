@@ -3,11 +3,11 @@ package com.fake_orgasm.generator.user_generator;
 public class CitizenIdentificationGenerator {
     private long citizenIdentificationCounter;
 
-    protected CitizenIdentificationGenerator(){
+    protected CitizenIdentificationGenerator() {
         citizenIdentificationCounter = 0;
     }
 
-    protected long make(){
+    protected long make() {
         citizenIdentificationCounter++;
         return citizenIdentificationCounter;
     }

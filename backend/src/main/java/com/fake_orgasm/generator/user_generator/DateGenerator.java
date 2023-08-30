@@ -23,7 +23,7 @@ public class DateGenerator {
     private int makeRandomDay() {
         int DAYS_CEIL = 31;
         daysCount++;
-        if (daysCount > DAYS_CEIL){
+        if (daysCount > DAYS_CEIL) {
             daysCount = 1;
         }
         return daysCount;
@@ -32,15 +32,15 @@ public class DateGenerator {
     private int makeRandomMonth() {
         int MONTHS_CEIL = 12;
         monthsCount++;
-        if (monthsCount > MONTHS_CEIL){
-           monthsCount = 1;
+        if (monthsCount > MONTHS_CEIL) {
+            monthsCount = 1;
         }
         return monthsCount;
     }
 
     private int makeRandomYear() {
         yearsCount++;
-        if (yearsCount > yearCeiling){
+        if (yearsCount > yearCeiling) {
             yearsCount = YEAR_FLOOR;
         }
 
