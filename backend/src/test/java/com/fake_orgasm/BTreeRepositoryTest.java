@@ -72,7 +72,6 @@ public class BTreeRepositoryTest {
         Assertions.assertEquals(expectedResult, currentResult);
     }
 
-
     /**
      * This method test the deletion of a node in the secondary memory.
      */

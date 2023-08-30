@@ -108,12 +108,14 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
      * @return FlightHistory list saved;
      * @throws IOException Exception to input or output.
      */
-    private List<FlightHistory> deserializeFlightsHistory(JsonNode flightsHistoryNode, ObjectMapper mapper) throws IOException {
+    private List<FlightHistory> deserializeFlightsHistory(JsonNode flightsHistoryNode, ObjectMapper mapper)
+            throws IOException {
         List<FlightHistory> flights = new ArrayList<>();
         for (JsonNode cuurentHistory : flightsHistoryNode) {
             Airport departureAirport = deserializeAirport(cuurentHistory.get("departureAirport"));
             Airport destinationAirport = deserializeAirport(cuurentHistory.get("destinationAirport"));
-            Category category = mapper.readValue(cuurentHistory.get("ticketType").traverse(), Category.class);
+            Category category =
+                    mapper.readValue(cuurentHistory.get("ticketType").traverse(), Category.class);
             FlightHistory flightHistory = new FlightHistory(departureAirport, destinationAirport, category);
             flights.add(flightHistory);
         }
