@@ -1,5 +1,6 @@
 package com.fake_orgasm.users_management.models;
 
+import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import java.time.LocalDate;
 import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import java.util.ArrayList;
