@@ -38,22 +38,22 @@ public class FlightHistoryGeneratorTest {
 
         assertEquals(
                 "El Alto International Airport",
-                flights.get(0).getSource().getName());
+                flights.get(0).getSourceId().getName());
         assertEquals(
                 "El Alto International Airport",
-                flights.get(10).getSource().getName());
+                flights.get(10).getSourceId().getName());
         assertEquals(
                 "El Alto International Airport",
-                flights.get(100).getSource().getName());
+                flights.get(100).getSourceId().getName());
         assertEquals(
                 "El Alto International Airport",
-                flights.get(1000).getSource().getName());
+                flights.get(1000).getSourceId().getName());
         assertEquals(
                 "El Alto International Airport",
-                flights.get(10000).getSource().getName());
+                flights.get(10000).getSourceId().getName());
         assertEquals(
                 "El Alto International Airport",
-                flights.get(49999).getSource().getName());
+                flights.get(49999).getSourceId().getName());
     }
 
     @Test
@@ -77,22 +77,22 @@ public class FlightHistoryGeneratorTest {
         assertEquals(50000, flights.size());
         assertEquals(
                 "Leonardo da Vinci–Fiumicino Airport",
-                flights.get(0).getDestination().getName());
+                flights.get(0).getDestinationId().getName());
         assertEquals(
                 "Leonardo da Vinci–Fiumicino Airport",
-                flights.get(10).getDestination().getName());
+                flights.get(10).getDestinationId().getName());
         assertEquals(
                 "Leonardo da Vinci–Fiumicino Airport",
-                flights.get(100).getDestination().getName());
+                flights.get(100).getDestinationId().getName());
         assertEquals(
                 "Leonardo da Vinci–Fiumicino Airport",
-                flights.get(1000).getDestination().getName());
+                flights.get(1000).getDestinationId().getName());
         assertEquals(
                 "Leonardo da Vinci–Fiumicino Airport",
-                flights.get(10000).getDestination().getName());
+                flights.get(10000).getDestinationId().getName());
         assertEquals(
                 "Leonardo da Vinci–Fiumicino Airport",
-                flights.get(49999).getDestination().getName());
+                flights.get(49999).getDestinationId().getName());
     }
 
     @Test
@@ -103,8 +103,8 @@ public class FlightHistoryGeneratorTest {
         var flights = flightHistoryGenerator.generateCustomFlights(dep, d, p, 50000);
         assertEquals(50000, flights.size());
 
-        assertEquals(d.getName(), flights.get(0).getDestination().getName());
-        assertEquals(dep.getName(), flights.get(0).getSource().getName());
+        assertEquals(d.getName(), flights.get(0).getDestinationId().getName());
+        assertEquals(dep.getName(), flights.get(0).getSourceId().getName());
 //        assertEquals(Category.REGULAR_PASSENGER, flights.get(0).getTicketType());
     }
 }

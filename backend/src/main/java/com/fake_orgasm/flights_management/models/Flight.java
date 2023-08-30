@@ -14,27 +14,27 @@ import java.util.PriorityQueue;
 public class Flight {
 
     private String id;
-    private Airport source;
-    private Airport destination;
+    private String sourceId;
+    private String destinationId;
     private Date date;
     private int capacity;
     private PriorityQueue<Ticket> tickets;
 
-    public Flight(String id, Airport source, Airport destination,
+    public Flight(String id, String sourceId, String destinationId,
                   Date date, int capacity) {
         this.id = id;
-        this.source = source;
-        this.destination = destination;
+        this.sourceId = sourceId;
+        this.destinationId = destinationId;
         this.date = date;
         this.capacity = capacity;
         this.tickets = new PriorityQueue<>();
     }
 
-    public Flight(String id, Airport source, Airport destination,
+    public Flight(String id, String sourceId, String destinationId,
                   int capacity) {
         this.id = id;
-        this.source = source;
-        this.destination = destination;
+        this.sourceId = sourceId;
+        this.destinationId = destinationId;
         this.date = new Date();
         this.capacity = capacity;
         this.tickets = new PriorityQueue<>();
