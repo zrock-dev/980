@@ -31,7 +31,7 @@ public class UserGenerator {
      */
     public User make() {
         User user = userNameGenerator.make();
-        user.setCitizen_id(citizenIdentificationGenerator.make());
+        user.setCitizenId(citizenIdentificationGenerator.make());
         user.setDateBirth(dateGenerator.make());
         return user;
     }

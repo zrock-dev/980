@@ -11,10 +11,9 @@ public class DateGenerator {
     private int monthsCount;
     private int yearsCount;
 
-    /**
-     * The minimum year for generating dates.
-     */
-    public static int YEAR_FLOOR = 2000;
+    public static final int YEAR_FLOOR = 2000;
+    public static final int DAYS_CEIL = 31;
+    public static final int MONTHS_CEIL = 12;
 
     /**
      * Constructs a DateGenerator object with the specified year ceiling.
@@ -43,7 +42,6 @@ public class DateGenerator {
      * @return A random day of the month.
      */
     private int makeRandomDay() {
-        int DAYS_CEIL = 31;
         daysCount++;
         if (daysCount > DAYS_CEIL) {
             daysCount = 1;
@@ -57,7 +55,6 @@ public class DateGenerator {
      * @return A random month.
      */
     private int makeRandomMonth() {
-        int MONTHS_CEIL = 12;
         monthsCount++;
         if (monthsCount > MONTHS_CEIL) {
             monthsCount = 1;

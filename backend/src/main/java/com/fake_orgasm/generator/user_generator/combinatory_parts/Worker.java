@@ -26,7 +26,7 @@ public class Worker extends Piece implements Notifiable {
      * @return The current item in the collection.
      */
     public String next() {
-        return current;
+        return getCurrent();
     }
 
     /**
@@ -34,8 +34,8 @@ public class Worker extends Piece implements Notifiable {
      */
     @Override
     public void startup() {
-        iterator = items.iterator();
-        current = iterator.next();
+        setIterator(getItems().iterator());
+        setCurrent(getIterator().next());
     }
 
     /**
@@ -45,11 +45,11 @@ public class Worker extends Piece implements Notifiable {
     @Override
     public void doNotify() {
         if (!isEmpty()) {
-            current = iterator.next();
+            setCurrent(getIterator().next());
         } else {
-            iterator = items.iterator();
-            current = iterator.next();
-            neighbor.doNotify();
+            setIterator(getItems().iterator());
+            setCurrent(getIterator().next());
+            getNeighbor().doNotify();
         }
     }
 }

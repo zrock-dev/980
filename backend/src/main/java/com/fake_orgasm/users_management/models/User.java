@@ -14,7 +14,7 @@ public class User implements Comparable<User> {
 
     private int id;
 
-    private long citizen_id;
+    private long citizenId;
     private String firstName;
     private String secondName;
     private String firstLastName;
@@ -110,5 +110,10 @@ public class User implements Comparable<User> {
         boolean secondLastNameComparison = Objects.equals(secondLastName, comparison.secondLastName);
 
         return nameComparison && firstLastNameComparison && secondLastNameComparison;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
