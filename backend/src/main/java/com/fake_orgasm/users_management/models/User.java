@@ -1,12 +1,11 @@
 package com.fake_orgasm.users_management.models;
 
 import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * This is a modal class for a user.
@@ -58,7 +57,12 @@ public class User implements Comparable<User> {
         this.secondLastName = secondLastName;
         this.flights = new ArrayList<>();
     }
-    public void addFlightHistory(FlightHistory flightHistory){
+
+    /**
+     * This method adds a flight history to the flights list
+     * @param flightHistory
+     */
+    public void addFlightHistory(FlightHistory flightHistory) {
         flights.add(flightHistory);
     }
 
@@ -110,8 +114,10 @@ public class User implements Comparable<User> {
 
         return nameComparison && firstLastNameComparison && secondLastNameComparison;
     }
+
     @Override
     public String toString() {
-        return "User-> name: " + firstName + ", LastName:" + firstLastName +" "+ secondLastName +  ", flights=" + flights;
+        return "User-> name: " + firstName + ", LastName:" + firstLastName + " " + secondLastName + ", flights="
+                + flights;
     }
 }

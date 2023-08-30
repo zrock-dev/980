@@ -21,9 +21,9 @@ public class Worker extends Piece implements Notifiable {
 
     @Override
     public void doNotify() {
-        if (!isEmpty()){
+        if (!isEmpty()) {
             current = iterator.next();
-        }else {
+        } else {
             iterator = items.iterator();
             current = iterator.next();
             neighbor.doNotify();

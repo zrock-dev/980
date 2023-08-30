@@ -1,7 +1,6 @@
 package com.fake_orgasm.generator.user_generator;
 
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.Calendar;
 
 public class UserGenerator {
@@ -15,7 +14,7 @@ public class UserGenerator {
         dateGenerator = new DateGenerator(Calendar.getInstance().get(Calendar.YEAR));
     }
 
-    public User make(){
+    public User make() {
         User user = userNameGenerator.make();
         user.setCitizen_id(citizenIdentificationGenerator.make());
         user.setDateBirth(dateGenerator.make());
