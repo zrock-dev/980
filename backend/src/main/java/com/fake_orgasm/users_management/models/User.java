@@ -13,7 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class User implements Comparable<User> {
+public final class User implements Comparable<User> {
 
     private int id;
     private long citizenId;
@@ -68,7 +68,7 @@ public class User implements Comparable<User> {
      */
     public User() {}
 
-    /* This adds new flight histories.
+    /** This adds new flight histories.
      *
      * @param flightHistory
      */
