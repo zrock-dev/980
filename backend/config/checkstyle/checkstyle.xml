@@ -72,7 +72,7 @@
   <!-- See https://checkstyle.org/checks/sizes/index.html -->
   <module name="FileLength"/>
   <module name="LineLength">
-    <property name="max" value="110"/>
+    <property name="max" value="120"/>
     <property name="fileExtensions" value="java"/>
   </module>
 
@@ -174,7 +174,9 @@
 
     <!-- Checks for class design                         -->
     <!-- See https://checkstyle.org/checks/design/index.html -->
-    <module name="DesignForExtension"/>
+    <module name="DesignForExtension">
+      <property name="ignoredAnnotations" value="Override"/>
+    </module>
     <module name="FinalClass"/>
     <module name="InterfaceIsType"/>
     <module name="VisibilityModifier"/>

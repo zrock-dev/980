@@ -85,11 +85,14 @@ public class BTreeRepository implements IBTreeRepository<User> {
     private void writeUser(User user, JsonGenerator generator) throws IOException {
         generator.writeStartObject();
         generator.writeNumberField("id", user.getId());
-        generator.writeStringField("name", user.getName());
-        generator.writeStringField("lastName", user.getLastName());
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE;
-        String formattedDate = user.getDateBirth().format(dateFormatter);
+        generator.writeNumberField("citizenId", user.getCitizenId());
+        generator.writeStringField("firstName", user.getFirstName());
+        generator.writeStringField("secondName", user.getSecondName());
+        generator.writeStringField("firstLastName", user.getFirstLastName());
+        generator.writeStringField("secondLastName", user.getSecondLastName());
+        String formattedDate = user.getDateBirth().format(DateTimeFormatter.ISO_DATE);
         generator.writeStringField("dateBirth", formattedDate);
+
         generator.writeFieldName("flights");
         generator.writeStartArray();
         for (Integer currentFlightId : user.getFlights()) {
