@@ -1,5 +1,7 @@
 package com.fake_orgasm.users_management.repository;
 
+import com.fake_orgasm.generator.flight_history_generator.Airport;
+import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
@@ -89,16 +91,49 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
             user.setDateBirth(LocalDate.parse(userNode.get("dateBirth").asText(), dateFormat));
             user.setCategory(mapper.readValue(userNode.get("category").traverse(), Category.class));
             user.setCountry(userNode.get("country").asText());
-
-            List<Integer> flights = new ArrayList<>();
-            int[] arrayFlights = deserializeArrayInt(userNode.get("flights"));
-            for (int currentFlight : arrayFlights) {
-                flights.add(currentFlight);
-            }
-            user.setFlights(flights);
+            List<FlightHistory> arrayFlights = deserializeFlightsHistory(userNode.get("flights"), mapper);
+            user.setFlights(arrayFlights);
             users.add(user);
         }
         return users;
+    }
+
+    /**
+     * Deserializes the flights history of the user represented in json.
+     * Through a JsonNode that represents a list, the data is deserialized in FlightHistory
+     * objects, the data is obtained and FlightHistory objects are created.
+     *
+     * @param flightsHistoryNode JsonNode, contents the flights history list.
+     * @param mapper ObjectMapper, mapper for cast data.
+     * @return FlightHistory list saved;
+     * @throws IOException Exception to input or output.
+     */
+    private List<FlightHistory> deserializeFlightsHistory(JsonNode flightsHistoryNode, ObjectMapper mapper)
+            throws IOException {
+        List<FlightHistory> flights = new ArrayList<>();
+        for (JsonNode cuurentHistory : flightsHistoryNode) {
+            Airport departureAirport = deserializeAirport(cuurentHistory.get("departureAirport"));
+            Airport destinationAirport = deserializeAirport(cuurentHistory.get("destinationAirport"));
+            Category category =
+                    mapper.readValue(cuurentHistory.get("ticketType").traverse(), Category.class);
+            FlightHistory flightHistory = new FlightHistory(departureAirport, destinationAirport, category);
+            flights.add(flightHistory);
+        }
+        return flights;
+    }
+
+    /**
+     * Deserializes a json node into an Airport.
+     *
+     * @param airportNode JsonNode to deserializes.
+     * @return Airport, object deserialized.
+     * @throws IOException Exception to input or output.
+     */
+    private Airport deserializeAirport(JsonNode airportNode) throws IOException {
+        String airportName = airportNode.get("airportName").asText();
+        String country = airportNode.get("country").asText();
+        String state = airportNode.get("state").asText();
+        return new Airport(airportName, country, state);
     }
 
     /**
