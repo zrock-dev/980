@@ -1,14 +1,11 @@
 package com.fake_orgasm.users_management.services;
 
-
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
 import com.fake_orgasm.users_management.services.exceptions.InvalidPageException;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-
+import org.springframework.stereotype.Service;
 
 /**
  * Service implementation for managing user-related operations using a B-tree data structure.

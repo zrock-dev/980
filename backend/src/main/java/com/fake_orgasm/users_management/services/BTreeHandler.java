@@ -1,13 +1,14 @@
 package com.fake_orgasm.users_management.services;
 
-
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.User;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-
 
 /**
  * A utility class for handling operations on a B-tree data structure containing User objects.
@@ -24,8 +25,9 @@ public class BTreeHandler {
      * @return A list of User objects whose names contain the given name fragment.
      */
     public static List<User> bfs(String name, Node<User> root) {
-        if (root == null) return Collections.emptyList();
-
+        if (root == null) {
+            return Collections.emptyList();
+        }
 
         List<User> foundUsers = new ArrayList<>();
         Queue<Node<User>> queue = new LinkedList<>();
@@ -61,8 +63,6 @@ public class BTreeHandler {
      * @param bTree      The B-tree containing the User objects.
      * @return A list of the first twenty User objects from the specified page number.
      */
-
-
     public static List<User> getKeysFromPage(int pageNumber, BTree<User> bTree) {
         List<User> result = new ArrayList<>();
         int count = 0;
@@ -71,7 +71,8 @@ public class BTreeHandler {
     }
 
     /**
-     * Recursively retrieves up to twenty User objects from a specific index within the B-tree node and its children.
+     * Recursively retrieves up to twenty User objects from a specific index within the B-tree
+     * node and its children.
      *
      * @param node   The node from which to start retrieving User objects.
      * @param index  The index within the node indicating the starting position.
@@ -79,7 +80,6 @@ public class BTreeHandler {
      * @param count  The running count of retrieved User objects.
      * @return The updated count of retrieved User objects.
      */
-
     private static int getFirstTwentyFromIndex(Node<User> node, int index, List<User> result, int count) {
         if (node == null || count >= 20) {
             return count;
@@ -102,6 +102,4 @@ public class BTreeHandler {
 
         return count;
     }
-
-
 }

@@ -1,9 +1,8 @@
 package com.fake_orgasm.users_management.libs.btree;
 
 import com.fake_orgasm.users_management.repository.IBTreeRepository;
-import lombok.Getter;
-
 import java.util.Arrays;
+import lombok.Getter;
 
 /**
  * A B-tree implementation that allows efficient storage and retrieval of sorted data.
@@ -15,7 +14,6 @@ public class BTree<T extends Comparable<T>> {
     /**
      * The repository used by the BTree.
      */
-
     private IBTreeRepository<T> repository;
 
     private boolean useRepository;
@@ -45,6 +43,13 @@ public class BTree<T extends Comparable<T>> {
         this.root.setLeaf(true);
     }
 
+    /**
+     * Creates a B-tree instance with the specified degree and repository.
+     *
+     * @param degree     The degree of the B-tree. Must be greater than 1.
+     * @param repository The repository used to store and retrieve B-tree nodes.
+     * @throws IllegalArgumentException If the degree is not greater than 1.
+     */
     public BTree(final int degree, IBTreeRepository<T> repository) {
         if (degree <= 1) {
             throw new IllegalArgumentException("Order must be greater than 1");
@@ -575,7 +580,9 @@ public class BTree<T extends Comparable<T>> {
      * @return {@code true} if redistribution is possible, {@code false} otherwise.
      */
     private boolean canRedistributeFromLeftSibling(Node<T> node, int pos) {
-        if (pos == 0) return false;
+        if (pos == 0) {
+            return false;
+        }
         Node<T> leftSibling = node.getChild(pos - 1);
         if (useRepository && leftSibling == null) {
             leftSibling = repository.readNodeById(node.getIdChild(pos - 1));

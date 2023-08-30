@@ -105,6 +105,10 @@ public class User implements Comparable<User> {
         return resultCompare;
     }
 
+    /**
+     * This method prints the object.
+     * @return
+     */
     @Override
     public String toString() {
         return getFullName();

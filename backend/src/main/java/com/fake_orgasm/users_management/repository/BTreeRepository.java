@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 /**
  * This class writes and reads the nodes in json form.
