@@ -1,6 +1,9 @@
 package com.fake_orgasm.users_management.libs.btree;
 
+import com.fake_orgasm.users_management.repository.NodeDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Arrays;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,9 +23,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@JsonDeserialize(using = NodeDeserializer.class)
 public class Node<T extends Comparable<T>> {
-
-    private int id;
+    /**
+     * The id of this node.
+     */
+    private String id;
 
     /**
      * The number of keys currently stored in the node.
@@ -45,7 +51,10 @@ public class Node<T extends Comparable<T>> {
      */
     private final Node<T>[] children;
 
-    private int[] idChildren;
+    /**
+     * An array storing the children references nodes of the current node.
+     */
+    private String[] idChildren;
 
     /**
      * A boolean flag indicating whether the node is a leaf node or not.
@@ -67,8 +76,9 @@ public class Node<T extends Comparable<T>> {
         this.children = (Node<T>[]) new Node<?>[2 * degree];
         this.leaf = true;
         this.size = 0;
-        this.id = this.hashCode();
-        this.idChildren = new int[children.length];
+        UUID randomUUID = UUID.randomUUID();
+        this.id = randomUUID.toString();
+        this.idChildren = new String[children.length];
     }
 
     /**
