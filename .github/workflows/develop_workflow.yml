@@ -34,7 +34,7 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: |
           cd backend
-          ./gradlew build -x test --no-daemon
+          ./gradlew build -x test -x check --no-daemon
 
   test:
     name: test
@@ -56,4 +56,26 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: |
           cd backend
-          ./gradlew test --no-daemon
+          ./gradlew test -x check --no-daemon
+
+  check:
+    name: code_analysis 
+    runs-on:  ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17' 
+          cache: 'gradle'
+
+      - name: Build
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend
+          ./gradlew checkStyleMain spotlessCheck -x checkStyleTest -x test
+
