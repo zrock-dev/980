@@ -13,7 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class User implements Comparable<User> {
+public final class User implements Comparable<User> {
 
     private int id;
     private long citizenId;
@@ -59,13 +59,22 @@ public class User implements Comparable<User> {
         this.secondName = secondName;
         this.firstLastName = firstLastName;
         this.secondLastName = secondLastName;
+        this.flights = new ArrayList<>();
     }
 
     /**
+     * <<<<<<< Updated upstream
      * Empty User constructor.
      */
     public User() {}
 
+    /** This adds new flight histories.
+     *
+     * @param flightHistory
+     */
+    public void addFlightHistory(FlightHistory flightHistory) {
+        flights.add(flightHistory);
+    }
     /**
      * Returns the full name of the user.
      *
@@ -119,5 +128,11 @@ public class User implements Comparable<User> {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "User-> name: " + firstName + ", LastName:" + firstLastName + " " + secondLastName + ", flights="
+                + flights;
     }
 }
