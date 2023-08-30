@@ -1,5 +1,7 @@
 package com.fake_orgasm.generator.user_generator;
 
+import java.time.LocalDate;
+
 /**
  * The DateGenerator class generates random dates within a specified range of years.
  * It provides methods to generate random days, months, and years for the date format "MM/DD/YYYY".
@@ -12,7 +14,7 @@ public class DateGenerator {
     private int yearsCount;
 
     public static final int YEAR_FLOOR = 2000;
-    public static final int DAYS_CEIL = 31;
+    public static final int DAYS_CEIL = 28;
     public static final int MONTHS_CEIL = 12;
 
     /**
@@ -28,12 +30,12 @@ public class DateGenerator {
     }
 
     /**
-     * Generates a random date in the format "MM/DD/YYYY".
+     * Generates a random date in the format "YYYY/MM/DD".
      *
      * @return A random date in the specified format.
      */
-    protected String make() {
-        return String.format("%s/%s/%s", makeRandomMonth(), makeRandomDay(), makeRandomYear());
+    protected LocalDate make() {
+        return LocalDate.of(makeRandomYear(), makeRandomMonth(), makeRandomDay());
     }
 
     /**

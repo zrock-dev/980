@@ -1,5 +1,7 @@
 package com.fake_orgasm.users_management.models;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.Getter;
@@ -13,13 +15,12 @@ import lombok.Setter;
 public class User implements Comparable<User> {
 
     private int id;
-
     private long citizenId;
     private String firstName;
     private String secondName;
     private String firstLastName;
     private String secondLastName;
-    private String dateBirth;
+    private LocalDate dateBirth;
     private List<Integer> flights;
     private Category category;
     private String country;
@@ -34,7 +35,7 @@ public class User implements Comparable<User> {
      * @param cat       The category of the user.
      * @param country   The country of the user.
      */
-    public User(int id, String firstName, String lastNam, String dateBirth, Category cat, String country) {
+    public User(int id, String firstName, String lastNam, LocalDate dateBirth, Category cat, String country) {
         this.id = id;
         this.firstName = firstName;
         this.firstLastName = lastNam;
@@ -58,6 +59,11 @@ public class User implements Comparable<User> {
         this.firstLastName = firstLastName;
         this.secondLastName = secondLastName;
     }
+
+    /**
+     * Empty User constructor.
+     */
+    public User() {}
 
     /**
      * Returns the full name of the user.
@@ -98,17 +104,14 @@ public class User implements Comparable<User> {
         if (this == obj) {
             return true;
         }
-
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
 
         User comparison = (User) obj;
-
         boolean nameComparison = Objects.equals(firstName, comparison.firstName);
         boolean firstLastNameComparison = Objects.equals(firstLastName, comparison.firstLastName);
         boolean secondLastNameComparison = Objects.equals(secondLastName, comparison.secondLastName);
-
         return nameComparison && firstLastNameComparison && secondLastNameComparison;
     }
 
