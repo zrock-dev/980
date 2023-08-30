@@ -1,14 +1,12 @@
 package com.fake_orgasm.users_management.models;
 
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * This is a modal class for a user.
+ * This class represents a user in the system.
  */
 @Getter
 @Setter
@@ -16,29 +14,26 @@ public class User implements Comparable<User> {
 
     private int id;
 
-    private long citizen_id;
+    private long citizenId;
     private String firstName;
     private String secondName;
     private String firstLastName;
     private String secondLastName;
     private String dateBirth;
 
-    private List<FlightHistory> flights;
+    private List<Integer> flights;
     private Category category;
     private String country;
 
     /**
-     * This is the constructor of the class.
-     * <p>
-     * The constructor receives all the necessary parameters to correctly
-     * represent the User data structure within the program.
+     * Constructs a new User object with the provided information.
      *
-     * @param id        int receives the id of the user.
-     * @param firstName String receives the name of the user.
-     * @param lastNam   String receives the last name of the user.
-     * @param dateBirth Date receives the date birth of the user.
-     * @param cat       Category receives the category of the user.
-     * @param country   String receives the country of the user.
+     * @param id        The unique identifier for the user.
+     * @param firstName The first name of the user.
+     * @param lastNam   The last name of the user.
+     * @param dateBirth The date of birth of the user.
+     * @param cat       The category of the user.
+     * @param country   The country of the user.
      */
     public User(int id, String firstName, String lastNam, String dateBirth, Category cat, String country) {
         this.id = id;
@@ -47,42 +42,38 @@ public class User implements Comparable<User> {
         this.dateBirth = dateBirth;
         this.category = cat;
         this.country = country;
-        this.flights = new ArrayList<>();
     }
 
+    /**
+     * Constructs a new User object with the provided name information.
+     *
+     * @param firstName      The first name of the user.
+     * @param secondName     The second name of the user.
+     * @param firstLastName  The first last name of the user.
+     * @param secondLastName The second last name of the user.
+     */
     public User(String firstName, String secondName, String firstLastName, String secondLastName) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.firstLastName = firstLastName;
         this.secondLastName = secondLastName;
-        this.flights = new ArrayList<>();
     }
 
     /**
-     * This method adds a flight history to the flights list
-     * @param flightHistory
-     */
-    public void addFlightHistory(FlightHistory flightHistory) {
-        flights.add(flightHistory);
-    }
-
-    /**
-     * @return return the full name of the user.
+     * Returns the full name of the user.
+     *
+     * @return The full name of the user.
      */
     public String getFullName() {
         return String.format("%s %s %s %s", firstName, secondName, firstLastName, secondLastName);
     }
 
     /**
-     * This method compare the actual user with other user.
-     * This method compares the names of the users to verify that they are in
-     * alphabetical order, it returns a positive value when the current user is alphabetically
-     * higher than the compared user, when the opposite happens it returns the negative value,
-     * in case both users have the same name it compares the user id to verify
-     * that they are different users and return the negative value if are different.
+     * Compares this user with another user.
      *
-     * @param o the object to be compared.
-     * @return int result of the comparative.
+     * @param o The user to compare with.
+     * @return A negative integer, zero, or a positive integer as this user is less than, equal to,
+     *         or greater than the specified user.
      */
     @Override
     public int compareTo(User o) {
@@ -96,6 +87,12 @@ public class User implements Comparable<User> {
         return resultCompare;
     }
 
+    /**
+     * Compares this user to another object for equality.
+     *
+     * @param obj The object to compare to.
+     * @return True if the objects are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -116,8 +113,7 @@ public class User implements Comparable<User> {
     }
 
     @Override
-    public String toString() {
-        return "User-> name: " + firstName + ", LastName:" + firstLastName + " " + secondLastName + ", flights="
-                + flights;
+    public int hashCode() {
+        return super.hashCode();
     }
 }
