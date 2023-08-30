@@ -1,4 +1,4 @@
-package com.fake_orgasm.flights_management.data_handler.requests;
+package com.fake_orgasm.flights_management.data_handler.data_request;
 
 public enum SourceJson {
 

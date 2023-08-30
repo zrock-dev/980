@@ -1,1 +1,4 @@
-[]
+[
+  {"soltero":true,"nombre":"Ejemplo","edad":25},
+  {"soltero":true,"nombre":"Ejemplo","edad":25}
+]

@@ -1,6 +1,6 @@
-package com.fake_orgasm.flights_management.data_handler.requests;
+package com.fake_orgasm.flights_management.data_handler.data_request;
 
-import org.json.JSONArray;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public interface IJsonRequester {
 
@@ -9,5 +9,5 @@ public interface IJsonRequester {
      *
      * @return documents obtained.
      */
-    JSONArray getDocuments();
+    JsonNode getDocuments();
 }
