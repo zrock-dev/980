@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The Piece class represents an abstract base class for components that operate on a collection of items and interact
@@ -15,12 +17,21 @@ import java.util.List;
  */
 public abstract class Piece {
 
-    protected final List<String> items;
-    protected final Notifiable neighbor;
     private final FileReader fileReader;
 
-    protected String current;
-    protected Iterator<String> iterator;
+    @Getter
+    private final List<String> items;
+
+    @Getter
+    private final Notifiable neighbor;
+
+    @Getter
+    @Setter
+    private Iterator<String> iterator;
+
+    @Getter
+    @Setter
+    private String current;
 
     /**
      * Constructs a Piece object with the specified FileReader and Notifiable neighbor.

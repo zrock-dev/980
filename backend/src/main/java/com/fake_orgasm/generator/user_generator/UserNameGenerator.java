@@ -16,20 +16,10 @@ import org.slf4j.LoggerFactory;
  * It combines various components to construct usernames in a structured manner.
  */
 public class UserNameGenerator implements Notifiable {
-    /**
-     * The root directory for the generator resources.
-     */
-    public static String GENERATOR_ROOT = "src/main/resources/generation";
 
-    /**
-     * The number of username candidates generated in a single chunk.
-     */
-    public static int GENERATION_CHUNK_SIZE = 32;
-
-    /**
-     * The number of stacks used for username generation.
-     */
-    public static int GENERATION_STACKS = 4;
+    public static final String GENERATOR_ROOT = "src/main/resources/generation";
+    public static final int GENERATION_CHUNK_SIZE = 32;
+    public static final int GENERATION_STACKS = 4;
 
     private Administrator administrator;
     private CoreWorker secondLastNames;

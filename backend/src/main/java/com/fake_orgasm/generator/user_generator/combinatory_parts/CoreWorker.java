@@ -20,17 +20,18 @@ public class CoreWorker extends Piece {
     }
 
     /**
-     * Retrieves the next item in the collection. If the collection is empty, resets the iterator and notifies the neighbor.
+     * Retrieves the next item in the collection. If the collection is empty, resets the iterator
+     * and notifies the neighbor.
      *
      * @return The next item in the collection.
      */
     public String next() {
         if (isEmpty()) {
-            iterator = items.iterator();
-            neighbor.doNotify();
+            setIterator(getItems().iterator());
+            getNeighbor().doNotify();
         }
 
-        return iterator.next();
+        return getIterator().next();
     }
 
     /**
@@ -38,6 +39,6 @@ public class CoreWorker extends Piece {
      */
     @Override
     public void startup() {
-        iterator = items.iterator();
+        setIterator(getItems().iterator());
     }
 }
