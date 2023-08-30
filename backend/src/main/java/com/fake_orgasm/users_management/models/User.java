@@ -20,7 +20,6 @@ public class User implements Comparable<User> {
     private String firstLastName;
     private String secondLastName;
     private String dateBirth;
-
     private List<Integer> flights;
     private Category category;
     private String country;
@@ -42,6 +41,7 @@ public class User implements Comparable<User> {
         this.dateBirth = dateBirth;
         this.category = cat;
         this.country = country;
+        this.flights = new ArrayList<>();
     }
 
     /**
