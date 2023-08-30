@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +23,7 @@ public class User implements Comparable<User> {
     private String firstLastName;
     private String secondLastName;
     private LocalDate dateBirth;
-    private List<Integer> flights;
+    private List<FlightHistory> flights;
     private Category category;
     private String country;
 

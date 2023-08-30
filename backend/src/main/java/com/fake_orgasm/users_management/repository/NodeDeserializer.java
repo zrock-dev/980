@@ -95,7 +95,7 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
             for (int currentFlight : arrayFlights) {
                 flights.add(currentFlight);
             }
-            user.setFlights(flights);
+            user.setFlights(null);
             users.add(user);
         }
         return users;
