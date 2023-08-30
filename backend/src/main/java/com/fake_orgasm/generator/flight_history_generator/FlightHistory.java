@@ -29,7 +29,7 @@ public class FlightHistory {
     }
 
     /**
-     * This is the toString method
+     * This is the toString method.
      *
      * @return a string of the class
      */
