@@ -48,7 +48,7 @@ public final class FlightHistoryGenerator {
     public List<Flight> generateCustomFlights(Airport dp, Airport dt, Category prio, int n) {
         List<Flight> flightHistories = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            flightHistories.add(new Flight(dp, dt, prio));
+//            flightHistories.add(new Flight(dp, dt, prio));
         }
         return flightHistories;
     }
