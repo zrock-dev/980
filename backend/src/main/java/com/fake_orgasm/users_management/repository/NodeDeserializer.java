@@ -79,19 +79,22 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
         List<User> users = new ArrayList<>();
         DateTimeFormatter dateFormat = DateTimeFormatter.ISO_DATE;
         for (JsonNode userNode : usersNode) {
-            int id = userNode.get("id").asInt();
-            String name = userNode.get("name").asText();
-            String lastName = userNode.get("lastName").asText();
-            String dateBirthString = userNode.get("dateBirth").asText();
-            String country = userNode.get("country").asText();
+            User user = new User();
+            user.setId(userNode.get("id").asInt());
+            user.setCitizenId(userNode.get("citizenId").asInt());
+            user.setFirstName(userNode.get("firstName").asText());
+            user.setSecondName(userNode.get("secondName").asText());
+            user.setFirstLastName(userNode.get("firstLastName").asText());
+            user.setSecondLastName(userNode.get("secondLastName").asText());
+            user.setDateBirth(LocalDate.parse(userNode.get("dateBirth").asText(), dateFormat));
+            user.setCategory(mapper.readValue(userNode.get("category").traverse(), Category.class));
+            user.setCountry(userNode.get("country").asText());
+
             List<Integer> flights = new ArrayList<>();
             int[] arrayFlights = deserializeArrayInt(userNode.get("flights"));
             for (int currentFlight : arrayFlights) {
                 flights.add(currentFlight);
             }
-            Category category = mapper.readValue(userNode.get("category").traverse(), Category.class);
-            LocalDate dateBirth = LocalDate.parse(dateBirthString, dateFormat);
-            User user = new User(id, name, lastName, dateBirth, category, country);
             user.setFlights(flights);
             users.add(user);
         }
