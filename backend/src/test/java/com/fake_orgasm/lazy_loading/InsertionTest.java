@@ -32,18 +32,23 @@ public class InsertionTest {
         return new User( hashCode(), firstName, lastName, localDate, category, country);
     }
 
-
+    /**
+     * Test case to measure the performance of insertion in a BTree.
+     * <p>
+     * This method creates a BTree object and inserts a specified number of random user objects into it.
+     * The method measures the time taken for insertion and prints the elapsed time in seconds.
+     * The expected time complexity of insertion in a BTree is O(log n).
+     */
     @Test
-    public void rep1() throws InterruptedException {
+    public void insertTest() {
         BTree<User> bTree = new BTree<>(40, new BTreeRepository());
 
-        LocalDate localDate = LocalDate.of(2004, 04, 25);
+
         long start = System.nanoTime();
         for (int i = 0; i <= 100; i++) {
             bTree.insert(createRandomUser());
         }
         long end = System.nanoTime();
-        System.out.println(Arrays.asList(bTree.getRoot().getIdChildren()));
         System.out.println((end-start)/1e+9);
 
         // 100k users = 12s
@@ -51,15 +56,16 @@ public class InsertionTest {
         // 10M users = 1200s = 20 min
     }
 
-    @Test
-    public void rep2() {
-        BTree<User> bTree = new BTree<>(20, new BTreeRepository());
-        //bTree.getRoot().printTree("");
+    /**
+     * This function is a test case for the search functionality.
+     */
 
+    @Test
+    public void searchTest() {
+        BTree<User> bTree = new BTree<>(40, new BTreeRepository());
         for(int i = 0 ; i< 1000; i ++){
             bTree.searchKey(createRandomUser());
         }
-        System.out.println("*******************************************************************************");
         bTree.getRoot().printTree("");
     }
 
