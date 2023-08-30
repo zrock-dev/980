@@ -48,13 +48,10 @@ public class BTreeRepositoryTest {
         result = currentFile.exists();
         Assertions.assertTrue(result);
     }
-/*
 
-    */
-/**
-     * This method test obtaining a node by id.
-     *//*
-
+    /**
+     * This method tests the reading of a node in the secondary memory.
+     */
     @Test
     public void getNodeByIdTest() {
         IBTreeRepository<User> userIBTreeRepository = new BTreeRepository();
@@ -74,7 +71,7 @@ public class BTreeRepositoryTest {
         expectedResult = "TestNode3";
         Assertions.assertEquals(expectedResult, currentResult);
     }
-*/
+
 
     /**
      * This method test the deletion of a node in the secondary memory.
