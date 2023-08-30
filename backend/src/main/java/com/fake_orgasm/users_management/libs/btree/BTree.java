@@ -1,7 +1,7 @@
 package com.fake_orgasm.users_management.libs.btree;
 
 import com.fake_orgasm.users_management.repository.IBTreeRepository;
-import com.fake_orgasm.users_management.repository.Repository;
+
 import lombok.Getter;
 
 /**
@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 @Getter
 public class BTree<T extends Comparable<T>> {
-    private IBTreeRepository<T> repository = new Repository();
+    private IBTreeRepository<T> repository ;
     private boolean useRepository;
 
     /**
@@ -42,21 +42,22 @@ public class BTree<T extends Comparable<T>> {
     }
 
 
-    public BTree(final int degree, boolean useRepository) {
+    public BTree(final int degree, IBTreeRepository<T> repository) {
         if (degree <= 1) {
             throw new IllegalArgumentException("Order must be greater than 1");
         }
+        this.repository = repository;
         this.order = degree;
-        Node<T> node = repository.readNodeById(0);
+        Node<T> node = repository.readNodeById("root");
         if (node == null) {
             this.root = new Node<>(order);
-            this.root.setId(0);
+            this.root.setId("root");
             root.setSize(0);
             root.setLeaf(true);
         } else {
             this.root = node;
         }
-        this.useRepository = useRepository;
+        this.useRepository = true;
     }
 
     /**
@@ -82,7 +83,7 @@ public class BTree<T extends Comparable<T>> {
         }
         Node<T> childNode = currNode.getChild(index);
         if(childNode==null){
-            childNode = repository.readNodeById(currNode.getNodeId(index));
+            childNode = repository.readNodeById(currNode.getIdChild(index));
             currNode.setChild(index, childNode);
         }
         return search(childNode, key);
@@ -126,7 +127,7 @@ public class BTree<T extends Comparable<T>> {
         Node<T> rootNode = this.root;
         if (rootNode.getSize() == 2 * order - 1) {
             Node<T> node = new Node<>(order);
-            long aux = node.getId();
+            String  aux = node.getId();
             node.setId(rootNode.getId());
             this.root = node;
             rootNode.setId(aux);
@@ -213,7 +214,7 @@ public class BTree<T extends Comparable<T>> {
             int insertionIndex = Utils.findPositionToInsert(currentNode, key);
             Node<T> childNode = currentNode.getChild(insertionIndex);
             if(childNode==null){
-                childNode = repository.readNodeById(currentNode.getNodeId(insertionIndex));
+                childNode = repository.readNodeById(currentNode.getIdChild(insertionIndex));
                 currentNode.setChild(insertionIndex,childNode);
             }
             if (childNode.getSize() == 2 * order - 1) {
@@ -322,11 +323,11 @@ public class BTree<T extends Comparable<T>> {
         Node<T> predecessor = parentNode.getChild(position);
         Node<T> successor = parentNode.getChild(position + 1);
         if(useRepository && (predecessor == null )){
-            predecessor = repository.readNodeById(parentNode.getNodeId(position));
+            predecessor = repository.readNodeById(parentNode.getIdChild(position));
             parentNode.setChild(position, predecessor);
         }
         if(useRepository && (successor == null )){
-            successor = repository.readNodeById(parentNode.getNodeId(position+1));
+            successor = repository.readNodeById(parentNode.getIdChild(position+1));
             parentNode.setChild(position+1, successor);
         }
         if (predecessor.getSize() >= order) {
@@ -415,7 +416,7 @@ public class BTree<T extends Comparable<T>> {
         int pos = Utils.findPositionToInsert(node, key);
         Node<T> tmp = node.getChild(pos);
         if(useRepository && (tmp == null )){
-            tmp = repository.readNodeById(node.getNodeId(pos));
+            tmp = repository.readNodeById(node.getIdChild(pos));
             node.setChild(pos, tmp);
         }
         if (tmp.getSize() >= this.order) {
@@ -474,7 +475,7 @@ public class BTree<T extends Comparable<T>> {
 
         if (parent.getSize() == 0 && parent == root) {
             root = parent.getChild(0);
-            root.setId(0);
+            root.setId("root");
         }
     }
 
@@ -548,7 +549,7 @@ public class BTree<T extends Comparable<T>> {
     private boolean canRedistributeFromRightSibling(Node<T> node, int pos) {
         Node<T> rightChild = node.getChild(pos +1);
         if(useRepository && rightChild == null){
-            rightChild = repository.readNodeById(node.getNodeId(pos + 1));
+            rightChild = repository.readNodeById(node.getIdChild(pos + 1));
             node.setChild(pos + 1, rightChild);
         }
         return pos != node.getSize() && rightChild.getSize() >= order;
@@ -565,7 +566,7 @@ public class BTree<T extends Comparable<T>> {
         if(pos==0)return false;
         Node<T> leftSibling = node.getChild(pos - 1);
         if(useRepository && leftSibling == null){
-            leftSibling = repository.readNodeById(node.getNodeId(pos- 1));
+            leftSibling = repository.readNodeById(node.getIdChild(pos- 1));
             node.setChild(pos - 1, leftSibling);
         }
         return pos != 0 && leftSibling.getSize() >= order;

@@ -3,9 +3,11 @@ package com.fake_orgasm.lazy_loading;
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
+import com.fake_orgasm.users_management.repository.BTreeRepository;
 import org.junit.jupiter.api.Test;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Random;
 
@@ -15,7 +17,7 @@ public class DeletionTest {
     @Test
     private User createRandomUser() {
         Random random = new Random();
-
+        LocalDate localDate = LocalDate.of(2004, 04, 25);
         String[] firstNames = {"Alice", "Bob", "Charlie", "David", "Ella", "Frank", "Grace", "Henry", "Isabel", "Jack"};
         String[] lastNames = {"Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor"};
         Category[] categories = {Category.REGULAR_PASSENGER, Category.VIP, Category.FREQUENT_PASSENGER};
@@ -27,13 +29,13 @@ public class DeletionTest {
         Category category = categories[random.nextInt(categories.length)];
         String country = countries[random.nextInt(countries.length)];
 
-        return new User(hashCode(), firstName, lastName, birthDate, category, country);
+        return new User(hashCode(), firstName, lastName, localDate, category, country);
     }
 
 
     @Test
     public void rep1() {
-        BTree<User> bTree = new BTree<>(2, true);
+        BTree<User> bTree = new BTree<>(2, new BTreeRepository());
 
         System.out.println(bTree.getRoot().getKey(0));
         System.out.println(bTree.getRoot().getId());
@@ -47,7 +49,7 @@ public class DeletionTest {
         System.out.println(bTree.getRoot().getKeys());
         System.out.println(bTree.getRoot().getId());
         System.out.println("-------------------------");
-        bTree.getRoot().printTree("");
+      //  bTree.getRoot().printTree("");
 
     }
     /**
@@ -61,7 +63,7 @@ public class DeletionTest {
     @Test
     public void rep2() {
 
-        BTree<User> bTree = new BTree<>(2, true);
+        BTree<User> bTree = new BTree<>(2, new BTreeRepository());
 
         // Agregar 5 usuarios
         User user1 = createRandomUser();
@@ -82,7 +84,7 @@ public class DeletionTest {
         System.out.println(user5);
 
         System.out.println("Árbol después de agregar usuarios:");
-        bTree.getRoot().printTree("");
+     //   bTree.getRoot().printTree("");
 
         // Eliminar un usuario
         bTree.remove(user4);
@@ -91,19 +93,19 @@ public class DeletionTest {
         bTree.remove(user3);
         bTree.remove(user2);
         System.out.println("Árbol después de eliminar un usuario:");
-        bTree.getRoot().printTree("");
+       // bTree.getRoot().printTree("");
     }
 
 
     @Test
     public void rep3() {
 
-        BTree<User> bTree = new BTree<>(2, true);
-
-       User user1 = new User(1328718765, "Charlie", "Taylor", new Date(), Category.VIP, "Japan");
+        BTree<User> bTree = new BTree<>(2, new BTreeRepository());
+        LocalDate localDate = LocalDate.of(2004, 04, 25);
+       User user1 = new User(1328718765, "Charlie", "Taylor", localDate, Category.VIP, "Japan");
 
         bTree.remove(user1);
 
-        bTree.getRoot().printTree("");
+   //     bTree.getRoot().printTree("");
     }
 }
