@@ -38,5 +38,5 @@ public interface IBTreeRepository<T extends Comparable<T>> {
      * @param id id node to remove.
      * @return Node found.
      */
-    Node<T> readNodeById(int id);
+    Node<T> readNodeById(String id);
 }

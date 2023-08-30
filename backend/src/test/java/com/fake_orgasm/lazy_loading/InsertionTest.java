@@ -3,14 +3,15 @@ package com.fake_orgasm.lazy_loading;
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
+import com.fake_orgasm.users_management.repository.BTreeRepository;
 import org.junit.jupiter.api.Test;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Random;
 
 public class InsertionTest {
-
 
     @Test
     private User createRandomUser() {
@@ -23,22 +24,22 @@ public class InsertionTest {
 
         String firstName = firstNames[random.nextInt(firstNames.length)];
         String lastName = lastNames[random.nextInt(lastNames.length)];
-        Date birthDate = new Date();
+        LocalDate localDate = LocalDate.of(2004, 04, 25);
         Category category = categories[random.nextInt(categories.length)];
         String country = countries[random.nextInt(countries.length)];
 
-        return new User( hashCode(), firstName, lastName, birthDate, category, country);
+        return new User( hashCode(), firstName, lastName, localDate, category, country);
     }
 
 
     @Test
     public void rep1() throws InterruptedException {
-        BTree<User> bTree = new BTree<>(3, true);
+        BTree<User> bTree = new BTree<>(3, new BTreeRepository());
 
-
+        LocalDate localDate = LocalDate.of(2004, 04, 25);
         //long start = System.nanoTime();
         //for (int i = 0; i <= 15; i++) {
-            bTree.insert(new User(hashCode(), "Alice", "Davis", new Date(), Category.REGULAR_PASSENGER, "USA"));
+            bTree.insert(new User(hashCode(), "Alice", "Davis", localDate, Category.REGULAR_PASSENGER, "USA"));
         //}   "lastName": "Davis",
         //      "country": "USA",
         //      "name": "Alice",
@@ -56,14 +57,14 @@ public class InsertionTest {
 
     @Test
     public void rep2() {
-        BTree<User> bTree = new BTree<>(10, true);
-        bTree.getRoot().printTree("");
+        BTree<User> bTree = new BTree<>(10, new BTreeRepository());
+        //bTree.getRoot().printTree("");
 
         for(int i = 0 ; i< 1000; i ++){
             bTree.searchKey(createRandomUser());
         }
         System.out.println("*******************************************************************************");
-        bTree.getRoot().printTree("");
+        //bTree.getRoot().printTree("");
     }
 
 }

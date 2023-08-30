@@ -1,6 +1,10 @@
 package com.fake_orgasm.users_management.libs.btree;
 
+import com.fake_orgasm.users_management.repository.NodeDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.util.Arrays;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -94,6 +98,17 @@ public class Node<T extends Comparable<T>> {
      */
     public Node<T> getChild(final int index) {
         return children[index];
+    }
+
+    /**
+     * Retrieves the ID of a child at the specified index.
+     *
+     * @param index the index of the child
+     * @return the ID of the child at the specified index
+     */
+
+    public String getIdChild(int index) {
+        return idChildren[index];
     }
 
     /**
