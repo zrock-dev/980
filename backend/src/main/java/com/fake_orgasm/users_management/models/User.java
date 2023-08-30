@@ -106,4 +106,9 @@ public class User implements Comparable<User> {
         }
         return resultCompare;
     }
+
+    @Override
+    public String toString() {
+        return getFullName();
+    }
 }

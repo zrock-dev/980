@@ -84,7 +84,7 @@ public class DeletionTest {
         System.out.println(user5);
 
         System.out.println("Árbol después de agregar usuarios:");
-     //   bTree.getRoot().printTree("");
+        bTree.getRoot().printTree("");
 
         // Eliminar un usuario
         bTree.remove(user4);
@@ -93,7 +93,7 @@ public class DeletionTest {
         bTree.remove(user3);
         bTree.remove(user2);
         System.out.println("Árbol después de eliminar un usuario:");
-       // bTree.getRoot().printTree("");
+        bTree.getRoot().printTree("");
     }
 
 

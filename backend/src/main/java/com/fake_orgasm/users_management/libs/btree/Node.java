@@ -3,6 +3,7 @@ package com.fake_orgasm.users_management.libs.btree;
 import com.fake_orgasm.users_management.repository.NodeDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -80,7 +81,7 @@ public class Node<T extends Comparable<T>> {
         this.size = 0;
         UUID randomUUID = UUID.randomUUID();
         this.id = randomUUID.toString();
-        this.idChildren = new String[children.length];
+        this.idChildren = new String[2*degree];
     }
 
     /**
@@ -133,6 +134,9 @@ public class Node<T extends Comparable<T>> {
      */
     public void setChild(final int index, final Node<T> child) {
         children[index] = child;
+        if(child!=null){
+            idChildren[index]=child.getId();
+        }
     }
 
     /**
@@ -178,5 +182,16 @@ public class Node<T extends Comparable<T>> {
     @Override
     public String toString() {
         return Arrays.asList(keys).toString() + size;
+    }
+    public void printTree(String prefix) {
+        System.out.println(prefix + "|__ " + new ArrayList(Arrays.asList(keys))+" "+size);
+        Node<T> node;
+        for (int i = 0; i <=size; i++) {
+            String childPrefix = prefix + (i == size - 1 ? "    " : "|   ");
+            node = this.children[i];
+            if (node != null) {
+                node.printTree(childPrefix);
+            }
+        }
     }
 }

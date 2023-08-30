@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
@@ -34,21 +35,16 @@ public class InsertionTest {
 
     @Test
     public void rep1() throws InterruptedException {
-        BTree<User> bTree = new BTree<>(3, new BTreeRepository());
+        BTree<User> bTree = new BTree<>(40, new BTreeRepository());
 
         LocalDate localDate = LocalDate.of(2004, 04, 25);
-        //long start = System.nanoTime();
-        //for (int i = 0; i <= 15; i++) {
-            bTree.insert(new User(hashCode(), "Alice", "Davis", localDate, Category.REGULAR_PASSENGER, "USA"));
-        //}   "lastName": "Davis",
-        //      "country": "USA",
-        //      "name": "Alice",
-        //      "id": 1704491411,
-        //      "dateBirth": 1693331658174,
-        //      "category": "REGULAR_PASSENGER"
-        //    }
+        long start = System.nanoTime();
+        for (int i = 0; i <= 100; i++) {
+            bTree.insert(createRandomUser());
+        }
         long end = System.nanoTime();
-        //System.out.println((end-start)/1e+9);
+        System.out.println(Arrays.asList(bTree.getRoot().getIdChildren()));
+        System.out.println((end-start)/1e+9);
 
         // 100k users = 12s
         // 1M users = 120s = 2 min
@@ -57,14 +53,14 @@ public class InsertionTest {
 
     @Test
     public void rep2() {
-        BTree<User> bTree = new BTree<>(10, new BTreeRepository());
+        BTree<User> bTree = new BTree<>(20, new BTreeRepository());
         //bTree.getRoot().printTree("");
 
         for(int i = 0 ; i< 1000; i ++){
             bTree.searchKey(createRandomUser());
         }
         System.out.println("*******************************************************************************");
-        //bTree.getRoot().printTree("");
+        bTree.getRoot().printTree("");
     }
 
 }

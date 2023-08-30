@@ -60,7 +60,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
             jsonGenerator.writeFieldName("idChildren");
             jsonGenerator.writeStartArray();
             for (String currenId : node.getIdChildren()) {
-                jsonGenerator.writeNumber(currenId);
+                jsonGenerator.writeString(currenId);
             }
             jsonGenerator.writeEndArray();
             jsonGenerator.writeBooleanField("leaf", node.isLeaf());
