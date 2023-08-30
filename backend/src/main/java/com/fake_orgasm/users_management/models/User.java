@@ -1,6 +1,10 @@
 package com.fake_orgasm.users_management.models;
 
+<<<<<<< Updated upstream
 import java.time.LocalDate;
+=======
+import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
+>>>>>>> Stashed changes
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,8 +24,14 @@ public class User implements Comparable<User> {
     private String secondName;
     private String firstLastName;
     private String secondLastName;
+<<<<<<< Updated upstream
     private LocalDate dateBirth;
     private List<Integer> flights;
+=======
+    private String dateBirth;
+
+    private List<FlightHistory> flights;
+>>>>>>> Stashed changes
     private Category category;
     private String country;
 
@@ -58,13 +68,24 @@ public class User implements Comparable<User> {
         this.secondName = secondName;
         this.firstLastName = firstLastName;
         this.secondLastName = secondLastName;
+        this.flights = new ArrayList<>();
     }
 
     /**
+<<<<<<< Updated upstream
      * Empty User constructor.
      */
     public User() {}
 
+=======
+     * This adds new flight histories.
+     *
+     * @param flightHistory
+     */
+    public void addFlightHistory(FlightHistory flightHistory) {
+        flights.add(flightHistory);
+    }
+>>>>>>> Stashed changes
     /**
      * Returns the full name of the user.
      *
@@ -118,5 +139,11 @@ public class User implements Comparable<User> {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "User-> name: " + firstName + ", LastName:" + firstLastName + " " + secondLastName + ", flights="
+                + flights;
     }
 }
