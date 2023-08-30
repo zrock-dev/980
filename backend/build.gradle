@@ -68,3 +68,6 @@ spotless {
 		formatAnnotations()
 	}
 }
+
+// ignored tasks
+checkstyleTest.enabled = false
