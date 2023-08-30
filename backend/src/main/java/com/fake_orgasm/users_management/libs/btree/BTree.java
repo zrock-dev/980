@@ -233,10 +233,6 @@ public class BTree<T extends Comparable<T>> {
             Node<T> childNode = currentNode.getChild(insertionIndex);
             if (useRepository && childNode == null) {
                 childNode = repository.readNodeById(currentNode.getIdChild(insertionIndex));
-                if (childNode == null) {
-                    System.out.println(Arrays.asList(currentNode.getKeys()));
-                    System.out.println(currentNode.getId());
-                }
                 currentNode.setChild(insertionIndex, childNode);
             }
             if (childNode.getSize() == 2 * order - 1) {

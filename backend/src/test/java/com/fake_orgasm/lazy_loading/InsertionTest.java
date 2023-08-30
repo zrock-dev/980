@@ -4,12 +4,23 @@ import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
+
 import java.time.LocalDate;
 import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
+/**
+ * The `InsertionTest` class is responsible for testing the insertion functionality.
+ * It provides test cases and methods to verify the correct behavior of insertion operations.
+ */
 public class InsertionTest {
 
+    /**
+     * Generates a random User object.
+     *
+     * @return The randomly generated User object.
+     */
     @Test
     private User createRandomUser() {
         Random random = new Random();
@@ -37,10 +48,10 @@ public class InsertionTest {
      */
     @Test
     public void insertTest() {
-        BTree<User> bTree = new BTree<>(40, new BTreeRepository());
+        BTree<User> bTree = new BTree<>(10, new BTreeRepository());
 
         long start = System.nanoTime();
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 100_000; i++) {
             bTree.insert(createRandomUser());
         }
         long end = System.nanoTime();
