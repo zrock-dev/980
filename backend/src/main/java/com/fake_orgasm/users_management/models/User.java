@@ -2,7 +2,6 @@ package com.fake_orgasm.users_management.models;
 
 import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import java.time.LocalDate;
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -64,12 +63,12 @@ public class User implements Comparable<User> {
     }
 
     /**
-<<<<<<< Updated upstream
+     * <<<<<<< Updated upstream
      * Empty User constructor.
      */
     public User() {}
 
-     /* This adds new flight histories.
+    /* This adds new flight histories.
      *
      * @param flightHistory
      */
