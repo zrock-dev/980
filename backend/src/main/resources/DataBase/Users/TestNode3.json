@@ -4,26 +4,107 @@
   "order" : 4,
   "keys" : [ {
     "id" : 12,
-    "name" : "Jorge",
-    "lastName" : "Oropeza",
+    "citizenId" : 0,
+    "firstName" : "Jorge",
+    "secondName" : null,
+    "firstLastName" : "Oropeza",
+    "secondLastName" : null,
     "dateBirth" : "2004-04-25",
-    "flights" : [ ],
+    "flights" : [ {
+      "departureAirport" : {
+        "airportName" : "Bahama",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "destinationAirport" : {
+        "airportName" : "Amazonas",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "ticketType" : "VIP"
+    }, {
+      "departureAirport" : {
+        "airportName" : "Amazonas",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "destinationAirport" : {
+        "airportName" : "BOA",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "ticketType" : "VIP"
+    } ],
     "category" : "VIP",
     "country" : "Bolivia"
   }, {
     "id" : 31,
-    "name" : "Jorge",
-    "lastName" : "Zambrana",
+    "citizenId" : 0,
+    "firstName" : "Jorge",
+    "secondName" : null,
+    "firstLastName" : "Zambrana",
+    "secondLastName" : null,
     "dateBirth" : "2004-04-25",
-    "flights" : [ ],
+    "flights" : [ {
+      "departureAirport" : {
+        "airportName" : "Bahama",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "destinationAirport" : {
+        "airportName" : "Amazonas",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "ticketType" : "VIP"
+    }, {
+      "departureAirport" : {
+        "airportName" : "Amazonas",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "destinationAirport" : {
+        "airportName" : "BOA",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "ticketType" : "VIP"
+    } ],
     "category" : "VIP",
     "country" : "Bolivia"
   }, {
     "id" : 54,
-    "name" : "Jorge",
-    "lastName" : "Muris",
+    "citizenId" : 0,
+    "firstName" : "Jorge",
+    "secondName" : null,
+    "firstLastName" : "Muris",
+    "secondLastName" : null,
     "dateBirth" : "2004-04-25",
-    "flights" : [ ],
+    "flights" : [ {
+      "departureAirport" : {
+        "airportName" : "Bahama",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "destinationAirport" : {
+        "airportName" : "Amazonas",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "ticketType" : "VIP"
+    }, {
+      "departureAirport" : {
+        "airportName" : "Amazonas",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "destinationAirport" : {
+        "airportName" : "BOA",
+        "country" : "Bolivia",
+        "state" : "active"
+      },
+      "ticketType" : "VIP"
+    } ],
     "category" : "VIP",
     "country" : "Bolivia"
   } ],
