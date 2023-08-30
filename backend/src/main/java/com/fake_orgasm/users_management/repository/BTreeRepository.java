@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 /**
  * This class writes and reads the nodes in json form.
@@ -53,6 +54,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
             jsonGenerator.writeNumberField("order", node.getOrder());
             jsonGenerator.writeFieldName("keys");
             jsonGenerator.writeStartArray();
+            System.out.println(node);
             for (int i = 0; i < node.getSize(); i++) {
                 writeUser(node.getKey(i), jsonGenerator);
             }
