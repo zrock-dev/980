@@ -1,0 +1,32 @@
+{
+  "id" : "TestNode3",
+  "size" : 3,
+  "order" : 4,
+  "keys" : [ {
+    "id" : 12,
+    "name" : "Jorge",
+    "lastName" : "Oropeza",
+    "dateBirth" : "2004-04-25",
+    "flights" : [ ],
+    "category" : "VIP",
+    "country" : "Bolivia"
+  }, {
+    "id" : 31,
+    "name" : "Jorge",
+    "lastName" : "Zambrana",
+    "dateBirth" : "2004-04-25",
+    "flights" : [ ],
+    "category" : "VIP",
+    "country" : "Bolivia"
+  }, {
+    "id" : 54,
+    "name" : "Jorge",
+    "lastName" : "Muris",
+    "dateBirth" : "2004-04-25",
+    "flights" : [ ],
+    "category" : "VIP",
+    "country" : "Bolivia"
+  } ],
+  "idChildren" : [ null, null, null, null, null, null, null, null ],
+  "leaf" : true
+}
