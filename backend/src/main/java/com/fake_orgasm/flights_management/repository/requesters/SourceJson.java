@@ -2,9 +2,9 @@ package com.fake_orgasm.flights_management.repository.requesters;
 
 public enum SourceJson {
 
-    AIRPORTS("src/main/resources/airports.json"),
-    FLIGHTS("src/main/resources/flights.json"),
-    TICKETS("src/main/resources/tickets.json");
+    AIRPORTS("src/main/resources/DataBase/Flights/Airports.json"),
+    FLIGHTS("src/main/resources/DataBase/Flights/Flights.json"),
+    TICKETS("src/main/resources/DataBase/Flights/Tickets.json");
 
     private final String source;
 

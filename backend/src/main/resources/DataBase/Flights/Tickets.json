@@ -33,5 +33,12 @@
         "id": "6c23c76a-97e1-44e1-b1d9-e64224206844",
         "priority": "Regular passenger",
         "userId": "nose2"
+    },
+    {
+        "number": 3,
+        "flightId": "nose1",
+        "id": "eeeefb07-ef46-4666-b0cf-788000dc04de",
+        "priority": "Regular passenger",
+        "userId": "nose2"
     }
 ]
