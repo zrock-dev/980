@@ -1,10 +1,11 @@
 package com.fake_orgasm.users_management.models;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.fake_orgasm.flights_management.models.Category;
+import java.time.LocalDate;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,28 +55,25 @@ public class User implements Comparable<User> {
     private String firstLastName;
     private String secondLastName;
     private LocalDate dateBirth;
-    private List<FlightHistory> flights;
-    private Category category;
+    private List<String> flights;
     private String country;
-    private List<String> tickets;
 
     /**
      * Constructs a new User object with the provided information.
      *
-     * @param id        int receives the id of the user.
-     * @param name      String receives the name of the user.
-     * @param lastName  String receives the last name of the user.
-     * @param birthdate Date receives the date birth of the user.
-     * @param ci        Category receives the category of the user.
+     * @param id        The unique identifier for the user.
+     * @param firstName The first name of the user.
+     * @param lastNam   The last name of the user.
+     * @param dateBirth The date of birth of the user.
+     * @param country   The country of the user.
      */
-    public User(int id, String name, String lastName,
-                Date birthdate, int ci) {
+    public User(int id, String firstName, String lastNam, LocalDate dateBirth, String country) {
         this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.birthdate = birthdate;
-        this.ci = ci;
-        this.tickets = new ArrayList<>();
+        this.firstName = firstName;
+        this.firstLastName = lastNam;
+        this.dateBirth = dateBirth;
+        this.country = country;
+        this.flights = new ArrayList<>();
     }
 
     /**
@@ -91,22 +89,13 @@ public class User implements Comparable<User> {
         this.secondName = secondName;
         this.firstLastName = firstLastName;
         this.secondLastName = secondLastName;
-        this.flights = new ArrayList<>();
     }
 
     /**
-     * <<<<<<< Updated upstream
      * Empty User constructor.
      */
     public User() {}
 
-    /** This adds new flight histories.
-     *
-     * @param flightHistory
-     */
-    public void addFlightHistory(FlightHistory flightHistory) {
-        flights.add(flightHistory);
-    }
     /**
      * Returns the full name of the user.
      *
@@ -114,6 +103,10 @@ public class User implements Comparable<User> {
      */
     public String getFullName() {
         return String.format("%s %s %s %s", firstName, secondName, firstLastName, secondLastName);
+    }
+
+    public void addFlight(String flightId) {
+        flights.add(flightId);
     }
 
     /**
@@ -134,7 +127,31 @@ public class User implements Comparable<User> {
         }
         return resultCompare;
     }
+
+    /**
+     * Compares this user to another object for equality.
+     *
+     * @param obj The object to compare to.
+     * @return True if the objects are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        User comparison = (User) obj;
+        boolean nameComparison = Objects.equals(firstName, comparison.firstName);
+        boolean firstLastNameComparison = Objects.equals(firstLastName, comparison.firstLastName);
+        boolean secondLastNameComparison = Objects.equals(secondLastName, comparison.secondLastName);
+        return nameComparison && firstLastNameComparison && secondLastNameComparison;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
-=======
-}
->>>>>>> 3a81eb8 (refactor: models refactored to book flights)

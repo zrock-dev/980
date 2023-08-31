@@ -3,6 +3,7 @@ package com.fake_orgasm.flights_management.models;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.PriorityQueue;
 
@@ -38,5 +39,34 @@ public class Flight {
         this.date = new Date();
         this.capacity = capacity;
         this.tickets = new PriorityQueue<>();
+    }
+
+    public boolean isAvailable() {
+        return tickets.size() < capacity;
+    }
+
+    public void addTicket(Ticket ticket) {
+        if (isAvailable()) {
+            tickets.add(ticket);
+        }
+    }
+
+    public void addTicket(Ticket ...tickets) {
+        for (Ticket ticket : tickets) {
+            addTicket(ticket);
+        }
+    }
+
+    public ArrayList<Ticket> getPriorityTickets() {
+        ArrayList<Ticket> priorityTickets = new ArrayList<>();
+        while (!tickets.isEmpty()) {
+            priorityTickets.add(tickets.remove());
+        }
+
+        return priorityTickets;
+    }
+
+    public int getNextNumber() {
+        return tickets.size() + 1;
     }
 }

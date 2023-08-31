@@ -21,7 +21,8 @@ public class Airport {
      * @param country     The country where the airport is located.
      * @param state       The state where the airport is located.
      */
-    public Airport(String name, String country, String state) {
+    public Airport(String id, String name, String country, String state) {
+        this.id = id;
         this.name = name;
         this.country = country;
         this.state = state;
