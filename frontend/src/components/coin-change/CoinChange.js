@@ -1,6 +1,7 @@
 'use client';
+import CoinChangeOperationDisplayer from "./CoinChangeOperationDisplayer";
 const CoinChange = () => {
-	return <div>CoinChange</div>;
+	return <CoinChangeOperationDisplayer/>;
 };
 
 export default CoinChange;

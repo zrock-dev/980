@@ -4,11 +4,17 @@ const CoinChangeOperationDisplayer = () => {
     return (
       <div className="coin-change-operation-main-container">
         <div className='coin-change-operation-results'>
-          <h2>Coin Changed</h2>
-          <div className="coin-details">
-            <p>$1500 USD</p>
-            <p>Total Coins 6</p>
+        <h2 className="coin-change-title">Coin Changed</h2>
+        <div className="coin-details">
+          <div className="coin-amount">
+            <span className="dollar-amount">$1500</span>
+            <span className="currency">USD</span>
           </div>
+          <div className="total-coins">
+            <span className="coins">Total Coins</span>
+            <span className="total">6</span>
+          </div>
+        </div>
           <div className="coin-images">
             <div className="coin-image-group">
               <div className="coin-image-result">

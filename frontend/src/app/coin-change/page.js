@@ -1,7 +1,7 @@
-import CoinChange from '@/components/coin-change/CoinChange';
+import CoinChange from "@/components/coin-change/CoinChange";
 
-const CoinChange = () => {
-	return <CoinChange />;
+const CoinChangePage = () => {
+	return <CoinChange/>;
 };
 
-export default CoinChange;
+export default CoinChangePage;
