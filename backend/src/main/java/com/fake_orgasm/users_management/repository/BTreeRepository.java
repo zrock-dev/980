@@ -1,5 +1,7 @@
 package com.fake_orgasm.users_management.repository;
 
+import com.fake_orgasm.generator.flight_history_generator.Airport;
+import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.User;
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -85,19 +87,41 @@ public class BTreeRepository implements IBTreeRepository<User> {
     private void writeUser(User user, JsonGenerator generator) throws IOException {
         generator.writeStartObject();
         generator.writeNumberField("id", user.getId());
-        generator.writeStringField("name", user.getName());
-        generator.writeStringField("lastName", user.getLastName());
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE;
-        String formattedDate = user.getDateBirth().format(dateFormatter);
+        generator.writeNumberField("citizenId", user.getCitizenId());
+        generator.writeStringField("firstName", user.getFirstName());
+        generator.writeStringField("secondName", user.getSecondName());
+        generator.writeStringField("firstLastName", user.getFirstLastName());
+        generator.writeStringField("secondLastName", user.getSecondLastName());
+        String formattedDate = user.getDateBirth().format(DateTimeFormatter.ISO_DATE);
         generator.writeStringField("dateBirth", formattedDate);
+
         generator.writeFieldName("flights");
         generator.writeStartArray();
-        for (Integer currentFlightId : user.getFlights()) {
-            generator.writeNumber(currentFlightId);
+        for (FlightHistory currentFlightId : user.getFlights()) {
+            writeFlightHistory(currentFlightId, generator);
         }
         generator.writeEndArray();
         generator.writeStringField("category", user.getCategory().name());
         generator.writeStringField("country", user.getCountry());
+        generator.writeEndObject();
+    }
+
+    private void writeFlightHistory(FlightHistory flightHistory, JsonGenerator generator) throws IOException {
+        generator.writeStartObject();
+        generator.writeFieldName("departureAirport");
+        writeAirport(flightHistory.getDepartureAirport(), generator);
+        generator.writeFieldName("destinationAirport");
+        writeAirport(flightHistory.getDestinationAirport(), generator);
+        generator.writeStringField("ticketType", flightHistory.getTicketType().name());
+        generator.writeEndObject();
+    }
+
+    private void writeAirport(Airport airport, JsonGenerator generator) throws IOException {
+
+        generator.writeStartObject();
+        generator.writeStringField("airportName", airport.getAirportName());
+        generator.writeStringField("country", airport.getCountry());
+        generator.writeStringField("state", airport.getState());
         generator.writeEndObject();
     }
 
