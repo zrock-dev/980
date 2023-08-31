@@ -138,7 +138,6 @@ public class UserManagementService implements IUserManagement {
             if (user.getLastName() == null || user.getLastName().isEmpty()) {
                 return false;
             }
-            user.getId();
         } catch (NullPointerException e) {
             return false;
         }

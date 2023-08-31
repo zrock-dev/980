@@ -53,7 +53,6 @@ public class BTreeRepository implements IBTreeRepository<User> {
             jsonGenerator.writeNumberField("order", node.getOrder());
             jsonGenerator.writeFieldName("keys");
             jsonGenerator.writeStartArray();
-            System.out.println(node);
             for (int i = 0; i < node.getSize(); i++) {
                 writeUser(node.getKey(i), jsonGenerator);
             }

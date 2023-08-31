@@ -1,0 +1,19 @@
+{
+  "id" : "root",
+  "size" : 1,
+  "order" : 2,
+  "keys" : [ {
+    "id" : 3,
+    "citizenId" : 3,
+    "firstName" : "Aaron",
+    "secondName" : "Aaron",
+    "firstLastName" : "Adams",
+    "secondLastName" : "Bailey",
+    "dateBirth" : "2003-03-03",
+    "flights" : [ 1 ],
+    "category" : "VIP",
+    "country" : null
+  } ],
+  "idChildren" : [ "a4f80866-1339-4cf8-910c-0edcb48ee9c3", "02379008-e6c1-4801-975b-91b99ecbef43", null, null ],
+  "leaf" : false
+}
