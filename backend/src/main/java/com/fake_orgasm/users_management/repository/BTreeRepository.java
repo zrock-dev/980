@@ -1,7 +1,5 @@
 package com.fake_orgasm.users_management.repository;
 
-import com.fake_orgasm.generator.flight_history_generator.Airport;
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.User;
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -115,31 +113,11 @@ public class BTreeRepository implements IBTreeRepository<User> {
 
         generator.writeFieldName("flights");
         generator.writeStartArray();
-        for (FlightHistory currentFlightId : user.getFlights()) {
-            writeFlightHistory(currentFlightId, generator);
+        for (String currentFlightId : user.getFlights()) {
+            generator.writeString(currentFlightId);
         }
         generator.writeEndArray();
-        generator.writeStringField("category", user.getCategory().name());
         generator.writeStringField("country", user.getCountry());
-        generator.writeEndObject();
-    }
-
-    private void writeFlightHistory(FlightHistory flightHistory, JsonGenerator generator) throws IOException {
-        generator.writeStartObject();
-        generator.writeFieldName("departureAirport");
-        writeAirport(flightHistory.getDepartureAirport(), generator);
-        generator.writeFieldName("destinationAirport");
-        writeAirport(flightHistory.getDestinationAirport(), generator);
-        generator.writeStringField("ticketType", flightHistory.getTicketType().name());
-        generator.writeEndObject();
-    }
-
-    private void writeAirport(Airport airport, JsonGenerator generator) throws IOException {
-
-        generator.writeStartObject();
-        generator.writeStringField("airportName", airport.getAirportName());
-        generator.writeStringField("country", airport.getCountry());
-        generator.writeStringField("state", airport.getState());
         generator.writeEndObject();
     }
 

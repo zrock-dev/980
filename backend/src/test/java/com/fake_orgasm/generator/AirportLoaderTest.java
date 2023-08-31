@@ -3,8 +3,10 @@ package com.fake_orgasm.generator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.fake_orgasm.flights_management.models.Airport;
-import com.fake_orgasm.flights_management.AirportLoader;
+
 import java.util.List;
+
+import com.fake_orgasm.generator.flight_generator.AirportLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
