@@ -1,0 +1,76 @@
+:root {
+	--white: #ffffff;
+	--blue: #0014ff;
+	--lightblue: #4eb1ff;
+
+	--blackone: #000;
+	--blacktwo: #333;
+	--grayone: #999;
+	--graytwo: #ddd;
+
+	--red: #d71313;
+	--yellow: #ffe569;
+	--green: #a2ff86;
+}
+
+.progress-bar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    background-color: var(--graytwo);
+  }
+  
+  .progress-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--white);
+    align-self: flex-start;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    margin-top: 2%;
+    height: 50px;
+    background-color: #ccc;
+    border-radius: 25px;
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .progress {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    line-height: 50px;
+  }
+
+  .red {
+    background-color: red;
+  }
+  
+  .yellow {
+    background-color: yellow;
+  }
+  
+  .purple {
+    background-color: purple;
+  }
+  
+  .orange {
+    background-color: orange;
+  }
+  
+  .green {
+    background-color: green;
+  }
+  
+  .blue {
+    background-color: blue;
+  }
+  

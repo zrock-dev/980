@@ -1,7 +1,8 @@
 'use client';
 import CoinChangeOperationDisplayer from "./CoinChangeOperationDisplayer";
+import ProgressBar from "./CoinChangeProgressBar";
 const CoinChange = () => {
-	return <CoinChangeOperationDisplayer/>;
+	return <ProgressBar/>;
 };
 
 export default CoinChange;

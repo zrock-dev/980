@@ -1,4 +1,3 @@
-import React from 'react';
 import '@/styles/coin-change-result.css'
 const CoinChangeOperationDisplayer = () => {
     return (
