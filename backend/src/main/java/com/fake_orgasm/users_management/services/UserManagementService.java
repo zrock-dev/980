@@ -132,10 +132,10 @@ public class UserManagementService implements IUserManagement {
      */
     private boolean isComplete(User user) {
         try {
-            if (user.getName() == null || user.getName().isEmpty()) {
+            if (user.getFirstName() == null || user.getFirstName().isEmpty()) {
                 return false;
             }
-            if (user.getLastName() == null || user.getLastName().isEmpty()) {
+            if (user.getFirstLastName() == null || user.getFirstLastName().isEmpty()) {
                 return false;
             }
         } catch (NullPointerException e) {

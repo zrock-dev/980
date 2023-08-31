@@ -39,7 +39,7 @@ public class BTreeHandler {
             if (current != null) {
                 for (int i = 0; i < current.getSize(); i++) {
                     User user = current.getKey(i);
-                    if (user.getName().contains(name)) {
+                    if (user.getFirstName().contains(name)) {
                         foundUsers.add(user);
                     }
                 }
