@@ -71,7 +71,6 @@ spotless {
 		palantirJavaFormat()
 		formatAnnotations()
 	}
-<<<<<<< HEAD
 }
 
 // ignored tasks

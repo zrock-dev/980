@@ -1,7 +1,6 @@
 package com.fake_orgasm.generator.generator_backbone;
 
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
-import com.fake_orgasm.generator.flight_history_generator.FlightHistoryGenerator;
+import com.fake_orgasm.generator.flight_generator.FlightHistoryGenerator;
 import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.models.User;
 import java.util.concurrent.ExecutorService;
@@ -36,8 +35,8 @@ public class GeneratorBackbone {
         for (int i = 0; i < numUsers; i++) {
             userExecutor.execute(() -> {
                 User user = userGenerator.make();
-                FlightHistory history = flightHistoryGenerator.generateRandomFlightHistory();
-                user.addFlightHistory(history);
+                /*FlightHistory history = flightHistoryGenerator.generateRandomFlightHistory();
+                user.addFlightHistory(history);*/
                 printUser(user);
             });
         }

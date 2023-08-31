@@ -3,11 +3,11 @@ package com.fake_orgasm.generator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
-import com.fake_orgasm.flights_management.generator.FlightHistoryGenerator;
 import com.fake_orgasm.flights_management.models.Category;
 import java.util.List;
+
+import com.fake_orgasm.generator.flight_generator.FlightHistoryGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
