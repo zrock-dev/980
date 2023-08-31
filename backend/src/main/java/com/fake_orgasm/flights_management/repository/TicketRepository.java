@@ -3,12 +3,13 @@ package com.fake_orgasm.flights_management.repository;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.repository.requesters.JsonRequester;
 import com.fake_orgasm.flights_management.repository.requesters.SourceJson;
+import com.fake_orgasm.flights_management.services.ITicketManagement;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.FileWriter;
 
-public class TicketRepository {
+public class TicketRepository implements ITicketManagement {
 
     private JsonRequester requester;
 
@@ -22,11 +23,12 @@ public class TicketRepository {
         jsonTicket.put("number", ticket.getNumber());
         jsonTicket.put("priority", ticket.getPriority().getType());
         jsonTicket.put("userId", ticket.getUserId());
-        jsonTicket.put("flightId", ticket.getFlightId());;
+        jsonTicket.put("flightId", ticket.getFlightId());
         return jsonTicket;
     }
 
-    public boolean save(Ticket ticket) {
+    @Override
+    public boolean create(Ticket ticket) {
         boolean wasSaved = false;
         try {
             JSONArray currentDocuments = requester.getDocuments();
@@ -41,4 +43,18 @@ public class TicketRepository {
         return wasSaved;
     }
 
+    @Override
+    public Ticket search(String id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(String id, Ticket ticket) {
+        return false;
+    }
+
+    @Override
+    public boolean remove(String id) {
+        return false;
+    }
 }
