@@ -20,4 +20,9 @@ public class ServiceConfiguration {
     public BTree<User> initBTree() {
         return new BTree<>(10);
     }
+
+    @Bean
+    public IUserManagement getUserManagement() {
+        return null;
+    }
 }
