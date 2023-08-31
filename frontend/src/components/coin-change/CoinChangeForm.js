@@ -1,7 +1,5 @@
 'use client'
 import React, { useState } from 'react';
-import '@/styles/coin-change.css'
-
 const CoinChangeForm = () => {
   const [currency, setCurrency] = useState('');
   const [amount, setAmount] = useState('');
