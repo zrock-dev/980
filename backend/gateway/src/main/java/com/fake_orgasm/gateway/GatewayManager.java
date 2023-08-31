@@ -13,7 +13,7 @@ public final class GatewayManager {
     /**
      * Variable to store server ip address.
      */
-    private static final String SERVER_HOST = "192.168.0.2";
+    private static final String SERVER_HOST = "127.0.0.1";
 
     /**
      * Variable to establish connection between client and server.
@@ -46,7 +46,6 @@ public final class GatewayManager {
      * Method to manage a request to server passed from serverHost variable.
      */
     private void launchGateway() {
-
         try {
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
@@ -55,7 +54,6 @@ public final class GatewayManager {
 
             String message = in.readUTF();
             System.out.println(message);
-            socket.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
