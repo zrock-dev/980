@@ -1,8 +1,14 @@
 'use client';
 import CoinChangeOperationDisplayer from "./CoinChangeOperationDisplayer";
-import ProgressBar from "./CoinChangeProgressBar";
+import CoinChangeForm from "./CoinChangeForm";
+import '@/styles/coin-change-c.css'
 const CoinChange = () => {
-	return <ProgressBar/>;
+    return (
+		<div className="coin-change-container">
+		<CoinChangeOperationDisplayer />
+		<CoinChangeForm />
+	  </div>
+	  );
 };
 
 export default CoinChange;

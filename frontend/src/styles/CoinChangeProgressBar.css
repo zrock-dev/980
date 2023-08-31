@@ -18,17 +18,11 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    background-color: var(--graytwo);
   }
   
   .progress-title {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: var(--white);
     align-self: flex-start;
   }
@@ -36,7 +30,7 @@
   .progress-bar {
     width: 100%;
     margin-top: 2%;
-    height: 50px;
+    height: auto;
     background-color: #ccc;
     border-radius: 25px;
     display: flex;

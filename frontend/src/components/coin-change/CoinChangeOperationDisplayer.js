@@ -1,4 +1,6 @@
+import ProgressBar from './CoinChangeProgressBar';
 import '@/styles/coin-change-result.css'
+import '@/styles/CoinChangeProgressBar.css'
 const CoinChangeOperationDisplayer = () => {
     return (
       <div className="coin-change-operation-main-container">
@@ -44,6 +46,7 @@ const CoinChangeOperationDisplayer = () => {
               </div>
             </div>
           </div>
+          <ProgressBar/>
         </div>
       </div>
     );

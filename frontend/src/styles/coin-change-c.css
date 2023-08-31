@@ -1,0 +1,11 @@
+.coin-change-container {
+    display: flex;
+}
+.form-container{
+    margin: 0 1%;
+    flex: 20;
+}
+.coin-change-operation-main-container{
+    flex: 60;
+    margin: 0 1%;
+}
