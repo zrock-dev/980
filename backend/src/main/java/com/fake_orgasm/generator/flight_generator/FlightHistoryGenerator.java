@@ -1,4 +1,4 @@
-package com.fake_orgasm.flights_management.generator;
+package com.fake_orgasm.generator.flight_generator;
 
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;

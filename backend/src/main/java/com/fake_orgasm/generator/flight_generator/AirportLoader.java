@@ -1,4 +1,4 @@
-package com.fake_orgasm.flights_management;
+package com.fake_orgasm.generator.flight_generator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,7 +73,7 @@ public final class AirportLoader {
      */
     private JSONArray readAirportArrayFromJSON() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        InputStream inputStream = AirportLoader.class.getResourceAsStream("/airports.json");
+        InputStream inputStream = AirportLoader.class.getResourceAsStream("/DataBase/Flights/Airports.json");
         if (inputStream != null) {
             return (JSONArray) parser.parse(new InputStreamReader(inputStream));
         }
@@ -90,7 +90,7 @@ public final class AirportLoader {
         String airportName = (String) airportJson.get("airportName");
         String country = (String) airportJson.get("country");
         String state = (String) airportJson.get("state");
-        return new Airport(airportName, country, state);
+        return null;
     }
 
     /**
