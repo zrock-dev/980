@@ -1,4 +1,4 @@
-package com.fake_orgasm.flights_management.data_handler.schemas;
+package com.fake_orgasm.flights_management.repository.schemas;
 
 public enum TicketSchema implements Schemable {
 

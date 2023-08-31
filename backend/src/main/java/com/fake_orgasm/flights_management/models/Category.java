@@ -29,11 +29,11 @@ public enum Category {
      *
      * @return int type, return the priority of the category.
      */
-    public int getPriorityNumber() {
+    public int getNumber() {
         return priorityNumber;
     }
 
-    public String getCategoryType() {
+    public String getType() {
         return categoryType;
     }
 }
