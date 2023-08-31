@@ -1,10 +1,9 @@
 package com.fake_orgasm.btree;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.libs.btree.Utils;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test class for the Utils class which contains helper methods for

@@ -14,6 +14,8 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class BTreeRepositoryTest {
     /**
@@ -29,7 +31,7 @@ public class BTreeRepositoryTest {
         result = bTreeRepository.save(nodeToInsert.get(0));
         Assertions.assertTrue(result);
 
-        File currentFile = new File("../server/src/main/resources/DataBase/Users/TestNode1.json");
+        File currentFile = new File("../user_database/src/main/resources/DataBase/Users/TestNode1.json");
         result = currentFile.exists();
         Assertions.assertTrue(result);
 
@@ -37,7 +39,7 @@ public class BTreeRepositoryTest {
         result = bTreeRepository.save(nodeToInsert.get(1));
         Assertions.assertTrue(result);
 
-        currentFile = new File("../server/src/main/resources/DataBase/Users/TestNode2.json");
+        currentFile = new File("../user_database/src/main/resources/DataBase/Users/TestNode2.json");
         result = currentFile.exists();
         Assertions.assertTrue(result);
 
@@ -45,7 +47,7 @@ public class BTreeRepositoryTest {
         result = bTreeRepository.save(nodeToInsert.get(2));
         Assertions.assertTrue(result);
 
-        currentFile = new File("../server/src/main/resources/DataBase/Users/TestNode3.json");
+        currentFile = new File("../user_database/src/main/resources/DataBase/Users/TestNode3.json");
         result = currentFile.exists();
         Assertions.assertTrue(result);
     }

@@ -1,14 +1,13 @@
 package com.fake_orgasm.generator.user_generator.name_generation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class ShiftingBehaviourTest {
 

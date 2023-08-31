@@ -1,14 +1,12 @@
 package com.fake_orgasm.generator;
 
-import com.fake_orgasm.generator.flight_history_generator.Airport;
-import com.fake_orgasm.generator.flight_history_generator.AirportLoader;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.fake_orgasm.generator.flight_history_generator.Airport;
+import com.fake_orgasm.generator.flight_history_generator.AirportLoader;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 public class AirportLoaderTest {
     private AirportLoader airportLoader;
 

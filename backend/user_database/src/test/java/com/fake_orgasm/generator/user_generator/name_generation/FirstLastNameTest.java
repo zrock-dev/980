@@ -1,15 +1,12 @@
 package com.fake_orgasm.generator.user_generator.name_generation;
 
-import com.fake_orgasm.generator.user_generator.UserNameGenerator;
-import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.Test;
-
-import java.util.*;
-
-
 import static com.fake_orgasm.generator.user_generator.name_generation.BasicTest.checkPattern;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.fake_orgasm.generator.user_generator.UserNameGenerator;
+import com.fake_orgasm.users_management.models.User;
+import java.util.*;
+import org.junit.jupiter.api.Test;
 public class FirstLastNameTest {
 
     @Test
