@@ -2,6 +2,7 @@ package com.fake_orgasm.users_management.models;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -76,7 +77,25 @@ public class User implements Comparable<User> {
     }
 
     /**
-     * @return return the full name of the user.
+     * <<<<<<< Updated upstream
+     * Empty User constructor.
+     */
+    public User() {
+    }
+
+    /**
+     * This adds new flight histories.
+     *
+     * @param flightHistory
+     */
+    public void addFlightHistory(FlightHistory flightHistory) {
+        flights.add(flightHistory);
+    }
+
+    /**
+     * Returns the full name of the user.
+     *
+     * @return The full name of the user.
      */
     public String getFullName() {
         return name + " " + lastName;
@@ -90,8 +109,9 @@ public class User implements Comparable<User> {
      * in case both users have the same name it compares the user id to verify
      * that they are different users and return the negative value if are different.
      *
-     * @param o the object to be compared.
-     * @return int result of the comparative.
+     * @param o The user to compare with.
+     * @return A negative integer, zero, or a positive integer as this user is less than, equal to,
+     * or greater than the specified user.
      */
     @Override
     public int compareTo(User o) {
@@ -110,7 +130,34 @@ public class User implements Comparable<User> {
      * @return
      */
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        User comparison = (User) obj;
+        boolean nameComparison = Objects.equals(firstName, comparison.firstName);
+        boolean firstLastNameComparison = Objects.equals(firstLastName, comparison.firstLastName);
+        boolean secondLastNameComparison = Objects.equals(secondLastName, comparison.secondLastName);
+        return nameComparison && firstLastNameComparison && secondLastNameComparison;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+/*    @Override
     public String toString() {
-        return getFullName();
+        return "User-> name: " + firstName + ", LastName:" + firstLastName + " " + secondLastName + ", flights="
+                + flights;
+    }*/
+
+    @Override
+    public String toString() {
+        return firstName;
     }
 }
