@@ -36,4 +36,12 @@ public enum Category {
     public String getType() {
         return categoryType;
     }
+
+    public static Category getCategory(String type) {
+        return switch (type) {
+            case "Vip" -> Category.VIP;
+            case "Frequent passenger" -> Category.FREQUENT_PASSENGER;
+            default -> Category.REGULAR_PASSENGER;
+        };
+    }
 }

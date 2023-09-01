@@ -19,6 +19,7 @@ public class Flight {
     private String destinationId;
     private Date date;
     private int capacity;
+    private String ticketIds;
     private PriorityQueue<Ticket> tickets;
 
     public Flight(String id, String sourceId, String destinationId,
@@ -28,6 +29,17 @@ public class Flight {
         this.destinationId = destinationId;
         this.date = date;
         this.capacity = capacity;
+        this.tickets = new PriorityQueue<>();
+    }
+
+    public Flight(String id, String sourceId, String destinationId,
+                  Date date, int capacity, String ticketIds) {
+        this.id = id;
+        this.sourceId = sourceId;
+        this.destinationId = destinationId;
+        this.date = date;
+        this.capacity = capacity;
+        this.ticketIds = ticketIds;
         this.tickets = new PriorityQueue<>();
     }
 
@@ -57,13 +69,16 @@ public class Flight {
         }
     }
 
-    public ArrayList<Ticket> getPriorityTickets() {
-        ArrayList<Ticket> priorityTickets = new ArrayList<>();
+    public void addTicketId(String ticketId) {
+        ticketIds += ticketId + ",";
+    }
+
+    public String getPriorityTickets() {
         while (!tickets.isEmpty()) {
-            priorityTickets.add(tickets.remove());
+            addTicketId(tickets.remove().getId());
         }
 
-        return priorityTickets;
+        return ticketIds;
     }
 
     public int getNextNumber() {

@@ -27,4 +27,9 @@ public class Airport {
         this.country = country;
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return "(" + id + ") - " + name;
+    }
 }
