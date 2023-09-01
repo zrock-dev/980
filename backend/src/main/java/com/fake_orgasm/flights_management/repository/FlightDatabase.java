@@ -46,4 +46,20 @@ public class FlightDatabase {
         }
         return exists;
     }
+
+    public boolean remove(String tableName, String id) {
+        boolean wasDeleted = false;
+        try {
+            String query = "DELETE FROM " + tableName + " WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, id);
+            ps.execute();
+            ps.close();
+            wasDeleted = true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return wasDeleted;
+    }
 }
