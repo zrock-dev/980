@@ -29,7 +29,7 @@ public class Node<T extends Comparable<T>> {
     /**
      * The number of keys currently stored in the node.
      */
-     private int size;
+    private int size;
 
     /**
      * The order of the B-tree node, determining

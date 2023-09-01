@@ -398,8 +398,8 @@ public class BTree<T extends Comparable<T>> {
 
     private void handleMergeCase(final Node<T> predecessor, Node<T> successor, int pos, Node<T> parent) {
         int temp = predecessor.getSize() + 1;
-        predecessor.setKey(predecessor.increaseSize(), predecessor.getKey(pos));
-
+        predecessor.setKey(predecessor.getSize(), predecessor.getKey(pos));
+        predecessor.increaseSize();
         for (int i = 0, j = predecessor.getSize(); i < successor.getSize(); i++) {
             predecessor.setKey(j++, successor.getKey(i));
             predecessor.increaseSize();
@@ -416,11 +416,11 @@ public class BTree<T extends Comparable<T>> {
         }
         parent.decreaseSize();
         if (parent.getSize() == 0 && parent == root) {
-            decreaseTree(parent, predecessor, successor);
+            root = parent.getChild(0);
+            saveNodeData(parent, successor, predecessor);
         } else if (useRepository) {
             saveNodeData(parent, successor, predecessor);
         }
-
     }
 
 
@@ -432,12 +432,15 @@ public class BTree<T extends Comparable<T>> {
      */
     private void removeKeyFromChild(Node<T> node, T key) {
         int pos = Utils.findPositionToInsert(node, key);
-
+        if (node.isLeaf()) {
+            return;
+        }
         Node<T> tmp = node.getChild(pos);
         if (useRepository && (tmp == null)) {
             tmp = repository.readNodeById(node.getIdChild(pos));
             node.setChild(pos, tmp);
         }
+
         if (tmp.getSize() >= this.order) {
             remove(tmp, key);
         } else {
@@ -674,6 +677,11 @@ public class BTree<T extends Comparable<T>> {
      */
     private void saveNodeData(Node<T>... nodes) {
         for (Node<T> node : nodes) {
+            for (int i = 0; i < order * 2; i++) {
+                if (i<node.getSize()) {
+                    repository.delete(node.getChild(i));
+                }
+            }
             if (node.getSize() == 0) {
                 repository.delete(node);
             } else {
