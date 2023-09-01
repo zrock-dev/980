@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     @Bean
-    public IFlightManagement getFlightManagement() {
+    public FlightRepository getFlightManagement() {
         return new FlightRepository();
     }
 
     @Bean
-    public ITicketManagement getTicketManagement() {
+    public TicketRepository getTicketManagement() {
         return new TicketRepository();
     }
 

@@ -54,7 +54,7 @@ public class Flight {
     }
 
     public boolean isAvailable() {
-        return tickets.size() < capacity;
+        return tickets.size() < capacity || ticketIds.split(",").length < capacity;
     }
 
     public void addTicket(Ticket ticket) {
@@ -63,7 +63,7 @@ public class Flight {
         }
     }
 
-    public void addTicket(Ticket ...tickets) {
+    public void addTicket(Ticket... tickets) {
         for (Ticket ticket : tickets) {
             addTicket(ticket);
         }
@@ -82,6 +82,8 @@ public class Flight {
     }
 
     public int getNextNumber() {
-        return tickets.size() + 1;
+        return tickets.isEmpty()
+                ? ticketIds.split(",").length + 1
+                : tickets.size() + 1;
     }
 }

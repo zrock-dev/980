@@ -131,23 +131,20 @@ public class User implements Comparable<User> {
     /**
      * Compares this user to another object for equality.
      *
-     * @param obj The object to compare to.
+     * @param object The object to compare to.
      * @return True if the objects are equal, false otherwise.
      */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass()) {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
 
-        User comparison = (User) obj;
-        boolean nameComparison = Objects.equals(firstName, comparison.firstName);
-        boolean firstLastNameComparison = Objects.equals(firstLastName, comparison.firstLastName);
-        boolean secondLastNameComparison = Objects.equals(secondLastName, comparison.secondLastName);
-        return nameComparison && firstLastNameComparison && secondLastNameComparison;
+        User userToCompare = (User) object;
+        return this.id == userToCompare.getId();
     }
 
     @Override

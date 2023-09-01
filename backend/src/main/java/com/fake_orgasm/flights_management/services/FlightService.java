@@ -3,6 +3,8 @@ package com.fake_orgasm.flights_management.services;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.repository.FlightRepository;
+import com.fake_orgasm.flights_management.repository.TicketRepository;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.IUserManagement;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
@@ -15,13 +17,13 @@ import java.util.UUID;
 public class FlightService {
 
     private IUserManagement userManagement;
-    private IFlightManagement flightManagement;
-    private ITicketManagement ticketManagement;
+    private FlightRepository flightManagement;
+    private TicketRepository ticketManagement;
 
     public FlightService(
             IUserManagement userManagement,
-            IFlightManagement flightManagement,
-            ITicketManagement ticketManagement
+            FlightRepository flightManagement,
+            TicketRepository ticketManagement
     ) {
         this.userManagement = userManagement;
         this.flightManagement = flightManagement;
@@ -29,7 +31,7 @@ public class FlightService {
     }
 
     private User findUser(User user) {
-        List<User> usersFound = userManagement.search(user.getFullName());
+        List<User> usersFound = userManagement.search(user.getFirstName());
         if (usersFound.isEmpty()) {
             try {
                 userManagement.create(user);
@@ -37,14 +39,17 @@ public class FlightService {
                 throw new RuntimeException(e);
             }
         } else {
-            user = usersFound.get(0);
+            for (User userFound : usersFound) {
+                if (user.equals(userFound))
+                    user = userFound;
+            }
         }
 
         return user;
     }
 
-    public boolean book(User user, String flightId, Category category) {
-        boolean wasReserved = false;
+    public boolean bookFlight(User user, String flightId, Category category) {
+        boolean wasBooked = false;
         try {
             Flight flightFound = flightManagement.search(flightId);
 
@@ -54,18 +59,18 @@ public class FlightService {
                         flightFound.getNextNumber(), category, userFound.getId(),
                         flightFound.getId());
 
-                flightFound.addTicket(newTicket);
+                flightFound.addTicketId(newTicket.getId());
                 userFound.addFlight(newTicket.getId());
 
                 userManagement.update(userFound, userFound);
                 flightManagement.update(flightId, flightFound);
                 ticketManagement.create(newTicket);
-                wasReserved = true;
+                wasBooked = true;
             }
         } catch (IncompleteUserException e) {
             throw new RuntimeException(e);
         }
 
-        return wasReserved;
+        return wasBooked;
     }
 }
