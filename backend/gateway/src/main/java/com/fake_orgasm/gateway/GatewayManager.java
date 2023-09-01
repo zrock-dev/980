@@ -21,11 +21,6 @@ public final class GatewayManager {
     private static final int PORT = 5000;
 
     /**
-     * Singleton variable.
-     */
-    private static GatewayManager instance;
-
-    /**
      * Socket variable to manage a single request.
      */
     private final Socket socket;
@@ -33,7 +28,7 @@ public final class GatewayManager {
     /**
      * Class constructor to init gateway socket and launch it.
      */
-    private GatewayManager() {
+    public GatewayManager() {
         try {
             this.socket = new Socket(SERVER_HOST, PORT);
             launchGateway();
@@ -57,17 +52,5 @@ public final class GatewayManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Method to manage singleton variable.
-     *
-     * @return Singleton variable.
-     */
-    public static GatewayManager getInstance() {
-        if (instance == null) {
-            instance = new GatewayManager();
-        }
-        return instance;
     }
 }

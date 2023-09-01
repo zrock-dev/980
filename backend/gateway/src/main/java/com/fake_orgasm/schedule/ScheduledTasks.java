@@ -15,6 +15,6 @@ public class ScheduledTasks {
      */
     @Scheduled(fixedRate = 1000)
     public void requestToServer() {
-        GatewayManager.getInstance();
+        GatewayManager manager = new GatewayManager();
     }
 }
