@@ -1,61 +1,135 @@
 package com.fake_orgasm.flights_management.repository;
 
 import com.fake_orgasm.flights_management.models.Flight;
-import com.fake_orgasm.flights_management.repository.requesters.JsonRequester;
-import com.fake_orgasm.flights_management.repository.requesters.SourceJson;
-import com.fake_orgasm.flights_management.services.IFlightManagement;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.io.FileWriter;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FlightRepository implements IFlightManagement {
+public class FlightRepository {
 
-    private JsonRequester requester;
+    private FlightDatabase database;
 
     public FlightRepository() {
-        requester = new JsonRequester(SourceJson.FLIGHTS.getSource());
+        database = FlightDatabase.getInstance();
     }
 
-    private JSONObject toJsonObject(Flight flight) {
-        JSONObject jsonTicket = new JSONObject();
-        jsonTicket.put("id", flight.getId());
-        jsonTicket.put("sourceId", flight.getSourceId());
-        jsonTicket.put("destinationId", flight.getDestinationId());
-        jsonTicket.put("date", flight.getDate());
-        jsonTicket.put("capacity", flight.getCapacity());
-        jsonTicket.put("tickets", flight.getTickets());
-        return jsonTicket;
+    public void createTable() {
+        try {
+            Statement stmt = database.getConnection().createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS Flight" +
+                    "(id VARCHAR(250) PRIMARY KEY," +
+                    "sourceId VARCHAR(250)," +
+                    "destinationId VARCHAR(250)," +
+                    "arrivalDate  DATE," +
+                    "capacity INTEGER," +
+                    "tickets VARCHAR," +
+                    "FOREIGN KEY (sourceId) REFERENCES Airport(id)," +
+                    "FOREIGN KEY (destinationId) REFERENCES Airport(id));";
+            stmt.executeUpdate(sql);
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Override
     public boolean create(Flight flight) {
         boolean wasSaved = false;
+        if (database.doesNotExist("Flight", flight.getId())) return wasSaved;
         try {
-            JSONArray currentDocuments = requester.getDocuments();
-            currentDocuments.put(toJsonObject(flight));
-            FileWriter writer = requester.getFileWriter();
-            writer.write(currentDocuments.toString(4));
-            writer.flush();
+            String query = "INSERT INTO Flight (id, sourceId, destinationId, " +
+                    "arrivalDate, capacity, tickets) " +
+                    "values (?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = database.getConnection().prepareStatement(query);
+            ps.setString(1, flight.getId());
+            ps.setString(2, flight.getSourceId());
+            ps.setString(3, flight.getDestinationId());
+            ps.setDate(4, (Date) flight.getDate());
+            ps.setInt(5, flight.getCapacity());
+            ps.setString(6, flight.getPriorityTickets());
+            ps.execute();
+            ps.close();
             wasSaved = true;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return wasSaved;
     }
 
-    @Override
+    public List<Flight> findAll() {
+        String query = "SELECT * FROM Flight;";
+        try {
+            List<Flight> searches = new ArrayList<>();
+            PreparedStatement ps = database.getConnection().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            String id, sourceId, destinationId, ticketIds;
+            Date arrivalDate;
+            int capacity;
+            String[] ticketsArray;
+            while (rs.next()) {
+                id = rs.getString("id");
+                sourceId = rs.getString("sourceId");
+                destinationId = rs.getString("destinationId");
+                arrivalDate = rs.getDate("arrivalDate");
+                capacity = rs.getInt("capacity");
+                ticketIds = rs.getString("tickets");
+                searches.add(new Flight(id, sourceId, destinationId,
+                        arrivalDate, capacity, ticketIds));
+            }
+            ps.close();
+            return searches;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean update(String id, Flight flight) {
-        return false;
+        boolean wasUpdated = false;
+        try {
+            if (!database.doesNotExist("Flight", id)) {
+                String query = "UPDATE Flight SET sourceId=?, destinationId=?, " +
+                        "arrivalDate=?, capacity=?, tickets=? WHERE id=?";
+                PreparedStatement ps = database.getConnection().prepareStatement(query);
+                ps.setString(1, flight.getSourceId());
+                ps.setString(2, flight.getDestinationId());
+                ps.setDate(3, (Date) flight.getDate());
+                ps.setInt(4, flight.getCapacity());
+                ps.setString(5, flight.getPriorityTickets());
+                ps.setString(6, id);
+                int rowsUpdated = ps.executeUpdate();
+                ps.close();
+
+                if (rowsUpdated > 0) {
+                    wasUpdated = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return wasUpdated;
     }
 
-    @Override
+
     public Flight search(String id) {
-        return null;
+        String query = "SELECT * FROM Flight WHERE id = ?";
+        try {
+            PreparedStatement ps = database.getConnection().prepareStatement(query);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            String sourceId = rs.getString("sourceId");
+            String destinationId = rs.getString("destinationId");
+            Date arrivalDate = rs.getDate("arrivalDate");
+            int capacity = rs.getInt("capacity");
+            String ticketIds = rs.getString("tickets");
+            ps.close();
+            return new Flight(id, sourceId, destinationId,
+                    arrivalDate, capacity, ticketIds);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Override
     public boolean remove(String id) {
-        return false;
+        return database.remove("Flight", id);
     }
 }
