@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -66,15 +67,18 @@ public final class User implements Comparable<User> {
      * <<<<<<< Updated upstream
      * Empty User constructor.
      */
-    public User() {}
+    public User() {
+    }
 
-    /** This adds new flight histories.
+    /**
+     * This adds new flight histories.
      *
      * @param flightHistory
      */
     public void addFlightHistory(FlightHistory flightHistory) {
         flights.add(flightHistory);
     }
+
     /**
      * Returns the full name of the user.
      *
@@ -89,7 +93,7 @@ public final class User implements Comparable<User> {
      *
      * @param o The user to compare with.
      * @return A negative integer, zero, or a positive integer as this user is less than, equal to,
-     *         or greater than the specified user.
+     * or greater than the specified user.
      */
     @Override
     public int compareTo(User o) {
@@ -130,9 +134,14 @@ public final class User implements Comparable<User> {
         return super.hashCode();
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "User-> name: " + firstName + ", LastName:" + firstLastName + " " + secondLastName + ", flights="
                 + flights;
+    }*/
+
+    @Override
+    public String toString() {
+        return firstName;
     }
 }

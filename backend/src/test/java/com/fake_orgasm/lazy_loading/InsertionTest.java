@@ -28,9 +28,12 @@ public class InsertionTest {
     public void insertTest() {
         BTree<User> bTree = new BTree<>(10, new BTreeRepository());
         UserGenerator userGenerator = new UserGenerator();
+        User user;
         long start = System.nanoTime();
         for (int i = 0; i <= 10; i++) {
-            bTree.insert(userGenerator.make());
+           user = userGenerator.make();
+           user.setCategory(Category.VIP);
+            bTree.insert(user);
         }
         long end = System.nanoTime();
         System.out.println((end - start) / 1e+9);
