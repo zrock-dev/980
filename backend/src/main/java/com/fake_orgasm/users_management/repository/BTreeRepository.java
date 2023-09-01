@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
     public BTreeRepository() {
         jsonFactory = new JsonFactory();
     }
+
     /**
      * Save a node in the secondary memory.
      *
@@ -80,7 +82,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      * Write a user in the json generator that is passed as a parameter,
      * use the streaming approach by writing line by line the json.
      *
-     * @param user User to write in a json.
+     * @param user      User to write in a json.
      * @param generator JsonGenerator, json constructor.
      * @throws IOException exception if the deed fails.
      */
@@ -133,6 +135,9 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     @Override
     public boolean delete(Node<User> node) {
+        if(node == null){
+            return false;
+        }
         String nameFile = pathUserDataBase + "/" + node.getId() + ".json";
         boolean resultOperation = false;
         File file = new File(nameFile);
