@@ -1,0 +1,80 @@
+France, Provence
+Germany, Bavaria
+Spain, Catalonia
+Canada, Quebec
+Australia, Victoria
+Brazil, São Paulo
+Argentina, Buenos Aires
+China, Shanghai
+India, Maharashtra
+Mexico, Jalisco
+Italy, Tuscany
+Switzerland, Zurich
+Austria, Tyrol
+United Kingdom, Scotland
+Russia, Siberia
+Japan, Hokkaido
+South Africa, Western Cape
+Greece, Crete
+Turkey, Anatolia
+Egypt, Cairo
+Thailand, Bangkok
+Vietnam, Ho Chi Minh
+Malaysia, Penang
+South Korea, Seoul
+Philippines, Cebu
+Indonesia, Bali
+New Zealand, Auckland
+Netherlands, Amsterdam
+Belgium, Flanders
+Portugal, Lisbon
+Sweden, Stockholm
+Norway, Oslo
+Denmark, Zealand
+Finland, Lapland
+Iceland, Reykjavik
+Ireland, Dublin
+United States, California
+Canada, Alberta
+Mexico, Yucatan
+Brazil, Rio de Janeiro
+Argentina, Patagonia
+Chile, Santiago
+Colombia, Bogota
+Peru, Cusco
+Venezuela, Caracas
+Ecuador, Quito
+Bolivia, La Paz
+Paraguay, Asuncion
+Uruguay, Montevideo
+Costa Rica, San Jose
+Panama, Panama City
+Honduras, Tegucigalpa
+Nicaragua, Managua
+El Salvador, San Salvador
+Guatemala, Guatemala City
+Belize, Belmopan
+Jamaica, Kingston
+Cuba, Havana
+Dominican Republic, Santo Domingo
+Haiti, Port-au-Prince
+Bahamas, Nassau
+Puerto Rico, San Juan
+Trinidad and Tobago, Port of Spain
+Barbados, Bridgetown
+Guyana, Georgetown
+Suriname, Paramaribo
+French Guiana, Cayenne
+Bolivia, Potosi
+Peru, Lima
+Ecuador, Guayaquil
+Venezuela, Maracaibo
+Colombia, Medellin
+Brazil, Sao Paulo
+Chile, Valparaiso
+Argentina, Cordoba
+Uruguay, Colonia
+Costa Rica, Puntarenas
+Panama, Colon
+Honduras, Roatan
+Nicaragua, Granada
