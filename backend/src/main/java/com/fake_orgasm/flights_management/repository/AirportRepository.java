@@ -19,15 +19,16 @@ public class AirportRepository {
 
     public void createTable() {
         try {
-            Statement stmt;
-            stmt = database.getConnection().createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS Airport" +
+            Statement statement;
+            statement = database.getConnection().createStatement();
+            String query = "CREATE TABLE IF NOT EXISTS Airport" +
                     "(id VARCHAR(250) PRIMARY KEY," +
                     "airportName VARCHAR(250)," +
                     "country VARCHAR(250)," +
                     "stateName  VARCHAR(250));";
-            stmt.executeUpdate(sql);
-            stmt.close();
+            statement.executeUpdate(query);
+            database.createIndexById(statement, "Airport");
+            statement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

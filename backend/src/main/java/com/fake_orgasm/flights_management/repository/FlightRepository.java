@@ -16,8 +16,8 @@ public class FlightRepository {
 
     public void createTable() {
         try {
-            Statement stmt = database.getConnection().createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS Flight" +
+            Statement statement = database.getConnection().createStatement();
+            String query = "CREATE TABLE IF NOT EXISTS Flight" +
                     "(id VARCHAR(250) PRIMARY KEY," +
                     "sourceId VARCHAR(250)," +
                     "destinationId VARCHAR(250)," +
@@ -26,8 +26,9 @@ public class FlightRepository {
                     "tickets VARCHAR," +
                     "FOREIGN KEY (sourceId) REFERENCES Airport(id)," +
                     "FOREIGN KEY (destinationId) REFERENCES Airport(id));";
-            stmt.executeUpdate(sql);
-            stmt.close();
+            statement.executeUpdate(query);
+            database.createIndexById(statement, "Flight");
+            statement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

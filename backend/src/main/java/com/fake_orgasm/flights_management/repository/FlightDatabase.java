@@ -31,6 +31,17 @@ public class FlightDatabase {
         return connection;
     }
 
+    public void createIndexById(Statement statement, String tableName) {
+        try {
+            String indexName = "idx_" + tableName.toLowerCase() + "_id";
+            String createIndex = "CREATE INDEX IF NOT EXISTS " + indexName +
+                    " ON " + tableName + " (id);";
+            statement.executeUpdate(createIndex);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean doesNotExist(String tableName, String id) {
         boolean exists;
         try {
