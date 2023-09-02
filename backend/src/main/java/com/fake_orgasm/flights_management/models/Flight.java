@@ -86,4 +86,9 @@ public class Flight {
                 ? ticketIds.split(",").length + 1
                 : tickets.size() + 1;
     }
+
+    @Override
+    public String toString() {
+        return "(" + sourceId + " - " + destinationId + ") - " + date.toString();
+    }
 }

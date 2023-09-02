@@ -31,10 +31,10 @@ public class AirportGenerator {
         }
     }
 
-    public List<Airport> getAirportsRandomly(int amount) {
+    public ArrayList<Airport> getAirportsRandomly(int amount) {
         String[] countryData;
         String randomCountry, airportName;
-        List<Airport> airports = new ArrayList<>();
+        ArrayList<Airport> airports = new ArrayList<>();
 
         for (int i = 0; i < amount; i++) {
             randomCountry = countryReader.getRandomLine();

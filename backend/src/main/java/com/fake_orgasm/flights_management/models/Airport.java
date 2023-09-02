@@ -30,6 +30,6 @@ public class Airport {
 
     @Override
     public String toString() {
-        return "(" + id + ") - " + name;
+        return "(" + id + ") - " + name + " -> " + country + " - " + state;
     }
 }
