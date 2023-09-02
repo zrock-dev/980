@@ -78,3 +78,23 @@ Costa Rica, Puntarenas
 Panama, Colon
 Honduras, Roatan
 Nicaragua, Granada
+El Salvador, Santa Ana
+Guatemala, Antigua
+Belize, Cayo
+Jamaica, Montego Bay
+Cuba, Varadero
+Dominican Republic, Punta Cana
+Bahamas, Freeport
+Puerto Rico, Ponce
+Trinidad and Tobago, Scarborough
+Guyana, Linden
+Suriname, Nickerie
+French Guiana, Kourou
+Bolivia, Cochabamba
+Peru, Arequipa
+Ecuador, Loja
+Venezuela, Valencia
+Colombia, Cali
+Brazil, Recife
+Chile, Concepcion
+Argentina, Mendoza

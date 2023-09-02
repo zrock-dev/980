@@ -1,5 +1,6 @@
 package com.fake_orgasm.flights_management.repository;
 
+import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Flight;
 
 import java.sql.*;
@@ -57,10 +58,43 @@ public class FlightRepository {
         return wasSaved;
     }
 
-    public List<Flight> findAll() {
+    public boolean create(List<Flight> flights) {
+        boolean wereCreated = false;
+
+        if (flights == null || flights.isEmpty()) {
+            return wereCreated;
+        }
+
+        try {
+            String query = "INSERT INTO Flight" +
+                    " (id, sourceId, destinationId, arrivalDate, capacity, tickets) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+            Connection connection = database.getConnection();
+            PreparedStatement ps = connection.prepareStatement(query);
+
+            for (Flight flight : flights) {
+                ps.setString(1, flight.getId());
+                ps.setString(2, flight.getSourceId());
+                ps.setString(3, flight.getDestinationId());
+                ps.setDate(4, new java.sql.Date(flight.getDate().getTime()));
+                ps.setInt(5, flight.getCapacity());
+                ps.setString(6, flight.getPriorityTickets());
+                ps.addBatch();
+            }
+
+            wereCreated = database.wereCreated(ps);
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return wereCreated;
+    }
+
+    public ArrayList<Flight> findAll() {
         String query = "SELECT * FROM Flight;";
         try {
-            List<Flight> searches = new ArrayList<>();
+            ArrayList<Flight> searches = new ArrayList<>();
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             String id, sourceId, destinationId, ticketIds;
@@ -79,7 +113,7 @@ public class FlightRepository {
             }
             ps.close();
             return searches;
-        } catch (SQLException e) {
+        } catch (SQLException | FlightCapacityException e) {
             throw new RuntimeException(e);
         }
     }
@@ -125,12 +159,12 @@ public class FlightRepository {
             ps.close();
             return new Flight(id, sourceId, destinationId,
                     arrivalDate, capacity, ticketIds);
-        } catch (SQLException e) {
+        } catch (SQLException | FlightCapacityException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public boolean remove(String id) {
-        return database.remove("Flight", id);
+    public boolean delete(String id) {
+        return database.delete("Flight", id);
     }
 }

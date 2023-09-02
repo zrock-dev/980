@@ -2,10 +2,7 @@ package com.fake_orgasm.flights_management.repository;
 
 import com.fake_orgasm.flights_management.models.Airport;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +33,11 @@ public class AirportRepository {
 
     public boolean create(Airport airport) {
         boolean wasSaved = false;
-        if (database.doesNotExist("Airport", airport.getId())) return wasSaved;
+        if (database.doesNotExist("Airport", airport.getId()))
+            return wasSaved;
         try {
-            String query = "INSERT INTO Airport (id, airportName, country, stateName)" +
+            String query = "INSERT INTO Airport " +
+                    "(id, airportName, country, stateName)" +
                     "values (?, ?, ?, ?)";
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ps.setString(1, airport.getId());
@@ -54,10 +53,41 @@ public class AirportRepository {
         return wasSaved;
     }
 
-    public List<Airport> findAll() {
+    public boolean create(ArrayList<Airport> airports) {
+        boolean wereCreated = false;
+
+        if (airports == null || airports.isEmpty()) {
+            return wereCreated;
+        }
+
+        try {
+            String query = "INSERT INTO Airport " +
+                    "(id, airportName, country, stateName) " +
+                    "VALUES (?, ?, ?, ?)";
+            Connection connection = database.getConnection();
+            PreparedStatement ps = connection.prepareStatement(query);
+
+            for (Airport airport : airports) {
+                ps.setString(1, airport.getId());
+                ps.setString(2, airport.getName());
+                ps.setString(3, airport.getCountry());
+                ps.setString(4, airport.getState());
+                ps.addBatch();
+            }
+
+            wereCreated = database.wereCreated(ps);
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return wereCreated;
+    }
+
+    public ArrayList<Airport> findAll() {
         String query = "SELECT * FROM Airport;";
         try {
-            List<Airport> searches = new ArrayList<>();
+            ArrayList<Airport> searches = new ArrayList<>();
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             String id, name, country, state;
@@ -100,7 +130,7 @@ public class AirportRepository {
         }
     }
 
-    public boolean remove(String id) {
-        return database.remove("Airport", id);
+    public boolean delete(String id) {
+        return database.delete("Airport", id);
     }
 }

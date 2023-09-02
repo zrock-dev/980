@@ -3,10 +3,9 @@ package com.fake_orgasm.flights_management.repository;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Ticket;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TicketRepository {
 
@@ -56,6 +55,64 @@ public class TicketRepository {
             throw new RuntimeException(e);
         }
         return wasSaved;
+    }
+
+    public boolean create(ArrayList<Ticket> tickets) {
+        boolean wereCreated = false;
+
+        if (tickets == null || tickets.isEmpty()) {
+            return wereCreated;
+        }
+
+        try {
+            String query = "INSERT INTO Ticket (id, arrivalNumber, priority, userId, flightId) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+            Connection connection = database.getConnection();
+            PreparedStatement ps = connection.prepareStatement(query);
+
+            for (Ticket ticket : tickets) {
+                ps.setString(1, ticket.getId());
+                ps.setInt(2, ticket.getNumber());
+                ps.setString(3, ticket.getPriority().getType());
+                ps.setInt(4, ticket.getUserId());
+                ps.setString(5, ticket.getFlightId());
+                ps.addBatch();
+            }
+
+            wereCreated = database.wereCreated(ps);
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return wereCreated;
+    }
+
+    public ArrayList<Ticket> findAll() {
+        String query = "SELECT * FROM Ticket;";
+        try {
+            ArrayList<Ticket> tickets = new ArrayList<>();
+            PreparedStatement ps = database.getConnection().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            String id, priorityType, flightId;
+            int arrivalNumber, userId;
+            Category category;
+            while (rs.next()) {
+                id = rs.getString("id");
+                arrivalNumber = rs.getInt("arrivalNumber");
+                priorityType = rs.getString("priority");
+                userId = rs.getInt("userId");
+                flightId = rs.getString("flightId");
+                category = Category.getCategory(priorityType);
+
+                tickets.add(new Ticket(id, arrivalNumber, category, userId, flightId));
+            }
+            ps.close();
+            return tickets;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Ticket search(String id) {
@@ -111,7 +168,7 @@ public class TicketRepository {
     }
 
 
-    public boolean remove(String id) {
-        return database.remove("Flight", id);
+    public boolean delete(String id) {
+        return database.delete("Flight", id);
     }
 }

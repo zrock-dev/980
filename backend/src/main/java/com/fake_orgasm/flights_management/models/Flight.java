@@ -1,5 +1,6 @@
 package com.fake_orgasm.flights_management.models;
 
+import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,19 +22,30 @@ public class Flight {
     private int capacity;
     private String ticketIds;
     private PriorityQueue<Ticket> tickets;
+    public final static int MIN_CAPACITY = 100;
+    public final static int MAX_CAPACITY = 550;
+    public final static int AVERAGE_CAPACITY =
+            (MIN_CAPACITY + MAX_CAPACITY) / 2;
 
     public Flight(String id, String sourceId, String destinationId,
-                  Date date, int capacity) {
+                  Date date, int capacity)
+            throws FlightCapacityException
+    {
+        validateCapacity(capacity);
         this.id = id;
         this.sourceId = sourceId;
         this.destinationId = destinationId;
         this.date = date;
         this.capacity = capacity;
+        this.ticketIds = "";
         this.tickets = new PriorityQueue<>();
     }
 
     public Flight(String id, String sourceId, String destinationId,
-                  Date date, int capacity, String ticketIds) {
+                  Date date, int capacity, String ticketIds)
+            throws FlightCapacityException
+    {
+        validateCapacity(capacity);
         this.id = id;
         this.sourceId = sourceId;
         this.destinationId = destinationId;
@@ -44,13 +56,23 @@ public class Flight {
     }
 
     public Flight(String id, String sourceId, String destinationId,
-                  int capacity) {
+                  int capacity)
+            throws FlightCapacityException
+    {
+        validateCapacity(capacity);
         this.id = id;
         this.sourceId = sourceId;
         this.destinationId = destinationId;
         this.date = new Date();
         this.capacity = capacity;
+        this.ticketIds = "";
         this.tickets = new PriorityQueue<>();
+    }
+
+    private void validateCapacity(int capacity) throws FlightCapacityException {
+        if (capacity < MIN_CAPACITY || capacity > MAX_CAPACITY) {
+            throw new FlightCapacityException();
+        }
     }
 
     public boolean isAvailable() {

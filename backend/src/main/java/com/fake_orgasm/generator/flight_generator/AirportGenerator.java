@@ -1,10 +1,10 @@
 package com.fake_orgasm.generator.flight_generator;
 
 import com.fake_orgasm.flights_management.models.Airport;
+import com.fake_orgasm.flights_management.repository.AirportRepository;
 import com.fake_orgasm.generator.utils.RandomFileReader;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class AirportGenerator {
@@ -15,8 +15,8 @@ public class AirportGenerator {
     private RandomFileReader nameReader;
 
     public AirportGenerator() {
-        countryReader = new RandomFileReader(COUNTRIES_PATH);
-        nameReader = new RandomFileReader(NAMES_PATH);
+        countryReader = new RandomFileReader(COUNTRIES_PATH, 100);
+        nameReader = new RandomFileReader(NAMES_PATH, 200);
         loadReaders();
     }
 

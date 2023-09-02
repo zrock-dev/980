@@ -58,7 +58,7 @@ public class FlightDatabase {
         return exists;
     }
 
-    public boolean remove(String tableName, String id) {
+    public boolean delete(String tableName, String id) {
         boolean wasDeleted = false;
         try {
             String query = "DELETE FROM " + tableName + " WHERE id = ?";
@@ -72,5 +72,25 @@ public class FlightDatabase {
         }
 
         return wasDeleted;
+    }
+
+    public boolean wereCreated(PreparedStatement ps) {
+        boolean wereCreated = false;
+        try {
+            int[] batchResult = ps.executeBatch();
+            for (int result : batchResult) {
+                if (result != PreparedStatement.SUCCESS_NO_INFO
+                        && result != PreparedStatement.EXECUTE_FAILED) {
+                    wereCreated = true;
+                } else {
+                    wereCreated = false;
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return wereCreated;
     }
 }
