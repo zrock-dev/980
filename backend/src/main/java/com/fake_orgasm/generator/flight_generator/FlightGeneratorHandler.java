@@ -16,50 +16,47 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Service
 public class FlightGeneratorHandler {
 
     private AirportGenerator airportGenerator;
     private FlightGenerator flightGenerator;
     private TicketGenerator ticketGenerator;
-    @Getter
     private AirportRepository airportRepository;
-    @Getter
     private FlightRepository flightRepository;
-    @Getter
     private TicketRepository ticketRepository;
     private IUserManagement userManagement;
-    @Getter
     private int amountTickets;
-    @Getter
     private int amountFlights;
-    @Getter
     private int amountAirports;
-    @Getter
     private ArrayList<Airport> airports;
-    @Getter
     private ArrayList<Flight> flights;
-    @Getter
     private ArrayList<Ticket> tickets;
-    @Getter
     private List<User> users;
 
-    public FlightGeneratorHandler(IUserManagement userManagement) {
+    public FlightGeneratorHandler(
+            IUserManagement userManagement,
+            AirportRepository airportRepository,
+            FlightRepository flightRepository,
+            TicketRepository ticketRepository
+    ) {
         this.userManagement = userManagement;
-        initializeHandlers();
-    }
-
-    public FlightGeneratorHandler() {
-        initializeHandlers();
-    }
-
-    private void initializeHandlers() {
         airportGenerator = new AirportGenerator();
         flightGenerator = new FlightGenerator();
 
-        airportRepository = new AirportRepository();
-        flightRepository = new FlightRepository();
-        ticketRepository = new TicketRepository();
+        this.airportRepository = airportRepository;
+        this.flightRepository = flightRepository;
+        this.ticketRepository = ticketRepository;
+    }
+
+    public FlightGeneratorHandler() {
+        airportGenerator = new AirportGenerator();
+        flightGenerator = new FlightGenerator();
+
+        this.airportRepository = new AirportRepository();
+        this.flightRepository = new FlightRepository();
+        this.ticketRepository = new TicketRepository();
 
         airportRepository.createTable();
         flightRepository.createTable();
@@ -151,10 +148,10 @@ public class FlightGeneratorHandler {
 
     public boolean saveNewData() {
         boolean wereSaved = false;
+        airportRepository.create(airports);
+        flightRepository.create(flights);
+        ticketRepository.create(tickets);
         if (userManagement != null) {
-            airportRepository.create(airports);
-            flightRepository.create(flights);
-            ticketRepository.create(tickets);
             updateUsers(users);
             wereSaved = true;
         }

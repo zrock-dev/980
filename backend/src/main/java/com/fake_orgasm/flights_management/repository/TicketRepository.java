@@ -39,7 +39,7 @@ public class TicketRepository {
         boolean wasSaved = false;
         if (database.doesNotExist("Ticket", ticket.getId())) return wasSaved;
         try {
-            String query = "INSERT INTO Flight (id, arrivalNumber, priority, " +
+            String query = "INSERT INTO Ticket (id, arrivalNumber, priority, " +
                     "userId, flightId) " +
                     "values (?, ?, ?, ?, ?)";
             PreparedStatement ps = database.getConnection().prepareStatement(query);
@@ -140,6 +140,52 @@ public class TicketRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public ArrayList<Ticket> search(String[] ticketIds) {
+        if (ticketIds == null || ticketIds.length == 0) {
+            return new ArrayList<>();
+        }
+
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Ticket WHERE id IN (");
+        for (int i = 0; i < ticketIds.length; i++) {
+            queryBuilder.append("?");
+            if (i < ticketIds.length - 1) {
+                queryBuilder.append(",");
+            }
+        }
+        queryBuilder.append(")");
+
+        try {
+            Connection connection = database.getConnection();
+            PreparedStatement ps = connection.prepareStatement(queryBuilder.toString());
+
+            for (int i = 0; i < ticketIds.length; i++) {
+                ps.setString(i + 1, ticketIds[i]);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Ticket> tickets = new ArrayList<>();
+
+            String id, priorityType, flightId;
+            int arrivalNumber, userId;
+            Category category;
+            while (rs.next()) {
+                id = rs.getString("id");
+                arrivalNumber = rs.getInt("arrivalNumber");
+                priorityType = rs.getString("priority");
+                userId = rs.getInt("userId");
+                flightId = rs.getString("flightId");
+                category = Category.getCategory(priorityType);
+                tickets.add(new Ticket(id, arrivalNumber, category, userId, flightId));
+            }
+
+            ps.close();
+            return tickets;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     public boolean update(String id, Ticket ticket) {

@@ -42,6 +42,6 @@ public class Ticket implements Comparable<Ticket>{
 
     @Override
     public String toString() {
-        return "(" + priority.getType() + " - " + number + ")";
+        return "(" + priority.getType() + " - " + number + ") - " + flightId;
     }
 }

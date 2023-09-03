@@ -24,7 +24,7 @@ public class FlightRepository {
                     "destinationId VARCHAR(250)," +
                     "arrivalDate  DATE," +
                     "capacity INTEGER," +
-                    "tickets VARCHAR," +
+                    "tickets VARCHAR(10000)," +
                     "FOREIGN KEY (sourceId) REFERENCES Airport(id)," +
                     "FOREIGN KEY (destinationId) REFERENCES Airport(id));";
             statement.executeUpdate(query);
@@ -121,7 +121,7 @@ public class FlightRepository {
     public boolean update(String id, Flight flight) {
         boolean wasUpdated = false;
         try {
-            if (!database.doesNotExist("Flight", id)) {
+            if (database.doesNotExist("Flight", id)) {
                 String query = "UPDATE Flight SET sourceId=?, destinationId=?, " +
                         "arrivalDate=?, capacity=?, tickets=? WHERE id=?";
                 PreparedStatement ps = database.getConnection().prepareStatement(query);
@@ -137,6 +137,8 @@ public class FlightRepository {
                 if (rowsUpdated > 0) {
                     wasUpdated = true;
                 }
+            } else {
+                create(flight);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -151,18 +153,32 @@ public class FlightRepository {
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
-            String sourceId = rs.getString("sourceId");
-            String destinationId = rs.getString("destinationId");
-            Date arrivalDate = rs.getDate("arrivalDate");
-            int capacity = rs.getInt("capacity");
-            String ticketIds = rs.getString("tickets");
-            ps.close();
-            return new Flight(id, sourceId, destinationId,
-                    arrivalDate, capacity, ticketIds);
-        } catch (SQLException | FlightCapacityException e) {
+
+            if (rs.next()) {
+                String sourceId = rs.getString("sourceId");
+                String destinationId = rs.getString("destinationId");
+                Date arrivalDate = rs.getDate("arrivalDate");
+                int capacity = rs.getInt("capacity");
+                String ticketIds = rs.getString("tickets");
+                Flight flight = null;
+                try {
+                    flight = new Flight(id, sourceId, destinationId,
+                            arrivalDate, capacity, ticketIds);
+                } catch (FlightCapacityException e) {
+                    throw new RuntimeException(e);
+                }
+
+                ps.close();
+                return flight;
+            } else {
+                ps.close();
+                return null;
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     public boolean delete(String id) {
         return database.delete("Flight", id);

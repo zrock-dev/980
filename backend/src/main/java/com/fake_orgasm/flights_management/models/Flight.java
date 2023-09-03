@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.PriorityQueue;
 
 /**
@@ -29,8 +30,7 @@ public class Flight {
 
     public Flight(String id, String sourceId, String destinationId,
                   Date date, int capacity)
-            throws FlightCapacityException
-    {
+            throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
         this.sourceId = sourceId;
@@ -43,8 +43,7 @@ public class Flight {
 
     public Flight(String id, String sourceId, String destinationId,
                   Date date, int capacity, String ticketIds)
-            throws FlightCapacityException
-    {
+            throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
         this.sourceId = sourceId;
@@ -57,8 +56,7 @@ public class Flight {
 
     public Flight(String id, String sourceId, String destinationId,
                   int capacity)
-            throws FlightCapacityException
-    {
+            throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
         this.sourceId = sourceId;
@@ -85,10 +83,19 @@ public class Flight {
         }
     }
 
-    public void addTicket(Ticket... tickets) {
+    public void addTicket(List<Ticket> tickets) {
         for (Ticket ticket : tickets) {
             addTicket(ticket);
         }
+    }
+
+    public List<Ticket> getTickets() {
+        List<Ticket> tickets = new ArrayList<>();
+        while (!this.tickets.isEmpty()) {
+            tickets.add(this.tickets.remove());
+        }
+
+        return tickets;
     }
 
     public void addTicketId(String ticketId) {
@@ -104,13 +111,29 @@ public class Flight {
     }
 
     public int getNextNumber() {
-        return tickets.isEmpty()
-                ? ticketIds.split(",").length + 1
-                : tickets.size() + 1;
+        return numberOfTickets() + 1;
+    }
+
+    public int numberOfTickets() {
+        if (tickets.isEmpty() && ticketIds.isEmpty()) {
+            return 0;
+        } else if (tickets.isEmpty()) {
+            return ticketIds.split(",").length;
+        } else {
+            return tickets.size();
+        }
+    }
+
+    public Ticket getNextTicket() {
+        return tickets.remove();
+    }
+
+    public boolean existNextTicket() {
+        return tickets.peek() != null;
     }
 
     @Override
     public String toString() {
-        return "(" + sourceId + " - " + destinationId + ") - " + date.toString();
+        return "(" + numberOfTickets() + " - Tickets ) - " + id + "\n(" + sourceId + " - " + destinationId + ") - " + date.toString();
     }
 }
