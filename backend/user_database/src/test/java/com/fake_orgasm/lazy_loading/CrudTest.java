@@ -123,8 +123,8 @@ public class DeleteTest {
         for (int i = 0; i < keys; i++) {
             int j = random.nextInt(100000) + 1;
             user = makeUser();
-            user.setId(j);
-            user.setFirstName(j + "a");
+            user.setId(i);
+            user.setFirstName(i + "a");
             users.add(user);
         }
         long start = System.nanoTime();
