@@ -67,7 +67,6 @@ return (
 	<div className="booking-form-container">
 	<h2 className="title">Title:</h2>
 	<div className="form-line">
-		<label className="form-label">First Name:</label>
 		<PlainTextInput
 		className="text-input"
 		label="First Name:"
@@ -86,7 +85,6 @@ return (
 		/>
 	</div>
 	<div className="form-line">
-		<label className="form-label">Last Name:</label>
 		<PlainTextInput
 		className="text-input"
 		label="Last Name:"
@@ -105,7 +103,6 @@ return (
 		/>
 	</div>
 	<div className="form-line">
-		<label className="form-label">CI:</label>
 		<PlainTextInput
 		className="text-input"
 		label="CI:"
