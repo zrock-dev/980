@@ -10,11 +10,13 @@ const PlainTextInput = ({ label, text, width, height, onChangeText }) => {
   const inputStyle = {
     width: width,
     height: height,
-    border: '1px solid #111',
+    border: '2px solid #ccc',
     padding: '5px',
     position: 'relative',
     marginTop: '20px',
     borderRadius: '5px',
+    background: 'transparent',
+    color: 'white',
   };
 
   const labelStyle = {
@@ -23,8 +25,10 @@ const PlainTextInput = ({ label, text, width, height, onChangeText }) => {
     position: 'relative',
     top: '-50px',
     left: '10px',
-    background: 'white',
-    padding: '5px',
+    background: '#0014ff',
+    padding: '0 5px',
+    color: 'white',
+    fontWeight: 'bold',
   };
 
   return (

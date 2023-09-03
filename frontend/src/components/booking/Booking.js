@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import PlainTextInput from './PlainTextInput';
 import OptionInput from './OptionInput';
+import DateInput from './DateInput';
 import '@/styles/booking.css'
 const BookingForm = () => {
 const [firstName, setFirstName] = useState('');
@@ -65,7 +66,7 @@ const handleSubmit = (e) => {
 
 return (
 	<div className="booking-form-container">
-	<h2 className="title">Title:</h2>
+	<h2 className="title">Booking Flight Form</h2>
 	<div className="two-line">
 		<div className='two-inputs'>
 			<PlainTextInput
@@ -122,7 +123,7 @@ return (
 		/>
 		</div>
 		<div className='three-input'>
-		<PlainTextInput
+		<DateInput
 		className="text-input"
 		label="Date of Birth:"
 		text={dateOfBirth}
