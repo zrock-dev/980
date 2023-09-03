@@ -4,10 +4,12 @@ import com.fake_orgasm.generator.user_generator.combinatory_parts.Administrator;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.CoreWorker;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.Piece;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.Worker;
+import com.fake_orgasm.generator.utils.FileReader;
+import com.fake_orgasm.generator.utils.Notifiable;
 import com.fake_orgasm.users_management.models.User;
-import com.fake_orgasm.utils.FileReader;
-import com.fake_orgasm.utils.Notifiable;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The UserNameGenerator class is responsible for generating usernames for User instances.
@@ -24,6 +26,8 @@ public class UserNameGenerator implements Notifiable {
     private Worker firstLastNames;
     private Worker firstNames;
     private Worker secondNames;
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * Initializes a new instance of the UserNameGenerator class.
@@ -44,7 +48,7 @@ public class UserNameGenerator implements Notifiable {
             administrator = new Administrator(new Piece[] {firstNames, secondNames, firstLastNames, secondLastNames});
             administrator.startup();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -67,7 +71,7 @@ public class UserNameGenerator implements Notifiable {
         try {
             administrator.fillStacks();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage(), e);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.fake_orgasm.utils;
+package com.fake_orgasm.generator.utils;
 
 /**
  * The Notifiable interface represents an entity that can be notified.

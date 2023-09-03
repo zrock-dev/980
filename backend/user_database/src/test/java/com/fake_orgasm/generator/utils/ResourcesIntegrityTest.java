@@ -8,8 +8,12 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ResourcesIntegrityTest {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Test
     void filesIntegrity() {
         String[] names =
@@ -29,7 +33,7 @@ public class ResourcesIntegrityTest {
                 assertTrue(items.add(item), String.format("Failed with file: %s", fileName));
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage(), e);
         }
     }
 }
