@@ -1,8 +1,7 @@
 plugins {
-	id 'java'
+	id 'application'
 	id 'com.diffplug.spotless' version '6.20.0'
 	id 'checkstyle'
-	id 'application'
 }
 
 group = 'com.fake_orgasm'
@@ -21,7 +20,6 @@ application {
 	mainClass = 'com.fake_orgasm.Main'
 }
 
-
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -39,16 +37,12 @@ dependencies {
 	implementation 'org.apache.directory.studio:org.apache.commons.io:2.4'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 
-
-
 	compileOnly 'org.projectlombok:lombok:1.18.28'
 	annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
 	testImplementation(platform('org.junit:junit-bom:5.10.0'))
 	testImplementation('org.junit.jupiter:junit-jupiter')
 }
-
-
 
 test {
 	useJUnitPlatform()
