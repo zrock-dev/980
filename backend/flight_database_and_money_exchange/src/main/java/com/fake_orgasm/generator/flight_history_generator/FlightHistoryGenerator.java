@@ -10,7 +10,7 @@ import java.util.List;
  */
 public final class FlightHistoryGenerator {
     private static FlightHistoryGenerator instance = null;
-    private final List<Airport> airports;
+    private List<Airport> airports;
 
     /**
      * This private constructor initializes the FlightHistoryGenerator by loading airports.

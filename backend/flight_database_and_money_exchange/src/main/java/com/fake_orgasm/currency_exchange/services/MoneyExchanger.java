@@ -3,9 +3,10 @@ package com.fake_orgasm.currency_exchange.services;
 import com.fake_orgasm.currency_exchange.libs.maxheap.MaxHeap;
 import com.fake_orgasm.currency_exchange.models.ExchangeRates;
 import com.fake_orgasm.currency_exchange.models.IMoneySubtracted;
+import org.json.simple.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.json.simple.JSONObject;
 
 /**
  * This class is to manage the service of give the user

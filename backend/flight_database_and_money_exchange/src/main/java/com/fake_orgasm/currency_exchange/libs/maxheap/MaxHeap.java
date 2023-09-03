@@ -19,7 +19,7 @@ public class MaxHeap<T extends Comparable<T>> {
     /**
      * Integer to restrict heap capacity.
      */
-    private final int capacity;
+    private int capacity;
 
     /**
      * Construct a heap with specified capacity.
