@@ -27,7 +27,7 @@ public final class ServerManager {
      */
     private ServerManager() {
         try {
-            FileReader fileReader = new FileReader("src/main/resources/server/server_port.txt");
+            FileReader fileReader = new FileReader("src/main/resources/server/server_connections/port.txt");
             int port = Integer.parseInt(fileReader.nextLine());
             this.serverSocket = new ServerSocket(port);
             launchServer();
