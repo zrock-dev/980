@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -31,7 +33,24 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     public BTreeRepository() {
         jsonFactory = new JsonFactory();
+        createUserDirectory();
     }
+
+    /**
+     * This method create a directory user if it does not exist.
+     */
+    private void createUserDirectory(){
+        File pathUser = new File(pathUserDataBase);
+        if(!pathUser.exists()){
+            Path directory = Path.of(pathUserDataBase);
+            try {
+                Files.createDirectory(directory);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    
     /**
      * Save a node in the secondary memory.
      *
