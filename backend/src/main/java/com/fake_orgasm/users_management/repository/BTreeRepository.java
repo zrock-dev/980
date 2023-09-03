@@ -39,9 +39,9 @@ public class BTreeRepository implements IBTreeRepository<User> {
     /**
      * This method create a directory user if it does not exist.
      */
-    private void createUserDirectory(){
+    private void createUserDirectory() {
         File pathUser = new File(pathUserDataBase);
-        if(!pathUser.exists()){
+        if (!pathUser.exists()) {
             Path directory = Path.of(pathUserDataBase);
             try {
                 Files.createDirectory(directory);
@@ -50,7 +50,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
             }
         }
     }
-    
+
     /**
      * Save a node in the secondary memory.
      *
