@@ -7,10 +7,9 @@ import com.fake_orgasm.generator.user_generator.combinatory_parts.Worker;
 import com.fake_orgasm.generator.utils.FileReader;
 import com.fake_orgasm.generator.utils.Notifiable;
 import com.fake_orgasm.users_management.models.User;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * The UserNameGenerator class is responsible for generating usernames for User instances.
  * It combines various components to construct usernames in a structured manner.
@@ -27,7 +26,7 @@ public class UserNameGenerator implements Notifiable {
     private Worker firstNames;
     private Worker secondNames;
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LogManager.getLogger(getClass());
 
     /**
      * Initializes a new instance of the UserNameGenerator class.

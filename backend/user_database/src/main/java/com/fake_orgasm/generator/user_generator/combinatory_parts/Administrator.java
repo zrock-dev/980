@@ -1,15 +1,15 @@
 package com.fake_orgasm.generator.user_generator.combinatory_parts;
 
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * The Administrator class manages the initialization and resetting of Piece handlers for username generation.
  * It coordinates the startup and stack-filling operations for each handler.
  */
 public class Administrator {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LogManager.getLogger(getClass());
     private final Piece[] handlers;
 
     /**
