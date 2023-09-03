@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import PlainTextInput from './PlainTextInput';
 import OptionInput from './OptionInput';
-
+import '@/styles/booking.css'
 const BookingForm = () => {
 const [firstName, setFirstName] = useState('');
 const [secondName, setSecondName] = useState('');
@@ -66,92 +66,109 @@ const handleSubmit = (e) => {
 return (
 	<div className="booking-form-container">
 	<h2 className="title">Title:</h2>
-	<div className="form-line">
-		<PlainTextInput
-		className="text-input"
-		label="First Name:"
-		text={firstName}
-		width="200px"
-		height="40px"
-		onChangeText={handleFirstNameChange}
-		/>
-		<PlainTextInput
-		className="text-input"
-		label="Second Name:"
-		text={secondName}
-		width="200px"
-		height="40px"
-		onChangeText={handleSecondNameChange}
-		/>
+	<div className="two-line">
+		<div className='two-inputs'>
+			<PlainTextInput
+			className="text-input"
+			label="First Name:"
+			text={firstName}
+			width="100%"
+			height="40px"
+			onChangeText={handleFirstNameChange}
+			/>
+		</div>
+		<div className='two-inputs'>
+			<PlainTextInput
+			className="text-input"
+			label="Second Name:"
+			text={secondName}
+			width="100%"
+			height="40px"
+			onChangeText={handleSecondNameChange}
+			/>
+		</div>
 	</div>
-	<div className="form-line">
+	<div className="two-line">
+		<div className='two-inputs'>
 		<PlainTextInput
-		className="text-input"
-		label="Last Name:"
-		text={lastName}
-		width="200px"
-		height="40px"
-		onChangeText={handleLastNameChange}
-		/>
+			className="text-input"
+			label="Last Name:"
+			text={lastName}
+			width="100%"
+			height="40px"
+			onChangeText={handleLastNameChange}
+			/>
+		</div>
+		<div className='two-inputs'>
 		<PlainTextInput
 		className="text-input"
 		label="Second Last Name:"
 		text={secondLastName}
-		width="200px"
+		width="100%"
 		height="40px"
 		onChangeText={handleSecondLastNameChange}
 		/>
+		</div>
 	</div>
-	<div className="form-line">
+	<div className="three-line">
+		<div className='three-input'>
 		<PlainTextInput
 		className="text-input"
 		label="CI:"
 		text={ci}
-		width="200px"
+		width="100%"
 		height="40px"
 		onChangeText={handleCiChange}
 		/>
+		</div>
+		<div className='three-input'>
 		<PlainTextInput
 		className="text-input"
 		label="Date of Birth:"
 		text={dateOfBirth}
-		width="200px"
+		width="100%"
 		height="40px"
 		onChangeText={handleDateOfBirthChange}
 		/>
+		</div>
+		<div className='three-input'>
 		<OptionInput
-		className="select-input"
 		label="Country:"
 		selectedOption={country}
 		stringlist={stringlist}
-		width="200px"
+		width="100%"
 		height="40px"
 		onSelectChange={handleCountryChange}
 		/>
+		</div>
 	</div>
-	<div className="form-line">
+	<div className="one-line">
+		<div className='one-input'>
 		<OptionInput
 		className="select-input"
 		label="Flights:"
 		selectedOption={flights}
 		stringlist={stringlist}
-		width="200px"
+		width="100%"
 		height="40px"
 		onSelectChange={handleFlightsChange}
 		/>
+		</div>
 	</div>
-	<div className="form-line">
+	<div className="one-line">
+		<div className='one-input'>
 		<OptionInput
-		className="select-input"
-		label="Type:"
-		selectedOption={type}
-		stringlist={stringlist}
-		width="200px"
-		height="40px"
-		onSelectChange={handleTypeChange}
-		/>
+			className="one-input"
+			label="Type:"
+			selectedOption={type}
+			stringlist={stringlist}
+			width="100%"
+			height="40px"
+			onSelectChange={handleTypeChange}
+			/>
+		</div>
 	</div>
-	<p className="paragraph">DKSAJÑDAWFJÑAKDFJSKLADFSLJADSFLÑKADJS FDKALD FÑAKSDF LÑAD FKAD FKL FASDJ FKLD FJÑKA FDFKL ADF</p>
+	<p className="paragraph">"Your privacy matters. We want you to know that the data you share here is used exclusively for booking flights. We handle your information with care and respect. Accuracy helps us provide you with the best service possible. Thank you for choosing us for your travel needs."</p>
 	<button type="submit" className="submit-button" onClick={handleSubmit}>
 		Book
 	</button>
