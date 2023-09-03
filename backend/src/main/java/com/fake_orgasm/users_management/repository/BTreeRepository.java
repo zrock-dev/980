@@ -24,7 +24,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
     /**
      * Path where the nodes are saved.
      */
-    private final String pathUserDataBase = "../backend/user_database";
+    public static final String PATH_USER_DATA_BASE = "../backend/user_database";
 
     private JsonFactory jsonFactory;
 
@@ -40,9 +40,9 @@ public class BTreeRepository implements IBTreeRepository<User> {
      * This method create a directory user if it does not exist.
      */
     private void createUserDirectory() {
-        File pathUser = new File(pathUserDataBase);
+        File pathUser = new File(PATH_USER_DATA_BASE);
         if (!pathUser.exists()) {
-            Path directory = Path.of(pathUserDataBase);
+            Path directory = Path.of(PATH_USER_DATA_BASE);
             try {
                 Files.createDirectory(directory);
             } catch (IOException e) {
@@ -61,7 +61,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
     public boolean save(Node<User> node) {
         boolean resultOperation = true;
         String nameFile = String.valueOf(node.getId());
-        nameFile = pathUserDataBase + "/" + nameFile + ".json";
+        nameFile = PATH_USER_DATA_BASE + "/" + nameFile + ".json";
         FileOutputStream fileOutputStream;
         JsonGenerator jsonGenerator;
         try {
@@ -152,7 +152,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     @Override
     public boolean delete(Node<User> node) {
-        String nameFile = pathUserDataBase + "/" + node.getId() + ".json";
+        String nameFile = PATH_USER_DATA_BASE + "/" + node.getId() + ".json";
         boolean resultOperation = false;
         File file = new File(nameFile);
         if (file.exists()) {
@@ -170,7 +170,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     @Override
     public Node<User> readNodeById(String id) {
-        String pathFile = pathUserDataBase + "/" + id + ".json";
+        String pathFile = PATH_USER_DATA_BASE + "/" + id + ".json";
         File file = new File(pathFile);
         Node<User> userNode = null;
         if (file.exists()) {
