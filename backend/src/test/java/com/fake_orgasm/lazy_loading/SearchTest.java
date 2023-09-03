@@ -12,7 +12,7 @@ public class SearchTest {
      */
     @Test
     public void searchTest() {
-        BTree<User> bTree = new BTree<>(10, new BTreeRepository());
+        BTree<User> bTree = new BTree<>(2, new BTreeRepository());
         UserGenerator userGenerator = new UserGenerator();
         for (int i = 0; i < 1000; i++) {
             bTree.searchKey(userGenerator.make());

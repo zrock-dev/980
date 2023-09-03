@@ -24,7 +24,7 @@ public class BTreeHandler {
      * @param root The root node of the B-tree.
      * @return A list of User objects whose names contain the given name fragment.
      */
-    public static List<User> bfs(String name, Node<User> root) {
+    public static List<User> searchByName(String name, Node<User> root) {
         if (root == null) {
             return Collections.emptyList();
         }
