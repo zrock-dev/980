@@ -31,7 +31,7 @@ public class UserManagementService implements IUserManagement {
      */
     @Override
     public List<User> search(String name) {
-        return BTreeHandler.bfs(name, btree.getRoot());
+        return BTreeHandler.searchByName(name, btree.getRoot());
     }
 
     /**

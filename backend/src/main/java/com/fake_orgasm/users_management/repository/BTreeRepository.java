@@ -135,7 +135,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     @Override
     public boolean delete(Node<User> node) {
-        if(node == null){
+        if (node == null) {
             return false;
         }
         String nameFile = pathUserDataBase + "/" + node.getId() + ".json";

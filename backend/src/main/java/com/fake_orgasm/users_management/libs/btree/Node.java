@@ -2,9 +2,11 @@ package com.fake_orgasm.users_management.libs.btree;
 
 import com.fake_orgasm.users_management.repository.NodeDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -196,5 +198,16 @@ public class Node<T extends Comparable<T>> {
                 node.printTree(childPrefix);
             }
         }
+    }
+
+    /**
+     * Sets the ID of a child at the specified index in the idChildren array.
+     *
+     * @param i  the index of the child
+     * @param id the ID of the child
+     */
+
+    public void setIdChild(int i, String id) {
+        idChildren[i] = id;
     }
 }

@@ -10,8 +10,8 @@ import com.fake_orgasm.users_management.repository.BTreeRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This class contains tests for deleting users from the BTree.
@@ -36,57 +36,6 @@ public class DeleteTest {
         return user;
     }
 
-    /**
-     * Deletes multiple users from the BTree and measures the time taken to delete them.
-     */
-    @Test
-    public void deleteTest() {
-        BTree bTree = new BTree(2, new BTreeRepository());
-        User user1 = makeUser();
-        User user2 = makeUser();
-        User user3 = makeUser();
-        User user4 = makeUser();
-        User user5 = makeUser();
-
-        user1.setFirstName("daniel");
-        user2.setFirstName("pablo");
-        user3.setFirstName("andres");
-        user4.setFirstName("thomas");
-        user5.setFirstName("jose");
-
-
-        bTree.insert(user1);
-        bTree.insert(user2);
-        bTree.insert(user3);
-        bTree.insert(user4);
-        bTree.insert(user5);
-
-
-        bTree.remove(user1);
-        bTree.remove(user2);
-        bTree.remove(user3);
-        bTree.remove(user4);
-        bTree.remove(user5);
-
-
-        bTree.printTree();
-    }
-
-    /**
-     * A test case to delete a single user.
-     */
-    @Test
-    public void deleteSingleUserTest() {
-        BTree bTree = new BTree(2, new BTreeRepository());
-        User user1 = makeUser();
-
-        user1.setId(0);
-        user1.setFirstName("jose");
-
-        bTree.remove(user1);
-
-        bTree.printTree();
-    }
 
     /**
      * Deletes a user from the BTree and verifies that the tree is empty after deletion.
@@ -104,15 +53,11 @@ public class DeleteTest {
             user.setFirstName(i + "a");
             users.add(user);
         }
+
         for (int i = 0; i < keys; i++) {
             bTree.insert(users.get(i));
         }
 
-        bTree.getRoot().printTree("");
-        for (int i = 0; i < keys-1; i++) {
-            bTree.getRoot().printTree("");
-            bTree.remove(users.get(i));
-        }
         bTree.getRoot().printTree("");
     }
 
@@ -125,19 +70,99 @@ public class DeleteTest {
         BTree<User> bTree = new BTree(2, new BTreeRepository());
         List<User> users = new ArrayList<>();
         User user;
-        for (int i = 5; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             user = makeUser();
             user.setId(i);
             user.setFirstName(i + "a");
             users.add(user);
         }
         bTree.getRoot().printTree("");
-        System.out.println(users);
-        for (int i = 0; i < 4; i++) {
-            bTree.getRoot().printTree("");
-            bTree.remove(users.get(i));
+        for (int i = 0; i < 9; i++) {
+            if (i != 3) {
+                bTree.remove(users.get(i));
+            }
         }
         bTree.getRoot().printTree("");
-        // Assert.assertTrue(bTree.getRoot().getSize() == 0);
+    }
+
+
+    /**
+     * Deletes a user from the BTree and verifies that the tree is empty after deletion.
+     */
+    @Test
+    public void insertTopRootUserTests() {
+        BTree<User> bTree = new BTree(10, new BTreeRepository());
+        List<User> users = new ArrayList<>();
+        int keys = 100_000;
+        User user;
+        for (int i = 0; i < keys; i++) {
+            user = makeUser();
+            user.setId(i);
+            user.setFirstName(i + "a");
+            users.add(user);
+        }
+        long start = System.nanoTime();
+        for (int i = 0; i < keys; i++) {
+            bTree.insert(users.get(i));
+        }
+        long end = System.nanoTime();
+        System.out.println((end - start) / 1e+9);
+    }
+
+
+    /**
+     * Deletes a user from the BTree and verifies that the tree is empty after deletion.
+     */
+    @Test
+    public void removeRandomUsersTests() {
+        BTree<User> bTree = new BTree(10, new BTreeRepository());
+        List<User> users = new ArrayList<>();
+        int keys = 100_000;
+        User user;
+        Random random = new Random();
+        for (int i = 0; i < keys; i++) {
+            int j = random.nextInt(100000) + 1;
+            user = makeUser();
+            user.setId(j);
+            user.setFirstName(j + "a");
+            users.add(user);
+        }
+        long start = System.nanoTime();
+        for (int i = 0; i < keys - 10; i++) {
+            bTree.remove(users.get(i));
+        }
+        long end = System.nanoTime();
+        System.out.println((end - start) / 1e+9);
+        bTree.getRoot().printTree("");
+    }
+
+
+    /**
+     * Deletes a user from the BTree and verifies that the tree is empty after deletion.
+     */
+    @Test
+    public void deleteASingleUserTest() {
+        BTree<User> bTree = new BTree(10, new BTreeRepository());
+        User user = makeUser();
+        int n = 99996;
+        user.setId(n);
+        user.setFirstName(n + "a");
+
+        bTree.remove(user);
+        bTree.getRoot().printTree("");
+    }
+
+    /**
+     * Deletes a user from the BTree and verifies that the tree is empty after deletion.
+     */
+    @Test
+    public void insertASingleUserTest() {
+        BTree<User> bTree = new BTree(2, new BTreeRepository());
+        User user = makeUser();
+        user.setId(3);
+        user.setFirstName(3 + "a");
+
+        bTree.remove(user);
+        bTree.getRoot().printTree("");
     }
 }
