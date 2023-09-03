@@ -1,12 +1,12 @@
 package com.fake_orgasm.btree;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for testing insertion functionality of the BTree.

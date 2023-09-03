@@ -1,11 +1,10 @@
 package com.fake_orgasm.generator.utils;
 
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import com.fake_orgasm.utils.FileReader;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.fake_orgasm.utils.FileReader;
+import java.io.IOException;
+import org.junit.jupiter.api.Test;
 
 class FileReaderTest {
 

@@ -1,13 +1,12 @@
 package com.fake_orgasm.users_management.models;
 
 import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * This class represents a user in the system.

@@ -5,12 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.junit.jupiter.api.Test;
 
 public class SecondLastNameTest {
 

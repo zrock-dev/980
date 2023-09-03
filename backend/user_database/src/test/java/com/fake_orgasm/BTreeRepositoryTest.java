@@ -7,9 +7,6 @@ import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
 import com.fake_orgasm.users_management.repository.IBTreeRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;

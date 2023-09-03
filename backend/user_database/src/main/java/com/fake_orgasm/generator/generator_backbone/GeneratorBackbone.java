@@ -4,7 +4,6 @@ import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.generator.flight_history_generator.FlightHistoryGenerator;
 import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;

@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
-
 /**
  * This class writes and reads the nodes in json form.
  * It implements the IBTreeRepository interface that allows to save the

@@ -73,4 +73,3 @@ spotless {
 
 // ignored tasks
 checkstyleTest.enabled = false
-
