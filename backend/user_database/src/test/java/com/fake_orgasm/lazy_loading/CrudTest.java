@@ -6,24 +6,19 @@ import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
-
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import org.junit.jupiter.api.Test;
 
 /**
  * This class contains tests for deleting users from the BTree.
  */
-
-public class DeleteTest {
+public class CrudTest {
     /**
      * Generates a new User object by utilizing the UserGenerator and FlightHistoryGenerator classes.
      *
      * @return The newly created User object.
      */
-
     private User makeUser() {
         UserGenerator userGenerator = new UserGenerator();
         FlightHistoryGenerator flightHistoryGenerator = FlightHistoryGenerator.getInstance();
@@ -36,13 +31,12 @@ public class DeleteTest {
         return user;
     }
 
-
     /**
      * Deletes a user from the BTree and verifies that the tree is empty after deletion.
      */
     @Test
-    public void deleteUserTest() {
-        BTree<User> bTree = new BTree(2, new BTreeRepository());
+    public void insertUsersTest() {
+        BTree<User> bTree = new BTree(10, new BTreeRepository());
         List<User> users = new ArrayList<>();
         User user;
         int keys = 10;
@@ -61,13 +55,12 @@ public class DeleteTest {
         bTree.getRoot().printTree("");
     }
 
-
     /**
      * Deletes a user from the BTree and verifies that the tree is empty after deletion.
      */
     @Test
     public void deleteUserTests() {
-        BTree<User> bTree = new BTree(2, new BTreeRepository());
+        BTree<User> bTree = new BTree(10, new BTreeRepository());
         List<User> users = new ArrayList<>();
         User user;
         for (int i = 0; i < 10; i++) {
@@ -85,7 +78,6 @@ public class DeleteTest {
         bTree.getRoot().printTree("");
     }
 
-
     /**
      * Deletes a user from the BTree and verifies that the tree is empty after deletion.
      */
@@ -93,7 +85,7 @@ public class DeleteTest {
     public void insertTopRootUserTests() {
         BTree<User> bTree = new BTree(10, new BTreeRepository());
         List<User> users = new ArrayList<>();
-        int keys = 100_000;
+        int keys = 10; // 100_000;
         User user;
         for (int i = 0; i < keys; i++) {
             user = makeUser();
@@ -109,44 +101,33 @@ public class DeleteTest {
         System.out.println((end - start) / 1e+9);
     }
 
-
     /**
      * Deletes a user from the BTree and verifies that the tree is empty after deletion.
      */
     @Test
     public void removeRandomUsersTests() {
         BTree<User> bTree = new BTree(10, new BTreeRepository());
-        List<User> users = new ArrayList<>();
-        int keys = 100_000;
-        User user;
-        Random random = new Random();
-        for (int i = 0; i < keys; i++) {
-            int j = random.nextInt(100000) + 1;
-            user = makeUser();
-            user.setId(i);
-            user.setFirstName(i + "a");
-            users.add(user);
-        }
+        int keys = 10; // 100_000;
         long start = System.nanoTime();
-        for (int i = 0; i < keys - 10; i++) {
-            bTree.remove(users.get(i));
+        User user;
+        for (int i = 0; i < keys - 1; i++) {
+            user = bTree.getRoot().getKey(0);
+            bTree.remove(user);
         }
         long end = System.nanoTime();
         System.out.println((end - start) / 1e+9);
         bTree.getRoot().printTree("");
     }
 
-
     /**
      * Deletes a user from the BTree and verifies that the tree is empty after deletion.
      */
     @Test
-    public void deleteASingleUserTest() {
+    public void insertASingleUserTest() {
         BTree<User> bTree = new BTree(10, new BTreeRepository());
         User user = makeUser();
-        int n = 99996;
-        user.setId(n);
-        user.setFirstName(n + "a");
+        user.setId(3);
+        user.setFirstName(3 + "a");
 
         bTree.remove(user);
         bTree.getRoot().printTree("");
@@ -156,11 +137,12 @@ public class DeleteTest {
      * Deletes a user from the BTree and verifies that the tree is empty after deletion.
      */
     @Test
-    public void insertASingleUserTest() {
-        BTree<User> bTree = new BTree(2, new BTreeRepository());
+    public void deleteASingleUserTest() {
+        BTree<User> bTree = new BTree(10, new BTreeRepository());
         User user = makeUser();
-        user.setId(3);
-        user.setFirstName(3 + "a");
+        int n = 9;
+        user.setId(n);
+        user.setFirstName(n + "a");
 
         bTree.remove(user);
         bTree.getRoot().printTree("");

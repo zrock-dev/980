@@ -5,10 +5,6 @@ import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
-
-import java.time.LocalDate;
-import java.util.Random;
-
 import org.junit.jupiter.api.Test;
 
 /**
@@ -30,9 +26,9 @@ public class InsertionTest {
         UserGenerator userGenerator = new UserGenerator();
         User user;
         long start = System.nanoTime();
-        for (int i = 0; i <= 10; i++) {
-           user = userGenerator.make();
-           user.setCategory(Category.VIP);
+        for (int i = 0; i < 20; i++) {
+            user = userGenerator.make();
+            user.setCategory(Category.VIP);
             bTree.insert(user);
         }
         long end = System.nanoTime();
@@ -42,6 +38,4 @@ public class InsertionTest {
         // 1M users = 120s = 2 min
         // 10M users = 1200s = 20 min
     }
-
-
 }

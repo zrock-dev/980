@@ -3,13 +3,12 @@ package com.fake_orgasm.generator.user_generator.combinatory_parts;
 import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.utils.FileReader;
 import com.fake_orgasm.utils.Notifiable;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The Piece class represents an abstract base class for components that operate on a collection of items and interact

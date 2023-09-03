@@ -25,6 +25,8 @@ public class BTree<T extends Comparable<T>> {
      */
     private Node<T> root;
 
+    private int size = 0;
+
     /**
      * Constructs a BTree object with the specified degree.
      *
@@ -36,6 +38,7 @@ public class BTree<T extends Comparable<T>> {
         if (degree <= 1) {
             throw new IllegalArgumentException("Order must be greater than 1");
         }
+        this.size = 0;
         this.order = degree;
         this.root = new Node<>(degree);
         this.root.setSize(0);
@@ -131,6 +134,7 @@ public class BTree<T extends Comparable<T>> {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
         }
+        size++;
         Node<T> rootNode = this.root;
         if (rootNode.getSize() == 2 * order - 1) {
             Node<T> node = new Node<>(order);
@@ -390,7 +394,6 @@ public class BTree<T extends Comparable<T>> {
      * @param pos         the position of the key
      * @param parent      the parent node
      */
-
     private void handleMergeCase(final Node<T> predecessor, Node<T> successor, int pos, Node<T> parent) {
         int temp = predecessor.getSize() + 1;
         predecessor.setKey(predecessor.getSize(), parent.getKey(pos));
@@ -409,7 +412,6 @@ public class BTree<T extends Comparable<T>> {
             saveNodeData(parent, predecessor);
         }
     }
-
 
     /**
      * Removes a key from a child node of the B-tree node.
@@ -450,7 +452,6 @@ public class BTree<T extends Comparable<T>> {
      * @param pos    the position of the parent node's child nodes to be merged
      * @param key    the key to be removed from the left child node
      */
-
     private void mergeNodes(Node<T> parent, int pos, T key) {
         if (pos == parent.getSize()) {
             pos--;
@@ -459,7 +460,6 @@ public class BTree<T extends Comparable<T>> {
         T divider = parent.getKey(pos);
         Node<T> leftChild = parent.getChild(pos);
         Node<T> rightChild = parent.getChild(pos + 1);
-
 
         Utils.shiftKeysLeft(parent, pos);
         Utils.shiftChildrenLeft(parent, pos + 1);
@@ -470,7 +470,6 @@ public class BTree<T extends Comparable<T>> {
         mergeKeysAndChildren(parent, leftChild, rightChild);
 
         remove(leftChild, key);
-
     }
 
     /**
@@ -480,7 +479,6 @@ public class BTree<T extends Comparable<T>> {
      * @param leftChild  the left child node
      * @param rightChild the right child node
      */
-
     private void mergeKeysAndChildren(Node<T> parent, Node<T> leftChild, Node<T> rightChild) {
         for (int i = 0, j = leftChild.getSize(); i < rightChild.getSize() + 1; i++, j++) {
             if (i < rightChild.getSize()) {
@@ -506,7 +504,6 @@ public class BTree<T extends Comparable<T>> {
      * @param leftChild  the left child node
      * @param rightChild the right child node
      */
-
     private void decreaseTree(Node<T> parent, Node<T> leftChild, Node<T> rightChild) {
         root = parent.getChild(0);
         if (useRepository) {
@@ -517,7 +514,6 @@ public class BTree<T extends Comparable<T>> {
             saveNodeData(root);
         }
     }
-
 
     /**
      * Redistributes keys and children from a right sibling
@@ -539,7 +535,6 @@ public class BTree<T extends Comparable<T>> {
         currentChild.increaseSize();
         currentChild.setChild(currentChild.getSize(), rightSibling.getChild(0));
         currentChild.setIdChild(currentChild.getSize(), rightSibling.getIdChild(0));
-
 
         Utils.shiftKeysLeft(rightSibling, 0);
         Utils.shiftChildrenLeft(rightSibling, 0);
@@ -572,11 +567,9 @@ public class BTree<T extends Comparable<T>> {
         }
         leftSibling.decreaseSize();
 
-
         Utils.shiftKeysRight(currentChild, 0);
         currentChild.setKey(0, divider);
         Utils.shiftChildrenRight(currentChild, 0);
-
 
         currentChild.setChild(0, childToMove);
         if (childToMove != null) {
@@ -688,6 +681,7 @@ public class BTree<T extends Comparable<T>> {
         if (x == null) {
             return false;
         }
+        size--;
         remove(root, key);
         return true;
     }

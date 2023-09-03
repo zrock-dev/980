@@ -1,7 +1,6 @@
 package com.fake_orgasm.generator.user_generator;
 
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.Calendar;
 
 /**

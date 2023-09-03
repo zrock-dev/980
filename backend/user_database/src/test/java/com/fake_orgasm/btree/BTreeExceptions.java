@@ -1,9 +1,9 @@
 package com.fake_orgasm.btree;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Test class for general methods and behavior of the BTree class.

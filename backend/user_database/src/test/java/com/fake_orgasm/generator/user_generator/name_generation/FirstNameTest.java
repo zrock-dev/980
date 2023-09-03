@@ -6,6 +6,7 @@ import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.users_management.models.User;
 import java.util.HashMap;
 import org.junit.jupiter.api.Test;
+
 public class FirstNameTest {
     @Test
     void checkRepetitionsValidity() {

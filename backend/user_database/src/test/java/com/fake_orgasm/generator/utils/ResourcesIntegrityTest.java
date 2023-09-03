@@ -1,14 +1,13 @@
 package com.fake_orgasm.generator.utils;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fake_orgasm.generator.user_generator.UserNameGenerator;
 import com.fake_orgasm.utils.FileReader;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-
+import org.junit.jupiter.api.Test;
 
 public class ResourcesIntegrityTest {
     @Test
