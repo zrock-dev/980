@@ -3,6 +3,8 @@ package com.fake_orgasm.generator.utils;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+
+import com.fake_orgasm.utils.FileReader;
 import org.junit.jupiter.api.Test;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;

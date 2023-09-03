@@ -1,4 +1,4 @@
-package com.fake_orgasm.generator.utils;
+package com.fake_orgasm;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
+import utils.FileReader;
 
 class FileReaderTest {
     protected final Logger logger = LogManager.getLogger(getClass());

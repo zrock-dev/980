@@ -1,4 +1,4 @@
-package com.fake_orgasm.generator.utils;
+package utils;
 
 import java.io.File;
 import java.io.IOException;

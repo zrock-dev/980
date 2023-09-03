@@ -1,7 +1,7 @@
 package com.fake_orgasm.generator.user_generator.combinatory_parts;
 
-import com.fake_orgasm.generator.utils.FileReader;
 import com.fake_orgasm.generator.utils.Notifiable;
+import com.fake_orgasm.utils.FileReader;
 
 /**
  * The CoreWorker class represents a worker that operates on a collection of items and interacts with a neighbor object.

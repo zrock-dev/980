@@ -1,11 +1,11 @@
 package com.fake_orgasm.server_management;
 
-import com.fake_orgasm.generator.utils.FileReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import utils.FileReader;
 
 /**
  * Class to manage all operations in server according to different requests.
