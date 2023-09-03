@@ -123,7 +123,6 @@ public class Utils {
      * @param pos    the starting position
      * @param <T>    the type of elements to work.
      */
-
     public static <T extends Comparable<T>> void reduceKeys(Node<T> parent, int pos) {
         for (int i = pos; i < parent.getSize(); i++) {
             parent.setKey(i, parent.getKey(i + 1));
@@ -144,7 +143,6 @@ public class Utils {
      * @param temp        an integer representing a temporary value used for indexing
      * @param <T>         the type of elements to work.
      */
-
     public static <T extends Comparable<T>> void joinNodes(Node<T> predecessor, Node<T> successor, int temp) {
         for (int i = 0, j = predecessor.getSize(); i < successor.getSize(); i++) {
             predecessor.setKey(j++, successor.getKey(i));
@@ -156,5 +154,4 @@ public class Utils {
             temp++;
         }
     }
-
 }
