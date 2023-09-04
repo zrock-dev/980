@@ -1,0 +1,343 @@
+/*COLOR VARIABLES*/
+:root {
+    --white: #ffffff;
+    --blue: #0014ff;
+    --lightblue: #4eb1ff;
+    --blackone: #000;
+    --blacktwo: #333;
+    --grayone: #999;
+    --graytwo: #ddd;
+    --grayThree: #f5f5f5;
+    --red: #d71313;
+    --yellow: #ffe569;
+    --green: #a2ff86;
+  }
+/*COIN CHANGE CONTAINER*/
+.coin-change-container {
+  display: flex;
+}
+.form-container{
+  margin: 0 1%;
+  flex: 20;
+}
+.coin-change-operation-main-container{
+  flex: 60;
+  margin: 0 1%;
+}
+
+/*FORM CONTAINER*/
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 70px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--blue);
+    width:100%;
+    max-height: 100vh;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    margin-left: auto;
+  }
+  
+  .form-container:hover {
+    transform: translateY(-5px);
+    background-color: var(--lightblue);
+  }
+  
+  .form-title {
+    font-size: 38px;
+    font-weight: bolder;
+    margin-bottom: 40px;
+    color: var(--white);
+    transition: color 0.2s ease;
+  }
+  
+  .form-title:hover {
+    color: var(--lightblue);
+  }
+  
+  .label {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: var(--white);
+    transition: color 0.2s ease;
+  }
+  
+  .label:hover {
+    color: var(--grayone);
+  }
+  
+  .select_input,
+  .text_input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid var(--white);
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: border-color 0.2s ease;
+    height: 60px;
+    color: var(--blacktwo);
+  }
+  
+  .select_input:hover,
+  .text_input:hover {
+    border-color: var(--blue);
+  }
+  
+  .select_input {
+    margin-bottom: 40px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 30px;
+    background: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right center;
+    background-size: 20px auto;
+    background-position: calc(100% - 15px) center;
+  }
+  .coin-image {
+    width: 120px;
+    height: auto;
+    margin: 60px;
+    align-self: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .coin-image:hover {
+    transform: scale(1.05);
+  }
+  
+  .option-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .option-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--blackone);
+    color: var(--white);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .option-buttons button:hover {
+    background-color: #1b1d1e;
+    transform: scale(1.05);
+  }
+  
+  .main-button {
+    padding: 15px;
+    font-size: 18px;
+    background-color: var(--blackone);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .main-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /*RESULT DISPLAYER*/
+  .coin-change-operation-main-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 100vh;
+    width: 100%;
+    padding: 2% 4% 3% 4%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: var(--graytwo);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  .coin-change-operation-main-container:hover{
+    transform: translateY(-5px);
+    background-color: var(--grayThree);
+  }
+  
+  .coin-change-operation-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    align-self: flex-start;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .coin-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .coin-image-group {
+    display: flex;
+    gap: 15%;
+  }
+  
+  .coin-image-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5%;
+  }
+  
+  .coin-image-result img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 3%;
+  }
+  .coin-image-result p{
+    margin-bottom: 5%;
+  }
+  
+  .coin-change-operation-results h2 {
+    align-self: flex-start;
+    font-size: 1.6rem;
+    color: var(--white);
+  }
+  
+  .coin-details {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .coin-amount,
+  .total-coins {
+    text-align: left;
+    margin: 0 10px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+  }
+  
+  .total-coins {
+    text-align: left;
+    margin: 0 10px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+  }
+  
+  .total {
+    font-size: 2rem;
+    margin-right: 5px;
+  }
+  
+  .currency,
+  .coins {
+    font-size: 1.3rem;
+  }
+  
+  .total {
+    margin-left: 10px;
+  }
+  
+  .currency {
+    margin-left: 5px;
+  }
+  
+  .progress-bar-container {
+    margin-top: 3%;
+    width: 100%;
+  }
+
+/*PROGRESS BAR*/
+.progress-bar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  
+  .progress-title {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--white);
+    align-self: flex-start;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    margin-top: 2%;
+    height: auto;
+    background-color: #ccc;
+    border-radius: 25px;
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .progress {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    line-height: 50px;
+  }
+
+  .red {
+    background-color: red;
+  }
+  
+  .yellow {
+    background-color: yellow;
+  }
+  
+  .purple {
+    background-color: purple;
+  }
+  
+  .orange {
+    background-color: orange;
+  }
+  
+  .green {
+    background-color: green;
+  }
+  
+  .blue {
+    background-color: blue;
+  }
+  
+
+
+
+
+
+
+  @media (max-width: 1400px) {
+    .option-buttons{
+      display: none;
+    }
+    .form-container{
+      padding: 20px;
+    }
+
+  }
+  
