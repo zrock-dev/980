@@ -24,7 +24,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
     /**
      * Path where the nodes are saved.
      */
-    public static final String PATH_USER_DATA_BASE = "../backend/user_database";
+    public static final String PATH_USER_DATA_BASE = "users";
 
     private JsonFactory jsonFactory;
 
