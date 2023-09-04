@@ -10,13 +10,14 @@ const OptionInput = ({ label, selectedOption, stringlist, width, height, onSelec
   const selectStyle = {
     width: width,
     height: height,
-    border: '2px solid #ccc',
+    border: '2px solid #0014ff',
     padding: '5px',
     position: 'relative',
     marginTop: '20px',
     borderRadius: '5px',
     background: 'transparent',
     zIndex:'1',
+    outline: 'none',
   };
 
   const labelStyle = {
@@ -24,7 +25,7 @@ const OptionInput = ({ label, selectedOption, stringlist, width, height, onSelec
     position: 'relative',
     top: '-50px',
     left: '10px',
-    background: '#0014ff',
+    background: '#4eb1ff',
     padding: '0 5px',
     zIndex:'2',
     color: 'white',
