@@ -5,5 +5,5 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'flight_database_and_money_exchange'
+rootProject.name = 'money_exchange'
 enableFeaturePreview "STABLE_CONFIGURATION_CACHE"
