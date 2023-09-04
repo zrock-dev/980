@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
     public BTreeRepository() {
         jsonFactory = new JsonFactory();
     }
+
     /**
      * Save a node in the secondary memory.
      *
@@ -163,5 +165,25 @@ public class BTreeRepository implements IBTreeRepository<User> {
             }
         }
         return userNode;
+    }
+
+    /**
+     * Saves the size of the binary tree.
+     *
+     * @return true if the size is successfully saved, false otherwise
+     */
+    @Override
+    public boolean saveBTreeSize(int size) {
+        return false;
+    }
+
+    /**
+     * Retrieves the size of the binary tree.
+     *
+     * @return the size of the binary tree
+     */
+    @Override
+    public Integer readBTreeSize() {
+        return 0;
     }
 }
