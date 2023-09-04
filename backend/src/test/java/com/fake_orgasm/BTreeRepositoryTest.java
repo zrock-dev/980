@@ -122,6 +122,27 @@ public class BTreeRepositoryTest {
         }
         return users;
     }
+
+    /**
+     * This method tests the save of the size of the btree.
+     */
+    @Test
+    public void saveSizeBTreeTest() {
+        IBTreeRepository<User> userIBTreeRepository = new BTreeRepository();
+        userIBTreeRepository.setSizeBTree(10);
+        File file = new File(BTreeRepository.PATH_USER_DATA_BASE + "/BTreeInformation.json");
+        boolean result = file.exists();
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    public void getSizeBTreeTest() {
+        IBTreeRepository<User> userIBTreeRepository = new BTreeRepository();
+        userIBTreeRepository.setSizeBTree(10);
+        int currentResult = userIBTreeRepository.getSizeBTree();
+        int expectedResult = 10;
+        Assertions.assertEquals(expectedResult, currentResult);
+    }
     /**
      * This method generate a list of flight histories.
      *
