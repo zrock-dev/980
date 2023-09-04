@@ -83,7 +83,6 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
         for (JsonNode userNode : usersNode) {
             User user = new User();
             user.setId(userNode.get("id").asInt());
-            user.setCitizenId(userNode.get("citizenId").asInt());
             user.setFirstName(userNode.get("firstName").asText());
             user.setSecondName(userNode.get("secondName").asText());
             user.setFirstLastName(userNode.get("firstLastName").asText());
