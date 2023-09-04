@@ -61,7 +61,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
     public boolean save(Node<User> node) {
         boolean resultOperation = true;
         String nameFile = String.valueOf(node.getId());
-        nameFile = PATH_USER_DATA_BASE + "/" + nameFile + ".json";
+        nameFile = String.format("%s/%s.json", PATH_USER_DATA_BASE, nameFile);
         FileOutputStream fileOutputStream;
         JsonGenerator jsonGenerator;
         try {
@@ -152,7 +152,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     @Override
     public boolean delete(Node<User> node) {
-        String nameFile = PATH_USER_DATA_BASE + "/" + node.getId() + ".json";
+        String nameFile = String.format("%s/%s.json", PATH_USER_DATA_BASE, node.getId());
         boolean resultOperation = false;
         File file = new File(nameFile);
         if (file.exists()) {
@@ -170,7 +170,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     @Override
     public Node<User> readNodeById(String id) {
-        String pathFile = PATH_USER_DATA_BASE + "/" + id + ".json";
+        String pathFile = String.format("%s/%s.json", PATH_USER_DATA_BASE, id);
         File file = new File(pathFile);
         Node<User> userNode = null;
         if (file.exists()) {
