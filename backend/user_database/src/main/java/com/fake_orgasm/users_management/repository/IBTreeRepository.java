@@ -26,4 +26,18 @@ public interface IBTreeRepository<T extends Comparable<T>> {
      * @return Node found.
      */
     Node<T> readNodeById(String id);
+
+    /**
+     * Get the size of the btree.
+     *
+     * @return size of the btree.
+     */
+    int getSizeBTree();
+
+    /**
+     * Set the size of the btree.
+     *
+     * @param sizeBTree size of the btree.
+     */
+    void setSizeBTree(int sizeBTree);
 }

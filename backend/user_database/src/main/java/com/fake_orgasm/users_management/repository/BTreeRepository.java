@@ -4,9 +4,8 @@ import com.fake_orgasm.generator.flight_history_generator.Airport;
 import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.User;
-import com.fasterxml.jackson.core.JsonEncoding;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -181,5 +180,51 @@ public class BTreeRepository implements IBTreeRepository<User> {
             }
         }
         return userNode;
+    }
+
+    /**
+     * Get the size of the btree.
+     *
+     * @return size of the btree.
+     */
+    @Override
+    public int getSizeBTree() {
+        String nameFile = String.format("%s/%s.json", PATH_USER_DATA_BASE, "BTreeInformation");
+        File file = new File(nameFile);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonFactory jsonFactory = new JsonFactory();
+        int sizeBTree = 0;
+        try {
+            JsonParser jsonParser = jsonFactory.createParser(file);
+            JsonNode jsonNode = objectMapper.readTree(jsonParser);
+            sizeBTree = jsonNode.get("sizeBTree").asInt();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return sizeBTree;
+    }
+
+    /**
+     * Set the size of the btree.
+     *
+     * @param sizeBTree size of the btree.
+     */
+    @Override
+    public void setSizeBTree(int sizeBTree) {
+        String nameFile = String.format("%s/%s.json", PATH_USER_DATA_BASE, "BTreeInformation");
+        FileOutputStream fileOutputStream;
+        JsonGenerator jsonGenerator;
+        try {
+            fileOutputStream = new FileOutputStream(new File(nameFile));
+            jsonGenerator = jsonFactory.createGenerator(fileOutputStream, JsonEncoding.UTF8);
+            jsonGenerator.useDefaultPrettyPrinter();
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeNumberField("sizeBTree", sizeBTree);
+            jsonGenerator.writeEndObject();
+            jsonGenerator.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
