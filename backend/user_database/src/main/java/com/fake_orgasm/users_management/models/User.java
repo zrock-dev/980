@@ -16,7 +16,6 @@ import lombok.Setter;
 public final class User implements Comparable<User> {
 
     private int id;
-    private long citizenId;
     private String firstName;
     private String secondName;
     private String firstLastName;

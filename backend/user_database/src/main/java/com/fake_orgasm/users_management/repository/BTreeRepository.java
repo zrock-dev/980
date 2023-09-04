@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -23,7 +25,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
     /**
      * Path where the nodes are saved.
      */
-    private final String pathUserDataBase = "../user_database/src/main/resources/DataBase/Users";
+    public static final String PATH_USER_DATA_BASE = "users";
 
     private JsonFactory jsonFactory;
 
@@ -32,6 +34,22 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     public BTreeRepository() {
         jsonFactory = new JsonFactory();
+        createUserDirectory();
+    }
+
+    /**
+     * This method create a directory user if it does not exist.
+     */
+    private void createUserDirectory() {
+        File pathUser = new File(PATH_USER_DATA_BASE);
+        if (!pathUser.exists()) {
+            Path directory = Path.of(PATH_USER_DATA_BASE);
+            try {
+                Files.createDirectory(directory);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
@@ -44,7 +62,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
     public boolean save(Node<User> node) {
         boolean resultOperation = true;
         String nameFile = String.valueOf(node.getId());
-        nameFile = pathUserDataBase + "/" + nameFile + ".json";
+        nameFile = String.format("%s/%s.json", PATH_USER_DATA_BASE, nameFile);
         FileOutputStream fileOutputStream;
         JsonGenerator jsonGenerator;
         try {
@@ -89,7 +107,6 @@ public class BTreeRepository implements IBTreeRepository<User> {
     private void writeUser(User user, JsonGenerator generator) throws IOException {
         generator.writeStartObject();
         generator.writeNumberField("id", user.getId());
-        generator.writeNumberField("citizenId", user.getCitizenId());
         generator.writeStringField("firstName", user.getFirstName());
         generator.writeStringField("secondName", user.getSecondName());
         generator.writeStringField("firstLastName", user.getFirstLastName());
@@ -135,7 +152,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     @Override
     public boolean delete(Node<User> node) {
-        String nameFile = pathUserDataBase + "/" + node.getId() + ".json";
+        String nameFile = String.format("%s/%s.json", PATH_USER_DATA_BASE, node.getId());
         boolean resultOperation = false;
         File file = new File(nameFile);
         if (file.exists()) {
@@ -153,7 +170,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      */
     @Override
     public Node<User> readNodeById(String id) {
-        String pathFile = pathUserDataBase + "/" + id + ".json";
+        String pathFile = String.format("%s/%s.json", PATH_USER_DATA_BASE, id);
         File file = new File(pathFile);
         Node<User> userNode = null;
         if (file.exists()) {

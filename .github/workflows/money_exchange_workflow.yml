@@ -7,7 +7,7 @@ on:
       - develop
       - main
     paths:
-      - "backend/flight_database_and_money_exchange"
+      - "backend/money_exchange"
   pull_request:
     types:
       - opened
@@ -35,7 +35,7 @@ jobs:
       - name: Building
         working-directory: ${{ github.workspace }}
         run: |
-          cd backend/flight_database_and_money_exchange
+          cd backend/money_exchange
           ./gradlew build -x test -x check --no-daemon
 
   test:
@@ -57,7 +57,7 @@ jobs:
       - name: Testing 
         working-directory: ${{ github.workspace }}
         run: |
-          cd backend/flight_database_and_money_exchange
+          cd backend/money_exchange
           ./gradlew test -x check --no-daemon
 
   check:
@@ -79,6 +79,6 @@ jobs:
       - name: Static Code Analysis 
         working-directory: ${{ github.workspace }}
         run: |
-          cd backend/flight_database_and_money_exchange
+          cd backend/money_exchange
           ./gradlew --no-daemon checkStyleMain spotlessCheck -x checkStyleTest -x test build 
 

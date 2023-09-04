@@ -28,7 +28,7 @@ public class BTreeRepositoryTest {
         result = bTreeRepository.save(nodeToInsert.get(0));
         Assertions.assertTrue(result);
 
-        File currentFile = new File("../user_database/src/main/resources/DataBase/Users/TestNode1.json");
+        File currentFile = new File(String.format("%s/TestNode1.json", BTreeRepository.PATH_USER_DATA_BASE));
         result = currentFile.exists();
         Assertions.assertTrue(result);
 
@@ -36,7 +36,7 @@ public class BTreeRepositoryTest {
         result = bTreeRepository.save(nodeToInsert.get(1));
         Assertions.assertTrue(result);
 
-        currentFile = new File("../user_database/src/main/resources/DataBase/Users/TestNode2.json");
+        currentFile = new File(String.format("%s/TestNode1.json", BTreeRepository.PATH_USER_DATA_BASE));
         result = currentFile.exists();
         Assertions.assertTrue(result);
 
@@ -44,7 +44,7 @@ public class BTreeRepositoryTest {
         result = bTreeRepository.save(nodeToInsert.get(2));
         Assertions.assertTrue(result);
 
-        currentFile = new File("../user_database/src/main/resources/DataBase/Users/TestNode3.json");
+        currentFile = new File(String.format("%s/TestNode1.json", BTreeRepository.PATH_USER_DATA_BASE));
         result = currentFile.exists();
         Assertions.assertTrue(result);
     }
