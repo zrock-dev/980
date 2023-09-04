@@ -13,30 +13,40 @@ public enum Category {
     private final String categoryType;
 
     /**
-     * This is a constructor method to create a category for passenger.
+     * This is a constructor method to create a category for a passenger.
      *
-     * @param priorityNumber is the priority number.
-     * @param categoryType is the priority type.
+     * @param priorityNumber The priority number associated with the category.
+     * @param categoryType   The category type or description.
      */
     Category(int priorityNumber, String categoryType) {
-
         this.priorityNumber = priorityNumber;
         this.categoryType = categoryType;
     }
 
     /**
-     * This is a getter method to get the priority;
+     * This method retrieves the priority number associated with this category.
      *
-     * @return int type, return the priority of the category.
+     * @return The priority number as an integer.
      */
     public int getNumber() {
         return priorityNumber;
     }
 
+    /**
+     * This method retrieves the category type or description.
+     *
+     * @return A string representing the category type.
+     */
     public String getType() {
         return categoryType;
     }
 
+    /**
+     * This method gets a Category enum based on the provided type string.
+     *
+     * @param type The type string to match against category types.
+     * @return The Category enum corresponding to the provided type.
+     */
     public static Category getCategory(String type) {
         return switch (type) {
             case "Vip" -> Category.VIP;

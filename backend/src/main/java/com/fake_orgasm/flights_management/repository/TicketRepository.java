@@ -5,16 +5,25 @@ import com.fake_orgasm.flights_management.models.Ticket;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * This class has the responsibility of managing ticket data in the database.
+ * It provides methods for creating, retrieving, updating, and deleting ticket records.
+ */
 public class TicketRepository {
 
     private FlightDatabase database;
 
+    /**
+     * This method constructs a TicketRepository and initializes it with a database connection.
+     */
     public TicketRepository() {
         database = FlightDatabase.getInstance();
     }
 
+    /**
+     * This method creates a Ticket table in the database if it does not already exist.
+     */
     public void createTable() {
         try {
             Statement statement;
@@ -35,6 +44,12 @@ public class TicketRepository {
         }
     }
 
+    /**
+     * This method creates a ticket record in the database.
+     *
+     * @param ticket The Ticket object to be created.
+     * @return True if the ticket was successfully created, otherwise false.
+     */
     public boolean create(Ticket ticket) {
         boolean wasSaved = false;
         if (database.doesNotExist("Ticket", ticket.getId())) return wasSaved;
@@ -57,6 +72,12 @@ public class TicketRepository {
         return wasSaved;
     }
 
+    /**
+     * This method creates multiple ticket records in the database.
+     *
+     * @param tickets A list of Ticket objects to be created.
+     * @return True if all tickets were successfully created, otherwise false.
+     */
     public boolean create(ArrayList<Ticket> tickets) {
         boolean wereCreated = false;
 
@@ -88,6 +109,11 @@ public class TicketRepository {
         return wereCreated;
     }
 
+    /**
+     * This method retrieves a list of all tickets stored in the database.
+     *
+     * @return A list of Ticket objects representing all tickets in the database.
+     */
     public ArrayList<Ticket> findAll() {
         String query = "SELECT * FROM Ticket;";
         try {
@@ -115,6 +141,12 @@ public class TicketRepository {
         }
     }
 
+    /**
+     * This method retrieves a ticket record from the database by its ID.
+     *
+     * @param id The ID of the ticket to retrieve.
+     * @return The Ticket object representing the ticket record, or null if not found.
+     */
     public Ticket search(String id) {
         String query = "SELECT * FROM Ticket WHERE id = ?";
         try {
@@ -141,6 +173,12 @@ public class TicketRepository {
         }
     }
 
+    /**
+     * This method retrieves a list of ticket records from the database by their IDs.
+     *
+     * @param ticketIds An array of ticket IDs to retrieve.
+     * @return A list of Ticket objects representing the retrieved tickets.
+     */
     public ArrayList<Ticket> search(String[] ticketIds) {
         if (ticketIds == null || ticketIds.length == 0) {
             return new ArrayList<>();
@@ -186,8 +224,13 @@ public class TicketRepository {
         }
     }
 
-
-
+    /**
+     * This method updates a ticket record in the database.
+     *
+     * @param id     The ID of the ticket to update.
+     * @param ticket The Ticket object with updated information.
+     * @return True if the ticket was successfully updated, otherwise false.
+     */
     public boolean update(String id, Ticket ticket) {
         boolean wasUpdated = false;
         try {
@@ -213,7 +256,12 @@ public class TicketRepository {
         return wasUpdated;
     }
 
-
+    /**
+     * This method deletes a ticket record from the database.
+     *
+     * @param id The ID of the ticket to delete.
+     * @return True if the ticket was successfully deleted, otherwise false.
+     */
     public boolean delete(String id) {
         return database.delete("Flight", id);
     }

@@ -6,14 +6,29 @@ import com.fake_orgasm.flights_management.models.Flight;
 
 import java.util.*;
 
+/**
+ * This class is responsible for generating random flight data based on a list of airports.
+ */
 public class FlightGenerator {
 
     private Random random;
 
+    /**
+     * This method constructs a FlightGenerator instance and initializes the random number generator.
+     */
     public FlightGenerator() {
         random = new Random();
     }
 
+    /**
+     * This method generates a list of random flights with the specified amount,
+     * considering a list of airports as sources and destinations.
+     *
+     * @param airports The list of airports from which flights will depart and arrive.
+     * @param amount   The number of flights to generate.
+     * @return An ArrayList of randomly generated flights.
+     * @throws FlightCapacityException If there is an issue with the flight capacity.
+     */
     public ArrayList<Flight> getFlightsRandomly(ArrayList<Airport> airports, int amount)
             throws FlightCapacityException {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -35,6 +50,11 @@ public class FlightGenerator {
         return flights;
     }
 
+    /**
+     * This method generates a random date within the next 90 days.
+     *
+     * @return A Date object representing a random future date.
+     */
     private Date getDateRandomly() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, 1);

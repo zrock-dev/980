@@ -6,7 +6,7 @@ package com.fake_orgasm.flights_management.repository.schemas;
 public interface Schemable {
 
     /**
-     * This is the method returns the name of the field.
+     * This method returns the name of the field.
      *
      * @return file name.
      */

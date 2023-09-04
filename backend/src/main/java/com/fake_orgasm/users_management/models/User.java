@@ -94,7 +94,8 @@ public class User implements Comparable<User> {
     /**
      * Empty User constructor.
      */
-    public User() {}
+    public User() {
+    }
 
     /**
      * Returns the full name of the user.
@@ -147,8 +148,13 @@ public class User implements Comparable<User> {
         return this.id == userToCompare.getId();
     }
 
+    /**
+     * This method returns a hash code value for this User object. This method overrides
+     * the hashCode method inherited from the Object class.
+     *
+     * @return A hash code value for this User object.
+     */
     @Override
     public int hashCode() {
         return super.hashCode();
     }
-}

@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles the generation of airports, flights, and tickets,
+ * as well as their storage in repositories.
+ */
 @Getter
 @Service
 public class FlightGeneratorHandler {
@@ -35,6 +39,15 @@ public class FlightGeneratorHandler {
     private ArrayList<Ticket> tickets;
     private List<User> users;
 
+    /**
+     * This method constructs a FlightGeneratorHandler instance with the specified user management
+     * and repository references.
+     *
+     * @param userManagement    The user management service for updating users.
+     * @param airportRepository The repository for airports.
+     * @param flightRepository  The repository for flights.
+     * @param ticketRepository  The repository for tickets.
+     */
     public FlightGeneratorHandler(
             IUserManagement userManagement,
             AirportRepository airportRepository,
@@ -50,6 +63,10 @@ public class FlightGeneratorHandler {
         this.ticketRepository = ticketRepository;
     }
 
+    /**
+     * This method constructs a FlightGeneratorHandler instance with default repository instances
+     * and creates their tables.
+     */
     public FlightGeneratorHandler() {
         airportGenerator = new AirportGenerator();
         flightGenerator = new FlightGenerator();
@@ -63,9 +80,16 @@ public class FlightGeneratorHandler {
         ticketRepository.createTable();
     }
 
+    /**
+     * This method generates random airports and saves them to the repository.
+     *
+     * @param amount The number of airports to generate.
+     * @return True if airports were generated and saved successfully; false otherwise.
+     */
     public boolean generateAirportsAndSave(int amount) {
         boolean wereGenerated = false;
-        ArrayList<Airport> airports = airportGenerator.getAirportsRandomly(amount);
+        ArrayList<Airport> airports = airportGenerator
+                .getAirportsRandomly(amount);
         if (!airports.isEmpty()) {
             airportRepository.create(airports);
             wereGenerated = true;
@@ -74,12 +98,19 @@ public class FlightGeneratorHandler {
         return wereGenerated;
     }
 
+    /**
+     * This method generates random flights and saves them to the repository.
+     *
+     * @param amount The number of flights to generate.
+     * @return True if flights were generated and saved successfully; false otherwise.
+     */
     public boolean generateFlightsAndSave(int amount) {
         boolean wereGenerated = false;
         try {
             ArrayList<Airport> airports = airportRepository.findAll();
             if (!airports.isEmpty()) {
-                ArrayList<Flight> flights = flightGenerator.getFlightsRandomly(airports, amount);
+                ArrayList<Flight> flights = flightGenerator
+                        .getFlightsRandomly(airports, amount);
                 flightRepository.create(flights);
                 wereGenerated = true;
             }
@@ -89,6 +120,13 @@ public class FlightGeneratorHandler {
         return wereGenerated;
     }
 
+    /**
+     * This method generates random tickets for users and saves them to the repository.
+     *
+     * @param usersToGenerate The list of users to generate tickets for.
+     * @param ticketsByUser   The number of tickets to generate per user.
+     * @return True if tickets were generated and saved successfully; false otherwise.
+     */
     public boolean generateTicketsAndSave(List<User> usersToGenerate, int ticketsByUser) {
         boolean wereGenerated = generateTickets(usersToGenerate, ticketsByUser);
         boolean wereSaved = saveNewData();
@@ -96,6 +134,13 @@ public class FlightGeneratorHandler {
         return wereGenerated && wereSaved;
     }
 
+    /**
+     * This method generates random tickets for users.
+     *
+     * @param usersToGenerate The list of users to generate tickets for.
+     * @param ticketsByUser   The number of tickets to generate per user.
+     * @return True if tickets were generated successfully; false otherwise.
+     */
     public boolean generateTickets(List<User> usersToGenerate, int ticketsByUser) {
         boolean wereGenerated = false;
         try {
@@ -124,6 +169,13 @@ public class FlightGeneratorHandler {
         return wereGenerated;
     }
 
+    /**
+     * This method calculates the required number of tickets, flights, and airports based on the
+     * number of users and tickets per user.
+     *
+     * @param usersSize       The total number of users.
+     * @param ticketsByUser   The number of tickets to generate per user.
+     */
     private void calculateAmounts(int usersSize, int ticketsByUser) {
         amountTickets = (usersSize * ticketsByUser);
         amountFlights = amountTickets / Flight.AVERAGE_CAPACITY;
@@ -135,6 +187,11 @@ public class FlightGeneratorHandler {
         }
     }
 
+    /**
+     * This method updates user information in the user management service.
+     *
+     * @param users The list of users to update.
+     */
     private void updateUsers(List<User> users) {
         try {
             for (User user : users) {
@@ -146,6 +203,12 @@ public class FlightGeneratorHandler {
 
     }
 
+    /**
+     * This method saves generated data (airports, flights, tickets) to the
+     * respective repositories.
+     *
+     * @return True if data was saved successfully; false otherwise.
+     */
     public boolean saveNewData() {
         boolean wereSaved = false;
         airportRepository.create(airports);

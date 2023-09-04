@@ -21,6 +21,11 @@ public class ServiceConfiguration {
         return new BTree<>(10);
     }
 
+    /**
+     * Initializes and configures a user management instance to manage the users.
+     *
+     * @return a user management.
+     */
     @Bean
     public IUserManagement getUserManagement() {
         return null;

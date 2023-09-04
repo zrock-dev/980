@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * This class is the airport model.
+ * This class has the responsibility to represent a airport.
  */
 @Getter
 @Setter
@@ -28,6 +28,11 @@ public class Airport {
         this.state = state;
     }
 
+    /**
+     * This is the to string method to return airport view by console.
+     *
+     * @return airport view by console.
+     */
     @Override
     public String toString() {
         return "(" + id + ") - " + name + " -> " + country + " - " + state;

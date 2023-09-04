@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * This class is responsible for generating random tickets for users on flights.
+ */
 public class TicketGenerator {
 
     private Random random;
@@ -24,6 +27,12 @@ public class TicketGenerator {
     private final Category[] CATEGORIES = {Category.VIP,
             Category.FREQUENT_PASSENGER, Category.REGULAR_PASSENGER};
 
+    /**
+     * This method constructs a TicketGenerator instance with a list of users and flights.
+     *
+     * @param users   The list of users for whom tickets will be generated.
+     * @param flights The list of flights for which tickets will be generated.
+     */
     public TicketGenerator(List<User> users, ArrayList<Flight> flights) {
         this.users = users;
         this.flights = flights;
@@ -31,6 +40,12 @@ public class TicketGenerator {
         random = new Random();
     }
 
+    /**
+     * This method generates a list of random tickets with the specified amount.
+     *
+     * @param amount The number of tickets to generate.
+     * @return An ArrayList of randomly generated tickets.
+     */
     public ArrayList<Ticket> getTicketsRandomly(int amount) {
         ArrayList<Ticket> tickets = new ArrayList<>();
         Category category;
@@ -55,6 +70,12 @@ public class TicketGenerator {
         return tickets;
     }
 
+    /**
+     * This method generates a specified amount of tickets for a specific user.
+     *
+     * @param userIndex The index of the user for whom tickets will be generated.
+     * @param amount    The number of tickets to generate for the user.
+     */
     public void generateTickets(int userIndex, int amount) {
         Flight flight;
         Ticket ticket;
@@ -71,6 +92,13 @@ public class TicketGenerator {
         }
     }
 
+    /**
+     * This method generate a ticket for a specific user and flight.
+     *
+     * @param user   the user who owns the ticket.
+     * @param flight the flight that will contain the ticket.
+     * @return the new ticket generated.
+     */
     private Ticket getTicketRandomly(User user, Flight flight) {
         Category category = CATEGORIES[random.nextInt(CATEGORIES.length)];
         return new Ticket(

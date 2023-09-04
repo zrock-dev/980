@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
  *
  */
 public class GeneratorBackbone {
+
     private UserGenerator userGenerator;
 
     /**
@@ -32,8 +33,6 @@ public class GeneratorBackbone {
         for (int i = 0; i < numUsers; i++) {
             userExecutor.execute(() -> {
                 User user = userGenerator.make();
-                /*FlightHistory history = flightHistoryGenerator.generateRandomFlightHistory();
-                user.addFlightHistory(history);*/
                 printUser(user);
             });
         }

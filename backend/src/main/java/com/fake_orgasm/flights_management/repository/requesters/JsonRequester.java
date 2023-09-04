@@ -1,6 +1,7 @@
 package com.fake_orgasm.flights_management.repository.requesters;
 
 import org.json.JSONArray;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,6 +38,11 @@ public class JsonRequester implements IJsonRequester {
         return documents;
     }
 
+    /**
+     * This method generate a file write to write on a json file.
+     *
+     * @return json file writer.
+     */
     public FileWriter getFileWriter() {
         try {
             return new FileWriter(jsonPath);

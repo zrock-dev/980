@@ -7,14 +7,24 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class has the responsibility of managing flight data in the database.
+ * It provides methods for creating, retrieving, updating, and deleting flight records.
+ */
 public class FlightRepository {
 
     private FlightDatabase database;
 
+    /**
+     * This method constructs a FlightRepository and initializes it with a database connection.
+     */
     public FlightRepository() {
         database = FlightDatabase.getInstance();
     }
 
+    /**
+     * This method creates a "Flight" table in the database if it does not already exist.
+     */
     public void createTable() {
         try {
             Statement statement = database.getConnection().createStatement();
@@ -35,6 +45,12 @@ public class FlightRepository {
         }
     }
 
+    /**
+     * This method creates a flight record in the database.
+     *
+     * @param flight The Flight object to be created.
+     * @return True if the flight was successfully created, otherwise false.
+     */
     public boolean create(Flight flight) {
         boolean wasSaved = false;
         if (database.doesNotExist("Flight", flight.getId())) return wasSaved;
@@ -58,6 +74,12 @@ public class FlightRepository {
         return wasSaved;
     }
 
+    /**
+     * This method creates multiple flight records in the database.
+     *
+     * @param flights A list of Flight objects to be created.
+     * @return True if all flights were successfully created, otherwise false.
+     */
     public boolean create(List<Flight> flights) {
         boolean wereCreated = false;
 
@@ -91,6 +113,11 @@ public class FlightRepository {
         return wereCreated;
     }
 
+    /**
+     * This method retrieves a list of all flights stored in the database.
+     *
+     * @return A list of Flight objects representing all flights in the database.
+     */
     public ArrayList<Flight> findAll() {
         String query = "SELECT * FROM Flight;";
         try {
@@ -118,6 +145,13 @@ public class FlightRepository {
         }
     }
 
+    /**
+     * This method updates a flight record in the database.
+     *
+     * @param id     The ID of the flight to update.
+     * @param flight The updated Flight object.
+     * @return True if the flight was successfully updated, otherwise false.
+     */
     public boolean update(String id, Flight flight) {
         boolean wasUpdated = false;
         try {
@@ -146,7 +180,12 @@ public class FlightRepository {
         return wasUpdated;
     }
 
-
+    /**
+     * This method retrieves a flight record from the database by its ID.
+     *
+     * @param id The ID of the flight to retrieve.
+     * @return The Flight object representing the flight record, or null if not found.
+     */
     public Flight search(String id) {
         String query = "SELECT * FROM Flight WHERE id = ?";
         try {
@@ -179,7 +218,12 @@ public class FlightRepository {
         }
     }
 
-
+    /**
+     * This method deletes a flight record from the database by its ID.
+     *
+     * @param id The ID of the flight to delete.
+     * @return True if the flight was successfully deleted, otherwise false.
+     */
     public boolean delete(String id) {
         return database.delete("Flight", id);
     }

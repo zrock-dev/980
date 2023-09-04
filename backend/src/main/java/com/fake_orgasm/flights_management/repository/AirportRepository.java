@@ -4,16 +4,25 @@ import com.fake_orgasm.flights_management.models.Airport;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * This class has the responsibility of managing airport data in the database.
+ * It provides methods for creating, retrieving, and deleting airport records.
+ */
 public class AirportRepository {
 
     private FlightDatabase database;
 
+    /**
+     * This method constructs an AirportRepository and initializes it with a database connection.
+     */
     public AirportRepository() {
         database = FlightDatabase.getInstance();
     }
 
+    /**
+     * This method creates an "Airport" table in the database if it does not already exist.
+     */
     public void createTable() {
         try {
             Statement statement;
@@ -31,6 +40,12 @@ public class AirportRepository {
         }
     }
 
+    /**
+     * This method creates an airport record in the database.
+     *
+     * @param airport The Airport object to be created.
+     * @return True if the airport was successfully created, otherwise false.
+     */
     public boolean create(Airport airport) {
         boolean wasSaved = false;
         if (database.doesNotExist("Airport", airport.getId()))
@@ -53,6 +68,12 @@ public class AirportRepository {
         return wasSaved;
     }
 
+    /**
+     * This method creates multiple airport records in the database.
+     *
+     * @param airports An ArrayList of Airport objects to be created.
+     * @return True if all airports were successfully created, otherwise false.
+     */
     public boolean create(ArrayList<Airport> airports) {
         boolean wereCreated = false;
 
@@ -84,6 +105,11 @@ public class AirportRepository {
         return wereCreated;
     }
 
+    /**
+     * This method retrieves a list of all airports stored in the database.
+     *
+     * @return An ArrayList of Airport objects representing all airports in the database.
+     */
     public ArrayList<Airport> findAll() {
         String query = "SELECT * FROM Airport;";
         try {
@@ -105,6 +131,12 @@ public class AirportRepository {
         }
     }
 
+    /**
+     * This method searches for an airport by its ID in the database.
+     *
+     * @param id The ID of the airport to search for.
+     * @return The Airport object if found, or null if not found.
+     */
     public Airport search(String id) {
         String query = "SELECT * FROM Airport WHERE id = ?";
         try {
@@ -130,6 +162,12 @@ public class AirportRepository {
         }
     }
 
+    /**
+     * This method deletes an airport record from the database by its ID.
+     *
+     * @param id The ID of the airport to delete.
+     * @return True if the airport was successfully deleted, otherwise false.
+     */
     public boolean delete(String id) {
         return database.delete("Airport", id);
     }
