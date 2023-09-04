@@ -60,6 +60,7 @@ public class BTree<T extends Comparable<T>> {
         this.repository = repository;
         this.order = degree;
         Node<T> node = repository.readNodeById("root");
+        this.size = repository.readBTreeSize();
         if (node == null) {
             this.root = new Node<>(order);
             this.root.setId("root");
@@ -134,7 +135,6 @@ public class BTree<T extends Comparable<T>> {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
         }
-        size++;
         Node<T> rootNode = this.root;
         if (rootNode.getSize() == 2 * order - 1) {
             Node<T> node = new Node<>(order);
@@ -149,6 +149,10 @@ public class BTree<T extends Comparable<T>> {
             insertIntoSubtree(node, key);
         } else {
             insertIntoSubtree(rootNode, key);
+        }
+        size++;
+        if (useRepository) {
+            repository.saveBTreeSize(size);
         }
     }
 
@@ -681,8 +685,11 @@ public class BTree<T extends Comparable<T>> {
         if (x == null) {
             return false;
         }
-        size--;
         remove(root, key);
+        size--;
+        if (useRepository) {
+            repository.saveBTreeSize(size);
+        }
         return true;
     }
 

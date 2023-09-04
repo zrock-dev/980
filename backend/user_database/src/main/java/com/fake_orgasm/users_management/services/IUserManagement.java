@@ -3,6 +3,7 @@ package com.fake_orgasm.users_management.services;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
 import com.fake_orgasm.users_management.services.exceptions.InvalidPageException;
+
 import java.util.List;
 
 /**
@@ -50,8 +51,8 @@ public interface IUserManagement {
     /**
      * Updates a user's information.
      *
-     * @param user        The User object representing the user
-     *                    whose information will be updated.
+     * @param user       The User object representing the user
+     *                   whose information will be updated.
      * @param updateUser The User object containing the new data to update.
      * @return True if the user's information was successfully updated,
      * false otherwise.
@@ -68,4 +69,12 @@ public interface IUserManagement {
      * @throws InvalidPageException If the page number is invalid.
      */
     List<User> getUsersByPage(int page) throws InvalidPageException;
+
+    /**
+     * Retrieves the count of users.
+     *
+     * @return the count of users
+     */
+
+    Integer countUsers();
 }

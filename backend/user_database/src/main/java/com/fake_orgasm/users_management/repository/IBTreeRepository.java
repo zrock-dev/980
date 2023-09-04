@@ -26,4 +26,19 @@ public interface IBTreeRepository<T extends Comparable<T>> {
      * @return Node found.
      */
     Node<T> readNodeById(String id);
+
+    /**
+     * Saves the size of the binary tree.
+     *
+     * @return true if the size is successfully saved, false otherwise
+     */
+    boolean saveBTreeSize(int size);
+
+    /**
+     * Retrieves the size of the binary tree.
+     *
+     * @return the size of the binary tree
+     */
+
+    Integer readBTreeSize();
 }
