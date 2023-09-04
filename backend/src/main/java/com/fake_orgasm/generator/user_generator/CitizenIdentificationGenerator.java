@@ -5,7 +5,7 @@ package com.fake_orgasm.generator.user_generator;
  * It maintains a counter to keep track of generated identification numbers.
  */
 public class CitizenIdentificationGenerator {
-    private long citizenIdentificationCounter;
+    private int citizenIdentificationCounter;
 
     /**
      * Constructs a CitizenIdentificationGenerator object with an initial counter value of 0.
@@ -19,7 +19,7 @@ public class CitizenIdentificationGenerator {
      *
      * @return A unique citizen identification number.
      */
-    protected long make() {
+    protected int make() {
         citizenIdentificationCounter++;
         return citizenIdentificationCounter;
     }

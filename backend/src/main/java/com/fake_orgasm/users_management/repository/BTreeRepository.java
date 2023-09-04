@@ -106,7 +106,6 @@ public class BTreeRepository implements IBTreeRepository<User> {
     private void writeUser(User user, JsonGenerator generator) throws IOException {
         generator.writeStartObject();
         generator.writeNumberField("id", user.getId());
-        generator.writeNumberField("citizenId", user.getCitizenId());
         generator.writeStringField("firstName", user.getFirstName());
         generator.writeStringField("secondName", user.getSecondName());
         generator.writeStringField("firstLastName", user.getFirstLastName());
