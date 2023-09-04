@@ -32,9 +32,9 @@ const Navbar = () => {
 					selected={pathname.includes('/booking')}
 				/>
 				<NavOption
-					route={'/money-exchange'}
-					title={'Money exchange'}
-					selected={pathname === '/money-exchange'}
+					route={'/coin-change'}
+					title={'Coin change'}
+					selected={pathname === '/coin-change'}
 				/>
 			</NavbarOptionContainer>
 			<Searcher />
