@@ -110,6 +110,10 @@ public class User implements Comparable<User> {
         flights.add(flightId);
     }
 
+    public void removeFlight(String flightId) {
+        flights.remove(flightId);
+    }
+
     /**
      * Compares this user with another user.
      *

@@ -23,6 +23,7 @@ public class Flight {
     private Date date;
     private int capacity;
     private String ticketIds;
+    private String lastTicket;
     private PriorityQueue<Ticket> tickets;
     public final static int MIN_CAPACITY = 100;
     public final static int MAX_CAPACITY = 550;
@@ -67,7 +68,7 @@ public class Flight {
      * @throws FlightCapacityException If the capacity is outside the acceptable range.
      */
     public Flight(String id, String sourceId, String destinationId,
-                  Date date, int capacity, String ticketIds)
+                  Date date, int capacity, String ticketIds, String lastTicket)
             throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
@@ -77,6 +78,7 @@ public class Flight {
         this.capacity = capacity;
         this.ticketIds = ticketIds;
         this.tickets = new PriorityQueue<>();
+        this.lastTicket = lastTicket;
     }
 
     /**
@@ -132,6 +134,7 @@ public class Flight {
     public void addTicket(Ticket ticket) {
         if (isAvailable()) {
             tickets.add(ticket);
+            setLastTicket(ticket.getId());
         }
     }
 
@@ -144,6 +147,19 @@ public class Flight {
         for (Ticket ticket : tickets) {
             addTicket(ticket);
         }
+    }
+
+    public void removeTicket(String ticketId) {
+        if (numberOfTickets() == 1) {
+            setTicketIds("");
+        } else {
+            setTicketIds(ticketIds.replace(ticketId, ""));
+            setTicketIds(ticketIds.replace(",,", ","));
+        }
+    }
+
+    public String getLastTicket() {
+        return numberOfTickets() == 0 ? "" : lastTicket;
     }
 
     /**
@@ -167,6 +183,7 @@ public class Flight {
      */
     public void addTicketId(String ticketId) {
         ticketIds += ticketId + ",";
+        setLastTicket(ticketId);
     }
 
     /**
@@ -208,13 +225,19 @@ public class Flight {
         }
     }
 
+    private Ticket remove() {
+        Ticket lastTicket = tickets.remove();
+        setLastTicket(lastTicket.getId());
+        return lastTicket;
+    }
+
     /**
      * This method retrieves and removes the next ticket from the priority queue.
      *
      * @return The next ticket in the priority queue.
      */
     public Ticket getNextTicket() {
-        return tickets.remove();
+        return remove();
     }
 
     /**
@@ -233,6 +256,9 @@ public class Flight {
      */
     @Override
     public String toString() {
-        return "(" + numberOfTickets() + " - Tickets ) - " + id + "\n(" + sourceId + " - " + destinationId + ") - " + date.toString();
+        return "(" + numberOfTickets() + " - Tickets - Flight ) - (id - "
+                + id + ") - (Date: " + date + ")" +
+                "\nSource: " + sourceId +
+                "\nDestination: " + destinationId;
     }
 }

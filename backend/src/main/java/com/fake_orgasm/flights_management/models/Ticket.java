@@ -15,6 +15,8 @@ public class Ticket implements Comparable<Ticket> {
     private Category priority;
     private int userId;
     private String flightId;
+    private String previousTicket;
+    private String nextTicket;
 
     /**
      * This method constructs a Ticket object with the provided parameters.
@@ -32,6 +34,30 @@ public class Ticket implements Comparable<Ticket> {
         this.priority = priority;
         this.userId = userId;
         this.flightId = flightId;
+        this.previousTicket = "";
+        this.nextTicket = "";
+    }
+
+    /**
+     * This method constructs a Ticket object with the provided parameters.
+     *
+     * @param id             The ticket ID.
+     * @param number         The ticket number.
+     * @param priority       The priority category of the ticket.
+     * @param userId         The ID of the user associated with the ticket.
+     * @param flightId       The ID of the flight associated with the ticket.
+     * @param previousTicket The ID of the previous ticket.
+     * @param nextTicket     The ID of the next ticket.
+     */
+    public Ticket(String id, int number, Category priority,
+                  int userId, String flightId, String previousTicket, String nextTicket) {
+        this.id = id;
+        this.number = number;
+        this.priority = priority;
+        this.userId = userId;
+        this.flightId = flightId;
+        this.previousTicket = previousTicket;
+        this.nextTicket = nextTicket;
     }
 
     /**
@@ -43,19 +69,23 @@ public class Ticket implements Comparable<Ticket> {
      */
     @Override
     public int compareTo(Ticket ticket) {
-        int priorityComparison = Integer.compare(
-                this.priority.getNumber(), ticket.priority.getNumber());
+        Category priority = this.getPriority();
+        Category priorityToCompare = ticket.getPriority();
 
-        if (priorityComparison != 0) {
-            return priorityComparison;
+        if (priority.getType().equals(priorityToCompare.getType())) {
+            return Integer.compare(this.number, ticket.number);
         } else {
-            if (this.priority == Category.VIP ||
-                    this.priority == Category.FREQUENT_PASSENGER) {
-                return Integer.compare(this.number, ticket.number);
-            } else {
-                return Integer.compare(ticket.number, this.number);
-            }
+            return Integer.compare(priority.getNumber(),
+                    priorityToCompare.getNumber());
         }
+    }
+
+    public boolean hasPrevious() {
+        return !previousTicket.isEmpty();
+    }
+
+    public boolean hasNext() {
+        return !nextTicket.isEmpty();
     }
 
     /**
@@ -65,6 +95,8 @@ public class Ticket implements Comparable<Ticket> {
      */
     @Override
     public String toString() {
-        return "(" + priority.getType() + " - " + number + ") - " + flightId;
+        return "\n(" + number + " - " + priority.getType() + ") - (id - " + id + ")" +
+                "\nPrevious: " + previousTicket +
+                "\nNext: " + nextTicket;
     }
 }
