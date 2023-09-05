@@ -54,7 +54,7 @@ public class TicketRepository {
      */
     public boolean create(Ticket ticket) {
         boolean wasSaved = false;
-        if (!exists(ticket.getId())) return wasSaved;
+        if (exists(ticket.getId())) return wasSaved;
         try {
             String query = "INSERT INTO Ticket (id, arrivalNumber, priority, " +
                     "userId, flightId, previousTicket, nextTicket) " +

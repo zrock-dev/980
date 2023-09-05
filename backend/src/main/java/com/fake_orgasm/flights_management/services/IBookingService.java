@@ -1,7 +1,6 @@
 package com.fake_orgasm.flights_management.services;
 
 import com.fake_orgasm.flights_management.models.Category;
-import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.users_management.models.User;
 
@@ -58,11 +57,4 @@ public interface IBookingService {
      */
     public List<Ticket> getFlightTickets(String flightId);
 
-    /**
-     * This method retrieves a list of flight tickets for a specific flight.
-     *
-     * @param flight The Flight object for which to retrieve tickets.
-     * @return A list of Ticket objects representing the flight tickets.
-     */
-    public List<Ticket> getFlightTickets(Flight flight);
 }

@@ -120,7 +120,7 @@ public class FlightDatabase {
     public boolean deleteAll(String tableName) {
         boolean wasDeleted = false;
         try {
-            String query = "TRUNCATE TABLE " + tableName;
+            String query = "DELETE FROM " + tableName;
             Statement statement = getConnection().createStatement();
             statement.executeUpdate(query);
             statement.close();

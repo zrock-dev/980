@@ -51,6 +51,7 @@ public class Flight {
         this.date = date;
         this.capacity = capacity;
         this.ticketIds = "";
+        this.lastTicket = "";
         this.tickets = new PriorityQueue<>();
     }
 
@@ -102,6 +103,7 @@ public class Flight {
         this.date = new Date();
         this.capacity = capacity;
         this.ticketIds = "";
+        this.lastTicket = "";
         this.tickets = new PriorityQueue<>();
     }
 
@@ -164,11 +166,6 @@ public class Flight {
             setTicketIds(ticketIds.replace(ticketId, ""));
             setTicketIds(ticketIds.replace(",,", ","));
         }
-    }
-
-
-    public String getLastTicket() {
-        return numberOfTickets() == 0 ? "" : lastTicket;
     }
 
     /**

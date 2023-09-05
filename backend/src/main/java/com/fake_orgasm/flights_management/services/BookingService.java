@@ -22,9 +22,6 @@ import java.util.UUID;
 @Service
 public class BookingService implements IBookingService {
 
-    private User user;
-    private Flight flight;
-    private Ticket ticket;
     private IUserManagement userManagement;
     private FlightRepository flightRepository;
     private TicketRepository ticketRepository;
@@ -130,7 +127,7 @@ public class BookingService implements IBookingService {
             if (!flight.getLastTicket().isEmpty()) {
                 Ticket lastTicket = ticketRepository.search(flight.getLastTicket());
                 lastTicket.setNextTicket(ticket.getId());
-                ticket.setPreviousTicket(lastTicket.getPreviousTicket());
+                ticket.setPreviousTicket(lastTicket.getId());
                 ticketRepository.update(lastTicket.getId(), lastTicket);
             }
 
@@ -166,18 +163,7 @@ public class BookingService implements IBookingService {
      */
     @Override
     public List<Ticket> getFlightTickets(String flightId) {
-        Flight flightFound = flightRepository.search(flightId);
-        return getFlightTickets(flightFound);
-    }
-
-    /**
-     * This method retrieves a list of flight tickets for a specific flight.
-     *
-     * @param flight The Flight object for which to retrieve tickets.
-     * @return A list of Ticket objects representing the flight tickets.
-     */
-    @Override
-    public List<Ticket> getFlightTickets(Flight flight) {
+        Flight flight = flightRepository.search(flightId);
         List<Ticket> tickets = ticketRepository
                 .search(flight.getTicketIds().split(","));
         flight.addTicket(tickets);
@@ -289,9 +275,12 @@ public class BookingService implements IBookingService {
             nextTicket.setPreviousTicket("");
             ticketRepository.update(nextTicket.getId(), nextTicket);
         } else if (ticket.hasPrevious() && !ticket.hasNext()) {
+            Flight flight = flightRepository.search(ticket.getFlightId());
             Ticket previousTicket = ticketRepository.search(ticket.getPreviousTicket());
+            flight.setLastTicket(previousTicket.getId());
             previousTicket.setNextTicket("");
             ticketRepository.update(previousTicket.getId(), previousTicket);
+            flightRepository.update(flight.getId(), flight);
         }
     }
 

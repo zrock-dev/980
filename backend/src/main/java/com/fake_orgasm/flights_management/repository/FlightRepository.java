@@ -161,6 +161,10 @@ public class FlightRepository {
         boolean wasUpdated = false;
         try {
             if (exists(id)) {
+                String lastTicket = flight.getLastTicket();
+                System.out.println("-".repeat(100));
+                System.out.println(lastTicket);
+                System.out.println("-".repeat(100));
                 String query = "UPDATE Flight SET sourceId=?, destinationId=?, " +
                         "arrivalDate=?, capacity=?, tickets=?, lastTicket=? WHERE id=?";
                 PreparedStatement ps = database.getConnection().prepareStatement(query);
@@ -169,10 +173,14 @@ public class FlightRepository {
                 ps.setDate(3, (Date) flight.getDate());
                 ps.setInt(4, flight.getCapacity());
                 ps.setString(5, flight.getPriorityTickets());
-                ps.setString(6, flight.getLastTicket());
+                ps.setString(6, lastTicket);
                 ps.setString(7, id);
-                ps.execute();
+                int rowsUpdated = ps.executeUpdate();
                 ps.close();
+
+                if (rowsUpdated > 0) {
+                    wasUpdated = true;
+                }
             } else {
                 create(flight);
             }

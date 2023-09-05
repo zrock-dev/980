@@ -35,7 +35,7 @@ public class BookingServiceTest {
             System.out.println("New ticket category: " + category.getType());
 
             // Show data before
-            tickets = bookService.getFlightTickets(flight);
+            tickets = bookService.getFlightTickets(flight.getId());
             System.out.println("\n" + "-".repeat(50) + "BEFORE" + "-".repeat(50) + "\n");
             System.out.println(flight);
             System.out.println();
@@ -50,11 +50,10 @@ public class BookingServiceTest {
             // Show data after
             System.out.println("\n" + "-".repeat(50) + "AFTER" + "-".repeat(50) + "\n");
             flight = bookService.getFlightRepository().search(FLIGHT_ID);
-            tickets = bookService.getFlightTickets(flight);
+            tickets = bookService.getFlightTickets(flight.getId());
             System.out.println(flight);
             System.out.println();
             tickets.forEach(System.out::println);
-            userForBook = bookService.getUser();
 
             int newNumberOfTickets = flight.numberOfTickets();
             int newNumberOfUserFlights = userForBook.getFlights().size();
@@ -85,7 +84,7 @@ public class BookingServiceTest {
             System.out.println("-".repeat(100));
             System.out.println(flight);
             System.out.println("-".repeat(100));
-            bookService.getFlightTickets(flight).forEach(System.out::println);
+            bookService.getFlightTickets(flight.getId()).forEach(System.out::println);
             System.out.println("-".repeat(100));
 
             System.out.println("\n" + "-".repeat(50) + "DATA" + "-".repeat(50) + "\n");
@@ -104,7 +103,7 @@ public class BookingServiceTest {
             System.out.println("-".repeat(100));
             System.out.println(flight);
             System.out.println("-".repeat(100));
-            bookService.getFlightTickets(flight).forEach(System.out::println);
+            bookService.getFlightTickets(flight.getId()).forEach(System.out::println);
             System.out.println("-".repeat(100));
             System.out.println("User to cancel the booking\n" + userToCancel);
 
@@ -122,32 +121,34 @@ public class BookingServiceTest {
         String newCategory = Category.REGULAR_PASSENGER.getType();
         Ticket ticket;
 
-        // show data before
-        ticket = bookService.getTicketRepository().search(ticketId);
-        System.out.println("\n" + "-".repeat(50) + "TICKET DATA BEFORE" + "-".repeat(50) + "\n");
-        System.out.println(ticket);
+        if (flight != null) {
+            // show data before
+            ticket = bookService.getTicketRepository().search(ticketId);
+            System.out.println("\n" + "-".repeat(50) + "TICKET DATA BEFORE" + "-".repeat(50) + "\n");
+            System.out.println(ticket);
 
-        // before edit a book
-        System.out.println("\n" + "-".repeat(50) + "BEFORE" + "-".repeat(50) + "\n");
-        System.out.println(flight);
-        bookService.getFlightTickets(flight).forEach(System.out::println);
-        System.out.println();
+            // before edit a book
+            System.out.println("\n" + "-".repeat(50) + "BEFORE" + "-".repeat(50) + "\n");
+            System.out.println(flight);
+            bookService.getFlightTickets(flight.getId()).forEach(System.out::println);
+            System.out.println();
 
-        // editing a book
-        bookService.editBooking(ticketId, newCategory);
+            // editing a book
+            bookService.editBooking(ticketId, newCategory);
 
-        // show data after
-        ticket = bookService.getTicketRepository().search(ticketId);
-        System.out.println("\n" + "-".repeat(50) + "TICKET DATA AFTER" + "-".repeat(50) + "\n");
-        System.out.println(ticket);
+            // show data after
+            ticket = bookService.getTicketRepository().search(ticketId);
+            System.out.println("\n" + "-".repeat(50) + "TICKET DATA AFTER" + "-".repeat(50) + "\n");
+            System.out.println(ticket);
 
-        // after edit a book
-        System.out.println("\n" + "-".repeat(50) + "AFTER" + "-".repeat(50) + "\n");
-        System.out.println(flight);
-        bookService.getFlightTickets(flight).forEach(System.out::println);
-        System.out.println();
+            // after edit a book
+            System.out.println("\n" + "-".repeat(50) + "AFTER" + "-".repeat(50) + "\n");
+            System.out.println(flight);
+            bookService.getFlightTickets(flight.getId()).forEach(System.out::println);
+            System.out.println();
 
-        // prove the new category saved
-        assertEquals(ticket.getPriority().getType(), newCategory);
+            // prove the new category saved
+            assertEquals(ticket.getPriority().getType(), newCategory);
+        }
     }
 }
