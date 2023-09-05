@@ -10,7 +10,6 @@ import java.util.Set;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Test;
 
 public class ResourcesIntegrityTest {
     private final Logger logger = LogManager.getLogger(getClass());

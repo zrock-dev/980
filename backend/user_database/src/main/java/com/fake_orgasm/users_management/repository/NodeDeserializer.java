@@ -73,7 +73,7 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
      * objects, the data is obtained and User objects are created.
      *
      * @param usersNode JsonNode, contents the user list.
-     * @param mapper ObjectMapper, mapper for cast data.
+     * @param mapper    ObjectMapper, mapper for cast data.
      * @return User list saved;
      * @throws IOException Exception to input or output.
      */
@@ -103,7 +103,7 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
      * objects, the data is obtained and FlightHistory objects are created.
      *
      * @param flightsHistoryNode JsonNode, contents the flights history list.
-     * @param mapper ObjectMapper, mapper for cast data.
+     * @param mapper             ObjectMapper, mapper for cast data.
      * @return FlightHistory list saved;
      * @throws IOException Exception to input or output.
      */
@@ -158,7 +158,11 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
     private String[] deserializeArrayString(JsonNode idChildrenNode) {
         String[] array = new String[idChildrenNode.size()];
         for (int i = 0; i < idChildrenNode.size(); i++) {
-            array[i] = idChildrenNode.get(i).asText();
+            if (idChildrenNode.get(i).isTextual()) {
+                array[i] = idChildrenNode.get(i).asText();
+            } else {
+                array[i] = null;
+            }
         }
         return array;
     }

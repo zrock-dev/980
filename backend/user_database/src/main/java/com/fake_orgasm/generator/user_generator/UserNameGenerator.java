@@ -1,15 +1,11 @@
 package com.fake_orgasm.generator.user_generator;
 
-import com.fake_orgasm.generator.user_generator.combinatory_parts.Administrator;
+import com.fake_orgasm.generator.user_generator.combinatory_parts.*;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.CoreWorker;
-import com.fake_orgasm.generator.user_generator.combinatory_parts.Piece;
 import com.fake_orgasm.generator.user_generator.combinatory_parts.Worker;
 import com.fake_orgasm.generator.utils.Notifiable;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.utils.FileReader;
-import com.fake_orgasm.users_management.models.User;
-import com.fake_orgasm.utils.FileReader;
-import com.fake_orgasm.utils.Notifiable;
 import java.io.IOException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
