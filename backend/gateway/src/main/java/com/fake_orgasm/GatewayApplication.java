@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Spring Boot Application to launch boot app.
+ * Spring Boot GatewayApplication to launch boot app.
  */
 @SpringBootApplication
-public class Application {
+public class GatewayApplication {
 
     /**
      * Method main to launch app.
@@ -15,6 +15,6 @@ public class Application {
      * @param args It does not expect any args as parameter.
      */
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(GatewayApplication.class, args);
     }
 }
