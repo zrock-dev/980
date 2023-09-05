@@ -111,6 +111,11 @@ public class TicketGenerator {
         );
     }
 
+    /**
+     * This method returns a list of the tickets that were generated randomly.
+     *
+     * @return list of the tickets.
+     */
     public ArrayList<Ticket> getTickets() {
         return new ArrayList<>(tickets.values());
     }

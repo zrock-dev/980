@@ -235,9 +235,18 @@ public class FlightRepository {
         return database.delete("Flight", id);
     }
 
+    /**
+     * Deletes all records from the "Flight" database table.
+     * <p>
+     * This method delegates the task of deleting all records from the "Flight"
+     * database table to the corresponding method in the associated "database" object.
+     *
+     * @return true if all records in the "Flight" table were successfully deleted, false otherwise.
+     */
     public boolean deleteAll() {
         return database.deleteAll("Flight");
     }
+
 
     /**
      * This method verify if a data exists on the airport table using their id.

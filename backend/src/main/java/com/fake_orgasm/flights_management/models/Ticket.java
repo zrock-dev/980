@@ -80,10 +80,25 @@ public class Ticket implements Comparable<Ticket> {
         }
     }
 
+    /**
+     * This method checks if there is a previous ticket available.
+     * <p>
+     * This method checks whether there is a previous ticket available in the
+     * sequence.
+     *
+     * @return true if there is a previous ticket, false otherwise.
+     */
     public boolean hasPrevious() {
         return !previousTicket.isEmpty();
     }
 
+    /**
+     * This method checks if there is a next ticket available.
+     * <p>
+     * This method checks whether there is a next ticket available in the sequence.
+     *
+     * @return true if there is a next ticket, false otherwise.
+     */
     public boolean hasNext() {
         return !nextTicket.isEmpty();
     }

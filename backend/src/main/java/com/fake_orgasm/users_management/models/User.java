@@ -106,13 +106,31 @@ public class User implements Comparable<User> {
         return String.format("%s %s %s %s", firstName, secondName, firstLastName, secondLastName);
     }
 
+    /**
+     * This method adds a flight to the list of flights associated with the user.
+     * <p>
+     * This method adds the specified flight ID to the list of flights associated
+     * with the user. The user is now considered to be booked on this flight.
+     *
+     * @param flightId The ID of the flight to be added to the user's list of flights.
+     */
     public void addFlight(String flightId) {
         flights.add(flightId);
     }
 
+    /**
+     * This method removes a flight from the list of flights associated with the user.
+     * <p>
+     * This method removes the specified flight ID from the list of flights
+     * associated with the user. The user is no longer considered to be booked on
+     * this flight.
+     *
+     * @param flightId The ID of the flight to be removed from the user's list of flights.
+     */
     public void removeFlight(String flightId) {
         flights.remove(flightId);
     }
+
 
     /**
      * Compares this user with another user.

@@ -85,6 +85,16 @@ public class BookingService implements IBookingService {
         return user;
     }
 
+    /**
+     * This method find a user within a list of users based on equality criteria.
+     * <p>
+     * This method searches for a user within a provided list of users by comparing
+     * each user to the specified user based on equality criteria.
+     *
+     * @param users The list of users to search within.
+     * @param user  The user to find within the list.
+     * @return The matching user if found, or null if no matching user is found.
+     */
     private User findUser(List<User> users, User user) {
         for (User userFound : users) {
             if (user.equals(userFound))
@@ -93,6 +103,7 @@ public class BookingService implements IBookingService {
 
         return null;
     }
+
 
     /**
      * This method books a flight ticket for a given user with a specified category.
@@ -171,6 +182,17 @@ public class BookingService implements IBookingService {
         return tickets;
     }
 
+    /**
+     * Deletes a booking associated with a user and a specific ticket ID.
+     * <p>
+     * This method attempts to delete a booking made by the specified user for a
+     * ticket identified by the provided ticket ID. If the deletion is successful,
+     * it returns true; otherwise, it returns false.
+     *
+     * @param user     The user data associated with the booking.
+     * @param ticketId The ID of the ticket to be deleted from the user's bookings.
+     * @return true if the booking was successfully deleted, false otherwise.
+     */
     @Override
     public boolean deleteBook(User user, String ticketId) {
         if (userManagement != null) {
@@ -182,6 +204,16 @@ public class BookingService implements IBookingService {
         return deleteBook(user, ticket);
     }
 
+    /**
+     * This method deletes a booking associated with a user and a specific ticket.
+     * <p>
+     * This method performs the deletion of a booking made by a user for a given ticket.
+     * It updates references and information related to the user, flight, and tickets as needed.
+     *
+     * @param userFound The user associated with the booking.
+     * @param ticket    The ticket to be deleted.
+     * @return true if the booking was successfully deleted, false otherwise.
+     */
     private boolean deleteBook(User userFound, Ticket ticket) {
         if (ticket != null && userFound != null) {
             try {
@@ -208,6 +240,14 @@ public class BookingService implements IBookingService {
         return false;
     }
 
+    /**
+     * This method updates references between tickets after a ticket is deleted.
+     * <p>
+     * This method updates references between tickets when a ticket is deleted.
+     * It ensures that the previous and next ticket references are correctly adjusted.
+     *
+     * @param ticket The ticket for which references need to be updated.
+     */
     private void updateTicketReferences(Ticket ticket) {
         if (ticket.hasPrevious() && ticket.hasNext()) {
             Ticket previousTicket = ticketRepository.search(ticket.getPreviousTicket());
@@ -227,6 +267,14 @@ public class BookingService implements IBookingService {
         }
     }
 
+    /**
+     * This method updates arrival numbers for subsequent tickets after a ticket is deleted.
+     * <p>
+     * This method updates the arrival numbers of subsequent tickets when a ticket is deleted.
+     * It ensures that the order and numbering of tickets are maintained.
+     *
+     * @param ticket The ticket for which arrival numbers need to be updated.
+     */
     private void updateArrivalNumber(Ticket ticket) {
         while (ticket.hasNext()) {
             ticket = ticketRepository.search(ticket.getNextTicket());

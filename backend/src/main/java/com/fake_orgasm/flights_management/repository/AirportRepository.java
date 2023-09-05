@@ -174,6 +174,14 @@ public class AirportRepository {
         return database.delete("Airport", id);
     }
 
+    /**
+     * Deletes all records from the "Airport" database table.
+     * <p>
+     * This method delegates the task of deleting all records from the "Airport"
+     * database table to the corresponding method in the associated "database" object.
+     *
+     * @return true if all records in the "Airport" table were successfully deleted, false otherwise.
+     */
     public boolean deleteAll() {
         return database.deleteAll("Airport");
     }

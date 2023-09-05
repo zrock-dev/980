@@ -1,6 +1,7 @@
 package com.fake_orgasm.flights_management.repository;
 
 import java.sql.*;
+
 /**
  * This class has the responsibility of managing the database connection and providing
  * utility methods for database operations related to flight management.
@@ -47,8 +48,8 @@ public class FlightDatabase {
     /**
      * This method creates an index on the ID field of a table.
      *
-     * @param statement  The database statement.
-     * @param tableName  The name of the table on which to create the index.
+     * @param statement The database statement.
+     * @param tableName The name of the table on which to create the index.
      */
     public void createIndexById(Statement statement, String tableName) {
         try {
@@ -107,6 +108,15 @@ public class FlightDatabase {
         return wasDeleted;
     }
 
+    /**
+     * This method deletes all records from the specified database table.
+     * <p>
+     * This method attempts to delete all records from the specified database table
+     * using a SQL "TRUNCATE TABLE" query.
+     *
+     * @param tableName The name of the database table from which all records will be deleted.
+     * @return true if all records were successfully deleted, false otherwise.
+     */
     public boolean deleteAll(String tableName) {
         boolean wasDeleted = false;
         try {

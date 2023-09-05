@@ -149,6 +149,14 @@ public class Flight {
         }
     }
 
+    /**
+     * This method removes a ticket with the specified ID from the list of ticket IDs.
+     * <p>
+     * This method removes the specified ticket ID from the list of ticket IDs
+     * stored in the object.
+     *
+     * @param ticketId The ID of the ticket to be removed from the list.
+     */
     public void removeTicket(String ticketId) {
         if (numberOfTickets() == 1) {
             setTicketIds("");
@@ -157,6 +165,7 @@ public class Flight {
             setTicketIds(ticketIds.replace(",,", ","));
         }
     }
+
 
     public String getLastTicket() {
         return numberOfTickets() == 0 ? "" : lastTicket;
