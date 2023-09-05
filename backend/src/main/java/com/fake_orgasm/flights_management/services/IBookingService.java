@@ -38,4 +38,7 @@ public interface IBookingService {
      * @return A list of Ticket objects representing the flight tickets.
      */
     public List<Ticket> getFlightTickets(Flight flight);
+
+
+    public boolean deleteBook(User userData, String ticketId);
 }

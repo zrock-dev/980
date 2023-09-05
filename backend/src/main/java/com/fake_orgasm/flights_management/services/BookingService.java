@@ -33,10 +33,10 @@ public class BookingService implements IBookingService {
      * This method constructs a BookingService instance with dependencies on user management,
      * flight repository, and ticket repository.
      *
-     * @param userManagement    The IUserManagement implementation for managing user-related
-     *                          operations.
-     * @param flightManagement  The FlightRepository for managing flight-related operations.
-     * @param ticketManagement  The TicketRepository for managing ticket-related operations.
+     * @param userManagement   The IUserManagement implementation for managing user-related
+     *                         operations.
+     * @param flightManagement The FlightRepository for managing flight-related operations.
+     * @param ticketManagement The TicketRepository for managing ticket-related operations.
      */
     public BookingService(
             IUserManagement userManagement,
@@ -77,15 +77,21 @@ public class BookingService implements IBookingService {
                     throw new RuntimeException(e);
                 }
             } else {
-                for (User userFound : usersFound) {
-                    if (user.equals(userFound))
-                        user = userFound;
-                }
+                return findUser(usersFound, user);
             }
 
         }
 
         return user;
+    }
+
+    private User findUser(List<User> users, User user) {
+        for (User userFound : users) {
+            if (user.equals(userFound))
+                return userFound;
+        }
+
+        return null;
     }
 
     /**
@@ -106,6 +112,12 @@ public class BookingService implements IBookingService {
             ticket = new Ticket(UUID.randomUUID().toString(),
                     flight.getNextNumber(), category, userForBook.getId(),
                     flight.getId());
+
+            if (!flight.getLastTicket().isEmpty()) {
+                Ticket lastTicket = ticketRepository.search(flight.getLastTicket());
+                lastTicket.setNextTicket(ticket.getId());
+                ticket.setPreviousTicket(lastTicket.getPreviousTicket());
+            }
 
             flight.addTicketId(ticket.getId());
             user.addFlight(ticket.getId());
@@ -157,5 +169,69 @@ public class BookingService implements IBookingService {
         tickets = flight.getTickets();
 
         return tickets;
+    }
+
+    @Override
+    public boolean deleteBook(User user, String ticketId) {
+        if (userManagement != null) {
+            List<User> usersFound = userManagement.search(user.getFirstName());
+            user = findUser(usersFound, user);
+        }
+
+        Ticket ticket = ticketRepository.search(ticketId);
+        return deleteBook(user, ticket);
+    }
+
+    private boolean deleteBook(User userFound, Ticket ticket) {
+        if (ticket != null && userFound != null) {
+            try {
+                String flightId = ticket.getFlightId();
+                Flight flight = flightRepository.search(flightId);
+
+                userFound.removeFlight(ticket.getId());
+                flight.removeTicket(ticket.getId());
+
+                updateTicketReferences(ticket);
+                updateArrivalNumber(ticket);
+
+                if (userManagement != null) {
+                    userManagement.update(userFound, userFound);
+                }
+                flightRepository.update(flightId, flight);
+                ticketRepository.delete(ticket.getId());
+                return true;
+            } catch (IncompleteUserException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return false;
+    }
+
+    private void updateTicketReferences(Ticket ticket) {
+        if (ticket.hasPrevious() && ticket.hasNext()) {
+            Ticket previousTicket = ticketRepository.search(ticket.getPreviousTicket());
+            Ticket nextTicket = ticketRepository.search(ticket.getNextTicket());
+            previousTicket.setNextTicket(nextTicket.getId());
+            nextTicket.setPreviousTicket(previousTicket.getId());
+            ticketRepository.update(previousTicket.getId(), previousTicket);
+            ticketRepository.update(nextTicket.getId(), nextTicket);
+        } else if (!ticket.hasPrevious() && ticket.hasNext()) {
+            Ticket nextTicket = ticketRepository.search(ticket.getNextTicket());
+            nextTicket.setPreviousTicket("");
+            ticketRepository.update(nextTicket.getId(), nextTicket);
+        } else if (ticket.hasPrevious() && !ticket.hasNext()) {
+            Ticket previousTicket = ticketRepository.search(ticket.getPreviousTicket());
+            previousTicket.setNextTicket("");
+            ticketRepository.update(previousTicket.getId(), previousTicket);
+        }
+    }
+
+    private void updateArrivalNumber(Ticket ticket) {
+        while (ticket.hasNext()) {
+            ticket = ticketRepository.search(ticket.getNextTicket());
+            ticket.setNumber(ticket.getNumber() - 1);
+            ticketRepository.update(ticket.getId(), ticket);
+        }
     }
 }
