@@ -125,12 +125,16 @@ public class Utils {
      */
     public static <T extends Comparable<T>> void reduceKeys(Node<T> parent, int pos) {
         for (int i = pos; i < parent.getSize(); i++) {
-            parent.setKey(i, parent.getKey(i + 1));
+            if (i != 2 * parent.getOrder() - 2) {
+                parent.setKey(i, parent.getKey(i + 1));
+            }
         }
 
         for (int i = pos + 1; i < parent.getSize() + 1; i++) {
-            parent.setChild(i, parent.getChild(i + 1));
-            parent.setIdChild(i, parent.getIdChild(i + 1));
+            if (i != 2 * parent.getOrder() - 1) {
+                parent.setChild(i, parent.getChild(i + 1));
+                parent.setIdChild(i, parent.getIdChild(i + 1));
+            }
         }
     }
 
@@ -144,14 +148,15 @@ public class Utils {
      * @param <T>         the type of elements to work.
      */
     public static <T extends Comparable<T>> void joinNodes(Node<T> predecessor, Node<T> successor, int temp) {
+        int k = temp;
+        int k1 = temp;
         for (int i = 0, j = predecessor.getSize(); i < successor.getSize(); i++) {
             predecessor.setKey(j++, successor.getKey(i));
             predecessor.increaseSize();
         }
         for (int i = 0; i < successor.getSize() + 1; i++) {
-            predecessor.setChild(temp, successor.getChild(i));
-            predecessor.setIdChild(temp, successor.getIdChild(i));
-            temp++;
+            predecessor.setChild(k++, successor.getChild(i));
+            predecessor.setIdChild(k1++, successor.getIdChild(i));
         }
     }
 }

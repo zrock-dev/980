@@ -137,6 +137,9 @@ public class BTree<T extends Comparable<T>> {
         }
         Node<T> rootNode = this.root;
         if (rootNode.getSize() == 2 * order - 1) {
+            if (rootNode.find(key) != -1) {
+                return;
+            }
             Node<T> node = new Node<>(order);
             String aux = node.getId();
             node.setId(rootNode.getId());
@@ -223,6 +226,9 @@ public class BTree<T extends Comparable<T>> {
      * @param currentNode The starting node of the subtree.
      */
     private void insertIntoSubtree(final Node<T> currentNode, final T key) {
+        if (currentNode.find(key) != -1) {
+            return;
+        }
         if (currentNode.isLeaf()) {
             insertIntoLeaf(currentNode, key);
         } else {
@@ -254,7 +260,7 @@ public class BTree<T extends Comparable<T>> {
             insertionIndex--;
         }
         leafNode.setKey(insertionIndex + 1, key);
-        leafNode.setSize(leafNode.increaseSize());
+        leafNode.setSize(leafNode.getSize() + 1);
         if (useRepository) {
             saveNodeData(leafNode);
         }
@@ -341,6 +347,11 @@ public class BTree<T extends Comparable<T>> {
 
         if (useRepository && (predecessor == null)) {
             predecessor = uploadNodeFromRepository(position, parentNode);
+            if (predecessor == null) {
+                System.out.println(position);
+                System.out.println("is null");
+                root.printTree("");
+            }
         }
         if (useRepository && (successor == null)) {
             successor = uploadNodeFromRepository(position + 1, parentNode);

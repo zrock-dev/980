@@ -3,7 +3,6 @@ package com.fake_orgasm.users_management.services;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
 import com.fake_orgasm.users_management.services.exceptions.InvalidPageException;
-
 import java.util.List;
 
 /**
@@ -75,6 +74,5 @@ public interface IUserManagement {
      *
      * @return the count of users
      */
-
     Integer countUsers();
 }

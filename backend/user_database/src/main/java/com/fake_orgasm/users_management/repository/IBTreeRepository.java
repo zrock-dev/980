@@ -30,6 +30,7 @@ public interface IBTreeRepository<T extends Comparable<T>> {
     /**
      * Saves the size of the binary tree.
      *
+     * @param size the btree keys amount..
      * @return true if the size is successfully saved, false otherwise
      */
     boolean saveBTreeSize(int size);
@@ -39,6 +40,5 @@ public interface IBTreeRepository<T extends Comparable<T>> {
      *
      * @return the size of the binary tree
      */
-
     Integer readBTreeSize();
 }
