@@ -125,7 +125,9 @@ public class Flight {
      * @return True if there are available seats, otherwise false.
      */
     public boolean isAvailable() {
-        return tickets.size() < capacity || ticketIds.split(",").length < capacity;
+        return tickets.isEmpty()
+                ? ticketIds.split(",").length < capacity
+                : tickets.size() < capacity;
     }
 
     /**
@@ -133,11 +135,15 @@ public class Flight {
      *
      * @param ticket The ticket to add.
      */
-    public void addTicket(Ticket ticket) {
+    public boolean addTicket(Ticket ticket) {
+        boolean wasAdded = false;
         if (isAvailable()) {
             tickets.add(ticket);
             setLastTicket(ticket.getId());
+            wasAdded = true;
         }
+
+        return wasAdded;
     }
 
     /**
@@ -145,10 +151,30 @@ public class Flight {
      *
      * @param tickets The list of tickets to add.
      */
-    public void addTicket(List<Ticket> tickets) {
+    public boolean addTicket(List<Ticket> tickets) {
+        boolean wereAdded = false;
         for (Ticket ticket : tickets) {
-            addTicket(ticket);
+            wereAdded = addTicket(ticket);
+            if (!wereAdded) return false;
         }
+
+        return wereAdded;
+    }
+
+    /**
+     * This method adds a ticket ID to the comma-separated string of ticket IDs.
+     *
+     * @param ticketId The ticket ID to add.
+     */
+    public boolean addTicketId(String ticketId) {
+        boolean wasAdded = false;
+        if (isAvailable()) {
+            ticketIds += ticketId + ",";
+            setLastTicket(ticketId);
+            wasAdded = true;
+        }
+
+        return wasAdded;
     }
 
     /**
@@ -180,16 +206,6 @@ public class Flight {
         }
 
         return tickets;
-    }
-
-    /**
-     * This method adds a ticket ID to the comma-separated string of ticket IDs.
-     *
-     * @param ticketId The ticket ID to add.
-     */
-    public void addTicketId(String ticketId) {
-        ticketIds += ticketId + ",";
-        setLastTicket(ticketId);
     }
 
     /**
