@@ -62,7 +62,6 @@ public final class User implements Comparable<User> {
     }
 
     /**
-     * <<<<<<< Updated upstream
      * Empty User constructor.
      */
     public User() {}
@@ -131,6 +130,7 @@ public final class User implements Comparable<User> {
 
     @Override
     public String toString() {
-        return firstName;
+        return "User-> name: " + firstName + ", LastName:" + firstLastName + " " + secondLastName + ", flights="
+                + flights;
     }
 }
