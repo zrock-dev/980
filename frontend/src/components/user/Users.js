@@ -1,11 +1,18 @@
 'use client';
 import Link from 'next/link';
+import UserSearchOption from './UserSeach';
 
 const Users = () => {
 	return (
 		<div>
 			<span>users</span>
-			<Link href={'/users/userid1'}>only user</Link>
+			<UserSearchOption
+			firstName= "Victor Leon"
+			lastName="Villca Silva" 
+			year ="19"
+			category="NORMAL"
+			country = "BOLIVIA"
+			/>
 		</div>
 	);
 };
