@@ -3,13 +3,11 @@ package com.fake_orgasm.generator.flight_generator;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.repository.FlightRepository;
 import com.fake_orgasm.users_management.models.User;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * This class is responsible for generating random tickets for users on flights.
@@ -21,8 +19,7 @@ public class TicketGenerator {
     private ArrayList<Flight> flights;
     @Getter
     private List<User> users;
-    @Getter
-    private ArrayList<Ticket> tickets;
+    private HashMap<String, Ticket> tickets;
 
     private final Category[] CATEGORIES = {Category.VIP,
             Category.FREQUENT_PASSENGER, Category.REGULAR_PASSENGER};
@@ -36,7 +33,7 @@ public class TicketGenerator {
     public TicketGenerator(List<User> users, ArrayList<Flight> flights) {
         this.users = users;
         this.flights = flights;
-        this.tickets = new ArrayList<>();
+        this.tickets = new HashMap<>();
         random = new Random();
     }
 
@@ -78,7 +75,7 @@ public class TicketGenerator {
      */
     public void generateTickets(int userIndex, int amount) {
         Flight flight;
-        Ticket ticket;
+        Ticket ticket, lastTicket;
         int flightIndex;
 
         User user = users.get(userIndex);
@@ -86,7 +83,14 @@ public class TicketGenerator {
             flightIndex = random.nextInt(flights.size());
             flight = flights.get(flightIndex);
             ticket = getTicketRandomly(user, flight);
-            tickets.add(ticket);
+
+            if (flight.numberOfTickets() > 0) {
+                lastTicket = tickets.get(flight.getLastTicket());
+                ticket.setPreviousTicket(lastTicket.getId());
+                tickets.get(flight.getLastTicket()).setNextTicket(ticket.getId());
+            }
+
+            tickets.put(ticket.getId(), ticket);
             users.get(userIndex).addFlight(ticket.getId());
             flights.get(flightIndex).addTicket(ticket);
         }
@@ -105,5 +109,9 @@ public class TicketGenerator {
                 UUID.randomUUID().toString(), flight.getNextNumber(),
                 category, user.getId(), flight.getId()
         );
+    }
+
+    public ArrayList<Ticket> getTickets() {
+        return new ArrayList<>(tickets.values());
     }
 }
