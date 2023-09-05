@@ -24,6 +24,22 @@ public interface IBookingService {
     public boolean booking(User user, String flightId, Category category);
 
     /**
+     * This method deletes a booking associated with a user and a specific ticket ID.
+     * <p>
+     * This method attempts to delete a booking made by the specified user for a
+     * ticket identified by the provided ticket ID. If the deletion is successful,
+     * it returns true; otherwise, it returns false.
+     *
+     * @param userData The user data associated with the booking.
+     * @param ticketId The ID of the ticket to be deleted from the user's bookings.
+     * @return true if the booking was successfully deleted, false otherwise.
+     */
+    public boolean deleteBooking(User userData, String ticketId);
+
+
+    public boolean editBooking(String ticketId, String newCategory);
+
+    /**
      * This method retrieves a list of flight tickets for a specific flight identified by its ID.
      *
      * @param flightId The ID of the flight for which to retrieve tickets.
@@ -38,18 +54,4 @@ public interface IBookingService {
      * @return A list of Ticket objects representing the flight tickets.
      */
     public List<Ticket> getFlightTickets(Flight flight);
-
-    /**
-     * This method deletes a booking associated with a user and a specific ticket ID.
-     * <p>
-     * This method attempts to delete a booking made by the specified user for a
-     * ticket identified by the provided ticket ID. If the deletion is successful,
-     * it returns true; otherwise, it returns false.
-     *
-     * @param userData The user data associated with the booking.
-     * @param ticketId The ID of the ticket to be deleted from the user's bookings.
-     * @return true if the booking was successfully deleted, false otherwise.
-     */
-    public boolean deleteBook(User userData, String ticketId);
-
 }

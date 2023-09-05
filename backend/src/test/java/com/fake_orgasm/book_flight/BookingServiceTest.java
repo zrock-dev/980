@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BookingServiceTest {
@@ -90,7 +91,7 @@ public class BookingServiceTest {
             System.out.println("User to cancel the booking\n" + userToCancel);
             System.out.println("Ticket ticket to cancel the flight\n" + ticketToCancel);
             // cancel booking
-            boolean wasCancel = bookService.deleteBook(userToCancel, ticketId);
+            boolean wasCancel = bookService.deleteBooking(userToCancel, ticketId);
             System.out.println("\n" + "-".repeat(50) + "RESULT" + "-".repeat(50) + "\n");
             System.out.println(wasCancel ? "Successful cancellation" : "Failed cancellation");
 
@@ -108,5 +109,45 @@ public class BookingServiceTest {
 
             assertTrue(afterNumberOfTickets < beforeNumberOfTickets);
         }
+    }
+
+    @Test
+    public void cancelABooking() {
+        BookingService bookService = new BookingService();
+
+        // data
+        String flightId = "5823ff72-3594-43ea-846a-e7a0db1cef67";
+        Flight flight = bookService.getFlightRepository().search(flightId);
+        String ticketId = "c202665a-a0b1-4cc6-8a0c-b6cb2084bd91";
+        String newCategory = Category.REGULAR_PASSENGER.getType();
+        Ticket ticket;
+
+        // show data before
+        ticket = bookService.getTicketRepository().search(ticketId);
+        System.out.println("\n" + "-".repeat(50) + "TICKET DATA BEFORE" + "-".repeat(50) + "\n");
+        System.out.println(ticket);
+
+        // before edit a book
+        System.out.println("\n" + "-".repeat(50) + "BEFORE" + "-".repeat(50) + "\n");
+        System.out.println(flight);
+        bookService.getFlightTickets(flight).forEach(System.out::println);
+        System.out.println();
+
+        // editing a book
+        bookService.editBooking(ticketId, newCategory);
+
+        // show data after
+        ticket = bookService.getTicketRepository().search(ticketId);
+        System.out.println("\n" + "-".repeat(50) + "TICKET DATA AFTER" + "-".repeat(50) + "\n");
+        System.out.println(ticket);
+
+        // after edit a book
+        System.out.println("\n" + "-".repeat(50) + "AFTER" + "-".repeat(50) + "\n");
+        System.out.println(flight);
+        bookService.getFlightTickets(flight).forEach(System.out::println);
+        System.out.println();
+
+        // prove the new category saved
+        assertEquals(ticket.getPriority().getType(), newCategory);
     }
 }

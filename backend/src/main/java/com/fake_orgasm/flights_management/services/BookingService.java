@@ -194,7 +194,7 @@ public class BookingService implements IBookingService {
      * @return true if the booking was successfully deleted, false otherwise.
      */
     @Override
-    public boolean deleteBook(User user, String ticketId) {
+    public boolean deleteBooking(User user, String ticketId) {
         if (userManagement != null) {
             List<User> usersFound = userManagement.search(user.getFirstName());
             user = findUser(usersFound, user);
@@ -202,6 +202,18 @@ public class BookingService implements IBookingService {
 
         Ticket ticket = ticketRepository.search(ticketId);
         return deleteBook(user, ticket);
+    }
+
+    @Override
+    public boolean editBooking(String ticketId, String newCategory) {
+        Ticket ticket = ticketRepository.search(ticketId);
+        if (ticket != null) {
+            Category category = Category.getCategory(newCategory);
+            ticket.setPriority(category);
+            return ticketRepository.update(ticketId, ticket);
+        }
+
+        return false;
     }
 
     /**
