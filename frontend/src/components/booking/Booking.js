@@ -83,6 +83,7 @@ const BookingForm = () => {
               width="100%"
               height="40px"
               onChangeText={(newText) => handleChange('firstName', newText)}
+              placeholder="Enter your first name"
             />
           </div>
           <div className='two-inputs'>
@@ -93,6 +94,7 @@ const BookingForm = () => {
               width="100%"
               height="40px"
               onChangeText={(newText) => handleChange('secondName', newText)}
+              placeholder="Enter your second name"
             />
           </div>
         </div>
@@ -105,6 +107,7 @@ const BookingForm = () => {
               width="100%"
               height="40px"
               onChangeText={(newText) => handleChange('lastName', newText)}
+              placeholder="Enter your last name"
             />
           </div>
           <div className='two-inputs'>
@@ -115,6 +118,7 @@ const BookingForm = () => {
               width="100%"
               height="40px"
               onChangeText={(newText) => handleChange('secondLastName', newText)}
+              placeholder="Enter your second last name"
             />
           </div>
         </div>
@@ -127,6 +131,7 @@ const BookingForm = () => {
               width="100%"
               height="40px"
               onChangeText={(newText) => handleChange('ci', newText)}
+              placeholder="Enter your CI number"
             />
           </div>
           <div className='three-input'>

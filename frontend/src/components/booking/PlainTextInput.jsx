@@ -1,4 +1,4 @@
-const PlainTextInput = ({ label, text, width, height, onChangeText }) => {
+const PlainTextInput = ({ label, text, width, height, onChangeText, placeholder }) => {
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -36,6 +36,7 @@ const PlainTextInput = ({ label, text, width, height, onChangeText }) => {
       <input
         type="text"
         value={text}
+        placeholder= {placeholder}
         style={inputStyle}
         onChange={(e) => {
           onChangeText(e.target.value);

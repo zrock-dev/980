@@ -94,3 +94,41 @@
     right: -240px;
     z-index: 3;
   }
+
+  @media (max-width: 1800px) {
+    .img-container img {
+      max-width: 30%;
+      height: auto;
+      position: fixed;
+      top: 300px;
+      right: -50px;
+      z-index: 3;
+    }
+  }
+  @media (max-width: 1400px) {
+    .img-container img {
+      max-width: 50%;
+      height: auto;
+      position: fixed;
+      top: 300px;
+      right: -240px;
+      z-index: 3;
+    }
+  }
+  @media (max-width: 900px) {
+    body {
+      overflow-x: hidden;
+    }
+  
+    .img-container img {
+      display: none;
+    }
+    .img-container {
+      display: none;
+    }
+  
+    .booking-form-container {
+      width: calc(100% - 40px);
+      margin: 20px auto;
+    }
+  }
