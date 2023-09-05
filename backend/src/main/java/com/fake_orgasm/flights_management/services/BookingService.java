@@ -204,6 +204,18 @@ public class BookingService implements IBookingService {
         return deleteBook(user, ticket);
     }
 
+    /**
+     * Edits the category of a booking associated with a ticket.
+     * <p>
+     * This method allows for the modification of the booking category (e.g., class)
+     * associated with a ticket. It takes the ticket ID and the new category as
+     * parameters and attempts to update the booking information. If the editing
+     * is successful, it returns true; otherwise, it returns false.
+     *
+     * @param ticketId    The ID of the ticket associated with the booking to be edited.
+     * @param newCategory The new category (e.g., class) for the booking.
+     * @return true if the booking was successfully edited, false otherwise.
+     */
     @Override
     public boolean editBooking(String ticketId, String newCategory) {
         Ticket ticket = ticketRepository.search(ticketId);
