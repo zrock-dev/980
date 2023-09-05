@@ -34,6 +34,8 @@ public class TicketRepository {
                     "priority VARCHAR(250)," +
                     "userId  VARCHAR(250)," +
                     "flightId VARCHAR(250)," +
+                    "previousTicket VARCHAR(100)," +
+                    "nextTicket VARCHAR(100)," +
                     "FOREIGN KEY (flightId) REFERENCES Flight(id)" +
                     ");";
             statement.executeUpdate(query);
@@ -52,17 +54,19 @@ public class TicketRepository {
      */
     public boolean create(Ticket ticket) {
         boolean wasSaved = false;
-        if (database.doesNotExist("Ticket", ticket.getId())) return wasSaved;
+        if (!exists(ticket.getId())) return wasSaved;
         try {
             String query = "INSERT INTO Ticket (id, arrivalNumber, priority, " +
-                    "userId, flightId) " +
-                    "values (?, ?, ?, ?, ?)";
+                    "userId, flightId, previousTicket, nextTicket) " +
+                    "values (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ps.setString(1, ticket.getId());
             ps.setInt(2, ticket.getNumber());
             ps.setString(3, ticket.getPriority().getType());
             ps.setInt(4, ticket.getUserId());
             ps.setString(5, ticket.getFlightId());
+            ps.setString(6, ticket.getPreviousTicket());
+            ps.setString(7, ticket.getNextTicket());
             ps.execute();
             ps.close();
             wasSaved = true;
@@ -86,18 +90,23 @@ public class TicketRepository {
         }
 
         try {
-            String query = "INSERT INTO Ticket (id, arrivalNumber, priority, userId, flightId) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Ticket " +
+                    "(id, arrivalNumber, priority, userId, flightId, previousTicket, nextTicket) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
             Connection connection = database.getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
 
             for (Ticket ticket : tickets) {
-                ps.setString(1, ticket.getId());
-                ps.setInt(2, ticket.getNumber());
-                ps.setString(3, ticket.getPriority().getType());
-                ps.setInt(4, ticket.getUserId());
-                ps.setString(5, ticket.getFlightId());
-                ps.addBatch();
+                if (!exists(ticket.getId())) {
+                    ps.setString(1, ticket.getId());
+                    ps.setInt(2, ticket.getNumber());
+                    ps.setString(3, ticket.getPriority().getType());
+                    ps.setInt(4, ticket.getUserId());
+                    ps.setString(5, ticket.getFlightId());
+                    ps.setString(6, ticket.getPreviousTicket());
+                    ps.setString(7, ticket.getNextTicket());
+                    ps.addBatch();
+                }
             }
 
             wereCreated = database.wereCreated(ps);
@@ -121,7 +130,7 @@ public class TicketRepository {
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
-            String id, priorityType, flightId;
+            String id, priorityType, flightId, previousTicket, nextTicket;
             int arrivalNumber, userId;
             Category category;
             while (rs.next()) {
@@ -130,9 +139,12 @@ public class TicketRepository {
                 priorityType = rs.getString("priority");
                 userId = rs.getInt("userId");
                 flightId = rs.getString("flightId");
+                previousTicket = rs.getString("previousTicket");
+                nextTicket = rs.getString("nextTicket");
                 category = Category.getCategory(priorityType);
 
-                tickets.add(new Ticket(id, arrivalNumber, category, userId, flightId));
+                tickets.add(new Ticket(id, arrivalNumber, category, userId,
+                        flightId, previousTicket, nextTicket));
             }
             ps.close();
             return tickets;
@@ -159,8 +171,11 @@ public class TicketRepository {
                 String priorityType = rs.getString("priority");
                 int userId = rs.getInt("userId");
                 String flightId = rs.getString("flightId");
+                String previousTicket = rs.getString("previousTicket");
+                String nextTicket = rs.getString("nextTicket");
                 Category category = Category.getCategory(priorityType);
-                Ticket ticket = new Ticket(id, ticketNumber, category, userId, flightId);
+                Ticket ticket = new Ticket(id, ticketNumber, category, userId,
+                        flightId, previousTicket, nextTicket);
 
                 ps.close();
                 return ticket;
@@ -204,7 +219,7 @@ public class TicketRepository {
             ResultSet rs = ps.executeQuery();
             ArrayList<Ticket> tickets = new ArrayList<>();
 
-            String id, priorityType, flightId;
+            String id, priorityType, flightId, previousTicket, nextTicket;
             int arrivalNumber, userId;
             Category category;
             while (rs.next()) {
@@ -214,7 +229,10 @@ public class TicketRepository {
                 userId = rs.getInt("userId");
                 flightId = rs.getString("flightId");
                 category = Category.getCategory(priorityType);
-                tickets.add(new Ticket(id, arrivalNumber, category, userId, flightId));
+                previousTicket = rs.getString("previousTicket");
+                nextTicket = rs.getString("nextTicket");
+                tickets.add(new Ticket(id, arrivalNumber, category, userId,
+                        flightId, previousTicket, nextTicket));
             }
 
             ps.close();
@@ -234,15 +252,17 @@ public class TicketRepository {
     public boolean update(String id, Ticket ticket) {
         boolean wasUpdated = false;
         try {
-            if (!database.doesNotExist("Ticket", id)) {
+            if (exists(id)) {
                 String query = "UPDATE Ticket SET arrivalNumber=?, priority=?, " +
-                        "userId=?, flightId=? WHERE id=?";
+                        "userId=?, flightId=?, previousTicket=?, nextTicket=? WHERE id=?";
                 PreparedStatement ps = database.getConnection().prepareStatement(query);
                 ps.setInt(1, ticket.getNumber());
                 ps.setString(2, ticket.getPriority().getType());
                 ps.setInt(3, ticket.getUserId());
                 ps.setString(4, ticket.getFlightId());
-                ps.setString(5, id);
+                ps.setString(5, ticket.getPreviousTicket());
+                ps.setString(6, ticket.getNextTicket());
+                ps.setString(7, id);
                 int rowsUpdated = ps.executeUpdate();
                 ps.close();
 
@@ -263,6 +283,20 @@ public class TicketRepository {
      * @return True if the ticket was successfully deleted, otherwise false.
      */
     public boolean delete(String id) {
-        return database.delete("Flight", id);
+        return database.delete("Ticket", id);
+    }
+
+    public boolean deleteAll() {
+        return database.deleteAll("Ticket");
+    }
+
+    /**
+     * This method verify if a data exists on the airport table using their id.
+     *
+     * @param id airport data id.
+     * @return boolean to know if exist the aiport.
+     */
+    public boolean exists(String id) {
+        return database.exists("Ticket", id);
     }
 }

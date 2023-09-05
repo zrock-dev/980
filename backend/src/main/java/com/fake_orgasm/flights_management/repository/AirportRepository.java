@@ -48,7 +48,7 @@ public class AirportRepository {
      */
     public boolean create(Airport airport) {
         boolean wasSaved = false;
-        if (database.doesNotExist("Airport", airport.getId()))
+        if (!exists(airport.getId()))
             return wasSaved;
         try {
             String query = "INSERT INTO Airport " +
@@ -89,11 +89,13 @@ public class AirportRepository {
             PreparedStatement ps = connection.prepareStatement(query);
 
             for (Airport airport : airports) {
-                ps.setString(1, airport.getId());
-                ps.setString(2, airport.getName());
-                ps.setString(3, airport.getCountry());
-                ps.setString(4, airport.getState());
-                ps.addBatch();
+                if (!exists(airport.getId())) {
+                    ps.setString(1, airport.getId());
+                    ps.setString(2, airport.getName());
+                    ps.setString(3, airport.getCountry());
+                    ps.setString(4, airport.getState());
+                    ps.addBatch();
+                }
             }
 
             wereCreated = database.wereCreated(ps);
@@ -170,5 +172,20 @@ public class AirportRepository {
      */
     public boolean delete(String id) {
         return database.delete("Airport", id);
+    }
+
+    public boolean deleteAll() {
+        return database.deleteAll("Airport");
+    }
+
+
+    /**
+     * This method verify if a data exists on the airport table using their id.
+     *
+     * @param id airport data id.
+     * @return boolean to know if exist the aiport.
+     */
+    public boolean exists(String id) {
+        return database.exists("Airport", id);
     }
 }

@@ -68,7 +68,7 @@ public class FlightDatabase {
      * @param id        The ID to search for.
      * @return True if the record exists, otherwise false.
      */
-    public boolean doesNotExist(String tableName, String id) {
+    public boolean exists(String tableName, String id) {
         boolean exists;
         try {
             String query = "SELECT COUNT(*) FROM " + tableName + " WHERE id=?";
@@ -95,10 +95,25 @@ public class FlightDatabase {
         boolean wasDeleted = false;
         try {
             String query = "DELETE FROM " + tableName + " WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = getConnection().prepareStatement(query);
             ps.setString(1, id);
             ps.execute();
             ps.close();
+            wasDeleted = true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return wasDeleted;
+    }
+
+    public boolean deleteAll(String tableName) {
+        boolean wasDeleted = false;
+        try {
+            String query = "TRUNCATE TABLE " + tableName;
+            Statement statement = getConnection().createStatement();
+            statement.executeUpdate(query);
+            statement.close();
             wasDeleted = true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
