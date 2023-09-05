@@ -15,18 +15,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BookingServiceTest {
 
+    private final String FLIGHT_ID = "9740c3f2-7021-44ba-86cd-f82e620eca7b";
+
     @Test
     public void testBookingService() {
         BookingService bookService = new BookingService();
 
         // Data
-        String flightId = "c8c86159-e441-4080-b927-1a359d63e208";
         Flight flight;
         List<Ticket> tickets;
         User userForBook = new User(1234, "Luiggy", "Mamani Condori",
                 LocalDate.of(1992, 1, 20), "Bolivia");
 
-        flight = bookService.getFlightRepository().search(flightId);
+        flight = bookService.getFlightRepository().search(FLIGHT_ID);
 
         if (flight != null && flight.isAvailable()) {
             // add new ticket with priority VIP
@@ -44,11 +45,11 @@ public class BookingServiceTest {
             int oldNumberOfTickets = flight.numberOfTickets();
 
             // flight reservation if is available
-            bookService.booking(userForBook, flightId, category);
+            bookService.booking(userForBook, FLIGHT_ID, category);
 
             // Show data after
             System.out.println("\n" + "-".repeat(50) + "AFTER" + "-".repeat(50) + "\n");
-            flight = bookService.getFlightRepository().search(flightId);
+            flight = bookService.getFlightRepository().search(FLIGHT_ID);
             tickets = bookService.getFlightTickets(flight);
             System.out.println(flight);
             System.out.println();
@@ -76,7 +77,7 @@ public class BookingServiceTest {
 
         if (ticketToCancel != null) {
             // before
-            String flightId = "43b9370d-bdde-45fd-8b6a-4aa685531fa6";
+            String flightId = ticketToCancel.getFlightId();
             Flight flight = bookService.getFlightRepository().search(flightId);
             int beforeNumberOfTickets = flight.numberOfTickets();
 
@@ -116,8 +117,7 @@ public class BookingServiceTest {
         BookingService bookService = new BookingService();
 
         // data
-        String flightId = "5823ff72-3594-43ea-846a-e7a0db1cef67";
-        Flight flight = bookService.getFlightRepository().search(flightId);
+        Flight flight = bookService.getFlightRepository().search(FLIGHT_ID);
         String ticketId = "c202665a-a0b1-4cc6-8a0c-b6cb2084bd91";
         String newCategory = Category.REGULAR_PASSENGER.getType();
         Ticket ticket;

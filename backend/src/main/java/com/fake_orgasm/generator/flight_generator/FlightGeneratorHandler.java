@@ -178,7 +178,7 @@ public class FlightGeneratorHandler {
      */
     private void calculateAmounts(int usersSize, int ticketsByUser) {
         amountTickets = (usersSize * ticketsByUser);
-        amountFlights = amountTickets / Flight.AVERAGE_CAPACITY;
+        amountFlights = amountTickets / Flight.MIN_CAPACITY;
         amountAirports = amountFlights / 2;
 
         if (amountFlights <= 0) {

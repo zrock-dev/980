@@ -171,12 +171,8 @@ public class FlightRepository {
                 ps.setString(5, flight.getPriorityTickets());
                 ps.setString(6, flight.getLastTicket());
                 ps.setString(7, id);
-                int rowsUpdated = ps.executeUpdate();
+                ps.execute();
                 ps.close();
-
-                if (rowsUpdated > 0) {
-                    wasUpdated = true;
-                }
             } else {
                 create(flight);
             }

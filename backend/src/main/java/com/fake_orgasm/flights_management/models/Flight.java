@@ -268,6 +268,7 @@ public class Flight {
         return "(" + numberOfTickets() + " - Tickets - Flight ) - (id - "
                 + id + ") - (Date: " + date + ")" +
                 "\nSource: " + sourceId +
-                "\nDestination: " + destinationId;
+                "\nDestination: " + destinationId +
+                "\nLast ticket: " + lastTicket;
     }
 }

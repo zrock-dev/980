@@ -116,6 +116,9 @@ public class BookingService implements IBookingService {
     @Override
     public boolean booking(User userForBook, String flightId, Category category) {
         boolean wasBooked = false;
+        Flight flight;
+        Ticket ticket;
+        User user;
         flight = flightRepository.search(flightId);
 
         if (flight != null && flight.isAvailable()) {
@@ -128,11 +131,12 @@ public class BookingService implements IBookingService {
                 Ticket lastTicket = ticketRepository.search(flight.getLastTicket());
                 lastTicket.setNextTicket(ticket.getId());
                 ticket.setPreviousTicket(lastTicket.getPreviousTicket());
+                ticketRepository.update(lastTicket.getId(), lastTicket);
             }
 
             flight.addTicketId(ticket.getId());
             user.addFlight(ticket.getId());
-            saveBooking();
+            saveBooking(flight, ticket, user);
             wasBooked = true;
         }
 
@@ -143,7 +147,7 @@ public class BookingService implements IBookingService {
      * This method saves the booking by updating the flight, creating the ticket,
      * and updating the user information if available.
      */
-    public void saveBooking() {
+    public void saveBooking(Flight flight, Ticket ticket, User user) {
         try {
             flightRepository.update(flight.getId(), flight);
             ticketRepository.create(ticket);

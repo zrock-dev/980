@@ -92,7 +92,7 @@ public class TicketGenerator {
 
             tickets.put(ticket.getId(), ticket);
             users.get(userIndex).addFlight(ticket.getId());
-            flights.get(flightIndex).addTicket(ticket);
+            flights.get(flightIndex).addTicketId(ticket.getId());
         }
     }
 
