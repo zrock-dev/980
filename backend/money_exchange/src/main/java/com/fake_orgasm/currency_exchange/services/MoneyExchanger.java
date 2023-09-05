@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
  *
  * @param <T> Is for param the class a specific type of MoneySubtracted.
  */
-public class MoneyExchanger<T extends IMoneySubtracted<T>> {
+public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExchanger<T> {
 
     /**
      * MaxHeap to manage all types of exchanges values.
@@ -43,7 +43,6 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> {
     public MoneyExchanger(ExchangeRates<T> moneyRates) {
         this.rates = moneyRates;
         this.heap = new MaxHeap<>(moneyRates.size());
-        fillHeap();
         this.jsonObject = new JSONObject();
         this.exchangesMap = new HashMap<>(moneyRates.size());
     }
@@ -64,11 +63,12 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> {
      * @return A JsonObject with all values processed.
      */
     public JSONObject getExchangeValues(T value) {
+        fillHeap();
         processQuantityRatesOnMap(value);
         for (T exchangeValue : exchangesMap.keySet()) {
             jsonObject.put(String.valueOf(exchangeValue), exchangesMap.get(exchangeValue));
         }
-        fillHeap();
+        this.heap.clear();
         return jsonObject;
     }
 
@@ -80,8 +80,8 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> {
     private void processQuantityRatesOnMap(T bigAmount) {
         T heapTop = this.heap.peek();
 
-        if (heapTop.compareTo(bigAmount) > 0) {
-            return;
+        while (heapTop.compareTo(bigAmount)>0){
+            heapTop = this.heap.peek();
         }
 
         for (int i = 0; i < rates.size(); i++) {
@@ -90,6 +90,9 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> {
 
             if (quantityOfMoney > 0) {
                 exchangesMap.put(heapTop, quantityOfMoney);
+            }
+            if (bigAmount.compareTo(heapTop)<0){
+                break;
             }
 
             heapTop = this.heap.peek();

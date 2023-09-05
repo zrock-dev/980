@@ -1,5 +1,7 @@
 package com.fake_orgasm.currency_exchange.libs.maxheap;
 
+import java.util.Arrays;
+
 /**
  * A Max Heap implementation that allows search data basing on priority values.
  * @param <T> Type of values stored on Heap, must be comparable.
@@ -112,5 +114,15 @@ public class MaxHeap<T extends Comparable<T>> {
         T temp = array[i];
         array[i] = array[j];
         array[j] = temp;
+    }
+
+    public void clear(){
+        while (this.size>0){
+            this.peek();
+        }
+    }
+
+    public String toString(){
+        return Arrays.toString(this.array);
     }
 }
