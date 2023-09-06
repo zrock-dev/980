@@ -1,10 +1,14 @@
 package com.fake_orgasm.flights_management.repository;
 
+import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.models.TicketJoined;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * This class has the responsibility of managing ticket data in the database.
@@ -152,6 +156,64 @@ public class TicketRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public List<TicketJoined> findAllTicketsWithFlightAndAirports(int userIdRequest) {
+        String query = "SELECT Ticket.*, Flight.*, " +
+                "Airport.airportName AS sourceAirportName, Airport.country AS sourceCountry, Airport.stateName AS sourceState, " +
+                "DestAirport.airportName AS destAirportName, DestAirport.country AS destCountry, DestAirport.stateName AS destState " +
+                "FROM Ticket " +
+                "INNER JOIN Flight ON Ticket.flightId = Flight.id " +
+                "INNER JOIN Airport ON Flight.sourceId = Airport.id " +
+                "INNER JOIN Airport AS DestAirport ON Flight.destinationId = DestAirport.id " +
+                "WHERE Ticket.userId = ?;";
+        List<TicketJoined> tickets = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = database.getConnection().prepareStatement(query);
+            ps.setInt(1, userIdRequest);
+
+            ResultSet rs = ps.executeQuery();
+
+            String ticketId, priorityType, flightId, sourceAirportName, sourceCountry,
+            sourceState, destAirportName, destCountry, destState;
+            int arrivalNumber, userId;
+            Date date;
+            Airport source, destination;
+            Category category;
+
+            while (rs.next()) {
+                ticketId = rs.getString("id");
+                arrivalNumber = rs.getInt("arrivalNumber");
+                priorityType = rs.getString("priority");
+                userId = rs.getInt("userId");
+                flightId = rs.getString("flightId");
+                category = Category.getCategory(priorityType);
+
+                sourceAirportName = rs.getString("sourceAirportName");
+                sourceCountry = rs.getString("sourceCountry");
+                sourceState = rs.getString("sourceState");
+                destAirportName = rs.getString("destAirportName");
+                destCountry = rs.getString("destCountry");
+                destState = rs.getString("destState");
+                date = rs.getDate("arrivalDate");
+
+                source = new Airport(sourceAirportName, sourceCountry, sourceState);
+                destination = new Airport(destAirportName, destCountry, destState);
+                tickets.add(new TicketJoined(
+                        ticketId, userId, flightId, arrivalNumber,
+                        category, date, source, destination
+                ));
+
+            }
+
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tickets;
+    }
+
 
     /**
      * This method retrieves a ticket record from the database by its ID.

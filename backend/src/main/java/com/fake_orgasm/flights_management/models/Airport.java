@@ -29,6 +29,20 @@ public class Airport {
     }
 
     /**
+     * This is the constructor for this class.
+     *
+     * @param name The name of the airport.
+     * @param country     The country where the airport is located.
+     * @param state       The state where the airport is located.
+     */
+    public Airport(String name, String country, String state) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.state = state;
+    }
+
+    /**
      * This is the to string method to return airport view by console.
      *
      * @return airport view by console.

@@ -3,6 +3,7 @@ package com.fake_orgasm.flights_management.services;
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.FlightJoined;
+import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.models.TicketJoined;
 import com.fake_orgasm.users_management.models.User;
 
@@ -23,6 +24,8 @@ public interface IBookingService {
      * @return True if the booking was successful, otherwise false.
      */
     public boolean booking(User user, String flightId, Category category);
+
+    List<Ticket> getFlightTickets(String flightId);
 
     /**
      * This method deletes a booking associated with a user and a specific ticket ID.

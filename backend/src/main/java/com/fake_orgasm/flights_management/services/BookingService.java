@@ -10,7 +10,6 @@ import com.fake_orgasm.users_management.services.exceptions.IncompleteUserExcept
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -166,6 +165,7 @@ public class BookingService implements IBookingService {
      * @param flightId The ID of the flight for which to retrieve tickets.
      * @return A list of Ticket objects representing the flight tickets.
      */
+    @Override
     public List<Ticket> getFlightTickets(String flightId) {
         Flight flight = flightRepository.search(flightId);
         List<Ticket> tickets = ticketRepository
@@ -234,7 +234,7 @@ public class BookingService implements IBookingService {
 
     @Override
     public List<TicketJoined> getUserTickets(int userId, int page) {
-        return null;
+        return ticketRepository.findAllTicketsWithFlightAndAirports(userId);
     }
 
     /**
