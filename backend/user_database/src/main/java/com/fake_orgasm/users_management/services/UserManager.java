@@ -1,5 +1,7 @@
 package com.fake_orgasm.users_management.services;
 
+import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
+import com.fake_orgasm.generator.flight_history_generator.FlightHistoryGenerator;
 import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.exceptions.DuplicateUserException;
@@ -19,16 +21,32 @@ import org.springframework.stereotype.Service;
 public class UserManager implements IUserManager {
     private List<User> users;
     private UserGenerator userGenerator;
+    private FlightHistoryGenerator flightHistoryGenerator;
 
     /**
      * This is a constructor method to initialize the state of the class.
      */
     public UserManager() {
         userGenerator = new UserGenerator();
+        flightHistoryGenerator = FlightHistoryGenerator.getInstance();
         this.users = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            this.users.add(userGenerator.make());
+        for (int i = 0; i < 10_000; i++) {
+            this.users.add(makeUser());
         }
+    }
+
+
+    /**
+     * Generates a new User object by utilizing the UserGenerator and FlightHistoryGenerator classes.
+     *
+     * @return The newly created User object.
+     */
+    private User makeUser() {
+        User user = userGenerator.make();
+        FlightHistory history = flightHistoryGenerator.generateRandomFlightHistory();
+        user.addFlightHistory(history);
+        user.setCategory(history.getTicketType());
+        return user;
     }
 
     /**
