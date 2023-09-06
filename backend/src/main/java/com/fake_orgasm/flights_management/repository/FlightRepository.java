@@ -152,6 +152,17 @@ public class FlightRepository {
         }
     }
 
+    /**
+     * This method retrieves a list of detailed information about all flights,
+     * including source and destination airports.
+     * <p>
+     * This method fetches detailed information about all available flights,
+     * including their source and destination airports, arrival dates,
+     * capacities, and associated ticket IDs.
+     *
+     * @return A list of FlightJoined objects containing detailed
+     * flight information for all available flights.
+     */
     public List<FlightJoined> findAllFlightsJoined() {
         List<FlightJoined> flights = new ArrayList<>();
         String query = "SELECT Flight.*, Airport.airportName AS sourceAirportName, "
@@ -204,6 +215,18 @@ public class FlightRepository {
         return flights;
     }
 
+    /**
+     * This method retrieves detailed information about a specific flight,
+     * including source and destination airports.
+     * <p>
+     * This method fetches detailed information about a flight including
+     * its source and destination airports, based on the provided flight ID.
+     *
+     * @param flightId The unique identifier of the flight to retrieve.
+     * @return A FlightJoined object containing detailed flight information,
+     * including associated source and destination airports, arrival date,
+     * capacity, and ticket IDs. Returns null if no matching flight is found.
+     */
     public FlightJoined findFlightJoined(String flightId) {
         String query = "SELECT Flight.*, Airport.airportName AS sourceAirportName, "
                 + "Airport.country AS sourceCountry, Airport.stateName AS sourceState, "
@@ -221,7 +244,7 @@ public class FlightRepository {
             ResultSet rs = ps.executeQuery();
 
             String sourceAirportName, sourceCountry, sourceState, destAirportName,
-                    destCountry, destState, ticketIds, lastTicket;
+                    destCountry, destState, ticketIds;
             java.util.Date date;
             Airport source, destination;
             int capacity;

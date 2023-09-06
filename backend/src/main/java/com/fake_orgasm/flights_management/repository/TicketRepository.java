@@ -157,6 +157,17 @@ public class TicketRepository {
         }
     }
 
+    /**
+     * This method retrieves a list of tickets associated with a specified user ID, including
+     * flight and airport information.
+     * <p>
+     * This method executes a SQL query to fetch ticket details along with corresponding flight
+     * and airport information for a given user ID. It joins the 'Ticket', 'Flight', 'Airport',
+     * and 'Airport AS DestAirport' tables to retrieve all the information.
+     *
+     * @param userIdRequest The ID of the user for whom to retrieve tickets.
+     * @return A list of TicketJoined objects containing ticket details.
+     */
     public List<TicketJoined> findAllTicketsWithFlightAndAirports(int userIdRequest) {
         String query = "SELECT Ticket.*, Flight.*, " +
                 "Airport.airportName AS sourceAirportName, Airport.country AS sourceCountry, Airport.stateName AS sourceState, " +
@@ -175,7 +186,7 @@ public class TicketRepository {
             ResultSet rs = ps.executeQuery();
 
             String ticketId, priorityType, flightId, sourceAirportName, sourceCountry,
-            sourceState, destAirportName, destCountry, destState;
+                    sourceState, destAirportName, destCountry, destState;
             int arrivalNumber, userId;
             Date date;
             Airport source, destination;

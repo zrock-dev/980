@@ -62,6 +62,44 @@ public class BookingService implements IBookingService {
     }
 
     /**
+     * This method books a flight ticket for a given user with a specified category.
+     *
+     * @param userForBook The User object representing the passenger.
+     * @param flightId    The ID of the flight for which the ticket is booked.
+     * @param category    The Category of the ticket (e.g., Economy, Business, VIP).
+     * @return True if the booking was successful, otherwise false.
+     */
+    @Override
+    public boolean booking(User userForBook, String flightId, Category category) {
+        boolean wasBooked = false;
+        Flight flight;
+        Ticket ticket;
+        User user;
+        flight = flightRepository.search(flightId);
+
+        if (flight != null && flight.isAvailable()) {
+            user = findUser(userForBook);
+            ticket = new Ticket(UUID.randomUUID().toString(),
+                    flight.getNextNumber(), category, userForBook.getId(),
+                    flight.getId());
+
+            if (!flight.getLastTicket().isEmpty()) {
+                Ticket lastTicket = ticketRepository.search(flight.getLastTicket());
+                lastTicket.setNextTicket(ticket.getId());
+                ticket.setPreviousTicket(lastTicket.getId());
+                ticketRepository.update(lastTicket.getId(), lastTicket);
+            }
+
+            flight.addTicketId(ticket.getId());
+            user.addFlight(ticket.getId());
+            saveBooking(flight, ticket, user);
+            wasBooked = true;
+        }
+
+        return wasBooked;
+    }
+
+    /**
      * This method finds an existing user or creates a new one if not found in the user
      * management system.
      *
@@ -105,45 +143,6 @@ public class BookingService implements IBookingService {
         return null;
     }
 
-
-    /**
-     * This method books a flight ticket for a given user with a specified category.
-     *
-     * @param userForBook The User object representing the passenger.
-     * @param flightId    The ID of the flight for which the ticket is booked.
-     * @param category    The Category of the ticket (e.g., Economy, Business, VIP).
-     * @return True if the booking was successful, otherwise false.
-     */
-    @Override
-    public boolean booking(User userForBook, String flightId, Category category) {
-        boolean wasBooked = false;
-        Flight flight;
-        Ticket ticket;
-        User user;
-        flight = flightRepository.search(flightId);
-
-        if (flight != null && flight.isAvailable()) {
-            user = findUser(userForBook);
-            ticket = new Ticket(UUID.randomUUID().toString(),
-                    flight.getNextNumber(), category, userForBook.getId(),
-                    flight.getId());
-
-            if (!flight.getLastTicket().isEmpty()) {
-                Ticket lastTicket = ticketRepository.search(flight.getLastTicket());
-                lastTicket.setNextTicket(ticket.getId());
-                ticket.setPreviousTicket(lastTicket.getId());
-                ticketRepository.update(lastTicket.getId(), lastTicket);
-            }
-
-            flight.addTicketId(ticket.getId());
-            user.addFlight(ticket.getId());
-            saveBooking(flight, ticket, user);
-            wasBooked = true;
-        }
-
-        return wasBooked;
-    }
-
     /**
      * This method saves the booking by updating the flight, creating the ticket,
      * and updating the user information if available.
@@ -160,24 +159,7 @@ public class BookingService implements IBookingService {
     }
 
     /**
-     * This method retrieves a list of flight tickets for a specific flight identified by its ID.
-     *
-     * @param flightId The ID of the flight for which to retrieve tickets.
-     * @return A list of Ticket objects representing the flight tickets.
-     */
-    @Override
-    public List<Ticket> getFlightTickets(String flightId) {
-        Flight flight = flightRepository.search(flightId);
-        List<Ticket> tickets = ticketRepository
-                .search(flight.getTicketIds().split(","));
-        flight.addTicket(tickets);
-        tickets = flight.getTickets();
-
-        return tickets;
-    }
-
-    /**
-     * Deletes a booking associated with a user and a specific ticket ID.
+     * This method deletes a booking associated with a user and a specific ticket ID.
      * <p>
      * This method attempts to delete a booking made by the specified user for a
      * ticket identified by the provided ticket ID. If the deletion is successful,
@@ -199,7 +181,7 @@ public class BookingService implements IBookingService {
     }
 
     /**
-     * Edits the category of a booking associated with a ticket.
+     * This method edits the category of a booking associated with a ticket.
      * <p>
      * This method allows for the modification of the booking category (e.g., class)
      * associated with a ticket. It takes the ticket ID and the new category as
@@ -222,16 +204,67 @@ public class BookingService implements IBookingService {
         return false;
     }
 
+    /**
+     * This method retrieves a list of tickets associated with a specific flight.
+     * <p>
+     * This method fetches a list of tickets that are associated with the specified flight ID.
+     *
+     * @param flightId The unique identifier of the flight for which to retrieve tickets.
+     * @return A list of Ticket objects representing tickets associated with the specified flight.
+     * An empty list is returned if no tickets are found for the given flight.
+     */
+    @Override
+    public List<Ticket> getFlightTickets(String flightId) {
+        Flight flight = flightRepository.search(flightId);
+        List<Ticket> tickets = ticketRepository
+                .search(flight.getTicketIds().split(","));
+        flight.addTicket(tickets);
+        tickets = flight.getTickets();
+
+        return tickets;
+    }
+
+    /**
+     * This method retrieves a paginated list of joined flight information.
+     * <p>
+     * This method fetches flight details, including associated source and
+     * destination airports, for a specified page.
+     *
+     * @param page The page number of the results to retrieve.
+     * @return A list of FlightJoined objects containing flight details
+     * and associated airports for the specified page.
+     */
     @Override
     public List<FlightJoined> getFlightsJoined(int page) {
         return flightRepository.findAllFlightsJoined();
     }
 
+    /**
+     * This method retrieves detailed information about a specific flight,
+     * including source and destination airports.
+     * <p>
+     * This method fetches detailed information about a flight,
+     * including its source and destination airports, based on the provided flight ID.
+     *
+     * @param flightId The unique identifier of the flight to retrieve.
+     * @return A FlightJoined object containing detailed flight information and associated airports.
+     */
     @Override
     public FlightJoined getFlightJoined(String flightId) {
         return flightRepository.findFlightJoined(flightId);
     }
 
+    /**
+     * This method retrieves a paginated list of tickets associated with a specific user.
+     * <p>
+     * This method retrieves a paginated list of tickets associated with a specified user ID.
+     * It includes ticket details, such as the ticket category and arrival information.
+     *
+     * @param userId The ID of the user for whom to retrieve tickets.
+     * @param page   The page number of the results to retrieve.
+     * @return A list of TicketJoined objects containing ticket details
+     * and associated flight and airport information for the specified user and page.
+     */
     @Override
     public List<TicketJoined> getUserTickets(int userId, int page) {
         return ticketRepository.findAllTicketsWithFlightAndAirports(userId);

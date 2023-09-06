@@ -186,7 +186,6 @@ public class AirportRepository {
         return database.deleteAll("Airport");
     }
 
-
     /**
      * This method verify if a data exists on the airport table using their id.
      *

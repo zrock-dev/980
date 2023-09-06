@@ -25,8 +25,6 @@ public interface IBookingService {
      */
     public boolean booking(User user, String flightId, Category category);
 
-    List<Ticket> getFlightTickets(String flightId);
-
     /**
      * This method deletes a booking associated with a user and a specific ticket ID.
      * <p>
@@ -41,7 +39,7 @@ public interface IBookingService {
     public boolean deleteBooking(User userData, String ticketId);
 
     /**
-     * Edits the category of a booking associated with a ticket.
+     * This method edits the category of a booking associated with a ticket.
      * <p>
      * This method allows for the modification of the booking category (e.g., class)
      * associated with a ticket. It takes the ticket ID and the new category as
@@ -54,9 +52,51 @@ public interface IBookingService {
      */
     public boolean editBooking(String ticketId, String newCategory);
 
+    /**
+     * This method retrieves a list of tickets associated with a specific flight.
+     * <p>
+     * This method fetches a list of tickets that are associated with the specified flight ID.
+     *
+     * @param flightId The unique identifier of the flight for which to retrieve tickets.
+     * @return A list of Ticket objects representing tickets associated with the specified flight.
+     * An empty list is returned if no tickets are found for the given flight.
+     */
+    public List<Ticket> getFlightTickets(String flightId);
+
+    /**
+     * This method retrieves a paginated list of joined flight information.
+     * <p>
+     * This method fetches flight details, including associated source and
+     * destination airports, for a specified page.
+     *
+     * @param page The page number of the results to retrieve.
+     * @return A list of FlightJoined objects containing flight details
+     * and associated airports for the specified page.
+     */
     public List<FlightJoined> getFlightsJoined(int page);
 
+    /**
+     * This method retrieves detailed information about a specific flight,
+     * including source and destination airports.
+     * <p>
+     * This method fetches detailed information about a flight,
+     * including its source and destination airports, based on the provided flight ID.
+     *
+     * @param flightId The unique identifier of the flight to retrieve.
+     * @return A FlightJoined object containing detailed flight information and associated airports.
+     */
     public FlightJoined getFlightJoined(String flightId) throws FlightCapacityException;
 
-    List<TicketJoined> getUserTickets(int userId, int page);
+    /**
+     * This method retrieves a paginated list of tickets associated with a specific user.
+     * <p>
+     * This method retrieves a paginated list of tickets associated with a specified user ID.
+     * It includes ticket details, such as the ticket category and arrival information.
+     *
+     * @param userId The ID of the user for whom to retrieve tickets.
+     * @param page   The page number of the results to retrieve.
+     * @return A list of TicketJoined objects containing ticket details
+     * and associated flight and airport information for the specified user and page.
+     */
+    public List<TicketJoined> getUserTickets(int userId, int page);
 }
