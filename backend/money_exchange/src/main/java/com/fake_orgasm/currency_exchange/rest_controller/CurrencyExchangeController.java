@@ -29,6 +29,7 @@ public class CurrencyExchangeController {
 
     /**
      * Class constructor to set injection facilities to spring boot.
+     *
      * @param context Is context given from spring application.
      */
     @Autowired
@@ -44,6 +45,9 @@ public class CurrencyExchangeController {
      */
     @GetMapping("/bolivian")
     public JSONObject getBolivianExchange(@RequestParam Double amount) {
+        if (amount < 0 || amount > 1_000_000) {
+            throw new RuntimeException("Amount must be greater than 0 and less than 1_000_000");
+        }
         this.moneyExchanger = context.getBean("bolivianExchanger", MoneyExchanger.class);
         return moneyExchanger.getExchangeValues(new DoubleMoney(amount));
     }
@@ -56,6 +60,9 @@ public class CurrencyExchangeController {
      */
     @GetMapping("/euro")
     public JSONObject getEuroExchange(@RequestParam Double amount) {
+        if (amount < 0 || amount > 1_000_000) {
+            throw new RuntimeException("Amount must be greater than 0 and less than 1_000_000");
+        }
         this.moneyExchanger = context.getBean("euroExchanger", MoneyExchanger.class);
         return moneyExchanger.getExchangeValues(new DoubleMoney(amount));
     }
@@ -68,6 +75,9 @@ public class CurrencyExchangeController {
      */
     @GetMapping("/dollar")
     public JSONObject getDollarExchange(@RequestParam Double amount) {
+        if (amount < 0 || amount > 1_000_000) {
+            throw new RuntimeException("Amount must be greater than 0 and less than 1_000_000");
+        }
         this.moneyExchanger = context.getBean("dollarExchanger", MoneyExchanger.class);
         return moneyExchanger.getExchangeValues(new DoubleMoney(amount));
     }
