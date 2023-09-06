@@ -1,7 +1,9 @@
 package com.fake_orgasm.flights_management.repository;
 
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
+import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
+import com.fake_orgasm.flights_management.models.FlightJoined;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -149,6 +151,59 @@ public class FlightRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public List<FlightJoined> findAllFlightsJoined() {
+        List<FlightJoined> flights = new ArrayList<>();
+        String query = "SELECT Flight.*, Airport.airportName AS sourceAirportName, "
+                + "Airport.country AS sourceCountry, Airport.stateName AS sourceState, "
+                + "DestAirport.airportName AS destAirportName, DestAirport.country AS destCountry, "
+                + "DestAirport.stateName AS destState "
+                + "FROM Flight "
+                + "INNER JOIN Airport ON Flight.sourceId = Airport.id "
+                + "INNER JOIN Airport AS DestAirport ON Flight.destinationId = DestAirport.id;";
+
+        try {
+            PreparedStatement ps = database.getConnection().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            String flightId, sourceAirportId, destAirportId, ticketIds,
+                    sourceAirportName, sourceCountry, sourceState,
+                    destAirportName, destCountry, destState;
+            int capacity;
+            java.util.Date date;
+            Airport source, destination;
+            while (rs.next()) {
+                flightId = rs.getString("id");
+                sourceAirportId = rs.getString("sourceId");
+                destAirportId = rs.getString("destinationId");
+                date = rs.getDate("arrivalDate");
+                capacity = rs.getInt("capacity");
+                ticketIds = rs.getString("tickets");
+                sourceAirportName = rs.getString("sourceAirportName");
+                sourceCountry = rs.getString("sourceCountry");
+                sourceState = rs.getString("sourceState");
+                destAirportName = rs.getString("destAirportName");
+                destCountry = rs.getString("destCountry");
+                destState = rs.getString("destState");
+
+                source = new Airport(sourceAirportId, sourceAirportName,
+                        sourceCountry, sourceState);
+                destination = new Airport(destAirportId, destAirportName,
+                        destCountry, destState);
+
+                flights.add(
+                        new FlightJoined(flightId, source, destination, date,
+                                capacity, ticketIds)
+                );
+            }
+
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return flights;
+    }
+
 
     /**
      * This method updates a flight record in the database.

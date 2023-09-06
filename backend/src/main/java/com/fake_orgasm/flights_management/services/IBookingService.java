@@ -1,7 +1,9 @@
 package com.fake_orgasm.flights_management.services;
 
+import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Category;
-import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.models.FlightJoined;
+import com.fake_orgasm.flights_management.models.TicketJoined;
 import com.fake_orgasm.users_management.models.User;
 
 import java.util.List;
@@ -49,12 +51,9 @@ public interface IBookingService {
      */
     public boolean editBooking(String ticketId, String newCategory);
 
-    /**
-     * This method retrieves a list of flight tickets for a specific flight identified by its ID.
-     *
-     * @param flightId The ID of the flight for which to retrieve tickets.
-     * @return A list of Ticket objects representing the flight tickets.
-     */
-    public List<Ticket> getFlightTickets(String flightId);
+    public List<FlightJoined> getFlightsJoined(int page);
 
+    public FlightJoined getFlightJoined(String flightId) throws FlightCapacityException;
+
+    List<TicketJoined> getUserTickets(int userId, int page);
 }

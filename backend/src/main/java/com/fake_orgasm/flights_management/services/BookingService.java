@@ -1,8 +1,7 @@
 package com.fake_orgasm.flights_management.services;
 
-import com.fake_orgasm.flights_management.models.Category;
-import com.fake_orgasm.flights_management.models.Flight;
-import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.models.*;
+import com.fake_orgasm.flights_management.repository.AirportRepository;
 import com.fake_orgasm.flights_management.repository.FlightRepository;
 import com.fake_orgasm.flights_management.repository.TicketRepository;
 import com.fake_orgasm.users_management.models.User;
@@ -11,6 +10,7 @@ import com.fake_orgasm.users_management.services.exceptions.IncompleteUserExcept
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +25,7 @@ public class BookingService implements IBookingService {
     private IUserManagement userManagement;
     private FlightRepository flightRepository;
     private TicketRepository ticketRepository;
+    private AirportRepository airportRepository;
 
     /**
      * This method constructs a BookingService instance with dependencies on user management,
@@ -38,11 +39,13 @@ public class BookingService implements IBookingService {
     public BookingService(
             IUserManagement userManagement,
             FlightRepository flightManagement,
-            TicketRepository ticketManagement
+            TicketRepository ticketManagement,
+            AirportRepository airportRepository
     ) {
         this.userManagement = userManagement;
         this.flightRepository = flightManagement;
         this.ticketRepository = ticketManagement;
+        this.airportRepository = airportRepository;
     }
 
     /**
@@ -52,7 +55,9 @@ public class BookingService implements IBookingService {
     public BookingService() {
         this.flightRepository = new FlightRepository();
         this.ticketRepository = new TicketRepository();
+        this.airportRepository = new AirportRepository();
 
+        airportRepository.createTable();
         flightRepository.createTable();
         ticketRepository.createTable();
     }
@@ -161,7 +166,6 @@ public class BookingService implements IBookingService {
      * @param flightId The ID of the flight for which to retrieve tickets.
      * @return A list of Ticket objects representing the flight tickets.
      */
-    @Override
     public List<Ticket> getFlightTickets(String flightId) {
         Flight flight = flightRepository.search(flightId);
         List<Ticket> tickets = ticketRepository
@@ -216,6 +220,21 @@ public class BookingService implements IBookingService {
         }
 
         return false;
+    }
+
+    @Override
+    public List<FlightJoined> getFlightsJoined(int page) {
+        return flightRepository.findAllFlightsJoined();
+    }
+
+    @Override
+    public FlightJoined getFlightJoined(String flightId) {
+        return null;
+    }
+
+    @Override
+    public List<TicketJoined> getUserTickets(int userId, int page) {
+        return null;
     }
 
     /**
