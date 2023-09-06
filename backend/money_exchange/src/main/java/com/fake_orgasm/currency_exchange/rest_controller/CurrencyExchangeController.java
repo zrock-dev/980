@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Class to manage all http requests of this micro-service.
+ * Class to manage all http requests of this microservice.
  */
 @RestController
 @RequestMapping("/api/currency-exchange")
