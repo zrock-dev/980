@@ -3,7 +3,7 @@ package com.fake_orgasm.users_management.services.exceptions;
 /**
  * Exception thrown when an invalid page number is provided.
  */
-public class InvalidPageException extends Exception {
+public class InvalidPageException extends RuntimeException {
 
     /**
      * Constructs an InvalidPageException with the specified detail message.
