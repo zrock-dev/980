@@ -1,5 +1,7 @@
 package com.fake_orgasm.currency_exchange.models;
 
+import org.decimal4j.util.DoubleRounder;
+
 /**
  * Class to model integer value money types.
  */
@@ -35,7 +37,8 @@ public class DoubleMoney implements IMoneySubtracted<DoubleMoney> {
      */
     @Override
     public void subtract(DoubleMoney value) {
-        this.moneyValue -= value.getMoneyValue();
+        double sum = DoubleRounder.round(Double.sum(this.moneyValue, value.getMoneyValue() * -1), 2);
+        this.moneyValue = sum;
     }
 
     /**

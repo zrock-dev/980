@@ -3,8 +3,7 @@ package com.fake_orgasm.currency_exchange.services;
 import com.fake_orgasm.currency_exchange.libs.maxheap.MaxHeap;
 import com.fake_orgasm.currency_exchange.models.ExchangeRates;
 import com.fake_orgasm.currency_exchange.models.IMoneySubtracted;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import org.json.simple.JSONObject;
 
 /**
@@ -52,7 +51,7 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
      */
     private void fillHeap() {
         for (Object rate : rates.exchangesArray()) {
-            heap.insert((T) rate);
+            heap.put((T) rate);
         }
     }
 
@@ -65,10 +64,11 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
     public JSONObject getExchangeValues(T value) {
         fillHeap();
         processQuantityRatesOnMap(value);
+        this.jsonObject.clear();
+
         for (T exchangeValue : exchangesMap.keySet()) {
             jsonObject.put(String.valueOf(exchangeValue), exchangesMap.get(exchangeValue));
         }
-        this.heap.clear();
         return jsonObject;
     }
 
@@ -78,24 +78,15 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
      * @param bigAmount Is mount to be separated in exchanges given.
      */
     private void processQuantityRatesOnMap(T bigAmount) {
-        T heapTop = this.heap.peek();
-
-        while (heapTop.compareTo(bigAmount)>0){
-            heapTop = this.heap.peek();
-        }
-
-        for (int i = 0; i < rates.size(); i++) {
-
+        this.exchangesMap.clear();
+        T heapTop = this.heap.extract();
+        while (heapTop != null && bigAmount.compareTo(heapTop) >= 0 || this.heap.size() > 0) {
+            int size = this.heap.size();
             int quantityOfMoney = getMoneyQuantity(bigAmount, heapTop);
-
             if (quantityOfMoney > 0) {
                 exchangesMap.put(heapTop, quantityOfMoney);
             }
-            if (bigAmount.compareTo(heapTop)<0){
-                break;
-            }
-
-            heapTop = this.heap.peek();
+            heapTop = this.heap.extract();
         }
     }
 
