@@ -5,10 +5,9 @@ import UserSearchOption from './UserSeach';
 const Users = () => {
 	return (
 		<div>
-			<span>users</span>
 			<UserSearchOption
-			firstName= "Victor Leon"
-			lastName="Villca Silva" 
+			firstName= "Maria Natalia"
+			lastName="Montalvo Mamani" 
 			year ="19"
 			category="NORMAL"
 			country = "BOLIVIA"
