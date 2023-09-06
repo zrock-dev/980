@@ -180,3 +180,4 @@ public class User implements Comparable<User> {
     public int hashCode() {
         return super.hashCode();
     }
+}

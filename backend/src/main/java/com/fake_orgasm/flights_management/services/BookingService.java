@@ -229,7 +229,7 @@ public class BookingService implements IBookingService {
 
     @Override
     public FlightJoined getFlightJoined(String flightId) {
-        return null;
+        return flightRepository.findFlightJoined(flightId);
     }
 
     @Override
