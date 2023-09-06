@@ -2,14 +2,12 @@ package com.fake_orgasm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
- * Main Class to set up project application.
+ * Spring Boot GatewayApplication to launch boot app.
  */
 @SpringBootApplication
-@EnableDiscoveryClient
-public class UserDatabaseApplication {
+public class GatewayApplication {
 
     /**
      * Method main to launch app.
@@ -17,6 +15,6 @@ public class UserDatabaseApplication {
      * @param args It does not expect any args as parameter.
      */
     public static void main(String[] args) {
-        SpringApplication.run(UserDatabaseApplication.class, args);
+        SpringApplication.run(GatewayApplication.class, args);
     }
 }
