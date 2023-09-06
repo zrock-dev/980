@@ -5,5 +5,5 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'money_exchange'
+rootProject.name = 'eureka_server'
 enableFeaturePreview "STABLE_CONFIGURATION_CACHE"
