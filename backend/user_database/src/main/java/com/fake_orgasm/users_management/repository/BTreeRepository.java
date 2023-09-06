@@ -80,7 +80,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
             jsonGenerator.writeFieldName("idChildren");
             jsonGenerator.writeStartArray();
             for (String currenId : node.getIdChildren()) {
-                jsonGenerator.writeNumber(currenId);
+                jsonGenerator.writeString(currenId);
             }
             jsonGenerator.writeEndArray();
             jsonGenerator.writeBooleanField("leaf", node.isLeaf());
@@ -198,9 +198,8 @@ public class BTreeRepository implements IBTreeRepository<User> {
             JsonParser jsonParser = jsonFactory.createParser(file);
             JsonNode jsonNode = objectMapper.readTree(jsonParser);
             sizeBTree = jsonNode.get("sizeBTree").asInt();
-
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            setSizeBTree(0);
         }
         return sizeBTree;
     }
