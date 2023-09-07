@@ -1,33 +1,63 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Loader from '../Loader';
+import {
+	UserContainer,
+	UserInfoContainer,
+	UserOptionsContainer,
+	UserName,
+	UserMainInfoContainer
+} from '@/elements/User';
+import { Subtitle, GeneralButton } from '@/elements/GeneralElements';
+import { getUserInformation, getUserTickets } from '@/backend/User';
 
 const User = ({ id }) => {
+	const router = useRouter();
 	const params = useSearchParams();
-	const [user, setUser] = useState({
-		id: 12345678,
-		firstName: 'Luiggy',
-		secondName: '',
-		firstLastName: 'Mamani',
-		secondLastName: 'Condori',
-		country: 'Bolivia',
-		age: 19,
-		flights: []
-	});
+	const [user, setUser] = useState(null);
 	const [flightHistory, setFlightHistory] = useState(null);
 
 	useEffect(() => {
 		const firstName = params.get('firstName');
-		const secondName = params.get('secondName');
+		let secondName = params.get('secondName');
+		secondName = secondName ? secondName : '';
 		const firstLastName = params.get('firstLastName');
 		const secondLastName = params.get('secondLastName');
 
-		// fetch to get user information
+		if (firstName && firstLastName && secondLastName) {
+			getUserInformation(
+				id,
+				firstName,
+				secondName,
+				firstLastName,
+				secondLastName
+			)
+				.then((response) => {
+					setUser(response.data);
+				})
+				.catch(() => {
+					redirectToMainPage();
+				});
+		} else {
+			redirectToMainPage();
+		}
 	}, []);
 
+	const redirectToMainPage = () => {
+		router.push('/');
+	};
+
 	useEffect(() => {
-		// fetch to get flight history using tickets ids
+		if (user) {
+			getUserTickets(user.flights)
+				.then((response) => {
+					setFlightHistory(response.data);
+				})
+				.catch(() => {
+					setFlightHistory([]);
+				});
+		}
 	}, [user]);
 
 	const renderFlihtHistory = () => {
@@ -40,40 +70,56 @@ const User = ({ id }) => {
 
 	const renderUserInformation = () => {
 		return (
-			<div>
-				<div>
-					<div>
+			<UserContainer>
+				<UserInfoContainer>
+					<UserOptionsContainer>
 						<div>
 							{user.country}
-							<span>
-								{user.fisrtName} {user.secondName} {user.firstLastName}{' '}
+							<UserName>
+								{user.firstName} {user.secondName} {user.firstLastName}{' '}
 								{user.secondLastName}
-							</span>
+							</UserName>
 						</div>
 						<div>
 							<button>edit</button>
 							<button>delete</button>
-							<button>Book flight</button>
+							<GeneralButton>Book flight</GeneralButton>
 						</div>
-					</div>
-					<span>{user.flights.length < 15 ? 'REGULAR' : 'FREQUENT'}</span>
-					<div>
-						<span>Country: {user.country}</span>
-						<span>Age: {user.age} years old</span>
-						<span>C.I.: {user.id}</span>
-					</div>
-				</div>
-				<span>Flight history</span>
-				{flightHistory ? (
-					renderFlihtHistory()
-				) : (
-					<Loader withAbsolute={false} overallSize={'200px'} iconSize="70px" />
-				)}
-			</div>
+					</UserOptionsContainer>
+					<Subtitle>
+						{user.flights.length < 15 ? 'REGULAR' : 'FREQUENT'}
+					</Subtitle>
+					<UserMainInfoContainer>
+						<span>
+							<b>Country:</b> {user.country}
+						</span>
+						<span>
+							<b>Age:</b> {user.age} years old
+						</span>
+						<span>
+							<b>C.I.:</b> {user.id}
+						</span>
+					</UserMainInfoContainer>
+				</UserInfoContainer>
+				<UserInfoContainer>
+					<Subtitle>Flight history</Subtitle>
+					{flightHistory ? (
+						renderFlihtHistory()
+					) : (
+						<Loader
+							withAbsolute={false}
+							overallSize={'200px'}
+							iconSize="50px"
+						/>
+					)}
+				</UserInfoContainer>
+			</UserContainer>
 		);
 	};
 
-	return user ? renderUserInformation() : <Loader iconSize="100px" />;
+	return user ? renderUserInformation() : <Loader iconSize="80px" />;
 };
 
 export default User;
+
+// http://localhost:3000/users/1?firstName=luiggy&firstLastName=mamani&secondLastName=condori

@@ -66,3 +66,8 @@ export const LoaderIcon = styled.span`
 	border-right: 5px solid transparent;
 	animation: rotation 750ms linear infinite;
 `;
+
+export const Subtitle = styled.span`
+	font-size: 20px;
+	font-weight: 700;
+`;
