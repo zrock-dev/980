@@ -79,7 +79,7 @@ public class Node<T extends Comparable<T>> {
         this.size = 0;
         UUID randomUUID = UUID.randomUUID();
         this.id = randomUUID.toString();
-        this.idChildren = new String[children.length];
+        this.idChildren = new String[2 * degree];
     }
 
     /**

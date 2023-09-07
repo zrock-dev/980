@@ -81,7 +81,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
             jsonGenerator.writeFieldName("idChildren");
             jsonGenerator.writeStartArray();
             for (String currenId : node.getIdChildren()) {
-                jsonGenerator.writeNumber(currenId);
+                jsonGenerator.writeObject(currenId);
             }
             jsonGenerator.writeEndArray();
             jsonGenerator.writeBooleanField("leaf", node.isLeaf());
@@ -99,7 +99,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      * Write a user in the json generator that is passed as a parameter,
      * use the streaming approach by writing line by line the json.
      *
-     * @param user User to write in a json.
+     * @param user      User to write in a json.
      * @param generator JsonGenerator, json constructor.
      * @throws IOException exception if the deed fails.
      */

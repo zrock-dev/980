@@ -6,8 +6,11 @@ import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +21,9 @@ public class CrudTest {
     UserGenerator userGenerator;
     private FlightHistoryGenerator flightHistoryGenerator;
 
+    /**
+     * Sets up the test environment before each test case is run.
+     */
     @BeforeEach
     public void setUp() {
         flightHistoryGenerator = FlightHistoryGenerator.getInstance();
@@ -51,11 +57,12 @@ public class CrudTest {
             user = makeUser();
             users.add(user);
         }
-        long start = System.nanoTime();
+
+	long start = System.nanoTime();
         for (int i = 0; i < keys; i++) {
             bTree.insert(users.get(i));
-            bTree.insert(users.get(i));
         }
+
         long end = System.nanoTime();
         System.out.println((end - start) / 1e+9);
     }
@@ -95,8 +102,9 @@ public class CrudTest {
         User user;
         for (int i = 0; i < keys - 1; i++) {
             user = bTree.getRoot().getKey(0);
+            if (user != null)
+                bTree.remove(user);
 
-            bTree.remove(user);
         }
         long end = System.nanoTime();
         System.out.println((end - start) / 1e+9);

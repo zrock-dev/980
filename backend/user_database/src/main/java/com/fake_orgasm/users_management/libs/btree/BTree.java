@@ -115,7 +115,7 @@ public class BTree<T extends Comparable<T>> {
         }
         Node<T> node = search(root, key);
         if (node != null) {
-            int index = Utils.binarySearch(node, key);
+            int index = node.find(key);
             if (index != -1) {
                 return node.getKey(index);
             }
