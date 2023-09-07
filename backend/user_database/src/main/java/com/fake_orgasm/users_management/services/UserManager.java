@@ -35,7 +35,6 @@ public class UserManager implements IUserManager {
         }
     }
 
-
     /**
      * Generates a new User object by utilizing the UserGenerator and FlightHistoryGenerator classes.
      *
