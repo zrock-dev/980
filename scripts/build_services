@@ -1,0 +1,20 @@
+#!/bin/bash
+
+home=$(pwd)
+find_reference="$1"
+gradlew_paths_name=path_names.txt
+find "$find_reference" -type f -name "gradlew" > $gradlew_paths_name
+mapfile -t main_array < "$gradlew_paths_name"
+
+for file in "${main_array[@]}"; do
+  file="$home/$file"
+  (
+  cd "$(dirname "$file")" || exit 1
+  ./gradlew -q build 
+  echo "Build: $(basename "$(pwd)")"
+  )
+done
+
+cd "$home" || exit 1
+rm $gradlew_paths_name
+
