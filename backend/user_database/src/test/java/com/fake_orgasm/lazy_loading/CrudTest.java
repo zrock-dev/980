@@ -6,11 +6,8 @@ import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,7 +55,7 @@ public class CrudTest {
             users.add(user);
         }
 
-	long start = System.nanoTime();
+        long start = System.nanoTime();
         for (int i = 0; i < keys; i++) {
             bTree.insert(users.get(i));
         }
@@ -102,9 +99,7 @@ public class CrudTest {
         User user;
         for (int i = 0; i < keys - 1; i++) {
             user = bTree.getRoot().getKey(0);
-            if (user != null)
-                bTree.remove(user);
-
+            if (user != null) bTree.remove(user);
         }
         long end = System.nanoTime();
         System.out.println((end - start) / 1e+9);
@@ -130,7 +125,7 @@ public class CrudTest {
     public void deleteASingleUserTest() {
         BTree<User> bTree = new BTree(10, new BTreeRepository());
         User user = makeUser();
-        int n = 9;
+
         bTree.remove(user);
         bTree.getRoot().printTree("");
     }

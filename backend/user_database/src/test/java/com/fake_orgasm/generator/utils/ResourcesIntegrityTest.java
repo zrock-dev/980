@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 public class ResourcesIntegrityTest {
     private final Logger logger = LogManager.getLogger(getClass());
+
     @Test
     void filesIntegrity() {
         String[] names =
