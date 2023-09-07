@@ -1,13 +1,12 @@
 package com.fake_orgasm.flights_management.models;
 
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.PriorityQueue;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * This class has the responsibility of representing flight information and managing
@@ -17,6 +16,9 @@ import java.util.PriorityQueue;
 @Setter
 public class Flight {
 
+    public static final int MIN_CAPACITY = 100;
+    public static final int MAX_CAPACITY = 550;
+    public static final int AVERAGE_CAPACITY = (MIN_CAPACITY + MAX_CAPACITY) / 2;
     private String id;
     private String sourceId;
     private String destinationId;
@@ -24,10 +26,6 @@ public class Flight {
     private int capacity;
     private String ticketIds;
     private PriorityQueue<Ticket> tickets;
-    public final static int MIN_CAPACITY = 100;
-    public final static int MAX_CAPACITY = 550;
-    public final static int AVERAGE_CAPACITY =
-            (MIN_CAPACITY + MAX_CAPACITY) / 2;
 
     /**
      * This constructor creates a Flight object with the provided parameters.
@@ -40,8 +38,7 @@ public class Flight {
      * @param capacity      The capacity of the flight.
      * @throws FlightCapacityException If the capacity is outside the acceptable range.
      */
-    public Flight(String id, String sourceId, String destinationId,
-                  Date date, int capacity)
+    public Flight(String id, String sourceId, String destinationId, Date date, int capacity)
             throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
@@ -66,8 +63,7 @@ public class Flight {
      * @param ticketIds     The comma-separated string of ticket IDs.
      * @throws FlightCapacityException If the capacity is outside the acceptable range.
      */
-    public Flight(String id, String sourceId, String destinationId,
-                  Date date, int capacity, String ticketIds)
+    public Flight(String id, String sourceId, String destinationId, Date date, int capacity, String ticketIds)
             throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
@@ -90,9 +86,7 @@ public class Flight {
      * @param capacity      The capacity of the flight.
      * @throws FlightCapacityException If the capacity is outside the acceptable range.
      */
-    public Flight(String id, String sourceId, String destinationId,
-                  int capacity)
-            throws FlightCapacityException {
+    public Flight(String id, String sourceId, String destinationId, int capacity) throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
         this.sourceId = sourceId;
@@ -233,6 +227,7 @@ public class Flight {
      */
     @Override
     public String toString() {
-        return "(" + numberOfTickets() + " - Tickets ) - " + id + "\n(" + sourceId + " - " + destinationId + ") - " + date.toString();
+        return "(" + numberOfTickets() + " - Tickets ) - " + id + "\n(" + sourceId + " - " + destinationId + ") - "
+                + date.toString();
     }
 }

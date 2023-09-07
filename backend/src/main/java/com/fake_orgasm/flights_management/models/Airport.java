@@ -17,6 +17,7 @@ public class Airport {
     /**
      * This is the constructor for this class.
      *
+     * @param id The id of the airport.
      * @param name The name of the airport.
      * @param country     The country where the airport is located.
      * @param state       The state where the airport is located.

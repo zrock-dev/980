@@ -4,7 +4,6 @@ import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.List;
 
 /**
@@ -21,7 +20,7 @@ public interface IBookingService {
      * @param category The Category of the ticket (e.g., Economy, Business, VIP).
      * @return True if the booking was successful, otherwise false.
      */
-    public boolean booking(User user, String flightId, Category category);
+    boolean booking(User user, String flightId, Category category);
 
     /**
      * This method retrieves a list of flight tickets for a specific flight identified by its ID.
@@ -29,7 +28,7 @@ public interface IBookingService {
      * @param flightId The ID of the flight for which to retrieve tickets.
      * @return A list of Ticket objects representing the flight tickets.
      */
-    public List<Ticket> getFlightTickets(String flightId);
+    List<Ticket> getFlightTickets(String flightId);
 
     /**
      * This method retrieves a list of flight tickets for a specific flight.
@@ -37,5 +36,5 @@ public interface IBookingService {
      * @param flight The Flight object for which to retrieve tickets.
      * @return A list of Ticket objects representing the flight tickets.
      */
-    public List<Ticket> getFlightTickets(Flight flight);
+    List<Ticket> getFlightTickets(Flight flight);
 }

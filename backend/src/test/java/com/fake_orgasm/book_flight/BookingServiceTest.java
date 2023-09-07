@@ -1,16 +1,15 @@
 package com.fake_orgasm.book_flight;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.services.BookingService;
 import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 public class BookingServiceTest {
 
@@ -22,8 +21,7 @@ public class BookingServiceTest {
         String flightId = "c8c86159-e441-4080-b927-1a359d63e208";
         Flight flight;
         List<Ticket> tickets;
-        User userForBook = new User(1234, "Luiggy", "Mamani Condori",
-                LocalDate.of(1992, 1, 20), "Bolivia");
+        User userForBook = new User(1234, "Luiggy", "Mamani Condori", LocalDate.of(1992, 1, 20), "Bolivia");
 
         flight = bookService.getFlightRepository().search(flightId);
 
@@ -62,5 +60,4 @@ public class BookingServiceTest {
             assertTrue(newNumberOfUserFlights > oldNumberOfUserFlights);
         }
     }
-
 }

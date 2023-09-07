@@ -1,8 +1,11 @@
 package com.fake_orgasm.flights_management.repository;
 
 import com.fake_orgasm.flights_management.models.Airport;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -27,11 +30,11 @@ public class AirportRepository {
         try {
             Statement statement;
             statement = database.getConnection().createStatement();
-            String query = "CREATE TABLE IF NOT EXISTS Airport" +
-                    "(id VARCHAR(250) PRIMARY KEY," +
-                    "airportName VARCHAR(250)," +
-                    "country VARCHAR(250)," +
-                    "stateName  VARCHAR(250));";
+            String query = "CREATE TABLE IF NOT EXISTS Airport"
+                    + "(id VARCHAR(250) PRIMARY KEY,"
+                    + "airportName VARCHAR(250),"
+                    + "country VARCHAR(250),"
+                    + "stateName  VARCHAR(250));";
             statement.executeUpdate(query);
             database.createIndexById(statement, "Airport");
             statement.close();
@@ -48,12 +51,11 @@ public class AirportRepository {
      */
     public boolean create(Airport airport) {
         boolean wasSaved = false;
-        if (database.doesNotExist("Airport", airport.getId()))
+        if (database.doesNotExist("Airport", airport.getId())) {
             return wasSaved;
+        }
         try {
-            String query = "INSERT INTO Airport " +
-                    "(id, airportName, country, stateName)" +
-                    "values (?, ?, ?, ?)";
+            String query = "INSERT INTO Airport " + "(id, airportName, country, stateName)" + "values (?, ?, ?, ?)";
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ps.setString(1, airport.getId());
             ps.setString(2, airport.getName());
@@ -82,9 +84,7 @@ public class AirportRepository {
         }
 
         try {
-            String query = "INSERT INTO Airport " +
-                    "(id, airportName, country, stateName) " +
-                    "VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO Airport " + "(id, airportName, country, stateName) " + "VALUES (?, ?, ?, ?)";
             Connection connection = database.getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
 
@@ -116,7 +116,10 @@ public class AirportRepository {
             ArrayList<Airport> searches = new ArrayList<>();
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            String id, name, country, state;
+            String id;
+            String name;
+            String country;
+            String state;
             while (rs.next()) {
                 id = rs.getString("id");
                 name = rs.getString("airportName");

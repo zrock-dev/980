@@ -18,8 +18,7 @@ public class FlightCapacityException extends Exception {
      * min and max flight capacity.
      */
     public FlightCapacityException() {
-        super("Invalid flight capability, the capability should be between "
-                + Flight.MIN_CAPACITY + " - " + Flight.MAX_CAPACITY);
+        super("Invalid flight capability, the capability should be between " + Flight.MIN_CAPACITY + " - "
+                + Flight.MAX_CAPACITY);
     }
-
 }

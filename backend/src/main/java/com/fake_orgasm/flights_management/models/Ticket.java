@@ -25,8 +25,7 @@ public class Ticket implements Comparable<Ticket> {
      * @param userId   The ID of the user associated with the ticket.
      * @param flightId The ID of the flight associated with the ticket.
      */
-    public Ticket(String id, int number, Category priority,
-                  int userId, String flightId) {
+    public Ticket(String id, int number, Category priority, int userId, String flightId) {
         this.id = id;
         this.number = number;
         this.priority = priority;
@@ -43,14 +42,12 @@ public class Ticket implements Comparable<Ticket> {
      */
     @Override
     public int compareTo(Ticket ticket) {
-        int priorityComparison = Integer.compare(
-                this.priority.getNumber(), ticket.priority.getNumber());
+        int priorityComparison = Integer.compare(this.priority.getNumber(), ticket.priority.getNumber());
 
         if (priorityComparison != 0) {
             return priorityComparison;
         } else {
-            if (this.priority == Category.VIP ||
-                    this.priority == Category.FREQUENT_PASSENGER) {
+            if (this.priority == Category.VIP || this.priority == Category.FREQUENT_PASSENGER) {
                 return Integer.compare(this.number, ticket.number);
             } else {
                 return Integer.compare(ticket.number, this.number);

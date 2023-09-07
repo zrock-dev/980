@@ -8,11 +8,10 @@ import com.fake_orgasm.flights_management.repository.TicketRepository;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.IUserManagement;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
-import lombok.Getter;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.Getter;
+import org.springframework.stereotype.Service;
 
 /**
  * This class implements the IBookingService interface and provides functionality for booking flight tickets,
@@ -39,10 +38,7 @@ public class BookingService implements IBookingService {
      * @param ticketManagement  The TicketRepository for managing ticket-related operations.
      */
     public BookingService(
-            IUserManagement userManagement,
-            FlightRepository flightManagement,
-            TicketRepository ticketManagement
-    ) {
+            IUserManagement userManagement, FlightRepository flightManagement, TicketRepository ticketManagement) {
         this.userManagement = userManagement;
         this.flightRepository = flightManagement;
         this.ticketRepository = ticketManagement;
@@ -78,11 +74,11 @@ public class BookingService implements IBookingService {
                 }
             } else {
                 for (User userFound : usersFound) {
-                    if (user.equals(userFound))
+                    if (user.equals(userFound)) {
                         user = userFound;
+                    }
                 }
             }
-
         }
 
         return user;
@@ -103,8 +99,11 @@ public class BookingService implements IBookingService {
 
         if (flight != null && flight.isAvailable()) {
             user = findUser(userForBook);
-            ticket = new Ticket(UUID.randomUUID().toString(),
-                    flight.getNextNumber(), category, userForBook.getId(),
+            ticket = new Ticket(
+                    UUID.randomUUID().toString(),
+                    flight.getNextNumber(),
+                    category,
+                    userForBook.getId(),
                     flight.getId());
 
             flight.addTicketId(ticket.getId());
@@ -124,8 +123,9 @@ public class BookingService implements IBookingService {
         try {
             flightRepository.update(flight.getId(), flight);
             ticketRepository.create(ticket);
-            if (userManagement != null)
+            if (userManagement != null) {
                 userManagement.update(user, user);
+            }
         } catch (IncompleteUserException e) {
             throw new RuntimeException(e);
         }
@@ -151,8 +151,7 @@ public class BookingService implements IBookingService {
      */
     @Override
     public List<Ticket> getFlightTickets(Flight flight) {
-        List<Ticket> tickets = ticketRepository
-                .search(flight.getTicketIds().split(","));
+        List<Ticket> tickets = ticketRepository.search(flight.getTicketIds().split(","));
         flight.addTicket(tickets);
         tickets = flight.getTickets();
 

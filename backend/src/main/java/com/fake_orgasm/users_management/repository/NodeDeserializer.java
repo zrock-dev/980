@@ -1,6 +1,5 @@
 package com.fake_orgasm.users_management.repository;
 
-import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.User;
 import com.fasterxml.jackson.core.JsonParser;

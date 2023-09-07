@@ -5,7 +5,6 @@ package com.fake_orgasm.flights_management.repository.requesters;
  * in JSON format for the program.
  */
 public enum SourceJson {
-
     AIRPORTS("src/main/resources/DataBase/Flights/Airports.json"),
     FLIGHTS("src/main/resources/DataBase/Flights/Flights.json"),
     TICKETS("src/main/resources/DataBase/Flights/Tickets.json");

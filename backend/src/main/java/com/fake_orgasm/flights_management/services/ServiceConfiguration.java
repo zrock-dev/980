@@ -7,6 +7,7 @@ import com.fake_orgasm.generator.flight_generator.FlightGeneratorHandler;
 import com.fake_orgasm.users_management.services.IUserManagement;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 /**
  * This class provides configuration for creating and managing beans related to the flight management system.
  */
@@ -79,7 +80,7 @@ public class ServiceConfiguration {
      */
     @Bean
     public FlightGeneratorHandler getGeneratorHandler() {
-        return new FlightGeneratorHandler(userManagement, getAirportManagement(),
-                getFlightManagement(), getTicketManagement());
+        return new FlightGeneratorHandler(
+                userManagement, getAirportManagement(), getFlightManagement(), getTicketManagement());
     }
 }

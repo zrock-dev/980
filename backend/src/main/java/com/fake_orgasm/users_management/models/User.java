@@ -1,11 +1,8 @@
 package com.fake_orgasm.users_management.models;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fake_orgasm.flights_management.models.Category;
-import java.time.LocalDate;
-import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,6 +47,7 @@ public class User implements Comparable<User> {
      * from being compared to this object.
      */
     private int id;
+
     private String firstName;
     private String secondName;
     private String firstLastName;
@@ -94,8 +92,7 @@ public class User implements Comparable<User> {
     /**
      * Empty User constructor.
      */
-    public User() {
-    }
+    public User() {}
 
     /**
      * Returns the full name of the user.
@@ -106,6 +103,11 @@ public class User implements Comparable<User> {
         return String.format("%s %s %s %s", firstName, secondName, firstLastName, secondLastName);
     }
 
+    /**
+     * This method add a ticket flight on the user flight history.
+     *
+     * @param flightId is the new flight id to add on the user.
+     */
     public void addFlight(String flightId) {
         flights.add(flightId);
     }
@@ -115,7 +117,7 @@ public class User implements Comparable<User> {
      *
      * @param o The user to compare with.
      * @return A negative integer, zero, or a positive integer as this user is less than, equal to,
-     *         or greater than the specified user.
+     * or greater than the specified user.
      */
     @Override
     public int compareTo(User o) {
@@ -158,3 +160,4 @@ public class User implements Comparable<User> {
     public int hashCode() {
         return super.hashCode();
     }
+}

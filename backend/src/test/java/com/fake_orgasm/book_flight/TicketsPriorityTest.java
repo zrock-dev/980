@@ -1,19 +1,18 @@
 package com.fake_orgasm.book_flight;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TicketsPriorityTest {
 
@@ -39,10 +38,13 @@ public class TicketsPriorityTest {
 
         flight = new Flight(UUID.randomUUID().toString(), airport1.getId(), airport2.getId(), 100);
 
-        ticket1 = new Ticket(UUID.randomUUID().toString(), 1, Category.FREQUENT_PASSENGER, user1.getId(), flight.getId());
-        ticket2 = new Ticket(UUID.randomUUID().toString(), 2, Category.REGULAR_PASSENGER, user2.getId(), flight.getId());
+        ticket1 =
+                new Ticket(UUID.randomUUID().toString(), 1, Category.FREQUENT_PASSENGER, user1.getId(), flight.getId());
+        ticket2 =
+                new Ticket(UUID.randomUUID().toString(), 2, Category.REGULAR_PASSENGER, user2.getId(), flight.getId());
         ticket3 = new Ticket(UUID.randomUUID().toString(), 3, Category.VIP, user3.getId(), flight.getId());
-        ticket4 = new Ticket(UUID.randomUUID().toString(), 4, Category.FREQUENT_PASSENGER, user4.getId(), flight.getId());
+        ticket4 =
+                new Ticket(UUID.randomUUID().toString(), 4, Category.FREQUENT_PASSENGER, user4.getId(), flight.getId());
         ticket5 = new Ticket(UUID.randomUUID().toString(), 5, Category.VIP, user5.getId(), flight.getId());
         ticket6 = new Ticket(UUID.randomUUID().toString(), 6, Category.VIP, user6.getId(), flight.getId());
 
@@ -66,5 +68,4 @@ public class TicketsPriorityTest {
         nextTicket = flight.getNextTicket();
         assertEquals(nextTicket, ticket2);
     }
-
 }

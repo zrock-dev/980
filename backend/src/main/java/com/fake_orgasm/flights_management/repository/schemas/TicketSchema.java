@@ -5,7 +5,6 @@ package com.fake_orgasm.flights_management.repository.schemas;
  * implementing the Schemable interface.
  */
 public enum TicketSchema implements Schemable {
-
     ID("id"),
     NUMBER("number"),
     PRIORITY("priority"),
