@@ -3,8 +3,7 @@ package com.fake_orgasm.currency_exchange.services;
 import com.fake_orgasm.currency_exchange.libs.maxheap.MaxHeap;
 import com.fake_orgasm.currency_exchange.models.ExchangeRates;
 import com.fake_orgasm.currency_exchange.models.IMoneySubtracted;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import org.json.simple.JSONObject;
 
 /**
@@ -13,7 +12,7 @@ import org.json.simple.JSONObject;
  *
  * @param <T> Is for param the class a specific type of MoneySubtracted.
  */
-public class MoneyExchanger<T extends IMoneySubtracted<T>> {
+public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExchanger<T> {
 
     /**
      * MaxHeap to manage all types of exchanges values.
@@ -43,7 +42,6 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> {
     public MoneyExchanger(ExchangeRates<T> moneyRates) {
         this.rates = moneyRates;
         this.heap = new MaxHeap<>(moneyRates.size());
-        fillHeap();
         this.jsonObject = new JSONObject();
         this.exchangesMap = new HashMap<>(moneyRates.size());
     }
@@ -53,7 +51,7 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> {
      */
     private void fillHeap() {
         for (Object rate : rates.exchangesArray()) {
-            heap.insert((T) rate);
+            heap.put((T) rate);
         }
     }
 
@@ -64,11 +62,13 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> {
      * @return A JsonObject with all values processed.
      */
     public JSONObject getExchangeValues(T value) {
+        fillHeap();
         processQuantityRatesOnMap(value);
+        this.jsonObject.clear();
+
         for (T exchangeValue : exchangesMap.keySet()) {
             jsonObject.put(String.valueOf(exchangeValue), exchangesMap.get(exchangeValue));
         }
-        fillHeap();
         return jsonObject;
     }
 
@@ -78,21 +78,15 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> {
      * @param bigAmount Is mount to be separated in exchanges given.
      */
     private void processQuantityRatesOnMap(T bigAmount) {
-        T heapTop = this.heap.peek();
-
-        if (heapTop.compareTo(bigAmount) > 0) {
-            return;
-        }
-
-        for (int i = 0; i < rates.size(); i++) {
-
+        this.exchangesMap.clear();
+        T heapTop = this.heap.extract();
+        while (heapTop != null && bigAmount.compareTo(heapTop) >= 0 || this.heap.size() > 0) {
+            int size = this.heap.size();
             int quantityOfMoney = getMoneyQuantity(bigAmount, heapTop);
-
             if (quantityOfMoney > 0) {
                 exchangesMap.put(heapTop, quantityOfMoney);
             }
-
-            heapTop = this.heap.peek();
+            heapTop = this.heap.extract();
         }
     }
 

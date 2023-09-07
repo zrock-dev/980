@@ -2,14 +2,14 @@ package com.fake_orgasm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
- * Spring Boot Application to launch boot app.
+ * Main Class to set up project application.
  */
 @SpringBootApplication
-@EnableScheduling
-public class Application {
+@EnableEurekaServer
+public class EurekaServerApplication {
 
     /**
      * Method main to launch app.
@@ -17,6 +17,6 @@ public class Application {
      * @param args It does not expect any args as parameter.
      */
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(EurekaServerApplication.class, args);
     }
 }

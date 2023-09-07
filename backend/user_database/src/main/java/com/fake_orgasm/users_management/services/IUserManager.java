@@ -1,14 +1,12 @@
 package com.fake_orgasm.users_management.services;
 
 import com.fake_orgasm.users_management.models.User;
-import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
-import com.fake_orgasm.users_management.services.exceptions.InvalidPageException;
 import java.util.List;
 
 /**
  * Defines the contract for managing user-related operations.
  */
-public interface IUserManagement {
+public interface IUserManager {
 
     /**
      * Searches for users whose names contain the given name fragment.
@@ -23,29 +21,23 @@ public interface IUserManagement {
      *
      * @param user The User object representing the user to be created.
      * @return True if the user creation was successful, false otherwise.
-     * @throws IncompleteUserException If the user's properties are incomplete.
-     * @throws NullPointerException    If the provided user object is null.
      */
-    boolean create(User user) throws IncompleteUserException, NullPointerException;
+    boolean create(User user);
 
     /**
      * Deletes a user.
      *
      * @param user The User object representing the user to be deleted.
-     * @throws IncompleteUserException If the user's properties are incomplete.
-     * @throws NullPointerException    If the provided user object is null.
      */
-    void delete(User user) throws IncompleteUserException, NullPointerException;
+    void delete(User user);
 
     /**
      * Retrieves information about a specific user.
      *
      * @param user The User object representing the user to be retrieved.
      * @return The User object containing the user's information, or null if not found.
-     * @throws IncompleteUserException If the user's properties are incomplete.
-     * @throws NullPointerException    If the provided user object is null.
      */
-    User getUser(User user) throws IncompleteUserException, NullPointerException;
+    User getUser(User user);
 
     /**
      * Updates a user's information.
@@ -55,24 +47,14 @@ public interface IUserManagement {
      * @param updateUser The User object containing the new data to update.
      * @return True if the user's information was successfully updated,
      * false otherwise.
-     * @throws IncompleteUserException If the user's properties are incomplete.
-     * @throws NullPointerException    If the provided user object is null.
      */
-    boolean update(User user, User updateUser) throws IncompleteUserException, NullPointerException;
+    boolean update(User user, User updateUser);
 
     /**
      * Retrieves a list of users from a specified page number.
      *
      * @param page The page number from which to retrieve users.
      * @return A list of User objects from the specified page.
-     * @throws InvalidPageException If the page number is invalid.
      */
-    List<User> getUsersByPage(int page) throws InvalidPageException;
-
-    /**
-     * Retrieves the count of users.
-     *
-     * @return the count of users
-     */
-    Integer countUsers();
+    List<User> getUsersByPage(int page);
 }
