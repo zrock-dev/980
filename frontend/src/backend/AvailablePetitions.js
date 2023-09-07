@@ -46,14 +46,9 @@ axios.get('/currency-exchange/bolivian', {
     });
 
 
-axios.post('/users/create', {
+axios.get('/users/search', {
     params: {
-        id: 6,
-        firstName: "joses",
-        firstLastName: "Doe",
-        dateBirth: "1999-01-15",
-        category: "VIP",
-        country: "USA"
+        name:"Aaron"
     }
 })
     .then(function (response) {
