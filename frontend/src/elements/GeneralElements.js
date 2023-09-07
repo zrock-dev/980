@@ -1,11 +1,4 @@
-import {
-	BLACKONE,
-	BLUE,
-	GRAYONE,
-	GRAYTWO,
-	LIGHTBLUE,
-	WHITE
-} from '@/styles/colors';
+import { BLUE, GRAYTWO, WHITE } from '@/styles/colors';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 

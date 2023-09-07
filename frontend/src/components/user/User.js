@@ -5,12 +5,15 @@ import Loader from '../Loader';
 import {
 	UserContainer,
 	UserInfoContainer,
-	UserOptionsContainer,
+	UserTopContainer,
 	UserName,
-	UserMainInfoContainer
+	UserMainInfoContainer,
+	UserOptionContainer
 } from '@/elements/User';
 import { Subtitle, GeneralButton } from '@/elements/GeneralElements';
 import { getUserInformation, getUserTickets } from '@/backend/User';
+import Trash from '@/icons/Trash';
+import PenToSquare from '@/icons/PenToSquare';
 
 const User = ({ id }) => {
 	const router = useRouter();
@@ -72,7 +75,7 @@ const User = ({ id }) => {
 		return (
 			<UserContainer>
 				<UserInfoContainer>
-					<UserOptionsContainer>
+					<UserTopContainer>
 						<div>
 							{user.country}
 							<UserName>
@@ -80,12 +83,16 @@ const User = ({ id }) => {
 								{user.secondLastName}
 							</UserName>
 						</div>
-						<div>
-							<button>edit</button>
-							<button>delete</button>
+						<UserOptionContainer>
+							<button>
+								<PenToSquare />
+							</button>
+							<button>
+								<Trash />
+							</button>
 							<GeneralButton>Book flight</GeneralButton>
-						</div>
-					</UserOptionsContainer>
+						</UserOptionContainer>
+					</UserTopContainer>
 					<Subtitle>
 						{user.flights.length < 15 ? 'REGULAR' : 'FREQUENT'}
 					</Subtitle>
