@@ -168,6 +168,46 @@ public class TicketRepository {
     }
 
     /**
+     * This method retrieves a list of all tickets stored in the database.
+     *
+     * @param userId to find just the user tickets.
+     * @return A list of Ticket objects representing all tickets in the database.
+     */
+    public ArrayList<Ticket> findAll(int userId) {
+        String query = "SELECT * FROM Ticket WHERE userId = ?";
+        try {
+            ArrayList<Ticket> tickets = new ArrayList<>();
+            PreparedStatement ps = database.getConnection().prepareStatement(query);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            String id;
+            String priorityType;
+            String flightId;
+            String previousTicket;
+            String nextTicket;
+            int arrivalNumber;
+
+            Category category;
+            while (rs.next()) {
+                id = rs.getString("id");
+                arrivalNumber = rs.getInt("arrivalNumber");
+                priorityType = rs.getString("priority");
+                flightId = rs.getString("flightId");
+                previousTicket = rs.getString("previousTicket");
+                nextTicket = rs.getString("nextTicket");
+                category = Category.getCategory(priorityType);
+
+                tickets.add(new Ticket(id, arrivalNumber, category, userId, flightId, previousTicket, nextTicket));
+            }
+            ps.close();
+            return tickets;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * This method retrieves a list of tickets associated with a specified user ID, including
      * flight and airport information.
      * <p>
@@ -178,7 +218,7 @@ public class TicketRepository {
      * @param userIdRequest The ID of the user for whom to retrieve tickets.
      * @return A list of TicketJoined objects containing ticket details.
      */
-    public List<TicketJoined> findAllTicketsWithFlightAndAirports(int userIdRequest) {
+    public List<TicketJoined> findAllTicketsJoined(int userIdRequest) {
         String query = "SELECT Ticket.*, Flight.*, "
                 + "Airport.airportName AS sourceAirportName, Airport.country "
                 + "AS sourceCountry, Airport.stateName AS sourceState, "
