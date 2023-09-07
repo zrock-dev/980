@@ -53,12 +53,21 @@ button {
 	}
 }
 
-@keyframes rotate {
+@keyframes rotation {
 	0% {
-		transform: translate(-50%, -50%) rotateZ(0deg);
+		transform: rotate(0deg);
 	}
 	100% {
-		transform: translate(-50%, -50%) rotateZ(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
 	}
 }
 

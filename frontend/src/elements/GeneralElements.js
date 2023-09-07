@@ -1,5 +1,13 @@
-import { BLUE, WHITE } from '@/styles/colors';
+import {
+	BLACKONE,
+	BLUE,
+	GRAYONE,
+	GRAYTWO,
+	LIGHTBLUE,
+	WHITE
+} from '@/styles/colors';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 export const GeneralButton = styled.button`
 	font-size: ${(props) => (props.size ? props.size : '1em')};
@@ -24,30 +32,37 @@ export const Title980 = styled.span`
 	color: ${BLUE};
 `;
 
-export const Loader = styled.span`
-	transform: rotateZ(45deg);
-	perspective: 1000px;
-	border-radius: 50%;
-	width: 48px;
-	height: 48px;
-	color: ${BLUE};
+export const LoaderContainer = styled.span`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-	&::before,
-	&::after {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: inherit;
-		height: inherit;
-		border-radius: 50%;
-		transform: rotateX(70deg);
-		animation: 1s spin linear infinite;
-	}
-	&::after {
-		color: #ff3d00;
-		transform: rotateY(70deg);
-		animation-delay: 0.4s;
-	}
+	width: 100%;
+	height: ${(props) => props.overallSize};
+
+	opacity: 0.8;
+	background-color: transparent;
+
+	${(props) =>
+		props.withAbsolute === true &&
+		css`
+			position: fixed;
+			top: 0;
+			left: 0;
+
+			background-color: ${GRAYTWO};
+		`}
+`;
+
+export const LoaderIcon = styled.span`
+	display: inline-block;
+	box-sizing: border-box;
+
+	width: ${(props) => props.iconSize};
+	height: ${(props) => props.iconSize};
+	border-radius: 50%;
+
+	border-top: 5px solid ${BLUE};
+	border-right: 5px solid transparent;
+	animation: rotation 750ms linear infinite;
 `;
