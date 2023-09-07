@@ -28,6 +28,8 @@ public class BookingService implements IBookingService {
     private FlightRepository flightRepository;
     private TicketRepository ticketRepository;
     private AirportRepository airportRepository;
+    private User user;
+    private Ticket ticket;
 
     /**
      * This method constructs a BookingService instance with dependencies on user management,
@@ -76,8 +78,6 @@ public class BookingService implements IBookingService {
     public boolean booking(User userForBook, String flightId, Category category) {
         boolean wasBooked = false;
         Flight flight;
-        Ticket ticket;
-        User user;
         flight = flightRepository.search(flightId);
 
         if (flight != null && flight.isAvailable()) {
@@ -261,7 +261,10 @@ public class BookingService implements IBookingService {
      */
     @Override
     public FlightJoined getFlightJoined(String flightId) {
-        return flightRepository.findFlightJoined(flightId);
+        FlightJoined flightJoined = flightRepository.findFlightJoined(flightId);
+        List<Ticket> tickets = getFlightTickets(flightId);
+        flightJoined.setTickets(tickets);
+        return flightJoined;
     }
 
     /**
@@ -331,7 +334,7 @@ public class BookingService implements IBookingService {
                 if (userManagement != null) {
                     userManagement.update(userFound, userFound);
                 }
-                flightRepository.update(flightId, flight);
+
                 ticketRepository.delete(ticket.getId());
                 return true;
             } catch (IncompleteUserException e) {
@@ -351,6 +354,8 @@ public class BookingService implements IBookingService {
      * @param ticket The ticket for which references need to be updated.
      */
     private void updateTicketReferences(Ticket ticket) {
+        Flight flight = flightRepository.search(ticket.getFlightId());
+
         if (ticket.hasPrevious() && ticket.hasNext()) {
             Ticket previousTicket = ticketRepository.search(ticket.getPreviousTicket());
             Ticket nextTicket = ticketRepository.search(ticket.getNextTicket());
@@ -363,13 +368,16 @@ public class BookingService implements IBookingService {
             nextTicket.setPreviousTicket("");
             ticketRepository.update(nextTicket.getId(), nextTicket);
         } else if (ticket.hasPrevious() && !ticket.hasNext()) {
-            Flight flight = flightRepository.search(ticket.getFlightId());
             Ticket previousTicket = ticketRepository.search(ticket.getPreviousTicket());
-            flight.setLastTicket(previousTicket.getId());
+            flight.setLastTicket(ticket.getPreviousTicket());
+            flightRepository.update(flight.getId(), flight);
             previousTicket.setNextTicket("");
             ticketRepository.update(previousTicket.getId(), previousTicket);
-            flightRepository.update(flight.getId(), flight);
         }
+
+        flight = flightRepository.search(ticket.getFlightId());
+        flight.removeTicket(ticket.getId());
+        flightRepository.update(flight.getId(), flight);
     }
 
     /**
