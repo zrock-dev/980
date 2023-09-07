@@ -281,6 +281,21 @@ public class BookingService implements IBookingService {
     }
 
     /**
+     * This method deletes all tickets associated with a specific user.
+     * <p>
+     * This method removes all tickets that are associated with
+     * the specified user ID from the database.
+     *
+     * @param userId The ID of the user for whom to delete all tickets.
+     * @return True if the deletion was successful, false otherwise
+     * (e.g., if no tickets were found for the user).
+     */
+    @Override
+    public boolean deleteAllUserTickets(int userId) {
+        return ticketRepository.deleteAllUserTickets(userId);
+    }
+
+    /**
      * This method deletes a booking associated with a user and a specific ticket.
      * <p>
      * This method performs the deletion of a booking made by a user for a given ticket.

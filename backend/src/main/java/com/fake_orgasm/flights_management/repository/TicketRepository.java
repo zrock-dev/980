@@ -378,6 +378,36 @@ public class TicketRepository {
     }
 
     /**
+     * Deletes all tickets associated with a specific user from the database.
+     * <p>
+     * This method removes all tickets that are associated with the specified
+     * user ID from the database.
+     *
+     * @param userId The ID of the user for whom to delete all tickets.
+     * @return True if the deletion was successful (at least one ticket was deleted),
+     * false otherwise (no tickets found for the user).
+     */
+    public boolean deleteAllUserTickets(int userId) {
+        boolean wasDeleted = false;
+        try {
+            String query = "DELETE FROM Ticket WHERE userId = ?";
+            PreparedStatement preparedStatement = database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                wasDeleted = true;
+            }
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return wasDeleted;
+    }
+
+    /**
      * Deletes all records from the "Ticket" database table.
      * <p>
      * This method delegates the task of deleting all records from the "Ticket"

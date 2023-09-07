@@ -98,4 +98,16 @@ public interface IBookingService {
      * and associated flight and airport information for the specified user and page.
      */
     List<TicketJoined> getUserTickets(int userId, int page);
+
+    /**
+     * This method deletes all tickets associated with a specific user.
+     * <p>
+     * This method removes all tickets that are associated with
+     * the specified user ID from the database.
+     *
+     * @param userId The ID of the user for whom to delete all tickets.
+     * @return True if the deletion was successful, false otherwise
+     * (e.g., if no tickets were found for the user).
+     */
+    boolean deleteAllUserTickets(int userId);
 }
