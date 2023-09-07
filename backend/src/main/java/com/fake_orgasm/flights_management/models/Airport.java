@@ -17,9 +17,10 @@ public class Airport {
     /**
      * This is the constructor for this class.
      *
-     * @param name The name of the airport.
-     * @param country     The country where the airport is located.
-     * @param state       The state where the airport is located.
+     * @param id      The id of the airport.
+     * @param name    The name of the airport.
+     * @param country The country where the airport is located.
+     * @param state   The state where the airport is located.
      */
     public Airport(String id, String name, String country, String state) {
         this.id = id;
@@ -31,9 +32,9 @@ public class Airport {
     /**
      * This is the constructor for this class.
      *
-     * @param name The name of the airport.
-     * @param country     The country where the airport is located.
-     * @param state       The state where the airport is located.
+     * @param name    The name of the airport.
+     * @param country The country where the airport is located.
+     * @param state   The state where the airport is located.
      */
     public Airport(String name, String country, String state) {
         this.id = id;

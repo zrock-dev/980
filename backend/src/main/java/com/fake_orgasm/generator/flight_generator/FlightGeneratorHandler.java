@@ -10,11 +10,10 @@ import com.fake_orgasm.flights_management.repository.TicketRepository;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.IUserManagement;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
-import lombok.Getter;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import org.springframework.stereotype.Service;
 
 /**
  * This class handles the generation of airports, flights, and tickets,
@@ -52,8 +51,7 @@ public class FlightGeneratorHandler {
             IUserManagement userManagement,
             AirportRepository airportRepository,
             FlightRepository flightRepository,
-            TicketRepository ticketRepository
-    ) {
+            TicketRepository ticketRepository) {
         this.userManagement = userManagement;
         airportGenerator = new AirportGenerator();
         flightGenerator = new FlightGenerator();
@@ -88,8 +86,7 @@ public class FlightGeneratorHandler {
      */
     public boolean generateAirportsAndSave(int amount) {
         boolean wereGenerated = false;
-        ArrayList<Airport> airports = airportGenerator
-                .getAirportsRandomly(amount);
+        ArrayList<Airport> airports = airportGenerator.getAirportsRandomly(amount);
         if (!airports.isEmpty()) {
             airportRepository.create(airports);
             wereGenerated = true;
@@ -109,8 +106,7 @@ public class FlightGeneratorHandler {
         try {
             ArrayList<Airport> airports = airportRepository.findAll();
             if (!airports.isEmpty()) {
-                ArrayList<Flight> flights = flightGenerator
-                        .getFlightsRandomly(airports, amount);
+                ArrayList<Flight> flights = flightGenerator.getFlightsRandomly(airports, amount);
                 flightRepository.create(flights);
                 wereGenerated = true;
             }
@@ -149,10 +145,8 @@ public class FlightGeneratorHandler {
                 int usersSize = users.size();
                 calculateAmounts(users.size(), ticketsByUser);
 
-                airports = airportGenerator
-                        .getAirportsRandomly(amountAirports);
-                flights = flightGenerator
-                        .getFlightsRandomly(airports, amountFlights);
+                airports = airportGenerator.getAirportsRandomly(amountAirports);
+                flights = flightGenerator.getFlightsRandomly(airports, amountFlights);
                 ticketGenerator = new TicketGenerator(users, flights);
                 for (int userIndex = 0; userIndex < usersSize; userIndex++) {
                     ticketGenerator.generateTickets(userIndex, ticketsByUser);
@@ -200,7 +194,6 @@ public class FlightGeneratorHandler {
         } catch (IncompleteUserException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     /**
@@ -221,5 +214,4 @@ public class FlightGeneratorHandler {
 
         return wereSaved;
     }
-
 }

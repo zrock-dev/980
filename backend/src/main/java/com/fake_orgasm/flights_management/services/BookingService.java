@@ -1,21 +1,24 @@
 package com.fake_orgasm.flights_management.services;
 
-import com.fake_orgasm.flights_management.models.*;
+import com.fake_orgasm.flights_management.models.Category;
+import com.fake_orgasm.flights_management.models.Flight;
+import com.fake_orgasm.flights_management.models.FlightJoined;
+import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.models.TicketJoined;
 import com.fake_orgasm.flights_management.repository.AirportRepository;
 import com.fake_orgasm.flights_management.repository.FlightRepository;
 import com.fake_orgasm.flights_management.repository.TicketRepository;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.IUserManagement;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
+import java.util.List;
+import java.util.UUID;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
-
 /**
- * This class implements the IBookingService interface and provides functionality for booking flight tickets,
- * retrieving flight tickets, and managing the booking process.
+ * This class implements the IBookingService interface and provides functionality
+ * for booking flight tickets, retrieving flight tickets, and managing the booking process.
  */
 @Getter
 @Service
@@ -34,13 +37,13 @@ public class BookingService implements IBookingService {
      *                         operations.
      * @param flightManagement The FlightRepository for managing flight-related operations.
      * @param ticketManagement The TicketRepository for managing ticket-related operations.
+     * @param airportRepository he AirportRepository for managing airport-related operations.
      */
     public BookingService(
             IUserManagement userManagement,
             FlightRepository flightManagement,
             TicketRepository ticketManagement,
-            AirportRepository airportRepository
-    ) {
+            AirportRepository airportRepository) {
         this.userManagement = userManagement;
         this.flightRepository = flightManagement;
         this.ticketRepository = ticketManagement;
@@ -79,8 +82,11 @@ public class BookingService implements IBookingService {
 
         if (flight != null && flight.isAvailable()) {
             user = findUser(userForBook);
-            ticket = new Ticket(UUID.randomUUID().toString(),
-                    flight.getNextNumber(), category, userForBook.getId(),
+            ticket = new Ticket(
+                    UUID.randomUUID().toString(),
+                    flight.getNextNumber(),
+                    category,
+                    userForBook.getId(),
                     flight.getId());
 
             if (!flight.getLastTicket().isEmpty()) {
@@ -118,7 +124,6 @@ public class BookingService implements IBookingService {
             } else {
                 return findUser(usersFound, user);
             }
-
         }
 
         return user;
@@ -136,8 +141,9 @@ public class BookingService implements IBookingService {
      */
     private User findUser(List<User> users, User user) {
         for (User userFound : users) {
-            if (user.equals(userFound))
+            if (user.equals(userFound)) {
                 return userFound;
+            }
         }
 
         return null;
@@ -146,13 +152,18 @@ public class BookingService implements IBookingService {
     /**
      * This method saves the booking by updating the flight, creating the ticket,
      * and updating the user information if available.
+     *
+     * @param flight is the flight that will be saved on the database.
+     * @param ticket is the ticket that will be saved on the database.
+     * @param user is the user that will be saved on the database.
      */
     public void saveBooking(Flight flight, Ticket ticket, User user) {
         try {
             flightRepository.update(flight.getId(), flight);
             ticketRepository.create(ticket);
-            if (userManagement != null)
+            if (userManagement != null) {
                 userManagement.update(user, user);
+            }
         } catch (IncompleteUserException e) {
             throw new RuntimeException(e);
         }
@@ -216,8 +227,7 @@ public class BookingService implements IBookingService {
     @Override
     public List<Ticket> getFlightTickets(String flightId) {
         Flight flight = flightRepository.search(flightId);
-        List<Ticket> tickets = ticketRepository
-                .search(flight.getTicketIds().split(","));
+        List<Ticket> tickets = ticketRepository.search(flight.getTicketIds().split(","));
         flight.addTicket(tickets);
         tickets = flight.getTickets();
 

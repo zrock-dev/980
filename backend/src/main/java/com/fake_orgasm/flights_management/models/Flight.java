@@ -1,13 +1,12 @@
 package com.fake_orgasm.flights_management.models;
 
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.PriorityQueue;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * This class has the responsibility of representing flight information and managing
@@ -17,6 +16,9 @@ import java.util.PriorityQueue;
 @Setter
 public class Flight {
 
+    public static final int MIN_CAPACITY = 100;
+    public static final int MAX_CAPACITY = 550;
+    public static final int AVERAGE_CAPACITY = (MIN_CAPACITY + MAX_CAPACITY) / 2;
     private String id;
     private String sourceId;
     private String destinationId;
@@ -25,10 +27,6 @@ public class Flight {
     private String ticketIds;
     private String lastTicket;
     private PriorityQueue<Ticket> tickets;
-    public final static int MIN_CAPACITY = 100;
-    public final static int MAX_CAPACITY = 550;
-    public final static int AVERAGE_CAPACITY =
-            (MIN_CAPACITY + MAX_CAPACITY) / 2;
 
     /**
      * This constructor creates a Flight object with the provided parameters.
@@ -41,8 +39,7 @@ public class Flight {
      * @param capacity      The capacity of the flight.
      * @throws FlightCapacityException If the capacity is outside the acceptable range.
      */
-    public Flight(String id, String sourceId, String destinationId,
-                  Date date, int capacity)
+    public Flight(String id, String sourceId, String destinationId, Date date, int capacity)
             throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
@@ -66,10 +63,17 @@ public class Flight {
      * @param date          The date of the flight.
      * @param capacity      The capacity of the flight.
      * @param ticketIds     The comma-separated string of ticket IDs.
+     * @param lastTicket    The last ticket of the flight.
      * @throws FlightCapacityException If the capacity is outside the acceptable range.
      */
-    public Flight(String id, String sourceId, String destinationId,
-                  Date date, int capacity, String ticketIds, String lastTicket)
+    public Flight(
+            String id,
+            String sourceId,
+            String destinationId,
+            Date date,
+            int capacity,
+            String ticketIds,
+            String lastTicket)
             throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
@@ -93,9 +97,7 @@ public class Flight {
      * @param capacity      The capacity of the flight.
      * @throws FlightCapacityException If the capacity is outside the acceptable range.
      */
-    public Flight(String id, String sourceId, String destinationId,
-                  int capacity)
-            throws FlightCapacityException {
+    public Flight(String id, String sourceId, String destinationId, int capacity) throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
         this.sourceId = sourceId;
@@ -125,15 +127,14 @@ public class Flight {
      * @return True if there are available seats, otherwise false.
      */
     public boolean isAvailable() {
-        return tickets.isEmpty()
-                ? ticketIds.split(",").length < capacity
-                : tickets.size() < capacity;
+        return tickets.isEmpty() ? ticketIds.split(",").length < capacity : tickets.size() < capacity;
     }
 
     /**
      * This method adds a ticket to the flight if there are available seats.
      *
      * @param ticket The ticket to add.
+     * @return result condition if the ticket was added.
      */
     public boolean addTicket(Ticket ticket) {
         boolean wasAdded = false;
@@ -150,12 +151,15 @@ public class Flight {
      * This method adds a list of tickets to the flight if there are available seats.
      *
      * @param tickets The list of tickets to add.
+     * @return result condition if the tickets were added.
      */
     public boolean addTicket(List<Ticket> tickets) {
         boolean wereAdded = false;
         for (Ticket ticket : tickets) {
             wereAdded = addTicket(ticket);
-            if (!wereAdded) return false;
+            if (!wereAdded) {
+                return false;
+            }
         }
 
         return wereAdded;
@@ -165,6 +169,7 @@ public class Flight {
      * This method adds a ticket ID to the comma-separated string of ticket IDs.
      *
      * @param ticketId The ticket ID to add.
+     * @return result condition if the ticket id was added.
      */
     public boolean addTicketId(String ticketId) {
         boolean wasAdded = false;
@@ -279,9 +284,9 @@ public class Flight {
     @Override
     public String toString() {
         return "(" + numberOfTickets() + " - Tickets - Flight ) - (id - "
-                + id + ") - (Date: " + date + ")" +
-                "\nSource: " + sourceId +
-                "\nDestination: " + destinationId +
-                "\nLast ticket: " + lastTicket;
+                + id + ") - (Date: " + date + ")"
+                + "\nSource: " + sourceId
+                + "\nDestination: " + destinationId
+                + "\nLast ticket: " + lastTicket;
     }
 }

@@ -1,17 +1,16 @@
 package com.fake_orgasm.book_flight;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.services.BookingService;
 import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 public class BookingServiceTest {
 
@@ -24,8 +23,7 @@ public class BookingServiceTest {
         // Data
         Flight flight;
         List<Ticket> tickets;
-        User userForBook = new User(1234, "Luiggy", "Mamani Condori",
-                LocalDate.of(1992, 1, 20), "Bolivia");
+        User userForBook = new User(1234, "Luiggy", "Mamani Condori", LocalDate.of(1992, 1, 20), "Bolivia");
 
         flight = bookService.getFlightRepository().search(FLIGHT_ID);
 
@@ -68,8 +66,7 @@ public class BookingServiceTest {
     public void flightCancellationTest() {
         BookingService bookService = new BookingService();
         // user to cancel a booking
-        User userToCancel = new User(1234, "Jose Luis", "Moreno",
-                LocalDate.of(1992, 1, 20), "Bolivia");
+        User userToCancel = new User(1234, "Jose Luis", "Moreno", LocalDate.of(1992, 1, 20), "Bolivia");
         String ticketId = "32e40ccf-413d-4e8e-9fd8-b0d4d977c662";
         Ticket ticketToCancel = bookService.getTicketRepository().search(ticketId);
         userToCancel.addFlight(ticketId);

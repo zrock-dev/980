@@ -1,11 +1,10 @@
 package com.fake_orgasm.flights_management.repository.requesters;
 
-import org.json.JSONArray;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import org.json.JSONArray;
 
 /**
  * This class is responsible for getting the documents from a JSON file.
@@ -32,8 +31,9 @@ public class JsonRequester implements IJsonRequester {
      */
     @Override
     public JSONArray getDocuments() {
-        if (documents.isEmpty())
+        if (documents.isEmpty()) {
             generateJSON();
+        }
 
         return documents;
     }
@@ -71,5 +71,4 @@ public class JsonRequester implements IJsonRequester {
             throw new RuntimeException(e);
         }
     }
-
 }

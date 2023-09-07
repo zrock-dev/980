@@ -4,8 +4,12 @@ import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.FlightJoined;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,16 +34,16 @@ public class FlightRepository {
     public void createTable() {
         try {
             Statement statement = database.getConnection().createStatement();
-            String query = "CREATE TABLE IF NOT EXISTS Flight" +
-                    "(id VARCHAR(250) PRIMARY KEY," +
-                    "sourceId VARCHAR(250)," +
-                    "destinationId VARCHAR(250)," +
-                    "arrivalDate  DATE," +
-                    "capacity INTEGER," +
-                    "tickets VARCHAR(10000)," +
-                    "lastTicket VARCHAR(100)," +
-                    "FOREIGN KEY (sourceId) REFERENCES Airport(id)," +
-                    "FOREIGN KEY (destinationId) REFERENCES Airport(id));";
+            String query = "CREATE TABLE IF NOT EXISTS Flight"
+                    + "(id VARCHAR(250) PRIMARY KEY,"
+                    + "sourceId VARCHAR(250),"
+                    + "destinationId VARCHAR(250),"
+                    + "arrivalDate  DATE,"
+                    + "capacity INTEGER,"
+                    + "tickets VARCHAR(10000),"
+                    + "lastTicket VARCHAR(100),"
+                    + "FOREIGN KEY (sourceId) REFERENCES Airport(id),"
+                    + "FOREIGN KEY (destinationId) REFERENCES Airport(id));";
             statement.executeUpdate(query);
             database.createIndexById(statement, "Flight");
             statement.close();
@@ -56,11 +60,13 @@ public class FlightRepository {
      */
     public boolean create(Flight flight) {
         boolean wasSaved = false;
-        if (!exists(flight.getId())) return wasSaved;
+        if (!exists(flight.getId())) {
+            return wasSaved;
+        }
         try {
-            String query = "INSERT INTO Flight (id, sourceId, destinationId, " +
-                    "arrivalDate, capacity, tickets, lastTicket) " +
-                    "values (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Flight (id, sourceId, destinationId, "
+                    + "arrivalDate, capacity, tickets, lastTicket) "
+                    + "values (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ps.setString(1, flight.getId());
             ps.setString(2, flight.getSourceId());
@@ -92,9 +98,9 @@ public class FlightRepository {
         }
 
         try {
-            String query = "INSERT INTO Flight" +
-                    " (id, sourceId, destinationId, arrivalDate, capacity, tickets, lastTicket) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Flight"
+                    + " (id, sourceId, destinationId, arrivalDate, capacity, tickets, lastTicket) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
             Connection connection = database.getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
 
@@ -131,9 +137,14 @@ public class FlightRepository {
             ArrayList<Flight> searches = new ArrayList<>();
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            String id, sourceId, destinationId, ticketIds, lastTicket;
+            String id;
+            String sourceId;
+            String destinationId;
+            String ticketIds;
+            String lastTicket;
             Date arrivalDate;
             int capacity;
+
             while (rs.next()) {
                 id = rs.getString("id");
                 sourceId = rs.getString("sourceId");
@@ -142,8 +153,7 @@ public class FlightRepository {
                 capacity = rs.getInt("capacity");
                 ticketIds = rs.getString("tickets");
                 lastTicket = rs.getString("lastTicket");
-                searches.add(new Flight(id, sourceId, destinationId,
-                        arrivalDate, capacity, ticketIds, lastTicket));
+                searches.add(new Flight(id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket));
             }
             ps.close();
             return searches;
@@ -177,12 +187,21 @@ public class FlightRepository {
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
-            String flightId, sourceAirportId, destAirportId, ticketIds,
-                    sourceAirportName, sourceCountry, sourceState,
-                    destAirportName, destCountry, destState;
+            String flightId;
+            String sourceAirportId;
+            String destAirportId;
+            String ticketIds;
+            String sourceAirportName;
+            String sourceCountry;
+            String sourceState;
+            String destAirportName;
+            String destCountry;
+            String destState;
             int capacity;
             java.util.Date date;
-            Airport source, destination;
+            Airport source;
+            Airport destination;
+
             while (rs.next()) {
                 flightId = rs.getString("id");
                 sourceAirportId = rs.getString("sourceId");
@@ -197,15 +216,10 @@ public class FlightRepository {
                 destCountry = rs.getString("destCountry");
                 destState = rs.getString("destState");
 
-                source = new Airport(sourceAirportId, sourceAirportName,
-                        sourceCountry, sourceState);
-                destination = new Airport(destAirportId, destAirportName,
-                        destCountry, destState);
+                source = new Airport(sourceAirportId, sourceAirportName, sourceCountry, sourceState);
+                destination = new Airport(destAirportId, destAirportName, destCountry, destState);
 
-                flights.add(
-                        new FlightJoined(flightId, source, destination, date,
-                                capacity, ticketIds)
-                );
+                flights.add(new FlightJoined(flightId, source, destination, date, capacity, ticketIds));
             }
 
             ps.close();
@@ -243,10 +257,16 @@ public class FlightRepository {
 
             ResultSet rs = ps.executeQuery();
 
-            String sourceAirportName, sourceCountry, sourceState, destAirportName,
-                    destCountry, destState, ticketIds;
+            String sourceAirportName;
+            String sourceCountry;
+            String sourceState;
+            String destAirportName;
+            String destCountry;
+            String destState;
+            String ticketIds;
             java.util.Date date;
-            Airport source, destination;
+            Airport source;
+            Airport destination;
             int capacity;
 
             if (rs.next()) {
@@ -274,7 +294,6 @@ public class FlightRepository {
         return null;
     }
 
-
     /**
      * This method updates a flight record in the database.
      *
@@ -287,11 +306,8 @@ public class FlightRepository {
         try {
             if (exists(id)) {
                 String lastTicket = flight.getLastTicket();
-                System.out.println("-".repeat(100));
-                System.out.println(lastTicket);
-                System.out.println("-".repeat(100));
-                String query = "UPDATE Flight SET sourceId=?, destinationId=?, " +
-                        "arrivalDate=?, capacity=?, tickets=?, lastTicket=? WHERE id=?";
+                String query = "UPDATE Flight SET sourceId=?, destinationId=?, "
+                        + "arrivalDate=?, capacity=?, tickets=?, lastTicket=? WHERE id=?";
                 PreparedStatement ps = database.getConnection().prepareStatement(query);
                 ps.setString(1, flight.getSourceId());
                 ps.setString(2, flight.getDestinationId());
@@ -335,10 +351,9 @@ public class FlightRepository {
                 int capacity = rs.getInt("capacity");
                 String ticketIds = rs.getString("tickets");
                 String lastTicket = rs.getString("lastTicket");
-                Flight flight = null;
+                Flight flight;
                 try {
-                    flight = new Flight(id, sourceId, destinationId,
-                            arrivalDate, capacity, ticketIds, lastTicket);
+                    flight = new Flight(id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket);
                 } catch (FlightCapacityException e) {
                     throw new RuntimeException(e);
                 }
@@ -375,7 +390,6 @@ public class FlightRepository {
     public boolean deleteAll() {
         return database.deleteAll("Flight");
     }
-
 
     /**
      * This method verify if a data exists on the airport table using their id.

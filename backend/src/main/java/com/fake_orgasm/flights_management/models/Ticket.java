@@ -27,8 +27,7 @@ public class Ticket implements Comparable<Ticket> {
      * @param userId   The ID of the user associated with the ticket.
      * @param flightId The ID of the flight associated with the ticket.
      */
-    public Ticket(String id, int number, Category priority,
-                  int userId, String flightId) {
+    public Ticket(String id, int number, Category priority, int userId, String flightId) {
         this.id = id;
         this.number = number;
         this.priority = priority;
@@ -49,8 +48,14 @@ public class Ticket implements Comparable<Ticket> {
      * @param previousTicket The ID of the previous ticket.
      * @param nextTicket     The ID of the next ticket.
      */
-    public Ticket(String id, int number, Category priority,
-                  int userId, String flightId, String previousTicket, String nextTicket) {
+    public Ticket(
+            String id,
+            int number,
+            Category priority,
+            int userId,
+            String flightId,
+            String previousTicket,
+            String nextTicket) {
         this.id = id;
         this.number = number;
         this.priority = priority;
@@ -75,8 +80,7 @@ public class Ticket implements Comparable<Ticket> {
         if (priority.getType().equals(priorityToCompare.getType())) {
             return Integer.compare(this.number, ticket.number);
         } else {
-            return Integer.compare(priority.getNumber(),
-                    priorityToCompare.getNumber());
+            return Integer.compare(priority.getNumber(), priorityToCompare.getNumber());
         }
     }
 
@@ -110,8 +114,8 @@ public class Ticket implements Comparable<Ticket> {
      */
     @Override
     public String toString() {
-        return "\n(" + number + " - " + priority.getType() + ") - (id - " + id + ")" +
-                "\nPrevious: " + previousTicket +
-                "\nNext: " + nextTicket;
+        return "\n(" + number + " - " + priority.getType() + ") - (id - " + id + ")"
+                + "\nPrevious: " + previousTicket
+                + "\nNext: " + nextTicket;
     }
 }

@@ -6,7 +6,6 @@ import com.fake_orgasm.flights_management.models.FlightJoined;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.models.TicketJoined;
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.List;
 
 /**
@@ -23,7 +22,7 @@ public interface IBookingService {
      * @param category The Category of the ticket (e.g., Economy, Business, VIP).
      * @return True if the booking was successful, otherwise false.
      */
-    public boolean booking(User user, String flightId, Category category);
+    boolean booking(User user, String flightId, Category category);
 
     /**
      * This method deletes a booking associated with a user and a specific ticket ID.
@@ -36,7 +35,7 @@ public interface IBookingService {
      * @param ticketId The ID of the ticket to be deleted from the user's bookings.
      * @return true if the booking was successfully deleted, false otherwise.
      */
-    public boolean deleteBooking(User userData, String ticketId);
+    boolean deleteBooking(User userData, String ticketId);
 
     /**
      * This method edits the category of a booking associated with a ticket.
@@ -50,7 +49,7 @@ public interface IBookingService {
      * @param newCategory The new category (e.g., class) for the booking.
      * @return true if the booking was successfully edited, false otherwise.
      */
-    public boolean editBooking(String ticketId, String newCategory);
+    boolean editBooking(String ticketId, String newCategory);
 
     /**
      * This method retrieves a list of tickets associated with a specific flight.
@@ -61,7 +60,7 @@ public interface IBookingService {
      * @return A list of Ticket objects representing tickets associated with the specified flight.
      * An empty list is returned if no tickets are found for the given flight.
      */
-    public List<Ticket> getFlightTickets(String flightId);
+    List<Ticket> getFlightTickets(String flightId);
 
     /**
      * This method retrieves a paginated list of joined flight information.
@@ -73,7 +72,7 @@ public interface IBookingService {
      * @return A list of FlightJoined objects containing flight details
      * and associated airports for the specified page.
      */
-    public List<FlightJoined> getFlightsJoined(int page);
+    List<FlightJoined> getFlightsJoined(int page);
 
     /**
      * This method retrieves detailed information about a specific flight,
@@ -85,7 +84,7 @@ public interface IBookingService {
      * @param flightId The unique identifier of the flight to retrieve.
      * @return A FlightJoined object containing detailed flight information and associated airports.
      */
-    public FlightJoined getFlightJoined(String flightId) throws FlightCapacityException;
+    FlightJoined getFlightJoined(String flightId) throws FlightCapacityException;
 
     /**
      * This method retrieves a paginated list of tickets associated with a specific user.
@@ -98,5 +97,5 @@ public interface IBookingService {
      * @return A list of TicketJoined objects containing ticket details
      * and associated flight and airport information for the specified user and page.
      */
-    public List<TicketJoined> getUserTickets(int userId, int page);
+    List<TicketJoined> getUserTickets(int userId, int page);
 }

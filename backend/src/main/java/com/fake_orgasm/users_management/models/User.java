@@ -1,11 +1,8 @@
 package com.fake_orgasm.users_management.models;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fake_orgasm.flights_management.models.Category;
-import java.time.LocalDate;
-import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,6 +47,7 @@ public class User implements Comparable<User> {
      * from being compared to this object.
      */
     private int id;
+
     private String firstName;
     private String secondName;
     private String firstLastName;
@@ -94,8 +92,7 @@ public class User implements Comparable<User> {
     /**
      * Empty User constructor.
      */
-    public User() {
-    }
+    public User() {}
 
     /**
      * Returns the full name of the user.
@@ -130,7 +127,6 @@ public class User implements Comparable<User> {
     public void removeFlight(String flightId) {
         flights.remove(flightId);
     }
-
 
     /**
      * Compares this user with another user.

@@ -5,7 +5,6 @@ package com.fake_orgasm.flights_management.repository.schemas;
  * implementing the Schemable interface.
  */
 public enum AirportSchema implements Schemable {
-
     ID("id"),
     NAME("name"),
     COUNTRY("country"),

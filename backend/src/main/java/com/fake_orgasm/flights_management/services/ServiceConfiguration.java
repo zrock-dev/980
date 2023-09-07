@@ -7,8 +7,10 @@ import com.fake_orgasm.generator.flight_generator.FlightGeneratorHandler;
 import com.fake_orgasm.users_management.services.IUserManagement;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 /**
- * This class provides configuration for creating and managing beans related to the flight management system.
+ * This class provides configuration for creating and managing beans
+ * related to the flight management system.
  */
 @Configuration
 public class ServiceConfiguration {
@@ -19,12 +21,24 @@ public class ServiceConfiguration {
     private TicketRepository ticketRepository;
 
     /**
-     * This method constructs a ServiceConfiguration instance with an IUserManagement implementation.
+     * This method constructs a ServiceConfiguration instance with an
+     * IUserManagement implementation.
      *
-     * @param userManagement The IUserManagement implementation for managing user-related operations.
+     * @param userManagement The IUserManagement implementation for
+     *                       managing user-related operations.
      */
     public ServiceConfiguration(IUserManagement userManagement) {
         this.userManagement = userManagement;
+    }
+
+    /**
+     * This method creates and configures a bean for managing booking operations.
+     *
+     * @return A BookingService bean for managing booking operations.
+     */
+    @Bean
+    public IBookingService getBookingService() {
+        return new BookingService(userManagement, flightRepository, ticketRepository, airportRepository);
     }
 
     /**
@@ -79,7 +93,7 @@ public class ServiceConfiguration {
      */
     @Bean
     public FlightGeneratorHandler getGeneratorHandler() {
-        return new FlightGeneratorHandler(userManagement, getAirportManagement(),
-                getFlightManagement(), getTicketManagement());
+        return new FlightGeneratorHandler(
+                userManagement, getAirportManagement(), getFlightManagement(), getTicketManagement());
     }
 }

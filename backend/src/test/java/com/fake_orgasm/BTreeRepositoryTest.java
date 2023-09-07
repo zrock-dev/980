@@ -1,6 +1,5 @@
 package com.fake_orgasm;
 
-
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
@@ -13,7 +12,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -131,16 +129,11 @@ public class BTreeRepositoryTest {
      * @return List of flight histories.
      */
     private static List<String> getFlightHistories() throws FlightCapacityException {
-        Airport airport = new Airport(UUID.randomUUID().toString(),
-                "Bahama", "Bolivia", "active");
-        Airport airport2 = new Airport(UUID.randomUUID().toString(),
-                "Amazonas", "Bolivia", "active");
-        Airport airport3 = new Airport(UUID.randomUUID().toString(),
-                "BOA", "Bolivia", "active");
-        Flight flightHistory = new Flight(UUID.randomUUID().toString(),
-                airport.getId(), airport2.getId(), 150);
-        Flight flightHistory2 = new Flight(UUID.randomUUID().toString(),
-                airport2.getId(), airport3.getId(), 150);
+        Airport airport = new Airport(UUID.randomUUID().toString(), "Bahama", "Bolivia", "active");
+        Airport airport2 = new Airport(UUID.randomUUID().toString(), "Amazonas", "Bolivia", "active");
+        Airport airport3 = new Airport(UUID.randomUUID().toString(), "BOA", "Bolivia", "active");
+        Flight flightHistory = new Flight(UUID.randomUUID().toString(), airport.getId(), airport2.getId(), 150);
+        Flight flightHistory2 = new Flight(UUID.randomUUID().toString(), airport2.getId(), airport3.getId(), 150);
         List<String> flightHistories = new ArrayList<>();
         flightHistories.add(flightHistory.getId());
         flightHistories.add(flightHistory2.getId());

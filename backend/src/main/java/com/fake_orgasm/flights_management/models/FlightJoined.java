@@ -1,10 +1,9 @@
 package com.fake_orgasm.flights_management.models;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a joined flight entity containing detailed information about a flight,
@@ -34,8 +33,7 @@ public class FlightJoined {
      * @param capacity The maximum capacity of the flight.
      * @param ticketIds A comma-separated string of ticket IDs associated with the flight.
      */
-    public FlightJoined(String id, Airport source, Airport destination, Date date,
-                        int capacity, String ticketIds) {
+    public FlightJoined(String id, Airport source, Airport destination, Date date, int capacity, String ticketIds) {
         this.id = id;
         this.source = source;
         this.destination = destination;
@@ -62,8 +60,8 @@ public class FlightJoined {
      */
     @Override
     public String toString() {
-        return "\n(id - " + id + ") - " + date + " - " + capacity + " - " + isAvailable() +
-                "\nSource: " + source +
-                "\nDestination: " + destination;
+        return "\n(id - " + id + ") - " + date + " - " + capacity + " - " + isAvailable()
+                + "\nSource: " + source
+                + "\nDestination: " + destination;
     }
 }

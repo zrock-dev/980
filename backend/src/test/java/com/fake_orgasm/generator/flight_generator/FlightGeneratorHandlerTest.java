@@ -1,17 +1,16 @@
 package com.fake_orgasm.generator.flight_generator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.users_management.models.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class FlightGeneratorHandlerTest {
 
@@ -23,42 +22,23 @@ public class FlightGeneratorHandlerTest {
         random = new Random();
         users = new ArrayList<>();
         users.addAll(List.of(
-                new User(1234, "Jose Luis", "Moreno",
-                        LocalDate.of(1992, 1, 20), "Bolivia"),
-                new User(5678, "Maria", "Gomez",
-                        LocalDate.of(1990, 5, 15), "Argentina"),
-                new User(9876, "John", "Smith",
-                        LocalDate.of(1985, 8, 20), "Estados Unidos"),
-                new User(3456, "Anna", "Müller",
-                        LocalDate.of(1993, 3, 10), "Alemania"),
-                new User(6789, "Sophia", "Chen",
-                        LocalDate.of(1988, 11, 25), "China"),
-                new User(4321, "Carlos", "López",
-                        LocalDate.of(1979, 7, 2), "México"),
-                new User(7890, "Emily", "Johnson",
-                        LocalDate.of(1995, 9, 8), "Canadá"),
-                new User(2345, "Juan", "Martinez",
-                        LocalDate.of(1982, 4, 12), "España"),
-                new User(8901, "Luisa", "Silva",
-                        LocalDate.of(1998, 12, 30), "Colombia"),
-                new User(5432, "Thomas", "Brown",
-                        LocalDate.of(1987, 6, 5), "Australia"),
-                new User(6780, "Sophie", "Dubois",
-                        LocalDate.of(1991, 2, 18), "Francia"),
-                new User(1122, "Miguel", "Santos",
-                        LocalDate.of(1975, 10, 14), "Perú"),
-                new User(9988, "Elena", "Kowalski",
-                        LocalDate.of(1997, 1, 22), "Polonia"),
-                new User(7654, "Daniel", "Kim",
-                        LocalDate.of(1984, 11, 8), "Corea del Sur"),
-                new User(5433, "Isabella", "Perez",
-                        LocalDate.of(1992, 7, 3), "Brasil"),
-                new User(5433, "Daniela", "Ochoa",
-                        LocalDate.of(2000, 7, 3), "Mexico")
-        ));
-
+                new User(1234, "Jose Luis", "Moreno", LocalDate.of(1992, 1, 20), "Bolivia"),
+                new User(5678, "Maria", "Gomez", LocalDate.of(1990, 5, 15), "Argentina"),
+                new User(9876, "John", "Smith", LocalDate.of(1985, 8, 20), "Estados Unidos"),
+                new User(3456, "Anna", "Müller", LocalDate.of(1993, 3, 10), "Alemania"),
+                new User(6789, "Sophia", "Chen", LocalDate.of(1988, 11, 25), "China"),
+                new User(4321, "Carlos", "López", LocalDate.of(1979, 7, 2), "México"),
+                new User(7890, "Emily", "Johnson", LocalDate.of(1995, 9, 8), "Canadá"),
+                new User(2345, "Juan", "Martinez", LocalDate.of(1982, 4, 12), "España"),
+                new User(8901, "Luisa", "Silva", LocalDate.of(1998, 12, 30), "Colombia"),
+                new User(5432, "Thomas", "Brown", LocalDate.of(1987, 6, 5), "Australia"),
+                new User(6780, "Sophie", "Dubois", LocalDate.of(1991, 2, 18), "Francia"),
+                new User(1122, "Miguel", "Santos", LocalDate.of(1975, 10, 14), "Perú"),
+                new User(9988, "Elena", "Kowalski", LocalDate.of(1997, 1, 22), "Polonia"),
+                new User(7654, "Daniel", "Kim", LocalDate.of(1984, 11, 8), "Corea del Sur"),
+                new User(5433, "Isabella", "Perez", LocalDate.of(1992, 7, 3), "Brasil"),
+                new User(5433, "Daniela", "Ochoa", LocalDate.of(2000, 7, 3), "Mexico")));
     }
-
 
     @Test
     public void generateFlightsTest() {
@@ -68,7 +48,6 @@ public class FlightGeneratorHandlerTest {
         boolean wereGenerated = handler.generateTickets(users, amountTicketByUser);
         // test status after generate flights
         assertTrue(wereGenerated);
-
 
         ArrayList<Flight> flights = handler.getFlights();
         ArrayList<Airport> airports = handler.getAirports();
@@ -86,5 +65,4 @@ public class FlightGeneratorHandlerTest {
         User randomUser = users.get(random.nextInt(users.size()));
         assertEquals(amountTicketByUser, randomUser.getFlights().size());
     }
-
 }

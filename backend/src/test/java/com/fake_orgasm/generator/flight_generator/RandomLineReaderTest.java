@@ -1,10 +1,10 @@
 package com.fake_orgasm.generator.flight_generator;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.fake_orgasm.generator.utils.RandomFileReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RandomLineReaderTest {
 
@@ -30,5 +30,4 @@ public class RandomLineReaderTest {
         String randomLineGenerated = randomFileReader.getRandomLine();
         assertNotNull(randomLineGenerated);
     }
-
 }

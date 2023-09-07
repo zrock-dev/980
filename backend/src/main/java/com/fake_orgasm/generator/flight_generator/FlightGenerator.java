@@ -3,8 +3,11 @@ package com.fake_orgasm.generator.flight_generator;
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * This class is responsible for generating random flight data based on a list of airports.
@@ -32,19 +35,18 @@ public class FlightGenerator {
     public ArrayList<Flight> getFlightsRandomly(ArrayList<Airport> airports, int amount)
             throws FlightCapacityException {
         ArrayList<Flight> flights = new ArrayList<>();
-        String sourceId, destinationId;
+        String sourceId;
+        String destinationId;
         int capacity;
         int airportSize = airports.size();
+
         for (int i = 0; i < amount; i++) {
             sourceId = airports.get(random.nextInt(airportSize)).getId();
             do {
                 destinationId = airports.get(random.nextInt(airportSize)).getId();
             } while (sourceId.equals(destinationId));
             capacity = random.nextInt(451) + 100;
-            flights.add(new Flight(
-                    UUID.randomUUID().toString(), sourceId, destinationId,
-                    getDateRandomly(), capacity
-            ));
+            flights.add(new Flight(UUID.randomUUID().toString(), sourceId, destinationId, getDateRandomly(), capacity));
         }
 
         return flights;

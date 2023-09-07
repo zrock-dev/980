@@ -1,8 +1,7 @@
 package com.fake_orgasm.flights_management.models;
 
-import lombok.Getter;
-
 import java.util.Date;
+import lombok.Getter;
 
 /**
  * This class represents a joined ticket entity containing
@@ -13,7 +12,6 @@ import java.util.Date;
 public class TicketJoined {
 
     private String id;
-    private int userId;
     private String flightId;
     private int number;
     private Category priority;
@@ -25,7 +23,6 @@ public class TicketJoined {
      * This method constructs a new TicketJoined instance with the specified details.
      *
      * @param id          The unique identifier of the ticket.
-     * @param userId      The ID of the user associated with the ticket.
      * @param flightId    The ID of the flight associated with the ticket.
      * @param number      The ticket number.
      * @param priority    The category or priority of the ticket.
@@ -33,10 +30,9 @@ public class TicketJoined {
      * @param source      The source airport of the associated flight.
      * @param destination The destination airport of the associated flight.
      */
-    public TicketJoined(String id, int userId, String flightId, int number, Category priority,
-                        Date date, Airport source, Airport destination) {
+    public TicketJoined(
+            String id, String flightId, int number, Category priority, Date date, Airport source, Airport destination) {
         this.id = id;
-        this.userId = userId;
         this.flightId = flightId;
         this.number = number;
         this.priority = priority;
@@ -53,10 +49,9 @@ public class TicketJoined {
      */
     @Override
     public String toString() {
-        return "\n(id - " + id + ") - number: " + number + " - " + priority.getType() +
-                "\nUser: " + userId +
-                "\nFlight: " + flightId +
-                "\nSource: " + source +
-                "\nDestination: " + destination;
+        return "\n(id - " + id + ") - number: " + number + " - " + priority.getType()
+                + "\nFlight: " + flightId
+                + "\nSource: " + source
+                + "\nDestination: " + destination;
     }
 }

@@ -1,13 +1,12 @@
 package com.fake_orgasm.generator.flight_generator;
 
-import com.fake_orgasm.flights_management.models.Airport;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import com.fake_orgasm.flights_management.models.Airport;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class AirportGeneratorTest {
 
@@ -30,5 +29,4 @@ public class AirportGeneratorTest {
         List<Airport> airports = airportGenerator.getAirportsRandomly(amount);
         assertEquals(amount, airports.size());
     }
-
 }

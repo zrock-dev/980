@@ -1,6 +1,11 @@
 package com.fake_orgasm.flights_management.repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * This class has the responsibility of managing the database connection and providing
@@ -54,8 +59,7 @@ public class FlightDatabase {
     public void createIndexById(Statement statement, String tableName) {
         try {
             String indexName = "idx_" + tableName.toLowerCase() + "_id";
-            String createIndex = "CREATE INDEX IF NOT EXISTS " + indexName +
-                    " ON " + tableName + " (id);";
+            String createIndex = "CREATE INDEX IF NOT EXISTS " + indexName + " ON " + tableName + " (id);";
             statement.executeUpdate(createIndex);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -143,8 +147,7 @@ public class FlightDatabase {
         try {
             int[] batchResult = ps.executeBatch();
             for (int result : batchResult) {
-                if (result != PreparedStatement.SUCCESS_NO_INFO
-                        && result != PreparedStatement.EXECUTE_FAILED) {
+                if (result != PreparedStatement.SUCCESS_NO_INFO && result != PreparedStatement.EXECUTE_FAILED) {
                     wereCreated = true;
                 } else {
                     wereCreated = false;
