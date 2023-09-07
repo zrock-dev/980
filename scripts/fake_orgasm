@@ -1,0 +1,80 @@
+#!/bin/bash
+
+build=false
+run=false
+pack=false
+logging=false
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --build)
+      build=true
+      shift
+      ;;
+    --run)
+      run=true
+      shift
+      ;;
+    --pack)
+      pack=true
+      shift
+      ;;
+    --log)
+      logging=true
+      shift
+      ;;
+    --help)
+      echo "Usage: $0 [--build] [--log] [--run] [--pack] <scripts_home>"
+      echo "  --build   Build the microservices"
+      echo "  --run     Run the microservices"
+      echo "  --pack    Pack the binaries in a tar file"
+      echo "  --log     To record the stdout and stdin of the services while running"
+      exit 0
+      ;;
+    *)
+	    break
+      ;;
+  esac
+done
+
+scripts_home=$1
+
+binaries_folder=binaries
+if ! [ -d "$binaries_folder" ]; then
+  mkdir "$binaries_folder"
+fi
+
+if [ "$build" = true ]; then
+	echo "Building"
+  "$scripts_home"/build_services backend
+fi
+
+if [ "$pack" = true ]; then
+	echo "Packing"
+  "$scripts_home"/pack_binaries "$binaries_folder" backend/*
+fi
+
+if [ "$run" = true ]; then
+	echo "Running"
+  services_pids_file=services_pids.txt
+  if [ "$logging" = true ]; then
+    logs_folder=logs
+    if ! [ -d "$logs_folder" ]; then
+      mkdir "$logs_folder"
+    fi
+    "$scripts_home"/run_services --log "$scripts_home"/service_execution_order.txt "$binaries_folder" "$logs_folder" > "$services_pids_file"
+  else
+    "$scripts_home"/run_services "$scripts_home"/service_execution_order.txt "$binaries_folder" > "$services_pids_file"
+  fi
+  cat "$services_pids_file"
+  tmp="$services_pids_file"
+  awk '{ print $4 }' "$tmp" > "$services_pids_file"
+
+  read -rp "Press enter to kill services"
+  while IFS= read -r line; do
+	  kill -9 "$line"
+  done < "$services_pids_file"
+  rm "$services_pids_file"
+fi
+
+exit 0

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+home=$(pwd)
+for file in "$@"; do
+	file="$home/$file"
+	(
+		cd "$file" || exit 1
+		if ./gradlew -q build; then
+			echo "Build: $(basename "$(pwd)")"
+		else
+			printf "The following path failed to build: %s" "$file" >&2
+			exit 1
+		fi
+	)
+done
+exit 0

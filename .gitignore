@@ -39,3 +39,6 @@ out/
 
 ### VS Code ###
 .vscode/
+binaries
+logs
+fake_orgasm_app.tar
