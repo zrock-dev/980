@@ -94,7 +94,7 @@ run(){
     log_arg=""
   fi
 
-  if ! "$binary" "$scripts_home"/service_execution_order.txt "$binaries_folder" > "$services_pids_file" "$log_arg"; then
+  if ! "$binary" "$scripts_home"/service_execution_order.txt "$binaries_folder" $log_arg> "$services_pids_file"; then
     echo "Could not start the running script, please check the binary folder" >&2
     rm "$services_pids_file"
     exit 1
