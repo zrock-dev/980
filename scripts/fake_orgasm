@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Script: fake_orgasm.sh
-# Description: This script provides options to build, pack, run, and manage microservices.
+# Description: This script provides options to build, extract_binaries, run, and manage microservices.
 # Author: [Santiago C. Saavedra]
 # Date: [07/09/2023]
 
 build=false
 run=false
-pack=false
+extract_binaries=false
 logging=false
 
 while [[ $# -gt 0 ]]; do
@@ -20,8 +20,8 @@ while [[ $# -gt 0 ]]; do
       run=true
       shift
       ;;
-    --pack)
-      pack=true
+    --extract-binaries)
+      extract_binaries=true
       shift
       ;;
     --log)
@@ -29,10 +29,10 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --help)
-      echo "Usage: $0 [--build] [--log] [--run] [--pack] <scripts_home>"
+      echo "Usage: $0 [--build] [--log] [--run] [--extract-binaries] <scripts_home>"
       echo "  --build   Build the microservices"
       echo "  --run     Run the microservices"
-      echo "  --pack    Pack the binaries in a tar file"
+      echo "  --extract_binaries    Pack the binaries in a tar file"
       echo "  --log     Record stdout and stdin of the services while running"
       exit 0
       ;;
@@ -49,48 +49,80 @@ if ! [ -d "$binaries_folder" ]; then
   mkdir "$binaries_folder"
 fi
 
-# Build the microservices if the --build flag is set
-if [ "$build" = true ]; then
-  echo "Building"
-  "$scripts_home"/build_services backend
-fi
-
-# Pack the binaries into a tar file if the --pack flag is set
-if [ "$pack" = true ]; then
-  echo "Packing"
-  "$scripts_home"/pack_binaries "$binaries_folder" backend/*
-fi
-
-# Run the microservices if the --run flag is set
-if [ "$run" = true ]; then
-  if ![ -d "$binaries_folder" && -z $(ls -a "$binaries_folder")];then
-
+clean_port(){
+  port=$1
+  if lsof -i :"$port" > /dev/null; then
+    echo "Port $port is in use."
+  
+    # Find and kill the process using the port
+    process_id=$(lsof -ti :"$port")
+    if [ -n "$process_id" ]; then
+      kill -9 "$process_id"
+    else
+      echo "Failed to find the process using the port." >&2
+      exit 1
+    fi
   fi
+}
 
+build(){
+  "$scripts_home"/build_services backend
+}
 
-  echo "Cleaning port: 8761"
-  lsof -i :8761 | xargs -n 1 kill -9
-  echo "Running"
-  services_pids_file=services_pids.txt
+extract_binaries(){
+  "$scripts_home"/extract_binaries "$binaries_folder" backend/*
+}
+
+logs_folder=logs
+check_for_logging(){
   if [ "$logging" = true ]; then
-    logs_folder=logs
     if ! [ -d "$logs_folder" ]; then
       mkdir "$logs_folder"
     fi
-    "$scripts_home"/run_services --log "$scripts_home"/service_execution_order.txt "$binaries_folder" "$logs_folder" > "$services_pids_file"
-  else
-    "$scripts_home"/run_services "$scripts_home"/service_execution_order.txt "$binaries_folder" > "$services_pids_file"
   fi
+}
+
+run(){
+  # clean_port 8761
+  check_for_logging
+
+  services_pids_file=services_pids.txt
+  binary="$scripts_home"/run_services
+  if [ "$logging" = true ]; then
+    log_arg="--log"
+  else
+    log_arg=""
+  fi
+
+  if ! "$binary" "$scripts_home"/service_execution_order.txt "$binaries_folder" > "$services_pids_file" "$log_arg"; then
+    echo "Could not start the running script, please check the binary folder" >&2
+    rm "$services_pids_file"
+    exit 1
+  fi
+
   cat "$services_pids_file"
   tmp="$services_pids_file"
   awk '{ print $4 }' "$tmp" > "$services_pids_file"
 
-  read -rp "Press enter to kill services"
   # Kill services based on PIDs in the services_pids_file
+  read -rp "Press enter to kill services"
   while IFS= read -r line; do
     kill -9 "$line"
   done < "$services_pids_file"
   rm "$services_pids_file"
+  lsof -i :8761 | awk '{{print $2}}' | xargs -n 1 kill -q -9 2>/dev/null
+}
+
+if [ "$build" = true ]; then
+  build
+fi
+
+if [ "$extract_binaries" = true ]; then
+  extract_binaries
+fi
+
+if [ "$run" = true ]; then
+  run
 fi
 
 exit 0
