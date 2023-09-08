@@ -8,8 +8,10 @@ import MagnifyingGlass from '@/icons/MagnifyingGlass';
 import Xmark from '@/icons/Xmark';
 import { BLUE, GRAYTWO } from '@/styles/colors';
 import { useEffect, useRef, useState } from 'react';
+import { useSearch } from '@/contexts/SearchContext'; 
 
 const Searcher = () => {
+	const { searchText, setSearchText } = useSearch();
 	const searchContainer = useRef(null);
 	const suggestionsContainer = useRef(null);
 	const [inputSearch, setInputSearch] = useState('');
@@ -44,6 +46,9 @@ const Searcher = () => {
 			</SearchSuggestions>
 		);
 	};
+	const handleSearch = () => {
+		setSearchText(inputSearch);
+	};
 
 	useEffect(() => {
 		getUserSuggestion(inputSearch).then((data) => {
@@ -64,7 +69,7 @@ const Searcher = () => {
 			<button onClick={() => setInputSearch('')} onFocus={showSuggestions}>
 				{<Xmark />}
 			</button>
-			<button>{<MagnifyingGlass />}</button>
+			<button onClick={handleSearch}>{<MagnifyingGlass />}</button>
 
 			{renderSuggestions()}
 		</SearcherContainer>
