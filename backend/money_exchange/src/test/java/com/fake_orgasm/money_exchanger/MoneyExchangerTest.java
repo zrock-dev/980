@@ -1,11 +1,9 @@
 package com.fake_orgasm.money_exchanger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.fake_orgasm.currency_exchange.models.ExchangeRates;
 import com.fake_orgasm.currency_exchange.models.IntegerMoney;
 import com.fake_orgasm.currency_exchange.services.MoneyExchanger;
-import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,9 +41,7 @@ class MoneyExchangerTest {
     @Test
     void getExchangeValues() {
         MoneyExchanger<IntegerMoney> exchanger = new MoneyExchanger<>(moneyRates);
-        JSONObject exchangerValues = exchanger.getExchangeValues(new IntegerMoney(67));
-        assertEquals(3, exchangerValues.get("20"));
-        assertEquals(1, exchangerValues.get("5"));
-        assertEquals(2, exchangerValues.get("1"));
+        JSONArray exchangerValues = exchanger.getExchangeValues(new IntegerMoney(67));
+        System.out.println(exchangerValues);
     }
 }

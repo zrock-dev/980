@@ -4,6 +4,7 @@ import com.fake_orgasm.currency_exchange.libs.maxheap.MaxHeap;
 import com.fake_orgasm.currency_exchange.models.ExchangeRates;
 import com.fake_orgasm.currency_exchange.models.IMoneySubtracted;
 import java.util.*;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -27,7 +28,7 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
     /**
      * A JsonObject to return to the final of the procurement.
      */
-    private final JSONObject jsonObject;
+    private final JSONArray jsonArray;
 
     /**
      * A Map to put all values with its exchange type.
@@ -42,7 +43,7 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
     public MoneyExchanger(ExchangeRates<T> moneyRates) {
         this.rates = moneyRates;
         this.heap = new MaxHeap<>(moneyRates.size());
-        this.jsonObject = new JSONObject();
+        this.jsonArray = new JSONArray();
         this.exchangesMap = new HashMap<>(moneyRates.size());
     }
 
@@ -61,15 +62,19 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
      * @param value Is money value to obtain all possible exchanges quantity.
      * @return A JsonObject with all values processed.
      */
-    public JSONObject getExchangeValues(T value) {
+    public JSONArray getExchangeValues(T value) {
         fillHeap();
         processQuantityRatesOnMap(value);
-        this.jsonObject.clear();
+        this.jsonArray.clear();
 
         for (T exchangeValue : exchangesMap.keySet()) {
-            jsonObject.put(String.valueOf(exchangeValue), exchangesMap.get(exchangeValue));
+            JSONObject moneyObject = new JSONObject();
+            JSONArray mappedArray = new JSONArray();
+            moneyObject.put("value", exchangeValue.toString());
+            moneyObject.put("quantity", exchangesMap.get(exchangeValue));
+            this.jsonArray.add(moneyObject);
         }
-        return jsonObject;
+        return this.jsonArray;
     }
 
     /**
@@ -81,7 +86,6 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
         this.exchangesMap.clear();
         T heapTop = this.heap.extract();
         while (heapTop != null && bigAmount.compareTo(heapTop) >= 0 || this.heap.size() > 0) {
-            int size = this.heap.size();
             int quantityOfMoney = getMoneyQuantity(bigAmount, heapTop);
             if (quantityOfMoney > 0) {
                 exchangesMap.put(heapTop, quantityOfMoney);

@@ -1,6 +1,6 @@
 package com.fake_orgasm.currency_exchange.services;
 
-import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 
 /**
  * Interface to establish promises of class' flow to obtain a result of processes.
@@ -15,5 +15,5 @@ public interface IMoneyExchanger<T> {
      * @param value Is value to be processed.
      * @return Json containing data processed.
      */
-    JSONObject getExchangeValues(T value);
+    JSONArray getExchangeValues(T value);
 }
