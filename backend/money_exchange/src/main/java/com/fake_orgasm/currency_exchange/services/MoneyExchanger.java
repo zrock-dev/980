@@ -36,7 +36,7 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
     private final Map<T, Integer> exchangesMap;
 
     /**
-     * Integer to accumulate the total number of coins needed to execute the exchange
+     * Integer to accumulate the total number of coins needed to execute the exchange.
      */
     private int totalMoneyQuantity;
 
