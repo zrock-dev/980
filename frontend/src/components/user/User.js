@@ -12,8 +12,8 @@ import {
 } from '@/elements/User';
 import { Subtitle, GeneralButton } from '@/elements/GeneralElements';
 import { getUserInformation, getUserTickets } from '@/backend/User';
-import Trash from '@/icons/Trash';
-import PenToSquare from '@/icons/PenToSquare';
+import DeleteUserCheck from './DeleteUserCheck';
+import EditUserForm from './EdirUserForm';
 
 const User = ({ id }) => {
 	const router = useRouter();
@@ -84,12 +84,8 @@ const User = ({ id }) => {
 							</UserName>
 						</div>
 						<UserOptionContainer>
-							<button>
-								<PenToSquare />
-							</button>
-							<button>
-								<Trash />
-							</button>
+							<EditUserForm user={user} />
+							<DeleteUserCheck user={user} />
 							<GeneralButton>Book flight</GeneralButton>
 						</UserOptionContainer>
 					</UserTopContainer>
@@ -101,7 +97,7 @@ const User = ({ id }) => {
 							<b>Country:</b> {user.country}
 						</span>
 						<span>
-							<b>Age:</b> {user.age} years old
+							<b>Age:</b> {user.birthdate} years old
 						</span>
 						<span>
 							<b>C.I.:</b> {user.id}
@@ -128,5 +124,3 @@ const User = ({ id }) => {
 };
 
 export default User;
-
-// http://localhost:3000/users/1?firstName=luiggy&firstLastName=mamani&secondLastName=condori

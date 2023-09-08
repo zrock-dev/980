@@ -27,13 +27,12 @@ export const PopupContainer = styled(ReactModal)`
 	${(props) =>
 		props.isCenter === true
 			? css`
-					border-radius: 5px;
+					border-radius: 20px;
 			  `
 			: css`
-					border-bottom-left-radius: 5px;
-					border-bottom-right-radius: 5px;
+					border-bottom-left-radius: 20px;
+					border-bottom-right-radius: 20px;
 			  `}
 
 	background-color: ${WHITE};
-	animation: ${(props) => props.animation} 200ms linear;
 `;

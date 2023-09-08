@@ -34,7 +34,7 @@ export const getUserInformation = async (
 			firstLastName: 'Mamani',
 			secondLastName: 'Condori',
 			country: 'Bolivia',
-			age: 19,
+			birthdate: '2013-10-21T13:28:06.419Z',
 			flights: []
 		},
 		status: 202

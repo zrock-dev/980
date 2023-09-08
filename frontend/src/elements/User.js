@@ -26,7 +26,7 @@ export const UserOptionContainer = styled.div`
 	gap: 15px;
 
 	svg {
-		height: 23px;
+		height: 20px;
 		fill: ${GRAYONE};
 		transition: all ease 250ms;
 	}
@@ -47,7 +47,3 @@ export const UserName = styled.span`
 	font-size: 35px;
 	font-weight: 700;
 `;
-
-export const UserInformationContainer = styled.div``;
-
-export const FlightHistoryContainer = styled.div``;

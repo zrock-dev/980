@@ -1,4 +1,4 @@
-import { BLUE, GRAYTWO, WHITE } from '@/styles/colors';
+import { BLUE, GRAYONE, GRAYTWO, WHITE } from '@/styles/colors';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
@@ -8,8 +8,10 @@ export const GeneralButton = styled.button`
 	border-radius: 20px;
 	padding: 10px 30px 10px 30px;
 
+	max-width: ${(props) => (props.width ? props.width : 'auto')};
+
 	color: ${WHITE};
-	background-color: ${BLUE};
+	background-color: ${(props) => (props.color ? props.color : BLUE)};
 	text-transform: capitalize;
 `;
 
@@ -61,6 +63,15 @@ export const LoaderIcon = styled.span`
 `;
 
 export const Subtitle = styled.span`
+	text-align: left;
+
+	width: 100%;
 	font-size: 20px;
 	font-weight: 700;
+`;
+
+export const SecondaryText = styled.p`
+	font-size: 14px;
+
+	color: ${GRAYONE};
 `;
