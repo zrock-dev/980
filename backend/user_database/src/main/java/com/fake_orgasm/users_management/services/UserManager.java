@@ -3,13 +3,18 @@ package com.fake_orgasm.users_management.services;
 import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.generator.flight_history_generator.FlightHistoryGenerator;
 import com.fake_orgasm.generator.user_generator.UserGenerator;
+import com.fake_orgasm.users_management.libs.btree.BTree;
+import com.fake_orgasm.users_management.libs.btree.NameIndexer;
+import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.User;
+import com.fake_orgasm.users_management.repository.BTreeRepository;
 import com.fake_orgasm.users_management.services.exceptions.DuplicateUserException;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
-import com.fake_orgasm.users_management.services.exceptions.InvalidPageException;
 import com.fake_orgasm.users_management.services.exceptions.NonexistentUserException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,20 +24,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserManager implements IUserManager {
-    private List<User> users;
     private UserGenerator userGenerator;
     private FlightHistoryGenerator flightHistoryGenerator;
+
+    private NameIndexer nameIndexer;
+    public static BTree<User> bTree;
 
     /**
      * This is a constructor method to initialize the state of the class.
      */
     public UserManager() {
+        nameIndexer = new NameIndexer();
         userGenerator = new UserGenerator();
+        bTree = new BTree<>(2, new BTreeRepository(), nameIndexer);
         flightHistoryGenerator = FlightHistoryGenerator.getInstance();
-        this.users = new ArrayList<>();
-        for (int i = 0; i < 10_000; i++) {
-            this.users.add(makeUser());
-        }
+        //for (int i = 0; i < 10_000; i++) {
+        //   create(makeUser());
+       // }
     }
 
 
@@ -57,13 +65,14 @@ public class UserManager implements IUserManager {
      */
     @Override
     public List<User> search(String name) {
-        List<User> result = new ArrayList<>();
-        users.forEach(user -> {
-            if (user.getFullName().contains(name)) {
-                result.add(user);
-            }
-        });
-        return result;
+        List<User> users = new ArrayList<>();
+        Set<User> userSet = nameIndexer.search(name);
+        for(User user : userSet){
+            if(users.size() < 20){
+                users.add(user);
+            }else break;
+        }
+        return users;
     }
 
     /**
@@ -82,11 +91,12 @@ public class UserManager implements IUserManager {
             throw new IncompleteUserException("User properties are incomplete.");
         }
 
-        if (users.contains(user)) {
+        if (bTree.getSize() > 0 && bTree.searchKey(user) != null){
             throw new DuplicateUserException("User already exists.");
         }
 
-        users.add(user);
+        bTree.insert(user);
+        nameIndexer.add(user, bTree.search(bTree.getRoot(), user));
         return true;
     }
 
@@ -101,17 +111,11 @@ public class UserManager implements IUserManager {
             throw new NullPointerException("User object is null.");
         }
         if (isUserComplete(user)) {
-            User userToRemove = null;
-            for (User user1 : users) {
-                if (user1.getId() == user.getId()) {
-                    userToRemove = user1;
-                    break;
-                }
-            }
+            User userToRemove = bTree.searchKey(user);
             if (userToRemove == null) {
                 throw new NonexistentUserException("User Object Not Exist");
             }
-            users.remove(userToRemove);
+            bTree.remove(userToRemove);
         } else {
             throw new IncompleteUserException("User properties are incomplete.");
         }
@@ -129,8 +133,8 @@ public class UserManager implements IUserManager {
             throw new NullPointerException("User object is null.");
         }
         if (isUserComplete(user)) {
-            if (users.contains(user)) {
-                return users.get(users.indexOf(user));
+            if (bTree.searchKey(user) != null) {
+                return bTree.searchKey(user);
             } else {
                 throw new NonexistentUserException("User Object Not Exist");
             }
@@ -154,9 +158,19 @@ public class UserManager implements IUserManager {
             throw new NullPointerException("User object is null.");
         }
         if (isUserComplete(user) && isUserComplete(updateUser)) {
-            if (users.contains(user)) {
-                updateUser.setId(user.getId());
-                users.set(users.indexOf(user), updateUser);
+            if (bTree.searchKey(user) != null) {
+                User userToUpdate = bTree.searchKey(user);
+                userToUpdate.setId(updateUser.getId());
+                userToUpdate.setFirstName(updateUser.getFirstName());
+                userToUpdate.setSecondName(updateUser.getSecondName());
+                userToUpdate.setFirstLastName(updateUser.getFirstLastName());
+                userToUpdate.setSecondLastName(updateUser.getSecondLastName());
+                userToUpdate.setDateBirth(updateUser.getDateBirth());
+                userToUpdate.setCategory(updateUser.getCategory());
+                userToUpdate.setCountry(updateUser.getCountry());
+                Node<User> nodeChanged = bTree.search(bTree.getRoot(), userToUpdate);
+                bTree.getRepository().save(nodeChanged);
+                nameIndexer.add(user, nodeChanged);
                 return true;
             } else {
                 throw new NonexistentUserException("User Object Not Exist");
@@ -174,7 +188,7 @@ public class UserManager implements IUserManager {
      */
     @Override
     public List<User> getUsersByPage(int page) {
-        page++;
+       /* page++;
         int pageSize = 20;
         int totalUsers = users.size();
         int totalPages = (totalUsers + pageSize - 1) / pageSize;
@@ -186,7 +200,8 @@ public class UserManager implements IUserManager {
         int startIndex = (page - 1) * pageSize;
         int endIndex = Math.min(startIndex + pageSize, totalUsers);
 
-        return users.subList(startIndex, endIndex);
+        return users.subList(startIndex, endIndex);*/
+        return null;
     }
 
     /**
