@@ -1,5 +1,9 @@
 #!/bin/bash
 #
+# Script: run_services
+# Description: This script runs services according to the specified execution order, with optional logging of stdout and stderr.
+# Author: [Santiago C. Saavedra]
+# Date: [07/09/2023]
 
 logging=false
 
@@ -11,7 +15,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     --help)
       echo "Usage: $0 [--log] <execution_order_file> <path/to/binaries> <path/to/logs>"
-      echo "  --log  When specified the services will write stdout and stderr to a log file in the log path"
+      echo "  --log  When specified, services will write stdout and stderr to a log file in the log path"
       exit 0
       ;;
     *)
@@ -20,6 +24,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# Define paths
 execution_order_file=$(realpath "$1")
 binaries_path=$(realpath "$2")
 if [ $logging = true ]; then
@@ -31,19 +36,22 @@ cd "$logs_path" || exit 1
 for file in "${main_array[@]}"; do
   if [ $logging = true ]; then
     log_file_name="$file.log"
+    
     if ! [ -f "$log_file_name" ]; then
       touch "$log_file_name"
     fi
 
-  { printf '%.s-' {1..50}; echo; date; echo "This is a new run"; printf '%.s-' {1..50}; echo -e "\n"; } >> "$log_file_name"
+    { printf '%.s-' {1..50}; echo; date; echo "This is a new run"; printf '%.s-' {1..50}; echo -e "\n"; } >> "$log_file_name"
   fi
 
   folder=$(find "$binaries_path" -type d -name "$file*boot*")
+
   if [ $logging = true ]; then
     "$folder/bin/$file" >> "$log_file_name" 2>&1  &
   else
     "$folder/bin/$file" > /dev/null 2>&1   &
   fi
+
   bg_pid=$!
   echo "$file has started with process PID: $bg_pid"
 done
