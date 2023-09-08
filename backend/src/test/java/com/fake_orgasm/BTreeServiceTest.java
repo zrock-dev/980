@@ -2,17 +2,18 @@ package com.fake_orgasm;
 
 import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
-import com.fake_orgasm.users_management.services.BTreeService;
+import com.fake_orgasm.users_management.services.UserManager;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
 import junit.framework.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class BTreeServiceTest {
     @Test
     public void updateUserTest(){
-        BTreeService bTreeService = new BTreeService();
+        UserManager bTreeService = new UserManager();
         LocalDate date = LocalDate.of(1999, 12, 12);
         User userTest = new User(123, "Jose", "Morales", date, Category.VIP, "Bol");
         userTest.setSecondName("Fernando");
@@ -21,12 +22,8 @@ public class BTreeServiceTest {
         userUpdated.setSecondName("VIllca");
         userUpdated.setSecondLastName("Villca");
         boolean currentResult = false;
-        try {
-            bTreeService.create(userTest);
-            currentResult = bTreeService.update(userTest, userUpdated);
-        } catch (IncompleteUserException e) {
-            throw new RuntimeException(e);
-        }
+        bTreeService.create(userTest);
+        currentResult = bTreeService.update(userTest, userUpdated);
 
         Assert.assertTrue(currentResult);
 
@@ -38,12 +35,8 @@ public class BTreeServiceTest {
         userUpdated2.setSecondName("Victor");
         userUpdated2.setSecondLastName("Villca");
 
-        try {
-            bTreeService.create(userTest2);
-            currentResult = bTreeService.update(userTest2, userUpdated2);
-        } catch (IncompleteUserException e) {
-            throw new RuntimeException(e);
-        }
+        bTreeService.create(userTest2);
+        currentResult = bTreeService.update(userTest2, userUpdated2);
 
         Assert.assertTrue(currentResult);
 
@@ -52,33 +45,37 @@ public class BTreeServiceTest {
         userTest3.setSecondLastName("Navarro");
 
         User userUpdated3 = new User(321, "Fernanda", "Villca", date, Category.VIP, "Bol");
-        userUpdated3.setSecondName("Victoria");
+        userUpdated3.setSecondName("Jonas");
         userUpdated3.setSecondLastName("Villca");
 
-        try {
-            bTreeService.create(userTest3);
-            currentResult = bTreeService.update(userTest3, userUpdated3);
-        } catch (IncompleteUserException e) {
-            throw new RuntimeException(e);
-        }
+        bTreeService.create(userTest3);
+        currentResult = bTreeService.update(userTest3, userUpdated3);
 
         Assert.assertTrue(currentResult);
 
         User userTest4 = new User(123, "Santiago", "Espinoza", date, Category.VIP, "Bol");
-        userTest4.setSecondName("Miguel");
+        userTest4.setSecondName("VIllca");
         userTest4.setSecondLastName("Ohara");
 
         User userUpdated4 = new User(321, "Santiago", "Villca", date, Category.VIP, "Bol");
-        userUpdated4.setSecondName("Vicente");
+        userUpdated4.setSecondName("Jojo");
         userUpdated4.setSecondLastName("Villca");
 
-        try {
-            bTreeService.create(userTest4);
-            currentResult = bTreeService.update(userTest4, userUpdated4);
-        } catch (IncompleteUserException e) {
-            throw new RuntimeException(e);
-        }
+        bTreeService.create(userTest4);
+        currentResult = bTreeService.update(userTest4, userUpdated4);
 
         Assert.assertTrue(currentResult);
+
+
+        List<User> users = bTreeService.search("jo");
+        System.out.println(users.size());
+
+    }
+
+    @Test
+    public void searchTest(){
+        UserManager bTreeService = new UserManager();
+        List<User> users = bTreeService.search("jo");
+        System.out.println(users.size());
     }
 }

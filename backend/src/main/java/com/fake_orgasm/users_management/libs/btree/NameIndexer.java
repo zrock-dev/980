@@ -4,18 +4,25 @@ import com.fake_orgasm.users_management.models.User;
 
 import java.util.*;
 
-public class NameIndexer {
+public class NameIndexer implements Indexer<User>{
     private Map<String, Set<Node<User>>> nameIndex;
 
     public NameIndexer() {
         nameIndex = new HashMap<>();
     }
 
-    public void addUser(User user, Node<User> node){
-        String firstName = user.getFirstName();
-        String secondName = user.getSecondName();
-        String firstLastName = user.getFirstLastName();
-        String secondLastName = user.getSecondLastName();
+    /**
+     * Adds a key to the indexer.
+     *
+     * @param user The key to be added.
+     * @param node The node where the key is located.
+     */
+    @Override
+    public void add(User user, Node<User> node){
+        String firstName = user.getFirstName().toLowerCase();
+        String secondName = user.getSecondName().toLowerCase();
+        String firstLastName = user.getFirstLastName().toLowerCase();
+        String secondLastName = user.getSecondLastName().toLowerCase();
         savePrefix(firstName, node);
         savePrefix(secondName, node);
         savePrefix(firstLastName, node);
@@ -32,7 +39,15 @@ public class NameIndexer {
         }
     }
 
-    public Set<User> searchName(String name){
+    /**
+     * Searches for keys that match the given key.
+     *
+     * @param name The key to be searched.
+     * @return A set of keys that match the given key.
+     */
+    @Override
+    public Set<User> search(String name){
+        name = name.toLowerCase();
         String[] words = name.split(" ");
         List<String> syllabus;
         Set<Node<User>> nodes = new HashSet<>();
@@ -47,21 +62,42 @@ public class NameIndexer {
         return getUserFromNodes(nodes, words);
     }
 
+    /**
+     * Adds all the keys in the given node to the indexer.
+     *
+     * @param node The node containing the keys to be added.
+     */
+    @Override
+    public void addAll(Node<User> node) {
+        for(int i = 0; i < node.getSize(); i++){
+            add(node.getKey(i), node);
+        }
+    }
+
     private Set<User> getUserFromNodes(Set<Node<User>> nodes, String[] words){
         Set<User> usersFound = new HashSet<>();
+        List<User> users;
         for(Node<User> node : nodes){
-            for(User user : node.getKeys()){
-                if (user.getFirstName().contains(words[0]) || user.getFirstName().contains(words[1])) {
-                    usersFound.add(user);
-                }else if (user.getSecondName().contains(words[0]) || user.getSecondName().contains(words[1])) {
-                    usersFound.add(user);
-                }else if (user.getFirstLastName().contains(words[0]) || user.getFirstLastName().contains(words[1])) {
-                    usersFound.add(user);
-                }else if (user.getSecondLastName().contains(words[0]) || user.getSecondLastName().contains(words[1])) {
+            users = new ArrayList<>();
+            for(int i = 0; i < node.getSize(); i++){
+                users.add(node.getKey(i));
+            }
+            for(User user : users){
+                if (verifyIfContainsWord(user, words)) {
                     usersFound.add(user);
                 }
             }
         }
         return usersFound;
     }
+
+    private boolean verifyIfContainsWord(User user , String[] word){
+        for (String currentWord : word) {
+            String fullName = user.getFullName().toLowerCase();
+           if (!fullName.contains(currentWord)) return false;
+        }
+        return true;
+    }
+
+
 }
