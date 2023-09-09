@@ -1,5 +1,5 @@
 #!/bin/bash
-testing_attempts=15
+testing_attempts=1
 testing_wait_interval=5
 executed_attempts=0
 while [ $executed_attempts -lt $testing_attempts ]; do

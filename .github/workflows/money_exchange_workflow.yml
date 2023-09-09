@@ -84,9 +84,9 @@ jobs:
           ./gradlew --no-daemon checkStyleMain spotlessCheck -x checkStyleTest -x test build 
 
   service_integration:
-    name: Service Integration
+    name: service_integration
     runs-on: ubuntu-latest
-    needs: code_analysis
+    needs: check
 
     steps:
     - name: Checkout code
@@ -105,18 +105,21 @@ jobs:
       run: |
           exit_code=0
           ./services_testing/money_exchange/service_startup
-          if ! ./services_testing/money_exchange/simple_test; then
-            exit_code=1
+          if ./services_testing/money_exchange/simple_test; then
+            ./scripts/pack
+          else
             echo "Test failed"
+            exit_code=1
+            ./scripts/pack --include-logs
           fi
 
           ./scripts/utils -k
-          ./scripts/pack
           exit $exit_code
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: fake_orgasm_app-${{ github.sha }}
-        path: fake_orgasm_app.tar
+        path: fake_orgasm_app.tar.gz
+      if: always()
             
