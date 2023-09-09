@@ -3,8 +3,7 @@ package com.fake_orgasm.flights_management.rest_controller;
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.FlightJoined;
 import com.fake_orgasm.flights_management.models.Ticket;
-import com.fake_orgasm.flights_management.repository.FlightList;
-import com.fake_orgasm.flights_management.repository.TicketsList;
+import com.fake_orgasm.flights_management.repository.Pagination;
 import com.fake_orgasm.flights_management.rest_controller.records.BookingRequest;
 import com.fake_orgasm.flights_management.services.IBookingService;
 import com.fake_orgasm.users_management.models.User;
@@ -118,7 +117,7 @@ public class BookingRestController {
      */
     @GetMapping("/flights")
     public ResponseEntity<?> getFlightsByPage(@RequestParam int page) {
-        FlightList flightJoined = bookingService.getFlightsJoined(page);
+        Pagination flightJoined = bookingService.getFlightsJoined(page);
         return ResponseEntity.ok(flightJoined);
     }
 
@@ -149,7 +148,7 @@ public class BookingRestController {
 
     @GetMapping("/user-tickets/{userId}")
     public ResponseEntity<?> getTickets(@PathVariable int userId, @RequestParam int page) {
-        TicketsList userTickets = bookingService.getUserTickets(userId, page);
+        Pagination userTickets = bookingService.getUserTickets(userId, page);
         return ResponseEntity.ok(userTickets);
     }
 

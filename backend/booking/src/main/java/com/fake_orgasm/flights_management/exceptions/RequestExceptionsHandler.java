@@ -1,9 +1,12 @@
 package com.fake_orgasm.flights_management.exceptions;
 
+import com.fake_orgasm.flights_management.repository.Pagination;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.ArrayList;
 
 /**
  * This class is a util class that contains methods for the RestResponse class.
@@ -50,5 +53,20 @@ public class RequestExceptionsHandler {
         RestResponse error = RestResponse.builder().message(e.getMessage()).status(status.value()).build();
         return new ResponseEntity<>(error, status);
     }
+
+    /**
+     * Handles the exception of type IllegalArgumentException.
+     *
+     * @param e the IllegalArgumentException that was thrown
+     * @return a ResponseEntity containing a RestResponse with the error details
+     */
+
+    @ExceptionHandler(value = EmptyContentException.class)
+    public ResponseEntity<Pagination> handleException(EmptyContentException e) {
+        HttpStatus status = HttpStatus.OK;
+        Pagination flightList = new Pagination(0, 0, new ArrayList<>(), 0, 0);
+        return new ResponseEntity<>(flightList, status);
+    }
+
 
 }

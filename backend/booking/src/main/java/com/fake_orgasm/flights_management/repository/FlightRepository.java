@@ -1,5 +1,6 @@
 package com.fake_orgasm.flights_management.repository;
 
+import com.fake_orgasm.flights_management.exceptions.EmptyContentException;
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
@@ -177,7 +178,7 @@ public class FlightRepository {
      * flight information for all available flights.
      */
 
-    public FlightList findAllFlightsJoined(int page) {
+    public Pagination findAllFlightsJoined(int page) {
         List<FlightJoined> flights = new ArrayList<>();
         String query = "SELECT Flight.*, Airport.airportName AS sourceAirportName, "
                 + "Airport.country AS sourceCountry, Airport.stateName AS sourceState, "
@@ -241,16 +242,23 @@ public class FlightRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving flights", e);
         }
-        return new FlightList(totalFlights, flights.size(), flights, page, maxPage);
+        return new Pagination(totalFlights, flights.size(), flights, page - 1, maxPage - 1);
     }
 
     private int getTotalFlights() {
         String countQuery = "SELECT COUNT(*) FROM Flight;";
+        int total;
         try {
             PreparedStatement countStatement = database.getConnection().prepareStatement(countQuery);
             ResultSet countResult = countStatement.executeQuery();
+
             if (countResult.next()) {
-                return countResult.getInt(1);
+                total = countResult.getInt(1);
+                if (total > 0) {
+                    return total;
+                } else {
+                    throw new EmptyContentException("Empty content");
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error counting flights", e);

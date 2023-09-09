@@ -1,5 +1,6 @@
 package com.fake_orgasm.flights_management.repository;
 
+import com.fake_orgasm.flights_management.exceptions.EmptyContentException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Ticket;
@@ -222,7 +223,7 @@ public class TicketRepository {
      * @param page          The page of tickets to retrieve.
      * @return A list of TicketJoined objects containing ticket details.
      */
-    public TicketsList findAllTicketsJoined(int userIdRequest, int page) {
+    public Pagination findAllTicketsJoined(int userIdRequest, int page) {
         String query = "SELECT Ticket.*, Flight.*, " +
                 "Airport.airportName AS sourceAirportName, Airport.country " +
                 "AS sourceCountry, Airport.stateName AS sourceState, " +
@@ -295,17 +296,23 @@ public class TicketRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return new TicketsList(totalTickets, tickets.size(), tickets, page - 1, maxPage - 1);
+        return new Pagination(totalTickets, tickets.size(), tickets, page - 1, maxPage - 1);
     }
 
     private int getTotalTicketsForUser(int userId) {
         String query = "SELECT COUNT(*) FROM Ticket WHERE userId = ?";
+        int total;
         try {
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1);
+                total = rs.getInt(1);
+                if (total > 0) {
+                    return total;
+                } else {
+                    throw new EmptyContentException("No tickets found");
+                }
             }
             ps.close();
         } catch (SQLException e) {

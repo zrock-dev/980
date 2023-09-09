@@ -192,7 +192,7 @@ public class BookingService implements IBookingService {
      * and associated airports for the specified page.
      */
     @Override
-    public FlightList getFlightsJoined(int page) {
+    public Pagination getFlightsJoined(int page) {
         return flightRepository.findAllFlightsJoined(page+1);
     }
 
@@ -227,7 +227,7 @@ public class BookingService implements IBookingService {
      * and associated flight and airport information for the specified user and page.
      */
     @Override
-    public TicketsList getUserTickets(int userId, int page) {
+    public Pagination getUserTickets(int userId, int page) {
         return ticketRepository.findAllTicketsJoined(userId, page +1);
     }
 
