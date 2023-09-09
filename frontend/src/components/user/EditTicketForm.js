@@ -15,15 +15,26 @@ import Xmark from '@/icons/Xmark';
 import Loader from '../Loader';
 import { differenceInDays, format } from 'date-fns';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const EditTicketForm = ({ onClose, ticket, sourceFlag, destinationFlag }) => {
+	const router = useRouter();
 	const [category, setCategory] = useState(ticket.category);
+
+	const reload = () => {
+		window.location.reload();
+	};
+
+	const updateTicket = async () => {
+		// request to edit the ticket
+		reload();
+	};
 
 	return (
 		<OptionContainer>
 			<OptionTopContainer>
 				<Subtitle>
-					Flight for {format(new Date(ticket.date), 'dd-MMM-yyyy')}
+					#{ticket.number} - {format(new Date(ticket.date), 'dd-MMM-yyyy')}
 				</Subtitle>
 				<button onClick={onClose}>
 					<Xmark />
@@ -75,8 +86,8 @@ const EditTicketForm = ({ onClose, ticket, sourceFlag, destinationFlag }) => {
 						onChange={(e) => setCategory(e.target.value)}
 					>
 						<option value="Vip">VIP</option>
-						<option value="Frecuent Passager">FRECUENT PASSAGER</option>
-						<option value="Regular Passager">REGULAR PASSAGER</option>
+						<option value="Frecuent passager">FRECUENT PASSAGER</option>
+						<option value="Regular passager">REGULAR PASSAGER</option>
 					</FormSelect>
 					<SecondaryText maxWidth={'280px'}>
 						You can still change the category of this flight, the category and

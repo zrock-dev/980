@@ -52,6 +52,7 @@ export const getUserTickets = async (ticketIds) => {
 				number: 1,
 				category: 'Vip',
 				date: '2023-09-10T13:28:06.419Z',
+				flightId: 'flightid1',
 				price: 1500,
 				source: {
 					airportName: 'Source airport',
@@ -67,8 +68,9 @@ export const getUserTickets = async (ticketIds) => {
 			{
 				id: 'unique-ticket2',
 				number: 2,
-				category: 'Regular Passager',
+				category: 'Regular passager',
 				date: '2023-09-30T13:28:06.419Z',
+				flightId: 'flightid1',
 				price: 3500,
 				source: {
 					airportName: 'Source airport',
