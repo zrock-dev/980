@@ -1,0 +1,26 @@
+#!/bin/bash
+
+scripts_home=$(realpath scripts)
+
+execute_command() {
+	local command=$1
+	if ! $command; then
+		printf "The preparation command: '%s' has failed.\n" "$(basename "$command" )" >&2
+		exit 1
+	fi
+}
+
+execute_command "$scripts_home/build_services backend"
+execute_command "$scripts_home/extract_binaries backend/*"
+
+binaries_home=$(realpath binaries)
+utils="$scripts_home/utils"
+run_service="$scripts_home/run_service"
+
+eureka_bin=$(find "$binaries_home" -type f -name "eureka_server")
+gateway_bin=$(find "$binaries_home" -type f -name "gateway")
+money_exchange_bin=$(find "$binaries_home" -type f -name "money_exchange")
+
+execute_command "$run_service $eureka_bin $utils --log --wait 7"
+execute_command "$run_service $gateway_bin $utils --log --wait 7"
+execute_command "$run_service $money_exchange_bin $utils --log --wait 7"
