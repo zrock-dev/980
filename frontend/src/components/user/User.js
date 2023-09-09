@@ -8,10 +8,15 @@ import {
 	UserTopContainer,
 	UserName,
 	UserMainInfoContainer,
-	UserOptionContainer
+	UserOptionContainer,
+	UserFlagImage
 } from '@/elements/User';
 import { Subtitle, GeneralButton } from '@/elements/GeneralElements';
-import { getUserInformation, getUserTickets } from '@/backend/UserRequest';
+import {
+	getFlagImage,
+	getUserInformation,
+	getUserTickets
+} from '@/backend/UserRequest';
 import DeleteUserCheck from './DeleteUserCheck';
 import EditUserForm from './EditUserForm';
 import { differenceInYears } from 'date-fns';
@@ -20,6 +25,7 @@ const User = ({ id }) => {
 	const router = useRouter();
 	const params = useSearchParams();
 	const [user, setUser] = useState(null);
+	const [flagImage, setFlagImage] = useState(null);
 	const [flightHistory, setFlightHistory] = useState(null);
 
 	useEffect(() => {
@@ -48,10 +54,6 @@ const User = ({ id }) => {
 		}
 	}, []);
 
-	const redirectToMainPage = () => {
-		router.push('/');
-	};
-
 	useEffect(() => {
 		if (user) {
 			getUserTickets(user.flights)
@@ -61,8 +63,19 @@ const User = ({ id }) => {
 				.catch(() => {
 					setFlightHistory([]);
 				});
+			getFlagImage(user.country)
+				.then((imagePng) => {
+					setFlagImage(imagePng);
+				})
+				.catch(() => {
+					setFlagImage(null);
+				});
 		}
 	}, [user]);
+
+	const redirectToMainPage = () => {
+		router.push('/');
+	};
 
 	const renderFlihtHistory = () => {
 		return flightHistory.length > 0 ? (
@@ -78,7 +91,7 @@ const User = ({ id }) => {
 				<UserInfoContainer>
 					<UserTopContainer>
 						<div>
-							{user.country}
+							{flagImage && <UserFlagImage src={flagImage} alt="" />}
 							<UserName>
 								{user.firstName} {user.secondName} {user.firstLastName}{' '}
 								{user.secondLastName}

@@ -47,3 +47,7 @@ export const UserName = styled.span`
 	font-size: 35px;
 	font-weight: 700;
 `;
+
+export const UserFlagImage = styled.img`
+	max-height: 30px;
+`;

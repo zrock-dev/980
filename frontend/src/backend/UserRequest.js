@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const getUserSuggestion = async (inputField) => {
 	// const {data} = await api.post('/api/users/suggestions', { inputField });
 
@@ -47,4 +49,13 @@ export const getUserTickets = async (ticketIds) => {
 		data: [],
 		status: 202
 	};
+};
+
+export const getFlagImage = async (countryName) => {
+	const response = await axios.get(
+		`https://restcountries.com/v3.1/name/${countryName}?fields=flags`
+	);
+	const imagePng = response.data[0].flags.png;
+
+	return imagePng;
 };
