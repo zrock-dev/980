@@ -1,4 +1,4 @@
-import { GRAYTWO, WHITE } from '@/styles/colors';
+import { GRAYONE, GRAYTWO, WHITE } from '@/styles/colors';
 import styled from '@emotion/styled';
 
 export const FormContainer = styled.div`
@@ -38,4 +38,15 @@ export const FormInput = styled.input`
 	border-radius: 10px;
 
 	border: 1px solid ${GRAYTWO};
+`;
+
+export const FormSelect = styled.select`
+	margin-top: 35px;
+	width: 100%;
+	padding: 10px 15px 10px 15px;
+	border-radius: 20px;
+	border: none;
+
+	box-shadow: 0 5px 10px ${GRAYONE};
+	background-color: ${WHITE};
 `;

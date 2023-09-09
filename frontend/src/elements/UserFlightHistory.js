@@ -69,3 +69,13 @@ export const UserFlightDate = styled.div`
 export const FlightPrice = styled.b`
 	font-size: 22px;
 `;
+
+export const FlightCategoryContainer = styled.div`
+	display: flexbox;
+	align-items: end;
+	gap: 25px;
+	flex-direction: column;
+
+	margin-top: 30px;
+	max-width: 350px;
+`;

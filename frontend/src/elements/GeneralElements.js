@@ -79,6 +79,7 @@ export const Subtitle = styled.span`
 export const SecondaryText = styled.p`
 	font-size: 14px;
 
+	max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'auto')};
 	color: ${GRAYONE};
 	& b {
 		color: ${BLACKTWO};

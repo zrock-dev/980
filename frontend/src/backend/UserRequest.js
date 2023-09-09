@@ -51,7 +51,7 @@ export const getUserTickets = async (ticketIds) => {
 				id: 'unique-ticket1',
 				number: 1,
 				category: 'Vip',
-				date: '2023-10-21T13:28:06.419Z',
+				date: '2023-09-10T13:28:06.419Z',
 				price: 1500,
 				source: {
 					airportName: 'Source airport',
