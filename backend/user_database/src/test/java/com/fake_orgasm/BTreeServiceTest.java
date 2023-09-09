@@ -3,16 +3,13 @@ package com.fake_orgasm;
 import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.UserManager;
-import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
+import java.time.LocalDate;
 import junit.framework.Assert;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.util.List;
-
 public class BTreeServiceTest {
     @Test
-    public void updateUserTest(){
+    public void updateUserTest() {
         UserManager bTreeService = new UserManager();
         LocalDate date = LocalDate.of(1999, 12, 12);
         User userTest = new User(123, "Jose", "Morales", date, Category.VIP, "Bol");
@@ -65,17 +62,5 @@ public class BTreeServiceTest {
         currentResult = bTreeService.update(userTest4, userUpdated4);
 
         Assert.assertTrue(currentResult);
-
-
-        List<User> users = bTreeService.search("jo");
-        System.out.println(users.size());
-
-    }
-
-    @Test
-    public void searchTest(){
-        UserManager bTreeService = new UserManager();
-        List<User> users = bTreeService.search("jo");
-        System.out.println(users.size());
     }
 }

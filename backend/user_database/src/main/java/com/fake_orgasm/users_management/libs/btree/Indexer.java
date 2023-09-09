@@ -1,12 +1,13 @@
 package com.fake_orgasm.users_management.libs.btree;
 
 import java.util.Set;
+
 /**
  * This interface represents an indexer for a BTree.
  *
  * @param <T> The type of the keys of the BTree.
  */
-public interface Indexer <T extends Comparable<T>>{
+public interface Indexer<T extends Comparable<T>> {
     /**
      * Adds a key to the indexer.
      *

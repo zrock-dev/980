@@ -19,6 +19,10 @@ public class BTree<T extends Comparable<T>> {
      */
     private Indexer<T> indexer;
 
+    private boolean useIndexer;
+    /**
+     * The flag that indicates whether the B-tree is using a repository.
+     */
     private boolean useRepository;
     /**
      * The order of the B-tree node.
@@ -55,6 +59,7 @@ public class BTree<T extends Comparable<T>> {
      *
      * @param degree     The degree of the B-tree. Must be greater than 1.
      * @param repository The repository used to store and retrieve B-tree nodes.
+     * @param indexer    The indexer used to store and retrieve B-tree nodes.
      * @throws IllegalArgumentException If the degree is not greater than 1.
      */
     public BTree(final int degree, IBTreeRepository<T> repository, Indexer<T> indexer) {
@@ -65,7 +70,6 @@ public class BTree<T extends Comparable<T>> {
         this.indexer = indexer;
         this.order = degree;
         Node<T> node = repository.readNodeById("root");
-        //TODO: revisar
         this.size = repository.getSizeBTree();
         if (node == null) {
             this.root = new Node<>(order);
@@ -77,6 +81,7 @@ public class BTree<T extends Comparable<T>> {
         }
         uploadNodeToIndexer(root);
         this.useRepository = true;
+        this.useIndexer = true;
     }
 
     /**
@@ -157,8 +162,9 @@ public class BTree<T extends Comparable<T>> {
             node.setChild(0, rootNode);
             split(node, 0, rootNode);
             insertIntoSubtree(node, key);
-            //TODO: revisar
-            indexer.addAll(root);
+            if (useIndexer) {
+                indexer.addAll(root);
+            }
         } else {
             insertIntoSubtree(rootNode, key);
         }
@@ -200,8 +206,9 @@ public class BTree<T extends Comparable<T>> {
     private void moveDataToNewNode(Node<T> node, Node<T> newNode) {
         for (int j = 0; j < order - 1; j++) {
             newNode.setKey(j, node.getKey(j + order));
-            //TODO:revisar
-            indexer.add(node.getKey(j + order), newNode);
+            if (useIndexer) {
+                indexer.add(node.getKey(j + order), newNode);
+            }
         }
         if (!node.isLeaf()) {
             for (int j = 0; j < order; j++) {
@@ -226,7 +233,6 @@ public class BTree<T extends Comparable<T>> {
 
         for (int j = parent.getSize() - 1; j >= position; j--) {
             parent.setKey(j + 1, parent.getKey(j));
-            //TODO:revisar
             indexer.add(parent.getKey(j), parent);
         }
     }
@@ -277,8 +283,9 @@ public class BTree<T extends Comparable<T>> {
         if (useRepository) {
             saveNodeData(leafNode);
         }
-        //TODO: revisar
-        indexer.add(key, leafNode);
+        if (useIndexer) {
+            indexer.add(key, leafNode);
+        }
     }
 
     /**
@@ -675,7 +682,9 @@ public class BTree<T extends Comparable<T>> {
     public Node<T> uploadNodeFromRepository(int index, Node<T> parent) {
         Node<T> childNode = repository.readNodeById(parent.getIdChild(index));
         parent.setChild(index, childNode);
-        uploadNodeToIndexer(childNode);
+        if (useIndexer) {
+            uploadNodeToIndexer(childNode);
+        }
         return childNode;
     }
 
