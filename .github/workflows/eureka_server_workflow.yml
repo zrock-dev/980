@@ -6,8 +6,6 @@ on:
     branches:
       - develop
       - main
-    paths:
-      - "backend/eureka_server"
   pull_request:
     types:
       - opened
