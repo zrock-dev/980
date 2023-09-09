@@ -6,8 +6,6 @@ on:
     branches:
       - develop
       - main
-    paths:
-      - "backend/gateway"
   pull_request:
     types:
       - opened
@@ -15,6 +13,8 @@ on:
     branches:
       - develop
       - main
+    paths:
+      - "backend/gateway"
 
 jobs:
   build:
