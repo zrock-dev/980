@@ -25,34 +25,44 @@ import UserFlightHistory from './UserFlightHistory';
 const User = ({ id }) => {
 	const router = useRouter();
 	const params = useSearchParams();
+	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState(null);
 	const [flagImage, setFlagImage] = useState(null);
 
-	useEffect(() => {
-		const firstName = params.get('firstName');
-		let secondName = params.get('secondName');
-		secondName = secondName ? secondName : '';
-		const firstLastName = params.get('firstLastName');
-		const secondLastName = params.get('secondLastName');
+	const fetchUserData = () => {
+		setLoading(true);
+	};
 
-		if (firstName && firstLastName && secondLastName) {
-			getUserInformation(
-				id,
-				firstName,
-				secondName,
-				firstLastName,
-				secondLastName
-			)
-				.then((response) => {
-					setUser(response.data);
-				})
-				.catch(() => {
-					redirectToMainPage();
-				});
-		} else {
-			redirectToMainPage();
+	useEffect(() => {
+		if (loading) {
+			const firstName = params.get('firstName');
+			let secondName = params.get('secondName');
+			secondName = secondName ? secondName : '';
+			const firstLastName = params.get('firstLastName');
+			const secondLastName = params.get('secondLastName');
+
+			if (firstName && firstLastName && secondLastName) {
+				getUserInformation(
+					id,
+					firstName,
+					secondName,
+					firstLastName,
+					secondLastName
+				)
+					.then((response) => {
+						setUser(response.data);
+					})
+					.then(() => {
+						setLoading(false);
+					})
+					.catch(() => {
+						redirectToMainPage();
+					});
+			} else {
+				redirectToMainPage();
+			}
 		}
-	}, []);
+	}, [loading]);
 
 	useEffect(() => {
 		if (user) {
@@ -83,7 +93,7 @@ const User = ({ id }) => {
 							</UserName>
 						</div>
 						<UserOptionContainer>
-							<EditUserForm user={user} />
+							<EditUserForm user={user} fetchUserData={fetchUserData} />
 							<DeleteUserCheck user={user} />
 							<GeneralButton>Book flight</GeneralButton>
 						</UserOptionContainer>
@@ -107,13 +117,16 @@ const User = ({ id }) => {
 				</UserInfoContainer>
 				<UserInfoContainer>
 					<Subtitle size={'24px'}>Flight history</Subtitle>
-					<UserFlightHistory ticketIds={user.flights} />
+					<UserFlightHistory
+						ticketIds={user.flights}
+						fetchUserData={fetchUserData}
+					/>
 				</UserInfoContainer>
 			</UserContainer>
 		);
 	};
 
-	return user ? renderUserInformation() : <Loader iconSize="80px" />;
+	return loading ? <Loader iconSize="80px" /> : renderUserInformation();
 };
 
 export default User;

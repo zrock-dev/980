@@ -85,3 +85,9 @@ export const SecondaryText = styled.p`
 		color: ${BLACKTWO};
 	}
 `;
+
+export const ButtonsContainer = styled.div`
+	display: flex;
+	align-items: end;
+	gap: 10px;
+`;

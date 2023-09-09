@@ -6,14 +6,14 @@ import { getUserTickets } from '@/backend/UserRequest';
 import UserFlight from './UserFlight';
 import { FlightHistoryContainer } from '@/elements/UserFlightHistory';
 
-const UserFlightHistory = ({ ticketIds = [] }) => {
+const UserFlightHistory = ({ ticketIds = [], fetchUserData }) => {
 	const [flightHistory, setFlightHistory] = useState(null);
 
 	const renderFlihtHistory = () => {
 		return flightHistory.length > 0 ? (
 			<FlightHistoryContainer>
 				{flightHistory.map((ticket) => (
-					<UserFlight ticket={ticket} />
+					<UserFlight ticket={ticket} fetchUserData={fetchUserData}/>
 				))}
 			</FlightHistoryContainer>
 		) : (

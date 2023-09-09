@@ -10,7 +10,7 @@ import { FormContainer, FormSubContainer } from '@/elements/FormElements';
 import FieldForm from './FieldForm';
 import { useRouter } from 'next/navigation';
 
-const EditUserForm = ({ user }) => {
+const EditUserForm = ({ user, fetchUserData }) => {
 	const router = useRouter();
 	const [isEditing, setEditing] = useState(false);
 	const [userEditing, setUserEditing] = useState(user);
@@ -37,6 +37,7 @@ const EditUserForm = ({ user }) => {
 			firstLastName=${userEditing.firstLastName}&
 			secondLastName=${userEditing.secondLastName}`
 		);
+		fetchUserData();
 	};
 
 	useEffect(() => {

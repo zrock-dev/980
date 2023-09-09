@@ -15,7 +15,7 @@ import {
 import Popup from '../Popup';
 import EditTicketForm from './EditTicketForm';
 
-const UserFlight = ({ ticket }) => {
+const UserFlight = ({ ticket, fetchUserData }) => {
 	const [isEditing, setEditing] = useState(false);
 	const [sourceFlag, setSourceFlag] = useState(null);
 	const [destinationFlag, setDestinationFlag] = useState(null);
@@ -76,13 +76,14 @@ const UserFlight = ({ ticket }) => {
 				<Popup
 					isOpen={isEditing}
 					onClose={() => setEditing(false)}
-					right='800px'
+					right="765px"
 					children={
 						<EditTicketForm
 							ticket={ticket}
 							onClose={() => setEditing(false)}
 							sourceFlag={sourceFlag}
 							destinationFlag={destinationFlag}
+							fetchUserData={fetchUserData}
 						/>
 					}
 				/>

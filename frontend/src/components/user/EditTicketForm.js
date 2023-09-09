@@ -4,7 +4,8 @@ import { FormSelect } from '@/elements/FormElements';
 import {
 	GeneralButton,
 	SecondaryText,
-	Subtitle
+	Subtitle,
+	ButtonsContainer
 } from '@/elements/GeneralElements';
 import {
 	UserFlightAirports,
@@ -15,19 +16,25 @@ import Xmark from '@/icons/Xmark';
 import Loader from '../Loader';
 import { differenceInDays, format } from 'date-fns';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { RED } from '@/styles/colors';
 
-const EditTicketForm = ({ onClose, ticket, sourceFlag, destinationFlag }) => {
-	const router = useRouter();
+const EditTicketForm = ({
+	onClose,
+	ticket,
+	sourceFlag,
+	destinationFlag,
+	fetchUserData
+}) => {
 	const [category, setCategory] = useState(ticket.category);
 
-	const reload = () => {
-		window.location.reload();
+	const deleteTicket = async () => {
+		// request to delete the ticket
+		fetchUserData();
 	};
 
 	const updateTicket = async () => {
 		// request to edit the ticket
-		reload();
+		fetchUserData();
 	};
 
 	return (
@@ -93,9 +100,17 @@ const EditTicketForm = ({ onClose, ticket, sourceFlag, destinationFlag }) => {
 						You can still change the category of this flight, the category and
 						price will change. Your arrival number will not be affected.
 					</SecondaryText>
-					<GeneralButton disabled={category === ticket.category}>
-						Save
-					</GeneralButton>
+					<ButtonsContainer>
+						<GeneralButton color={RED} onClick={deleteTicket}>
+							Delete
+						</GeneralButton>
+						<GeneralButton
+							disabled={category === ticket.category}
+							onClick={updateTicket}
+						>
+							Save
+						</GeneralButton>
+					</ButtonsContainer>
 				</>
 			) : (
 				<>
