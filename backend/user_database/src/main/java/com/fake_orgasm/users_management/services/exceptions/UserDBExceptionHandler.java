@@ -19,10 +19,10 @@ public class UserDBExceptionHandler {
      * @return the ResponseEntity object containing the error and status
      */
     @ExceptionHandler(value = RuntimeException.class)
-    public ResponseEntity<Error> handleException(RuntimeException e) {
+    public ResponseEntity<RestResponse> handleException(RuntimeException e) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        Error error =
-                Error.builder().message(e.getMessage()).status(status.value()).build();
+        RestResponse error =
+                RestResponse.builder().message(e.getMessage()).status(status.value()).build();
         return new ResponseEntity<>(error, status);
     }
 
@@ -33,10 +33,10 @@ public class UserDBExceptionHandler {
      * @return the ResponseEntity object containing the error and status
      */
     @ExceptionHandler(value = NonexistentUserException.class)
-    public ResponseEntity<Error> handleException(NonexistentUserException e) {
+    public ResponseEntity<RestResponse> handleException(NonexistentUserException e) {
         HttpStatus status = HttpStatus.NOT_FOUND;
-        Error error =
-                Error.builder().message(e.getMessage()).status(status.value()).build();
+        RestResponse error =
+                RestResponse.builder().message(e.getMessage()).status(status.value()).build();
         return new ResponseEntity<>(error, status);
     }
 }

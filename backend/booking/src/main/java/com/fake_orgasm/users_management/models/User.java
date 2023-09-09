@@ -3,7 +3,6 @@ package com.fake_orgasm.users_management.models;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -91,27 +90,26 @@ public class User implements Comparable<User> {
     }
 
     /**
-     * Empty User constructor.
-     */
-    public User() {
-    }
-
-    /**
      * Constructs a new User object with the provided name information.
      *
-     * @param id             The unique identifier for the user.
+     * @param id            The unique identifier for the user.
      * @param firstName      The first name of the user.
      * @param secondName     The second name of the user.
      * @param firstLastName  The first last name of the user.
      * @param secondLastName The second last name of the user.
      */
-    public User(int id, String firstName, String secondName, String firstLastName, String secondLastName) {
+    public User(int id,String firstName, String secondName, String firstLastName, String secondLastName) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.firstLastName = firstLastName;
         this.secondLastName = secondLastName;
     }
+
+    /**
+     * Empty User constructor.
+     */
+    public User() {}
 
     /**
      * Returns the full name of the user.
@@ -152,7 +150,7 @@ public class User implements Comparable<User> {
      *
      * @param o The user to compare with.
      * @return A negative integer, zero, or a positive integer as this user is less than, equal to,
-     * or greater than the specified user.
+     *         or greater than the specified user.
      */
     @Override
     public int compareTo(User o) {
@@ -180,6 +178,7 @@ public class User implements Comparable<User> {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
+        System.out.println("I'm diferent");
 
         User userToCompare = (User) object;
         return this.id == userToCompare.getId();

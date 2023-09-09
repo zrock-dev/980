@@ -98,43 +98,8 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
         return users;
     }
 
-    /**
-     * Deserializes the flights history of the user represented in json.
-     * Through a JsonNode that represents a list, the data is deserialized in FlightHistory
-     * objects, the data is obtained and FlightHistory objects are created.
-     *
-     * @param flightsHistoryNode JsonNode, contents the flights history list.
-     * @param mapper             ObjectMapper, mapper for cast data.
-     * @return FlightHistory list saved;
-     * @throws IOException Exception to input or output.
-     */
-    private List<FlightHistory> deserializeFlightsHistory(JsonNode flightsHistoryNode, ObjectMapper mapper)
-            throws IOException {
-        List<FlightHistory> flights = new ArrayList<>();
-        for (JsonNode currentHistory : flightsHistoryNode) {
-            Airport departureAirport = deserializeAirport(currentHistory.get("departureAirport"));
-            Airport destinationAirport = deserializeAirport(currentHistory.get("destinationAirport"));
-            Category category =
-                    mapper.readValue(currentHistory.get("ticketType").traverse(), Category.class);
-            FlightHistory flightHistory = new FlightHistory(departureAirport, destinationAirport, category);
-            flights.add(flightHistory);
-        }
-        return flights;
-    }
 
-    /**
-     * Deserializes a json node into an Airport.
-     *
-     * @param airportNode JsonNode to deserializes.
-     * @return Airport, object deserialized.
-     * @throws IOException Exception to input or output.
-     */
-    private Airport deserializeAirport(JsonNode airportNode) throws IOException {
-        String airportName = airportNode.get("airportName").asText();
-        String country = airportNode.get("country").asText();
-        String state = airportNode.get("state").asText();
-        return new Airport(airportName, country, state);
-    }
+
 
     /**
      * Deserializes a json node into an int[].
