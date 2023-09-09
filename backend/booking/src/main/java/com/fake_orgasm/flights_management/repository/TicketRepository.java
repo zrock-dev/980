@@ -5,8 +5,6 @@ import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.models.TicketJoined;
-
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -223,21 +221,22 @@ public class TicketRepository {
      * @param page          The page of tickets to retrieve.
      * @return A list of TicketJoined objects containing ticket details.
      */
-    public Pagination findAllTicketsJoined(int userIdRequest, int page) {
-        String query = "SELECT Ticket.*, Flight.*, " +
-                "Airport.airportName AS sourceAirportName, Airport.country " +
-                "AS sourceCountry, Airport.stateName AS sourceState, " +
-                "DestAirport.airportName AS destAirportName, DestAirport.country " +
-                "AS destCountry, DestAirport.stateName AS destState " +
-                "FROM Ticket " +
-                "INNER JOIN Flight ON Ticket.flightId = Flight.id " +
-                "INNER JOIN Airport ON Flight.sourceId = Airport.id " +
-                "INNER JOIN Airport AS DestAirport ON Flight.destinationId = DestAirport.id " +
-                "WHERE Ticket.userId = ? " +
-                "LIMIT ? OFFSET ?;";
+    public Page findAllTicketsJoined(int userIdRequest, int page) {
+        String query = "SELECT Ticket.*, Flight.*, "
+                + "Airport.airportName AS sourceAirportName, Airport.country "
+                + "AS sourceCountry, Airport.stateName AS sourceState, "
+                + "DestAirport.airportName AS destAirportName, DestAirport.country "
+                + "AS destCountry, DestAirport.stateName AS destState "
+                + "FROM Ticket "
+                + "INNER JOIN Flight ON Ticket.flightId = Flight.id "
+                + "INNER JOIN Airport ON Flight.sourceId = Airport.id "
+                + "INNER JOIN Airport AS DestAirport ON Flight.destinationId = DestAirport.id "
+                + "WHERE Ticket.userId = ? "
+                + "LIMIT ? OFFSET ?;";
 
         List<TicketJoined> tickets = new ArrayList<>();
-        int totalTickets = 0, maxPage = 0;
+        int totalTickets;
+        int maxPage;
         try {
             totalTickets = getTotalTicketsForUser(userIdRequest);
 
@@ -296,7 +295,7 @@ public class TicketRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return new Pagination(totalTickets, tickets.size(), tickets, page - 1, maxPage - 1);
+        return new Page(totalTickets, tickets.size(), tickets, page - 1, maxPage - 1);
     }
 
     private int getTotalTicketsForUser(int userId) {

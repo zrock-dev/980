@@ -18,5 +18,4 @@ public class RestResponse {
      * The HTTP status code associated with the error.
      */
     private int status;
-
 }

@@ -3,6 +3,7 @@ package com.fake_orgasm.flights_management.services;
 import com.fake_orgasm.flights_management.exceptions.UserNotFoundException;
 import com.fake_orgasm.flights_management.services.records.UpdateRequest;
 import com.fake_orgasm.users_management.models.User;
+import java.util.List;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-
 /**
- * This class is a rest client for manage and request data from the server
+ * This class is a rest client for manage and request data from the server.
  */
 @Service
 public class RestClient {
@@ -40,13 +39,8 @@ public class RestClient {
     public List<User> searchUsers(String name) {
         String url = BASE_URL + "/search?name=" + name;
 
-        ResponseEntity<List<User>> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<User>>() {
-                }
-        );
+        ResponseEntity<List<User>> response =
+                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
 
         List<User> usersFound = response.getBody();
         return usersFound;
@@ -59,8 +53,6 @@ public class RestClient {
      * @param newDataUser the new data.
      * @return true if the user was updated successfully, false otherwise
      */
-
-
     public boolean updateUserData(User oldDataUser, User newDataUser) {
         try {
             restTemplate.put(BASE_URL, new UpdateRequest(oldDataUser, newDataUser));
@@ -84,7 +76,6 @@ public class RestClient {
      * @param user the user object to be created
      * @return true if the user was created successfully, false otherwise
      */
-
     public boolean createUser(User user) {
         ResponseEntity<Void> response = restTemplate.postForEntity(BASE_URL + "/" + user.getId(), user, Void.class);
 
@@ -105,11 +96,8 @@ public class RestClient {
      * @return The existing or newly created User object.
      */
     public User findUser(User user) {
-        String url = BASE_URL + "/" + user.getId() +
-                "?fn=" + user.getFirstName() +
-                "&sn=" + user.getSecondName() +
-                "&lfn=" + user.getFirstLastName() +
-                "&lsn=" + user.getSecondLastName();
+        String url = BASE_URL + "/" + user.getId() + "?fn=" + user.getFirstName() + "&sn=" + user.getSecondName()
+                + "&lfn=" + user.getFirstLastName() + "&lsn=" + user.getSecondLastName();
 
         ResponseEntity<User> response = restTemplate.getForEntity(url, User.class);
 

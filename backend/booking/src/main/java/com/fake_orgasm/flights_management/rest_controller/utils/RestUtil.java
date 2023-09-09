@@ -16,8 +16,10 @@ public class RestUtil {
      * @return the RestResponse object.
      */
     public static ResponseEntity<?> buildResponse(String message, HttpStatus httpStatus) {
-        RestResponse response =
-                RestResponse.builder().message(message).status(httpStatus.value()).build();
+        RestResponse response = RestResponse.builder()
+                .message(message)
+                .status(httpStatus.value())
+                .build();
         return new ResponseEntity<>(response, httpStatus);
     }
 }

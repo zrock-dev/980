@@ -1,18 +1,15 @@
 package com.fake_orgasm.users_management.rest_controller;
 
+import static com.fake_orgasm.users_management.rest_controller.RestUtil.buildResponse;
+
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.rest_controller.records.UpdateUserRequest;
 import com.fake_orgasm.users_management.services.IUserManager;
-
-import java.util.List;
-
+import com.fake_orgasm.users_management.services.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static com.fake_orgasm.users_management.rest_controller.RestUtil.buildResponse;
-
 
 /**
  * The UserDatabaseController class handles the REST API endpoints related to user management.
@@ -38,11 +35,13 @@ public class UserDatabaseController {
      * Retrieves a list of users based on the provided name.
      *
      * @param name the name to search for
+     * @param page the page that defines the amount of results.
      * @return a list of users matching the search criteria
      */
     @GetMapping("/search")
-    public List<User> searchUsers(@RequestParam String name) {
-        return userManager.search(name);
+    public Page searchUsers(@RequestParam String name, @RequestParam int page) {
+        Page searchResult = userManager.search(name, page);
+        return searchResult;
     }
 
     /**
@@ -58,7 +57,16 @@ public class UserDatabaseController {
         return buildResponse("User created successfully.", HttpStatus.CREATED);
     }
 
-
+    /**
+     * Deletes a user.
+     *
+     * @param userId the ID of the user to be deleted
+     * @param fn     the first name of the user
+     * @param sn     the second name of the user
+     * @param lfn    the last first name of the user
+     * @param lsn    the last second name of the user
+     * @return a response entity indicating the success of the delete operation
+     */
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(
             @PathVariable int userId,
@@ -70,7 +78,16 @@ public class UserDatabaseController {
         return buildResponse("User deleted successfully.", HttpStatus.OK);
     }
 
-
+    /**
+     * Retrieves a user based on the user ID and query parameters.
+     *
+     * @param userId the ID of the user to retrieve
+     * @param fn     the first name of the user
+     * @param sn     the second name of the user
+     * @param lfn    the last first name of the user
+     * @param lsn    the last second name of the user
+     * @return the retrieved user if found, or an error response
+     */
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUser(
             @PathVariable int userId,
@@ -107,7 +124,7 @@ public class UserDatabaseController {
      */
     @GetMapping("")
     public ResponseEntity<?> getUsersByPage(@RequestParam int page) {
-        List<User> users = userManager.getUsersByPage(page);
-        return ResponseEntity.ok(users);
+        Page usersPage = userManager.getUsersByPage(page);
+        return ResponseEntity.ok(usersPage);
     }
 }

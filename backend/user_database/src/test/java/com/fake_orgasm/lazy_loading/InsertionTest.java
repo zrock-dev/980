@@ -2,9 +2,9 @@ package com.fake_orgasm.lazy_loading;
 
 import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.libs.btree.BTree;
-import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -28,7 +28,7 @@ public class InsertionTest {
         long start = System.nanoTime();
         for (int i = 0; i < 20; i++) {
             user = userGenerator.make();
-            user.setCategory(Category.VIP);
+            user.setFlights(new ArrayList<>());
             bTree.insert(user);
         }
         long end = System.nanoTime();

@@ -1,19 +1,18 @@
 package com.fake_orgasm.flights_management.rest_controller;
 
+import static com.fake_orgasm.flights_management.rest_controller.utils.RestUtil.buildResponse;
+
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.FlightJoined;
 import com.fake_orgasm.flights_management.models.Ticket;
-import com.fake_orgasm.flights_management.repository.Pagination;
+import com.fake_orgasm.flights_management.repository.Page;
 import com.fake_orgasm.flights_management.rest_controller.records.BookingRequest;
 import com.fake_orgasm.flights_management.services.IBookingService;
 import com.fake_orgasm.users_management.models.User;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import static com.fake_orgasm.flights_management.rest_controller.utils.RestUtil.buildResponse;
 
 /**
  * The REST controller for managing bookings.
@@ -26,6 +25,11 @@ import static com.fake_orgasm.flights_management.rest_controller.utils.RestUtil.
 public class BookingRestController {
     private final IBookingService bookingService;
 
+    /**
+     * This is a constructor method that initializes the booking service.
+     *
+     * @param bookingService
+     */
     public BookingRestController(IBookingService bookingService) {
         this.bookingService = bookingService;
     }
@@ -38,10 +42,8 @@ public class BookingRestController {
      */
     @PostMapping("")
     public ResponseEntity<?> bookTicket(@RequestBody BookingRequest bookingRequest) {
-        boolean wasBooked = bookingService.booking(
-                bookingRequest.user(),
-                bookingRequest.flightId(),
-                bookingRequest.category());
+        boolean wasBooked =
+                bookingService.booking(bookingRequest.user(), bookingRequest.flightId(), bookingRequest.category());
         if (wasBooked) {
             return buildResponse("Booking successful.", HttpStatus.OK);
         } else {
@@ -53,13 +55,13 @@ public class BookingRestController {
      * Deletes a booking based on the ticket ID and user information.
      *
      * @param ticketId the ID of the booking ticket
+     * @param userId   the ID of the user
      * @param fn       the first name of the user
      * @param sn       the last name of the user
      * @param lfn      the first name of the user
      * @param lsn      the last name of the user
      * @return a ResponseEntity indicating the success of the deletion
      */
-
     @DeleteMapping("/{ticketId}/{userId}")
     public ResponseEntity<?> deleteBooking(
             @PathVariable String ticketId,
@@ -84,11 +86,8 @@ public class BookingRestController {
      * @param newCategory the new category for the booking
      * @return a ResponseEntity with a message indicating the booking was edited
      */
-
     @PutMapping("/{ticketId}")
-    public ResponseEntity<?> editBooking(
-            @PathVariable String ticketId
-            , @RequestBody String newCategory) {
+    public ResponseEntity<?> editBooking(@PathVariable String ticketId, @RequestBody String newCategory) {
         boolean wasEdited = bookingService.editBooking(ticketId, newCategory);
         if (wasEdited) {
             return buildResponse("Booking edited.", HttpStatus.OK);
@@ -117,7 +116,7 @@ public class BookingRestController {
      */
     @GetMapping("/flights")
     public ResponseEntity<?> getFlightsByPage(@RequestParam int page) {
-        Pagination flightJoined = bookingService.getFlightsJoined(page);
+        Page flightJoined = bookingService.getFlightsJoined(page);
         return ResponseEntity.ok(flightJoined);
     }
 
@@ -145,25 +144,29 @@ public class BookingRestController {
      * @param page   the page number
      * @return a ResponseEntity containing the retrieved tickets
      */
-
     @GetMapping("/user-tickets/{userId}")
     public ResponseEntity<?> getTickets(@PathVariable int userId, @RequestParam int page) {
-        Pagination userTickets = bookingService.getUserTickets(userId, page);
+        Page userTickets = bookingService.getUserTickets(userId, page);
         return ResponseEntity.ok(userTickets);
     }
 
     /**
      * Deletes all user tickets based on the user's first name, last name, last name prefix, and last name suffix.
      *
-     * @param fn  the user's first name
-     * @param sn  the user's second name
-     * @param lfn the user's last name
-     * @param lsn the user's last name
+     * @param userId the ID of the user
+     * @param fn     the user's first name
+     * @param sn     the user's second name
+     * @param lfn    the user's last name
+     * @param lsn    the user's last name
      * @return a ResponseEntity with the message "User's tickets deleted."
      */
-
     @DeleteMapping("/delete-ticket/{userId}")
-    public ResponseEntity<?> deleteAllUserTickets(@PathVariable int userId, @RequestParam String fn, @RequestParam String sn, @RequestParam String lfn, @RequestParam String lsn) {
+    public ResponseEntity<?> deleteAllUserTickets(
+            @PathVariable int userId,
+            @RequestParam String fn,
+            @RequestParam String sn,
+            @RequestParam String lfn,
+            @RequestParam String lsn) {
         User user = new User(userId, fn, sn, lfn, lsn);
         bookingService.deleteAllUserTickets(user);
         return buildResponse("User's tickets deleted.", HttpStatus.OK);

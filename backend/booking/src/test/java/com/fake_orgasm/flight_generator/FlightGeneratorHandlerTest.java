@@ -73,32 +73,32 @@ public class FlightGeneratorHandlerTest {
         assertEquals(amountTicketByUser, randomUser.getFlights().size());
     }
 
-//    @Test
-//    public void generateAndDelete() {
-//        boolean isProduction = false;
-//        if (!isProduction) {
-//            // generate data
-//            deleteAllData();
-//            generateAndSave();
-//            showData();
-//
-//            // booking process
-//            booking(Category.VIP);
-//            editBooking(Category.REGULAR_PASSENGER.getType());
-//            cancelBooking();
-//
-//            booking(Category.REGULAR_PASSENGER);
-//            editBooking(Category.VIP.getType());
-//            cancelBooking();
-//
-//            booking(Category.FREQUENT_PASSENGER);
-//            editBooking(Category.REGULAR_PASSENGER.getType());
-//            cancelBooking();
-//
-//            // delete all data generated
-//            deleteAllData();
-//        }
-//    }
+    //    @Test
+    //    public void generateAndDelete() {
+    //        boolean isProduction = false;
+    //        if (!isProduction) {
+    //            // generate data
+    //            deleteAllData();
+    //            generateAndSave();
+    //            showData();
+    //
+    //            // booking process
+    //            booking(Category.VIP);
+    //            editBooking(Category.REGULAR_PASSENGER.getType());
+    //            cancelBooking();
+    //
+    //            booking(Category.REGULAR_PASSENGER);
+    //            editBooking(Category.VIP.getType());
+    //            cancelBooking();
+    //
+    //            booking(Category.FREQUENT_PASSENGER);
+    //            editBooking(Category.REGULAR_PASSENGER.getType());
+    //            cancelBooking();
+    //
+    //            // delete all data generated
+    //            deleteAllData();
+    //        }
+    //    }
 
     public static void generateAndSave() {
         generator.generateTicketsAndSave(users, 5);

@@ -5,7 +5,6 @@ import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.FlightJoined;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -177,8 +176,7 @@ public class FlightRepository {
      * @return A list of FlightJoined objects containing detailed
      * flight information for all available flights.
      */
-
-    public Pagination findAllFlightsJoined(int page) {
+    public Page findAllFlightsJoined(int page) {
         List<FlightJoined> flights = new ArrayList<>();
         String query = "SELECT Flight.*, Airport.airportName AS sourceAirportName, "
                 + "Airport.country AS sourceCountry, Airport.stateName AS sourceState, "
@@ -242,7 +240,7 @@ public class FlightRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving flights", e);
         }
-        return new Pagination(totalFlights, flights.size(), flights, page - 1, maxPage - 1);
+        return new Page(totalFlights, flights.size(), flights, page - 1, maxPage - 1);
     }
 
     private int getTotalFlights() {
@@ -265,7 +263,6 @@ public class FlightRepository {
         }
         return 0;
     }
-
 
     /**
      * This method retrieves detailed information about a specific flight,

@@ -92,13 +92,13 @@ public class User implements Comparable<User> {
     /**
      * Constructs a new User object with the provided name information.
      *
-     * @param id            The unique identifier for the user.
+     * @param id             The unique identifier for the user.
      * @param firstName      The first name of the user.
      * @param secondName     The second name of the user.
      * @param firstLastName  The first last name of the user.
      * @param secondLastName The second last name of the user.
      */
-    public User(int id,String firstName, String secondName, String firstLastName, String secondLastName) {
+    public User(int id, String firstName, String secondName, String firstLastName, String secondLastName) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -150,7 +150,7 @@ public class User implements Comparable<User> {
      *
      * @param o The user to compare with.
      * @return A negative integer, zero, or a positive integer as this user is less than, equal to,
-     *         or greater than the specified user.
+     * or greater than the specified user.
      */
     @Override
     public int compareTo(User o) {

@@ -3,7 +3,6 @@ package com.fake_orgasm.users_management.models;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -93,8 +92,7 @@ public class User implements Comparable<User> {
     /**
      * Empty User constructor.
      */
-    public User() {
-    }
+    public User() {}
 
     /**
      * Constructs a new User object with the provided name information.

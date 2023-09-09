@@ -13,6 +13,4 @@ import java.util.List;
  * @param currentPage   The current page number.
  * @param totalPages    The total number of pages in the pagination.
  */
-public record Pagination(int total, int amountPerPage, List<?> elements, int currentPage,
-                         int totalPages) {
-}
+public record Page(int total, int amountPerPage, List<?> elements, int currentPage, int totalPages) {}

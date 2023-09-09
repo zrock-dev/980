@@ -7,10 +7,8 @@ import com.fake_orgasm.flights_management.models.FlightJoined;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.repository.*;
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.List;
 import java.util.UUID;
-
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,11 +28,11 @@ public class BookingService implements IBookingService {
     private User user;
     private Ticket ticket;
 
-
     /**
      * This method constructs a BookingService instance with dependencies on user management,
      * flight repository, and ticket repository.
      *
+     * @param restClient        the rest client to make request to others microservices.
      * @param flightManagement  The FlightRepository for managing flight-related operations.
      * @param ticketManagement  The TicketRepository for managing ticket-related operations.
      * @param airportRepository he AirportRepository for managing airport-related operations.
@@ -103,7 +101,6 @@ public class BookingService implements IBookingService {
         return wasBooked;
     }
 
-
     /**
      * This method saves the booking by updating the flight, creating the ticket,
      * and updating the user information if available.
@@ -116,7 +113,6 @@ public class BookingService implements IBookingService {
         flightRepository.update(flight.getId(), flight);
         ticketRepository.create(ticket);
         restClient.updateUserData(user, user);
-
     }
 
     /**
@@ -192,8 +188,8 @@ public class BookingService implements IBookingService {
      * and associated airports for the specified page.
      */
     @Override
-    public Pagination getFlightsJoined(int page) {
-        return flightRepository.findAllFlightsJoined(page+1);
+    public Page getFlightsJoined(int page) {
+        return flightRepository.findAllFlightsJoined(page + 1);
     }
 
     /**
@@ -214,7 +210,6 @@ public class BookingService implements IBookingService {
         return flightJoined;
     }
 
-
     /**
      * This method retrieves a paginated list of tickets associated with a specific user.
      * <p>
@@ -227,8 +222,8 @@ public class BookingService implements IBookingService {
      * and associated flight and airport information for the specified user and page.
      */
     @Override
-    public Pagination getUserTickets(int userId, int page) {
-        return ticketRepository.findAllTicketsJoined(userId, page +1);
+    public Page getUserTickets(int userId, int page) {
+        return ticketRepository.findAllTicketsJoined(userId, page + 1);
     }
 
     /**

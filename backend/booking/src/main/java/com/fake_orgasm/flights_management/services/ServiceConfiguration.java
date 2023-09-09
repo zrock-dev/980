@@ -79,7 +79,6 @@ public class ServiceConfiguration {
      *
      * @return a RestClient object
      */
-
     public RestClient getRestClient() {
         return new RestClient(restTemplate());
     }
@@ -91,7 +90,7 @@ public class ServiceConfiguration {
      */
     @Bean
     public FlightGeneratorHandler getGeneratorHandler() {
-        return new FlightGeneratorHandler(getRestClient(), getAirportManagement(), getFlightManagement(), getTicketManagement());
+        return new FlightGeneratorHandler(
+                getRestClient(), getAirportManagement(), getFlightManagement(), getTicketManagement());
     }
-
 }

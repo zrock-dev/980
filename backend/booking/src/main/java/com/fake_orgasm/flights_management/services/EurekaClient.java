@@ -1,11 +1,10 @@
 package com.fake_orgasm.flights_management.services;
 
+import java.net.URI;
+import java.util.List;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Component;
-
-import java.net.URI;
-import java.util.List;
 
 /**
  * Client for interacting with the Eureka service registry.

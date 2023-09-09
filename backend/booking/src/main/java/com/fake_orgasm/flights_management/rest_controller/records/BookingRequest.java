@@ -5,8 +5,11 @@ import com.fake_orgasm.users_management.models.User;
 
 /**
  * Represents a booking request in a flights management system.
+ *
+ * @param user     the user object.
+ * @param flightId the flight ID.
+ * @param category the category of flight.
  */
-
 public record BookingRequest(User user, String flightId, Category category) {
     /**
      * Retrieves the user.
@@ -23,7 +26,6 @@ public record BookingRequest(User user, String flightId, Category category) {
      *
      * @return The flight ID.
      */
-
     @Override
     public String flightId() {
         return flightId;
@@ -34,7 +36,6 @@ public record BookingRequest(User user, String flightId, Category category) {
      *
      * @return the category of the Java function
      */
-
     @Override
     public Category category() {
         return category;

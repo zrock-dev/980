@@ -98,9 +98,6 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
         return users;
     }
 
-
-
-
     /**
      * Deserializes a json node into an int[].
      *

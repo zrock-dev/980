@@ -4,9 +4,7 @@ import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.*;
-
 import lombok.Getter;
 
 /**
