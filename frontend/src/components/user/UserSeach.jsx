@@ -59,10 +59,10 @@ const UserSearchOption = ({ firstName, lastName, year, category, country }) => {
           <span style={{ ...spanStyle, ...boldBiggerNameStyle }}>
             {firstName} {lastName}
           </span>
-
           <span style={{ ...spanStyle, ...graySmallStyle }}>
-          {country.toUpperCase()} {year}
+            {country ? country.toUpperCase() : ''} {year}
           </span>
+
         </div>
         <div className="user-extra-info" style={childDivStyle}>
           <div className="user-category" style={divStyle}>
