@@ -15,6 +15,7 @@ on:
       - main
     paths:
       - "backend/money_exchange"
+  workflow_dispatch:
 
 jobs:
   build:

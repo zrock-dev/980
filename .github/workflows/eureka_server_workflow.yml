@@ -15,6 +15,8 @@ on:
       - main
     paths:
       - "backend/eureka_server"
+  workflow_dispatch:
+    
 
 jobs:
   build:
