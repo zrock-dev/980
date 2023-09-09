@@ -1,11 +1,14 @@
 package com.fake_orgasm.flights_management.exceptions;
 
-import com.fake_orgasm.flights_management.repository.Page;
-import java.util.ArrayList;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class is a util class that contains methods for the RestResponse class.
@@ -21,6 +24,7 @@ public class RequestExceptionsHandler {
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<RestResponse> handleException(RuntimeException e) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
+
         RestResponse error = RestResponse.builder()
                 .message(e.getMessage())
                 .status(status.value())
@@ -60,16 +64,31 @@ public class RequestExceptionsHandler {
         return new ResponseEntity<>(error, status);
     }
 
+    @ExceptionHandler(value = HttpClientErrorException.class)
+    public ResponseEntity<RestResponse> handleException(HttpClientErrorException e) {
+        HttpStatus status = (HttpStatus) e.getStatusCode();
+        RestResponse error = RestResponse.builder()
+                .message(extractMessage(e.getMessage()))
+                .status(status.value())
+                .build();
+        return new ResponseEntity<>(error, status);
+    }
+
     /**
-     * Handles the exception of type IllegalArgumentException.
+     * Extracts the message from the input string.
      *
-     * @param e the IllegalArgumentException that was thrown
-     * @return a ResponseEntity containing a RestResponse with the error details
+     * @param input the input string to extract the message from
+     * @return the extracted message if found, otherwise "Http Client Error"
      */
-    @ExceptionHandler(value = EmptyContentException.class)
-    public ResponseEntity<Page> handleException(EmptyContentException e) {
-        HttpStatus status = HttpStatus.OK;
-        Page flightList = new Page(0, 0, new ArrayList<>(), 0, 0);
-        return new ResponseEntity<>(flightList, status);
+
+    private static String extractMessage(String input) {
+        Pattern pattern = Pattern.compile("\"message\":\"(.*?)\"");
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return "Http Client Error";
+        }
     }
 }

@@ -16,7 +16,7 @@ public class RestUtil {
      * @param httpStatus  The HTTP status code for the response.
      * @return            A ResponseEntity containing the message and status code.
      */
-    public static ResponseEntity<?> buildResponse(String message, HttpStatus httpStatus) {
+    public static ResponseEntity<RestResponse> buildResponse(String message, HttpStatus httpStatus) {
         RestResponse response = RestResponse.builder()
                 .message(message)
                 .status(httpStatus.value())

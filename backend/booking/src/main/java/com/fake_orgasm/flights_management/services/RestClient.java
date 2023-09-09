@@ -3,7 +3,9 @@ package com.fake_orgasm.flights_management.services;
 import com.fake_orgasm.flights_management.exceptions.UserNotFoundException;
 import com.fake_orgasm.flights_management.services.records.UpdateRequest;
 import com.fake_orgasm.users_management.models.User;
+
 import java.util.List;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -40,7 +42,8 @@ public class RestClient {
         String url = BASE_URL + "/search?name=" + name;
 
         ResponseEntity<List<User>> response =
-                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
+                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
+                });
 
         List<User> usersFound = response.getBody();
         return usersFound;
@@ -61,12 +64,12 @@ public class RestClient {
             if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
                 throw new UserNotFoundException("Non existent user");
             } else if (ex.getStatusCode() == HttpStatus.BAD_REQUEST) {
-                throw new RuntimeException(ex.getMessage());
+                throw new RuntimeException("bad request");
             } else {
                 throw new RuntimeException("Error updating user");
             }
         } catch (RestClientException ex) {
-            throw new RuntimeException(ex.getMessage());
+            throw new RuntimeException("Rest client exception");
         }
     }
 
@@ -104,6 +107,7 @@ public class RestClient {
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();
         } else if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
+            System.out.println(response.getStatusCode());
             return createUser(user) ? user : null;
         } else {
             throw new RuntimeException("Unexpected status code: " + response.getStatusCode());

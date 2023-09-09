@@ -1,10 +1,10 @@
 package com.fake_orgasm.flights_management.repository;
 
-import com.fake_orgasm.flights_management.exceptions.EmptyContentException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.models.TicketJoined;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -239,7 +239,9 @@ public class TicketRepository {
         int maxPage;
         try {
             totalTickets = getTotalTicketsForUser(userIdRequest);
-
+            if (totalTickets == 0) {
+                return new Page(0, 0, tickets, 0, 0);
+            }
             maxPage = (totalTickets + PAGINATION - 1) / PAGINATION;
 
             if (page < 1 || page > maxPage) {
@@ -300,18 +302,12 @@ public class TicketRepository {
 
     private int getTotalTicketsForUser(int userId) {
         String query = "SELECT COUNT(*) FROM Ticket WHERE userId = ?";
-        int total;
         try {
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                total = rs.getInt(1);
-                if (total > 0) {
-                    return total;
-                } else {
-                    throw new EmptyContentException("No tickets found");
-                }
+                return rs.getInt(1);
             }
             ps.close();
         } catch (SQLException e) {

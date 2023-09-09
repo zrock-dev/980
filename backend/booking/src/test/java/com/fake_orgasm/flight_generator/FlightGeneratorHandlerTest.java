@@ -8,18 +8,24 @@ import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.services.BookingService;
+import com.fake_orgasm.flights_management.services.EurekaClient;
 import com.fake_orgasm.users_management.models.User;
 import java.time.LocalDate;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
+@SpringBootTest
 public class FlightGeneratorHandlerTest {
 
     private static List<User> users;
     private static Random random;
     private static User user = new User(1234, "Luiggy", "Mamani Condori", LocalDate.of(1992, 1, 20), "Bolivia");
     private static Flight flight;
+    @MockBean
+    private EurekaClient eurekaClient;
     private static Ticket ticket;
     private static BookingService bookService = new BookingService();
     private static FlightGeneratorHandler generator = new FlightGeneratorHandler();

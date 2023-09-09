@@ -1,10 +1,11 @@
 package com.fake_orgasm.flights_management.repository;
 
-import com.fake_orgasm.flights_management.exceptions.EmptyContentException;
+
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.FlightJoined;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -188,6 +189,9 @@ public class FlightRepository {
                 + "LIMIT ? OFFSET ?;";
 
         int totalFlights = getTotalFlights();
+        if (totalFlights == 0) {
+            return new Page(0, 0, flights, 0, 0);
+        }
         int maxPage = (totalFlights + PAGINATION - 1) / PAGINATION;
         if (page < 1 || page > maxPage) {
             throw new IllegalArgumentException("Invalid page number");
@@ -245,18 +249,12 @@ public class FlightRepository {
 
     private int getTotalFlights() {
         String countQuery = "SELECT COUNT(*) FROM Flight;";
-        int total;
         try {
             PreparedStatement countStatement = database.getConnection().prepareStatement(countQuery);
             ResultSet countResult = countStatement.executeQuery();
 
             if (countResult.next()) {
-                total = countResult.getInt(1);
-                if (total > 0) {
-                    return total;
-                } else {
-                    throw new EmptyContentException("Empty content");
-                }
+                return countResult.getInt(1);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error counting flights", e);

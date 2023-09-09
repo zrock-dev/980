@@ -6,6 +6,7 @@ import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.rest_controller.records.UpdateUserRequest;
 import com.fake_orgasm.users_management.services.IUserManager;
 import com.fake_orgasm.users_management.services.Page;
+import com.fake_orgasm.users_management.services.exceptions.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,7 @@ public class UserDatabaseController {
      * or a ResponseEntity with a status code and an error message if the user creation failed
      */
     @PostMapping("")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<RestResponse> createUser(@RequestBody User user) {
         userManager.create(user);
         return buildResponse("User created successfully.", HttpStatus.CREATED);
     }
@@ -68,7 +69,7 @@ public class UserDatabaseController {
      * @return a response entity indicating the success of the delete operation
      */
     @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUser(
+    public ResponseEntity<RestResponse> deleteUser(
             @PathVariable int userId,
             @RequestParam String fn,
             @RequestParam String sn,
@@ -110,7 +111,7 @@ public class UserDatabaseController {
      * @return the response entity indicating the status of the update operation
      */
     @PutMapping("")
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequest updateUser) {
+    public ResponseEntity<RestResponse> updateUser(@RequestBody UpdateUserRequest updateUser) {
         userManager.update(updateUser.getOldData(), updateUser.getNewData());
         return buildResponse("User updated successfully.", HttpStatus.OK);
     }
@@ -123,7 +124,7 @@ public class UserDatabaseController {
      * or a ResponseEntity with a BAD_REQUEST status and an error message if the page is invalid
      */
     @GetMapping("")
-    public ResponseEntity<?> getUsersByPage(@RequestParam int page) {
+    public ResponseEntity<Page> getUsersByPage(@RequestParam int page) {
         Page usersPage = userManager.getUsersByPage(page);
         return ResponseEntity.ok(usersPage);
     }
