@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Script: pack_binaries.sh
 # Description: This script packages and combines binary distributions from specified folders into a single tar file.
 # Author: [Santiago C. Saavedra]
 # Date: [07/09/2023]
@@ -9,22 +8,6 @@
 packaging_dir="binaries"
 if ! [ -d "$packaging_dir" ]; then
 	mkdir "$packaging_dir"
-fi
-
-compress=false
-while [[ $# -gt 0 ]]; do
-	case "$1" in
-	--compress)
-		compress=true
-		shift
-		;;
-	*)
-		break
-	esac
-done
-
-if [ $compress = true ]; then
-	package_name=fake_orgasm_app.tar
 fi
 
 for folder in "$@"; do
@@ -44,10 +27,5 @@ for folder in "$@"; do
 	fi
 done
 
-# Create a single tar file containing all packaged binaries
 printf "Binaries extracted in dir: %s\n" "$(realpath $packaging_dir)"
-if [ $compress = true ]; then
-	tar -cf "$package_name" "$packaging_dir"
-	echo "Binaries packed at: $(realpath "$package_name")"
-fi
 exit 0

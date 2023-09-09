@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Description: Packages the logs and binaries in a tar file.
+# Author: [Santiago C. Saavedra]
+# Date: [09/09/2023]
+
+check_dir() {
+	local folder=$1
+	if ! [ -d "$folder" ]; then
+		printf "The following path is invalid: %s" "$folder" >&2
+		exit 1
+	fi
+}
+
+binaries_dir=binaries
+check_dir "$binaries_dir"
+
+include_logs=false
+while [[ $# -gt 0 ]]; do
+	case "$1" in
+	--include-logs)
+		include_logs=true
+		shift
+		;;
+	*)
+		break
+		;;
+	esac
+done
+
+package_name=fake_orgasm_app.tar.gz
+# Create a single tar file containing all packaged binaries
+if [ $include_logs == true ]; then
+	logs_dir=logs
+	check_dir "$logs_dir"
+	tar -zcf "$package_name" "$binaries_dir" "$logs_dir"
+else
+	tar -zcf "$package_name" "$binaries_dir"
+fi
+echo "Packed at: $(realpath "$package_name")"
