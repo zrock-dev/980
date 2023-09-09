@@ -5,7 +5,7 @@ export const UserContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 
-	max-width: 85%;
+	max-width: 80%;
 	margin: auto;
 `;
 

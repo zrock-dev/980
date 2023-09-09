@@ -15,7 +15,8 @@ export const NavbarContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 
-	width: 100%;
+	width: 90%;
+	margin: auto;
 	padding: 15px 40px 15px 40px;
 
 	background-color: ${WHITE};
