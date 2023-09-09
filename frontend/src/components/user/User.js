@@ -14,6 +14,7 @@ import { Subtitle, GeneralButton } from '@/elements/GeneralElements';
 import { getUserInformation, getUserTickets } from '@/backend/UserRequest';
 import DeleteUserCheck from './DeleteUserCheck';
 import EditUserForm from './EditUserForm';
+import { differenceInYears } from 'date-fns';
 
 const User = ({ id }) => {
 	const router = useRouter();
@@ -97,7 +98,9 @@ const User = ({ id }) => {
 							<b>Country:</b> {user.country}
 						</span>
 						<span>
-							<b>Age:</b> {user.birthdate} years old
+							<b>Age:</b>{' '}
+							{differenceInYears(new Date(), new Date(user.birthdate))} years
+							old
 						</span>
 						<span>
 							<b>C.I.:</b> {user.id}
