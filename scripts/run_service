@@ -1,0 +1,100 @@
+#!/bin/bash
+# Script: run_services
+# Description: This script runs services according to the specified execution order, with optional logging of stdout and stderr.
+# Author: [Santiago C. Saavedra]
+# Date: [07/09/2023]
+
+check_path() {
+	local path=$1
+	if ! [ -f "$path" ]; then
+		printf "Error: Invalid path: '%s'\n at line %s\n" "$path" "$LINENO" >&2
+		exit 1
+	fi
+}
+
+check_path "$1"
+binary=$(realpath "$1")
+shift
+
+utils_script=$(realpath "$1")
+check_path "$utils_script"
+shift
+
+logging=false
+wait_process=false
+time=-1
+while [[ $# -gt 0 ]]; do
+	case "$1" in
+	--log)
+		logging=true
+		shift
+		;;
+	--wait)
+		wait_process=true
+		shift
+		time=$1
+		shift
+		;;
+	*)
+		break
+		;;
+	esac
+done
+
+handle_logging() {
+	local folder_path=$1
+	local file=$2
+	local log_file_name="$folder_path/$file.log"
+
+	if [ "$logging" = true ]; then
+		if ! [ -f "$log_file_name" ]; then
+			touch "$log_file_name"
+		fi
+		{
+			printf '%.s-' {1..50}
+			echo
+			date
+			echo "This is a new run"
+			printf '%.s-' {1..50}
+			echo -e "\n"
+		} >>"$log_file_name"
+	fi
+	echo "$log_file_name"
+}
+
+log_wait() {
+	local log_file=$1
+	{
+		echo -e "\n"
+		printf '%.s-' {1..100}
+		echo
+		date
+		echo "Waiting for service to start"
+		printf '%.s-' {1..100}
+		echo -e "\n"
+	} >> "$log_file"
+}
+
+execute() {
+	local output=$1
+	"$binary" >> "$output" 2>&1 &
+	if [ $wait_process = true ]; then
+		log_wait "$output"
+		sleep "$time"
+	fi
+}
+
+logs_path=logs
+output="/dev/null"
+if [ "$logging" = true ]; then
+	if ! [ -d "$logs_path" ]; then
+		mkdir "$logs_path"
+	fi
+	echo "Logging at: $(realpath $logs_path)"
+	output=$(handle_logging "$logs_path" "$(basename "$binary")")
+fi
+
+execute "$output"
+bg_pid=$!
+printf "%s has started with process PID: %s\n" "$(basename "$binary")" "$bg_pid"
+exit 0

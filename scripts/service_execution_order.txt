@@ -1,4 +1,0 @@
-eureka_server
-gateway
-money_exchange
-user_database

@@ -1,0 +1,48 @@
+#!/bin/bash
+check_port=false
+port=-1
+clean_services=false
+
+check_port_bussy() {
+	local port="$1"
+	echo "Check port $port"
+	if lsof -i :"$port" >/dev/null 2>&1; then
+		exit 1
+	else
+		exit 0
+	fi
+}
+
+clean_services() {
+	pkill -e -TERM "java"
+}
+
+while getopts ":p:k" opt; do
+	case "$opt" in
+	p)
+		check_port=true
+		port="$OPTARG"
+		;;
+	k)
+		clean_services=true
+		;;
+	\?)
+		echo "Invalid option: -$OPTARG" >&2
+		exit 1
+		;;
+	:)
+		echo "Option -$OPTARG requires an argument." >&2
+		exit 1
+		;;
+	esac
+done
+
+shift "$((OPTIND - 1))"
+
+if [ $check_port == true ]; then
+	check_port_bussy "$port"
+fi
+
+if [ $clean_services == true ]; then
+	clean_services
+fi
