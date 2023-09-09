@@ -207,9 +207,4 @@ public class Node<T extends Comparable<T>> {
     public void setIdChild(int i, String id) {
         idChildren[i] = id;
     }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 }

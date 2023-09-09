@@ -131,6 +131,6 @@ public final class User implements Comparable<User> {
 
     @Override
     public String toString() {
-        return "User->"+ firstName + ", "+ secondName + ", " + firstLastName + " " + secondLastName;
+        return "User->" + firstName + ", " + secondName + ", " + firstLastName + " " + secondLastName;
     }
 }

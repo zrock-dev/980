@@ -14,7 +14,6 @@ import com.fake_orgasm.users_management.services.exceptions.NonexistentUserExcep
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,7 +27,7 @@ public class UserManager implements IUserManager {
     private FlightHistoryGenerator flightHistoryGenerator;
 
     private NameIndexer nameIndexer;
-    public static BTree<User> bTree;
+    private static BTree<User> bTree;
 
     /**
      * This is a constructor method to initialize the state of the class.
@@ -36,20 +35,21 @@ public class UserManager implements IUserManager {
     public UserManager() {
         nameIndexer = new NameIndexer();
         userGenerator = new UserGenerator();
-        bTree = new BTree<>(2, new BTreeRepository(), nameIndexer);
+        bTree = new BTree<>(10, new BTreeRepository(), nameIndexer);
         flightHistoryGenerator = FlightHistoryGenerator.getInstance();
-        //for (int i = 0; i < 10_000; i++) {
-        //   create(makeUser());
-       // }
     }
 
-
+    private void generateUsers() {
+        for (int i = 0; i < 100_000; i++) {
+            create(makeUser());
+        }
+    }
     /**
      * Generates a new User object by utilizing the UserGenerator and FlightHistoryGenerator classes.
      *
      * @return The newly created User object.
      */
-    private User makeUser() {
+    public User makeUser() {
         User user = userGenerator.make();
         FlightHistory history = flightHistoryGenerator.generateRandomFlightHistory();
         user.addFlightHistory(history);
@@ -67,10 +67,12 @@ public class UserManager implements IUserManager {
     public List<User> search(String name) {
         List<User> users = new ArrayList<>();
         Set<User> userSet = nameIndexer.search(name);
-        for(User user : userSet){
-            if(users.size() < 20){
+        for (User user : userSet) {
+            if (users.size() < 20) {
                 users.add(user);
-            }else break;
+            } else {
+                break;
+            }
         }
         return users;
     }
@@ -91,7 +93,7 @@ public class UserManager implements IUserManager {
             throw new IncompleteUserException("User properties are incomplete.");
         }
 
-        if (bTree.getSize() > 0 && bTree.searchKey(user) != null){
+        if (bTree.getSize() > 0 && bTree.searchKey(user) != null) {
             throw new DuplicateUserException("User already exists.");
         }
 
@@ -188,7 +190,7 @@ public class UserManager implements IUserManager {
      */
     @Override
     public List<User> getUsersByPage(int page) {
-       /* page++;
+        /* page++;
         int pageSize = 20;
         int totalUsers = users.size();
         int totalPages = (totalUsers + pageSize - 1) / pageSize;
@@ -215,5 +217,14 @@ public class UserManager implements IUserManager {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Get the bTree.
+     *
+     * @return bTree.
+     */
+    public static BTree<User> getBTree() {
+        return bTree;
     }
 }
