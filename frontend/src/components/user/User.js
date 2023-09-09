@@ -20,13 +20,13 @@ import {
 import DeleteUserCheck from './DeleteUserCheck';
 import EditUserForm from './EditUserForm';
 import { differenceInYears } from 'date-fns';
+import UserFlightHistory from './UserFlightHistory';
 
 const User = ({ id }) => {
 	const router = useRouter();
 	const params = useSearchParams();
 	const [user, setUser] = useState(null);
 	const [flagImage, setFlagImage] = useState(null);
-	const [flightHistory, setFlightHistory] = useState(null);
 
 	useEffect(() => {
 		const firstName = params.get('firstName');
@@ -56,13 +56,6 @@ const User = ({ id }) => {
 
 	useEffect(() => {
 		if (user) {
-			getUserTickets(user.flights)
-				.then((response) => {
-					setFlightHistory(response.data);
-				})
-				.catch(() => {
-					setFlightHistory([]);
-				});
 			getFlagImage(user.country)
 				.then((imagePng) => {
 					setFlagImage(imagePng);
@@ -75,14 +68,6 @@ const User = ({ id }) => {
 
 	const redirectToMainPage = () => {
 		router.push('/');
-	};
-
-	const renderFlihtHistory = () => {
-		return flightHistory.length > 0 ? (
-			<div>flights</div>
-		) : (
-			<span>empty history</span>
-		);
 	};
 
 	const renderUserInformation = () => {
@@ -121,16 +106,8 @@ const User = ({ id }) => {
 					</UserMainInfoContainer>
 				</UserInfoContainer>
 				<UserInfoContainer>
-					<Subtitle>Flight history</Subtitle>
-					{flightHistory ? (
-						renderFlihtHistory()
-					) : (
-						<Loader
-							withAbsolute={false}
-							overallSize={'200px'}
-							iconSize="50px"
-						/>
-					)}
+					<Subtitle size={'24px'}>Flight history</Subtitle>
+					<UserFlightHistory ticketIds={user.flights} />
 				</UserInfoContainer>
 			</UserContainer>
 		);

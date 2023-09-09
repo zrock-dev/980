@@ -72,7 +72,7 @@ export const Subtitle = styled.span`
 	text-align: left;
 
 	width: 100%;
-	font-size: 20px;
+	font-size: ${(props) => (props.size ? props.size : '20px')};
 	font-weight: 700;
 `;
 
