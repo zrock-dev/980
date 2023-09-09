@@ -11,12 +11,15 @@ import {
 import { OptionContainer, OptionTopContainer } from '@/elements/UserOptions';
 import { RED } from '@/styles/colors';
 import Xmark from '@/icons/Xmark';
+import { useRouter } from 'next/navigation';
 
 const DeleteUserCheck = ({ user }) => {
 	const [isDeleting, setDeleting] = useState(false);
+	const router = useRouter();
 
 	const deleteUser = () => {
-		alert(user.firstName);
+		// request to send the userEditing data to update user
+		router.push('/users');
 	};
 
 	return (

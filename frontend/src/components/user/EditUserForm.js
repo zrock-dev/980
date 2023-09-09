@@ -8,8 +8,10 @@ import { OptionContainer, OptionTopContainer } from '@/elements/UserOptions';
 import Xmark from '@/icons/Xmark';
 import { FormContainer, FormSubContainer } from '@/elements/FormElements';
 import FieldForm from './FieldForm';
+import { useRouter } from 'next/navigation';
 
 const EditUserForm = ({ user }) => {
+	const router = useRouter();
 	const [isEditing, setEditing] = useState(false);
 	const [userEditing, setUserEditing] = useState(user);
 	const [userChanged, setUserChanged] = useState(false);
@@ -23,11 +25,17 @@ const EditUserForm = ({ user }) => {
 	};
 
 	const summit = () => {
-		alert(
-			userEditing.firstName +
-				userEditing.secondName +
-				userEditing.firstLastName +
-				userEditing.secondLastName
+		// request to send the userEditing data to update user
+		const secondName =
+			userEditing.secondName.length == 0
+				? ''
+				: `secondName=${userEditing.secondName}&`;
+		router.push(
+			`/users/${userEditing.id}?
+			firstName=${userEditing.firstName}&
+			${secondName}
+			firstLastName=${userEditing.firstLastName}&
+			secondLastName=${userEditing.secondLastName}`
 		);
 	};
 
