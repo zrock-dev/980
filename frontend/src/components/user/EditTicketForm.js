@@ -17,6 +17,7 @@ import Loader from '../Loader';
 import { differenceInDays, format } from 'date-fns';
 import { useState } from 'react';
 import { RED } from '@/styles/colors';
+import DeleteTicketCheck from './DeleteTicketCheck';
 
 const EditTicketForm = ({
 	onClose,
@@ -101,9 +102,10 @@ const EditTicketForm = ({
 						price will change. Your arrival number will not be affected.
 					</SecondaryText>
 					<ButtonsContainer>
-						<GeneralButton color={RED} onClick={deleteTicket}>
-							Delete
-						</GeneralButton>
+						<DeleteTicketCheck
+							ticket={ticket}
+							fetchUserData={fetchUserData}
+						/>
 						<GeneralButton
 							disabled={category === ticket.category}
 							onClick={updateTicket}
