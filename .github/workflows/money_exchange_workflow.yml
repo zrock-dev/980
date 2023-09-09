@@ -82,3 +82,40 @@ jobs:
           cd backend/money_exchange
           ./gradlew --no-daemon checkStyleMain spotlessCheck -x checkStyleTest -x test build 
 
+  service_integration:
+    name: Service Integration
+    runs-on: ubuntu-latest
+    needs: code_analysis
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+         distribution: 'temurin'
+         java-version: '17'
+         cache: 'gradle'
+
+    - name: Money Exchange Integration testing
+      id: integration_testing
+      working-directory: ${{ github.workspace }}
+      run: |
+          exit_code=0
+          ./services_testing/money_exchange/service_startup
+          if ! ./services_testing/money_exchange/simple_test; then
+            exit_code=1
+            echo "Test failed"
+          fi
+
+          ./scripts/utils -k
+          ./scripts/pack
+          exit $exit_code
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: fake_orgasm_app-${{ github.sha }}
+        path: fake_orgasm_app.tar
+            
