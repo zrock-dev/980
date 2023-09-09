@@ -1,4 +1,4 @@
-import { getUserSuggestion } from '@/backend/User';
+import { getUserSuggestion } from '@/backend/UserRequest';
 import {
 	SearcherContainer,
 	SearchSuggestion,

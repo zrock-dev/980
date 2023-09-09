@@ -11,9 +11,9 @@ import {
 	UserOptionContainer
 } from '@/elements/User';
 import { Subtitle, GeneralButton } from '@/elements/GeneralElements';
-import { getUserInformation, getUserTickets } from '@/backend/User';
+import { getUserInformation, getUserTickets } from '@/backend/UserRequest';
 import DeleteUserCheck from './DeleteUserCheck';
-import EditUserForm from './EdirUserForm';
+import EditUserForm from './EditUserForm';
 
 const User = ({ id }) => {
 	const router = useRouter();

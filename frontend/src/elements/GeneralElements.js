@@ -1,4 +1,4 @@
-import { BLUE, GRAYONE, GRAYTWO, WHITE } from '@/styles/colors';
+import { BLACKTWO, BLUE, GRAYONE, GRAYTWO, WHITE } from '@/styles/colors';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
@@ -13,6 +13,12 @@ export const GeneralButton = styled.button`
 	color: ${WHITE};
 	background-color: ${(props) => (props.color ? props.color : BLUE)};
 	text-transform: capitalize;
+
+	${(props) =>
+		props.disabled === true &&
+		css`
+			opacity: 0.3;
+		`}
 `;
 
 export const Icon980 = styled.img`
@@ -74,4 +80,7 @@ export const SecondaryText = styled.p`
 	font-size: 14px;
 
 	color: ${GRAYONE};
+	& b {
+		color: ${BLACKTWO};
+	}
 `;
