@@ -28,7 +28,6 @@ public class UserNameGenerator implements Notifiable {
     private Worker secondNames;
 
     private final Logger logger = LogManager.getLogger(getClass());
-
     /**
      * Initializes a new instance of the UserNameGenerator class.
      * Sets up the worker components for username generation.
