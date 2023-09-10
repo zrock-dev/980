@@ -95,7 +95,7 @@ public class FlightGeneratorHandlerTest {
         if (!isProduction) {
             // deleteAllData();
             long startTime = System.currentTimeMillis();
-            //generateAndSave();
+            // generateAndSave();
 
             long endTime = System.currentTimeMillis();
             System.out.println(endTime - startTime);
