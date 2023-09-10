@@ -4,6 +4,7 @@ import com.fake_orgasm.currency_exchange.libs.maxheap.MaxHeap;
 import com.fake_orgasm.currency_exchange.models.ExchangeRates;
 import com.fake_orgasm.currency_exchange.models.IMoneySubtracted;
 import java.util.*;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -27,12 +28,17 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
     /**
      * A JsonObject to return to the final of the procurement.
      */
-    private final JSONObject jsonObject;
+    private final JSONArray jsonArray;
 
     /**
      * A Map to put all values with its exchange type.
      */
     private final Map<T, Integer> exchangesMap;
+
+    /**
+     * Integer to accumulate the total number of coins needed to execute the exchange.
+     */
+    private int totalMoneyQuantity;
 
     /**
      * Class constructor  given a collection of moneyRates.
@@ -41,8 +47,9 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
      */
     public MoneyExchanger(ExchangeRates<T> moneyRates) {
         this.rates = moneyRates;
+        this.totalMoneyQuantity = 0;
         this.heap = new MaxHeap<>(moneyRates.size());
-        this.jsonObject = new JSONObject();
+        this.jsonArray = new JSONArray();
         this.exchangesMap = new HashMap<>(moneyRates.size());
     }
 
@@ -61,15 +68,20 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
      * @param value Is money value to obtain all possible exchanges quantity.
      * @return A JsonObject with all values processed.
      */
-    public JSONObject getExchangeValues(T value) {
+    public JSONArray getExchangeValues(T value) {
+        this.jsonArray.clear();
         fillHeap();
         processQuantityRatesOnMap(value);
-        this.jsonObject.clear();
-
         for (T exchangeValue : exchangesMap.keySet()) {
-            jsonObject.put(String.valueOf(exchangeValue), exchangesMap.get(exchangeValue));
+            JSONObject moneyObject = new JSONObject();
+            int moneyQuantity = exchangesMap.get(exchangeValue);
+            moneyObject.put("value", exchangeValue.toString());
+            moneyObject.put("quantity", moneyQuantity);
+            moneyObject.put("percentage", getPercentage(this.totalMoneyQuantity, moneyQuantity));
+            this.jsonArray.add(moneyObject);
         }
-        return jsonObject;
+        this.totalMoneyQuantity = 0;
+        return this.jsonArray;
     }
 
     /**
@@ -81,13 +93,24 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
         this.exchangesMap.clear();
         T heapTop = this.heap.extract();
         while (heapTop != null && bigAmount.compareTo(heapTop) >= 0 || this.heap.size() > 0) {
-            int size = this.heap.size();
             int quantityOfMoney = getMoneyQuantity(bigAmount, heapTop);
             if (quantityOfMoney > 0) {
                 exchangesMap.put(heapTop, quantityOfMoney);
+                this.totalMoneyQuantity += quantityOfMoney;
             }
             heapTop = this.heap.extract();
         }
+    }
+
+    /**
+     * Method to obtain the percentage of an amount to other bigger amount.
+     * @param total Is total quantity representing the 100% percent.
+     * @param percentage Is unknown little quantity.
+     *
+     * @return Percentage represented respecting big amount.
+     */
+    private double getPercentage(int total, int percentage) {
+        return percentage * 100 / total;
     }
 
     /**

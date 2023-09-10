@@ -1,14 +1,14 @@
-package com.fake_orgasm.users_management.services.exceptions;
+package com.fake_orgasm.flights_management.exceptions;
 
 import lombok.Builder;
 import lombok.Data;
 
 /**
- * A class representing an error response.
+ * A class representing an exception that occurred during the response.
  */
 @Data
 @Builder
-public class Error {
+public class RestResponse {
     /**
      * The error message.
      */
