@@ -1,7 +1,5 @@
 package com.fake_orgasm.lazy_loading;
 
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
-import com.fake_orgasm.generator.flight_history_generator.FlightHistoryGenerator;
 import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.models.User;
@@ -16,14 +14,12 @@ import org.junit.jupiter.api.Test;
  */
 public class CrudTest {
     UserGenerator userGenerator;
-    private FlightHistoryGenerator flightHistoryGenerator;
 
     /**
      * Sets up the test environment before each test case is run.
      */
     @BeforeEach
     public void setUp() {
-        flightHistoryGenerator = FlightHistoryGenerator.getInstance();
         userGenerator = new UserGenerator();
     }
 
@@ -34,9 +30,7 @@ public class CrudTest {
      */
     private User makeUser() {
         User user = userGenerator.make();
-        FlightHistory history = flightHistoryGenerator.generateRandomFlightHistory();
-        user.addFlightHistory(history);
-        user.setCategory(history.getTicketType());
+        user.setFlights(new ArrayList<>());
         return user;
     }
 

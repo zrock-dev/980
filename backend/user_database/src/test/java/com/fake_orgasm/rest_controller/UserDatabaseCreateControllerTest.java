@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.IBTreeRepository;
 import com.fake_orgasm.users_management.rest_controller.UserDatabaseController;
@@ -73,8 +72,8 @@ public class UserDatabaseCreateControllerTest {
      */
     private List<User> createUsers() {
         List<User> users = new ArrayList<>();
-        users.add(new User(13, "daniel", "espinoza", LocalDate.of(2004, 04, 25), Category.VIP, "BOLIVIA"));
-        users.add(new User(14, "daniel", "andrade", LocalDate.of(2002, 01, 25), Category.VIP, "CHILE"));
+        users.add(new User(13, "daniel", "espinoza", LocalDate.of(2004, 04, 25), "BOLIVIA"));
+        users.add(new User(14, "daniel", "andrade", LocalDate.of(2002, 01, 25), "CHILE"));
         return users;
     }
 
@@ -93,11 +92,13 @@ public class UserDatabaseCreateControllerTest {
 
         when(userManager.create(any(User.class))).thenReturn(true);
 
-        mockMvc.perform(post(BASE_END_POINT + "/create")
+        mockMvc.perform(post(BASE_END_POINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
-                .andExpect(status().isOk())
-                .andExpect(content().string("User created successfully."));
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("User created successfully."))
+                .andExpect(jsonPath("$.status").value(201));
         verify(userManager).create(any(User.class));
     }
 
@@ -113,7 +114,7 @@ public class UserDatabaseCreateControllerTest {
         when(userManager.create(any(User.class)))
                 .thenThrow(new IncompleteUserException("User properties are incomplete."));
 
-        mockMvc.perform(post(BASE_END_POINT + "/create")
+        mockMvc.perform(post(BASE_END_POINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().isBadRequest())
@@ -139,7 +140,7 @@ public class UserDatabaseCreateControllerTest {
         when(userManager.create(any(User.class)))
                 .thenThrow(new IncompleteUserException("User properties are incomplete."));
 
-        mockMvc.perform(post(BASE_END_POINT + "/create")
+        mockMvc.perform(post(BASE_END_POINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().isBadRequest())
@@ -161,7 +162,7 @@ public class UserDatabaseCreateControllerTest {
         String validUserJson = objectMapper.writeValueAsString(validUser);
 
         when(userManager.create(any(User.class))).thenThrow(new DuplicateUserException("User already exists."));
-        mockMvc.perform(post(BASE_END_POINT + "/create")
+        mockMvc.perform(post(BASE_END_POINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validUserJson))
                 .andExpect(status().isBadRequest())

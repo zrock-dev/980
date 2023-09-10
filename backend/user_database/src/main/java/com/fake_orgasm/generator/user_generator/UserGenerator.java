@@ -15,7 +15,7 @@ public class UserGenerator {
     /**
      * Initializes a new instance of the UserGenerator class.
      * Creates sub-generators for usernames, citizen identification numbers, and birth dates.
-     * The birth date generator's year ceiling is set to the current year.
+     * The birthdate generator's year ceiling is set to the current year.
      */
     public UserGenerator() {
         userNameGenerator = new UserNameGenerator();
