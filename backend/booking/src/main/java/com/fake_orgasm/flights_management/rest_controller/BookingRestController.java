@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * This class provides endpoints for creating, retrieving, updating, and deleting bookings.
  * It handles HTTP requests related to bookings and delegates the operations to the booking service.
  */
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/booking")
 public class BookingRestController {
