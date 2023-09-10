@@ -1,13 +1,13 @@
 import ProgressBar from './CoinChangeProgressBar';
-const CoinChangeOperationDisplayer = () => {
+const CoinChangeOperationDisplayer = ({moneyAmount, moneyType, moneyJson}) => {
     return (
       <div className="coin-change-operation-main-container">
         <div className='coin-change-operation-results'>
         <h2 className="coin-change-title">Coin Changed</h2>
         <div className="coin-details">
           <div className="coin-amount">
-            <span className="dollar-amount">$1500</span>
-            <span className="currency">USD</span>
+            <span className="dollar-amount">{moneyAmount}</span>
+            <span className="currency">{moneyType}</span>
           </div>
           <div className="total-coins">
             <span className="coins">Total Coins</span>
@@ -44,7 +44,7 @@ const CoinChangeOperationDisplayer = () => {
               </div>
             </div>
           </div>
-          <ProgressBar/>
+          <ProgressBar coinContext ={moneyJson}/>
         </div>
       </div>
     );

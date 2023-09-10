@@ -1,4 +1,4 @@
-const ProgressBar = () => {
+const ProgressBar = ({moneyJson}) => {
   return (
     <div className="progress-bar-container">
       <h2 className="progress-title">Progress Bar</h2>
