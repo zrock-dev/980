@@ -7,6 +7,7 @@ export const SearchProvider = ({ children }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [inputSearch, setInputSearch] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
   const updateInputSearch = (text) => {
     setInputSearch(text);
   };
@@ -20,7 +21,11 @@ export const SearchProvider = ({ children }) => {
         throw new Error('Failed to fetch data');
       }
       const data = await response.json();
-      setSearchResults(data.elements);
+      if(data.total != 0){
+        setSearchResults([...searchResults, ...data.elements]);
+      }else{
+        setSearchResults([]);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -29,7 +34,9 @@ export const SearchProvider = ({ children }) => {
   };
 
   return (
-  <SearchContext.Provider value={{ searchResults, fetchData, isFetching, inputSearch, updateInputSearch }}>
+  <SearchContext.Provider 
+  value={{ searchResults, fetchData, isFetching, inputSearch, updateInputSearch, currentPage, setCurrentPage }
+  }>
     {children}
   </SearchContext.Provider>
 

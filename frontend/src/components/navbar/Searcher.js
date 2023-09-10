@@ -4,14 +4,14 @@ import MagnifyingGlass from '@/icons/MagnifyingGlass';
 import Xmark from '@/icons/Xmark';
 import { BLUE, GRAYTWO } from '@/styles/colors';
 import { useEffect, useRef, useState } from 'react';
-import { useSearch } from '@/contexts/SearchContext'; 
+import { useSearch, setSearchResults } from '@/contexts/SearchContext'; 
 
 const Searcher = () => {
 	const searchContainer = useRef(null);
 	const suggestionsContainer = useRef(null);
 	const [inputSearch, setInputSearch] = useState('');
 	const [suggestions, setSuggestions] = useState([]);
-	const { fetchData, isFetching, updateInputSearch } = useSearch();
+	const { fetchData, isFetching, updateInputSearch, currentPage, setCurrentPage } = useSearch();
 
 	const showSuggestions = () => {
 		if (searchContainer.current && suggestionsContainer.current) {
@@ -44,7 +44,9 @@ const Searcher = () => {
 	};
 	const handleSearch = () => {
 		updateInputSearch(inputSearch); 
-		fetchData(inputSearch,1);
+		fetchData(inputSearch, 0)
+		setCurrentPage(1);
+		
 	};
 
 	useEffect(() => {
