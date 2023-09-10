@@ -1,12 +1,10 @@
 package com.fake_orgasm.flights_management.models;
 
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.PriorityQueue;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -80,8 +78,7 @@ public class Flight {
             int capacity,
             String ticketIds,
             String lastTicket,
-            int price
-    )
+            int price)
             throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
@@ -107,7 +104,8 @@ public class Flight {
      * @param price         The price of the flight.
      * @throws FlightCapacityException If the capacity is outside the acceptable range.
      */
-    public Flight(String id, String sourceId, String destinationId, int capacity, int price) throws FlightCapacityException {
+    public Flight(String id, String sourceId, String destinationId, int capacity, int price)
+            throws FlightCapacityException {
         validateCapacity(capacity);
         this.id = id;
         this.sourceId = sourceId;

@@ -4,9 +4,7 @@ import com.fake_orgasm.flights_management.exceptions.UserNotFoundException;
 import com.fake_orgasm.flights_management.repository.Page;
 import com.fake_orgasm.flights_management.services.records.UpdateRequest;
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.List;
-
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -43,8 +41,7 @@ public class RestClient {
         String url = BASE_URL + "/search?name=" + name;
 
         ResponseEntity<List<User>> response =
-                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
-                });
+                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
 
         List<User> usersFound = response.getBody();
         return usersFound;
@@ -114,14 +111,17 @@ public class RestClient {
         }
     }
 
-
+    /**
+     * Retrieves a specific page of User objects from the API.
+     *
+     * @param page the page number to retrieve
+     * @return the Page<User> object representing the requested page
+     */
     public Page<User> getPage(int page) {
         String url = BASE_URL + "?page=" + page;
 
-
         ResponseEntity<Page<User>> response =
-                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Page<User>>() {
-                });
+                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Page<User>>() {});
 
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();

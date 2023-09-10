@@ -14,11 +14,9 @@ import com.fake_orgasm.flights_management.repository.TicketRepository;
 import com.fake_orgasm.flights_management.services.BookingService;
 import com.fake_orgasm.flights_management.services.RestClient;
 import com.fake_orgasm.users_management.models.User;
-
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +29,6 @@ public class FlightGeneratorHandlerTest {
     private static Random random;
     private static User user = new User(1234, "Luiggy", "Mamani Condori", LocalDate.of(1992, 1, 20), "Bolivia");
     private static Flight flight;
-
 
     private static Ticket ticket;
     private static List<Ticket> tickets;
@@ -89,10 +86,14 @@ public class FlightGeneratorHandlerTest {
 
     @Test
     public void generateAndDelete() {
-        generator = new FlightGeneratorHandler(new RestClient(new RestTemplate()), new AirportRepository(), new FlightRepository(), new TicketRepository());
+        generator = new FlightGeneratorHandler(
+                new RestClient(new RestTemplate()),
+                new AirportRepository(),
+                new FlightRepository(),
+                new TicketRepository());
         boolean isProduction = false;
         if (!isProduction) {
-           // deleteAllData();
+            // deleteAllData();
             long startTime = System.currentTimeMillis();
             generateAndSave();
 
@@ -115,10 +116,8 @@ public class FlightGeneratorHandlerTest {
             executor.execute(new RestGenerator(from, to));
         }
         executor.shutdown();
-        while (!executor.isTerminated()) {
-        }
+        while (!executor.isTerminated()) {}
     }
-
 
     public static void deleteAllData() {
         bookService.getTicketRepository().deleteAll();

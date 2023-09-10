@@ -7,7 +7,6 @@ import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.models.TicketJoined;
 import com.fake_orgasm.flights_management.repository.Page;
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.List;
 
 /**

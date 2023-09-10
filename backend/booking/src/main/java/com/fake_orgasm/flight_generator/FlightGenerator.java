@@ -3,7 +3,6 @@ package com.fake_orgasm.flight_generator;
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,7 +48,8 @@ public class FlightGenerator {
             } while (sourceId.equals(destinationId));
             capacity = random.nextInt(451) + 100;
             price = random.nextInt(1000) + 180;
-            flights.add(new Flight(UUID.randomUUID().toString(), sourceId, destinationId, getDateRandomly(), capacity, price));
+            flights.add(new Flight(
+                    UUID.randomUUID().toString(), sourceId, destinationId, getDateRandomly(), capacity, price));
         }
 
         return flights;

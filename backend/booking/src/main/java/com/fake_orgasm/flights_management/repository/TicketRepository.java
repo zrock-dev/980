@@ -4,7 +4,6 @@ import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.models.TicketJoined;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;

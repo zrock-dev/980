@@ -9,10 +9,8 @@ import com.fake_orgasm.flights_management.repository.FlightRepository;
 import com.fake_orgasm.flights_management.repository.TicketRepository;
 import com.fake_orgasm.flights_management.services.RestClient;
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 

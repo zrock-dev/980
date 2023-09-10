@@ -14,5 +14,4 @@ import java.util.List;
  * @param totalPages    The total number of pages in the pagination.
  * @param <T>           the type of elements in the list.
  */
-public record Page<T>(int total, int amountPerPage, List<T> elements, int currentPage, int totalPages) {
-}
+public record Page<T>(int total, int amountPerPage, List<T> elements, int currentPage, int totalPages) {}

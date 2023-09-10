@@ -27,7 +27,11 @@ public class RestGenerator implements Runnable {
     public RestGenerator(int from, int to) {
         this.from = from;
         this.to = to;
-        generator = new FlightGeneratorHandler(new RestClient(new RestTemplate()), new AirportRepository(), new FlightRepository(), new TicketRepository());
+        generator = new FlightGeneratorHandler(
+                new RestClient(new RestTemplate()),
+                new AirportRepository(),
+                new FlightRepository(),
+                new TicketRepository());
         restClient = new RestClient(new RestTemplate());
     }
 

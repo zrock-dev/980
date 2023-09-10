@@ -8,11 +8,9 @@ import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.users_management.models.User;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

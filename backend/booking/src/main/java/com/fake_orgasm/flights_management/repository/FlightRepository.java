@@ -4,7 +4,6 @@ import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.FlightJoined;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -159,7 +158,8 @@ public class FlightRepository {
                 ticketIds = rs.getString("tickets");
                 lastTicket = rs.getString("lastTicket");
                 price = rs.getInt("price");
-                searches.add(new Flight(id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket, price));
+                searches.add(
+                        new Flight(id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket, price));
             }
             ps.close();
             return searches;
@@ -402,7 +402,8 @@ public class FlightRepository {
                 int price = rs.getInt("price");
                 Flight flight;
                 try {
-                    flight = new Flight(id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket, price);
+                    flight = new Flight(
+                            id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket, price);
                 } catch (FlightCapacityException e) {
                     throw new RuntimeException(e);
                 }

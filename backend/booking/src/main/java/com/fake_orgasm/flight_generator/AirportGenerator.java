@@ -1,11 +1,8 @@
 package com.fake_orgasm.flight_generator;
 
-
 import com.fake_orgasm.BookingApplication;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.utils.RandomFileReader;
-
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -70,9 +67,12 @@ public class AirportGenerator {
      *
      * @return path to src directory.
      */
-
     private String calculatePath() {
-        File classLocation = new File(BookingApplication.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        File classLocation = new File(BookingApplication.class
+                .getProtectionDomain()
+                .getCodeSource()
+                .getLocation()
+                .getPath());
         String srcPath = classLocation.getAbsolutePath();
         return srcPath.substring(0, srcPath.indexOf("booking") + 7);
     }
