@@ -21,7 +21,7 @@ export const SearchProvider = ({ children }) => {
         throw new Error('Failed to fetch data');
       }
       const data = await response.json();
-      if(data.total != 0){
+      if (data.total != 0 && (data.totalPages * data.amountPerPage) > searchResults.length) {
         setSearchResults([...searchResults, ...data.elements]);
       }else{
         setSearchResults([]);

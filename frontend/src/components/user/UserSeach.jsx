@@ -62,8 +62,10 @@ const UserSearchOption = ({idNum, firstName,secondName, lastName, secondLastName
     padding:'0'
   };
 
+  const userURL = `/users/${idNum}?firstName=${firstName}&secondName=${secondName}&firstLastName=${lastName}&secondLastName=${secondLastName}`;
+
   return (
-    <Link href="/new-page">
+    <Link href={userURL}>
       <div style={userSearchOptionStyle} className="user-search-option">
         <div style={idNumStyle}>
         <span>{idNum}</span>
