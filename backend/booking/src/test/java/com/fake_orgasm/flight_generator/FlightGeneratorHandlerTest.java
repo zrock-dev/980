@@ -92,9 +92,9 @@ public class FlightGeneratorHandlerTest {
         generator = new FlightGeneratorHandler(new RestClient(new RestTemplate()), new AirportRepository(), new FlightRepository(), new TicketRepository());
         boolean isProduction = false;
         if (!isProduction) {
-            deleteAllData();
+           // deleteAllData();
             long startTime = System.currentTimeMillis();
-            //generateAndSave();
+            generateAndSave();
 
             long endTime = System.currentTimeMillis();
             System.out.println(endTime - startTime);
@@ -109,7 +109,7 @@ public class FlightGeneratorHandlerTest {
         int pageSize = 20;
         int totalThreads = (totalPages + pageSize - 1) / pageSize;
         ExecutorService executor = Executors.newFixedThreadPool(totalThreads);
-        for (int i = 0; i < totalThreads; i++) {
+        for (int i = 0; i < 1; i++) {
             int from = i * pageSize;
             int to = Math.min((i + 1) * pageSize, totalPages);
             executor.execute(new RestGenerator(from, to));
