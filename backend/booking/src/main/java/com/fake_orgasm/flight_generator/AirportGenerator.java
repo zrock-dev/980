@@ -13,7 +13,7 @@ import java.util.UUID;
  * pools of countries and airport names.
  */
 public class AirportGenerator {
-    private final add Path currentDirectory = Paths.get("").toAbsolutePath();
+    private final Path currentDirectory = Paths.get("").toAbsolutePath();
     private final String countriesPath =
             currentDirectory+"/backend/booking/src/main/resources/generation/country_pool.txt";
     private final String namesPath =
