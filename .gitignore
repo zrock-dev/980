@@ -2,3 +2,5 @@ binaries
 logs
 *.tar.gz
 
+flight_management.db
+frontend/.idea
