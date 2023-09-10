@@ -5,14 +5,12 @@ import com.fake_orgasm.currency_exchange.services.MoneyExchanger;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Class to manage all http requests of this microservice.
  */
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/currency-exchange")
 public class CurrencyExchangeController {

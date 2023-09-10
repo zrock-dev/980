@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  *
  * This class initializes and runs the booking application.
  */
-@CrossOrigin(origins = "*")
 @SpringBootApplication
 @EnableDiscoveryClient
 public class BookingApplication {

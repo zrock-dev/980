@@ -15,9 +15,9 @@ import java.util.UUID;
 public class AirportGenerator {
     private final Path currentDirectory = Paths.get("").toAbsolutePath();
     private final String countriesPath =
-            currentDirectory+"/backend/booking/src/main/resources/generation/country_pool.txt";
+            currentDirectory+"/src/main/resources/generation/country_pool.txt";
     private final String namesPath =
-            currentDirectory+"/backend/booking/src/main/resources/generation/airport_name_pool.txt";
+            currentDirectory+"/src/main/resources/generation/airport_name_pool.txt";
     private RandomFileReader countryReader;
     private RandomFileReader nameReader;
 

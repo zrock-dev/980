@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 /**
  * Main Class to set up project application.
  */
-@CrossOrigin(origins = "*")
 @SpringBootApplication
 @EnableDiscoveryClient
 public class UserDatabaseApplication {

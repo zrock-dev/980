@@ -9,7 +9,9 @@ import com.fake_orgasm.flights_management.repository.Page;
 import com.fake_orgasm.flights_management.rest_controller.records.BookingRequest;
 import com.fake_orgasm.flights_management.services.IBookingService;
 import com.fake_orgasm.users_management.models.User;
+
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * This class provides endpoints for creating, retrieving, updating, and deleting bookings.
  * It handles HTTP requests related to bookings and delegates the operations to the booking service.
  */
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/booking")
 public class BookingRestController {
