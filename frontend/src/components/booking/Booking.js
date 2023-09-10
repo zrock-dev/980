@@ -8,8 +8,9 @@ import {registerTicket} from "@/backend/BookingAPI";
 import {useSearchParams} from "next/navigation";
 import {requestFlight} from "@/backend/FlightsAPI";
 
+
 const flightDefaultData = {
-    id: -1,
+    "id": "",
     "source": "",
     "destination": "",
 }
@@ -21,11 +22,13 @@ const BookingForm = () => {
     useEffect(() => {
         let flightId = searchParams.get('flight')
         requestFlight(flightId)
-            .then((data) => {
-                setFlight(data)
-            }).catch((error) => {
-            console.error(error)
-        })
+            .then((flight) => {
+                setFlight(flight)
+
+            })
+            .catch((error) => {
+                console.error(error)
+            })
     }, [searchParams]);
 
     const [formData, setFormData] = useState({
@@ -36,23 +39,23 @@ const BookingForm = () => {
         ci: '',
         dateOfBirth: '',
         country: '',
-        flights: '',
+        flights: ``,
         type: '',
     });
 
     const availableCountries = [
-        {label: 'Unavailable', value: ''},
-    ];
-
-    const availableFlights = [
-        {label: `FROM: ${flight.source.name} TO: ${flight.destination.name}`, value: flight.id},
+        {label: 'Unavailable', value: 'Unavailable'},
     ];
 
     const availableCategories = [
         {label: 'VIP', value: 'VIP'},
-        {label: 'Frequent Passenger', value: 'FrequentPassenger'},
-        {label: 'Regular Passenger', value: 'RegularPassenger'},
+        {label: 'Frequent Passenger', value: 'Frequent Passenger'},
+        {label: 'Regular Passenger', value: 'Regular Passenger'},
     ];
+
+    const availableFlights = [{
+        label: `FROM: ${flight.source.name} TO: ${flight.destination.name}`, value: "-1",
+    }]
 
     const handleChange = (fieldName, newValue) => {
         setFormData({
@@ -61,19 +64,9 @@ const BookingForm = () => {
         });
     };
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formDataString = `
-    First Name: ${formData.firstName}
-    Second Name: ${formData.secondName}
-    Last Name: ${formData.lastName}
-    Second Last Name: ${formData.secondLastName}
-    CI: ${formData.ci}
-    Date of Birth: ${formData.dateOfBirth}
-    Country: ${formData.country}
-    Flights: ${formData.flights}
-    Type: ${formData.type}
-  `;
         const formDataJson = {
             firstName: formData.firstName,
             secondName: formData.secondName,
@@ -81,13 +74,12 @@ const BookingForm = () => {
             secondLastName: formData.secondLastName,
             ci: formData.ci,
             dateOfBirth: formData.dateOfBirth,
-            country: formData.country,
-            flights: formData.flights,
+            country: "unavailable",
+            flights: flight.id,
             type: formData.type,
         };
         const formDataStringJson = JSON.stringify(formDataJson);
         registerTicket(formDataStringJson)
-        console.log(formDataString);
 
         setFormData({
             firstName: '',
@@ -96,8 +88,8 @@ const BookingForm = () => {
             secondLastName: '',
             ci: '',
             dateOfBirth: '',
-            country: '',
-            flights: '',
+            country: ``,
+            flights: ``,
             type: '',
         });
     };
@@ -213,9 +205,9 @@ const BookingForm = () => {
                         />
                     </div>
                 </div>
-                <p className="paragraph">"Your privacy matters. We want you to know that the data you share here is used
+                <p className="paragraph">Your privacy matters. We want you to know that the data you share here is used
                     exclusively for booking flights. We handle your information with care and respect. Accuracy helps us
-                    provide you with the best service possible. Thank you for choosing us for your travel needs."</p>
+                    provide you with the best service possible. Thank you for choosing us for your travel needs.</p>
                 <button type="submit" className="submit-button" onClick={handleSubmit}>
                     Book
                 </button>
