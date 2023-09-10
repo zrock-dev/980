@@ -1,6 +1,6 @@
 import Link from 'next/link'; 
 import '@/styles/user-search.css'
-const UserSearchOption = ({ firstName, lastName, year, category, country }) => {
+const UserSearchOption = ({ firstName,secondName, lastName, secondLastName, year, category, country }) => {
   const userSearchOptionStyle = {
     display: 'flex',
     flexDirection: 'row',
@@ -57,7 +57,7 @@ const UserSearchOption = ({ firstName, lastName, year, category, country }) => {
       <div style={userSearchOptionStyle} className="user-search-option">
         <div style={biggerChildStyle} className="user-info">
           <span style={{ ...spanStyle, ...boldBiggerNameStyle }}>
-            {firstName} {lastName}
+          {firstName} {lastName} {secondName} {secondLastName}
           </span>
           <span style={{ ...spanStyle, ...graySmallStyle }}>
             {country ? country.toUpperCase() : ''} {year}

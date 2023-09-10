@@ -1,9 +1,5 @@
 import { getUserSuggestion } from '@/backend/User';
-import {
-	SearcherContainer,
-	SearchSuggestion,
-	SearchSuggestions
-} from '@/elements/Navbar';
+import {SearcherContainer,SearchSuggestion,SearchSuggestions} from '@/elements/Navbar';
 import MagnifyingGlass from '@/icons/MagnifyingGlass';
 import Xmark from '@/icons/Xmark';
 import { BLUE, GRAYTWO } from '@/styles/colors';
@@ -16,6 +12,7 @@ const Searcher = () => {
 	const suggestionsContainer = useRef(null);
 	const [inputSearch, setInputSearch] = useState('');
 	const [suggestions, setSuggestions] = useState([]);
+	const { fetchData, isFetching } = useSearch();
 
 	const showSuggestions = () => {
 		if (searchContainer.current && suggestionsContainer.current) {
@@ -47,7 +44,7 @@ const Searcher = () => {
 		);
 	};
 	const handleSearch = () => {
-		setSearchText(inputSearch);
+		fetchData(inputSearch);
 	};
 
 	useEffect(() => {
