@@ -1,9 +1,12 @@
 package com.fake_orgasm.users_management.rest_controller;
 
+import static com.fake_orgasm.users_management.rest_controller.RestUtil.buildResponse;
+
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.rest_controller.records.UpdateUserRequest;
 import com.fake_orgasm.users_management.services.IUserManager;
-import java.util.List;
+import com.fake_orgasm.users_management.services.Page;
+import com.fake_orgasm.users_management.services.exceptions.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * The UserDatabaseController class handles the REST API endpoints related to user management.
  * It provides functionality to create, update, delete, and retrieve user data from the database.
  */
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/users")
 public class UserDatabaseController {
@@ -33,11 +37,13 @@ public class UserDatabaseController {
      * Retrieves a list of users based on the provided name.
      *
      * @param name the name to search for
+     * @param page the page that defines the amount of results.
      * @return a list of users matching the search criteria
      */
     @GetMapping("/search")
-    public List<User> searchUsers(@RequestParam String name) {
-        return userManager.search(name);
+    public Page searchUsers(@RequestParam String name, @RequestParam int page) {
+        Page searchResult = userManager.search(name, page);
+        return searchResult;
     }
 
     /**
@@ -47,41 +53,55 @@ public class UserDatabaseController {
      * @return a ResponseEntity containing a success message if the user was created successfully,
      * or a ResponseEntity with a status code and an error message if the user creation failed
      */
-    @PostMapping("/create")
-    public ResponseEntity createUser(@RequestBody User user) {
+    @PostMapping("")
+    public ResponseEntity<RestResponse> createUser(@RequestBody User user) {
         userManager.create(user);
-        return ResponseEntity.ok("User created successfully.");
+        return buildResponse("User created successfully.", HttpStatus.CREATED);
     }
 
     /**
-     * Deletes a user by making a DELETE request to the "/delete" endpoint.
+     * Deletes a user.
      *
-     * @param user the user object to be deleted
-     * @return a ResponseEntity with a success message if the user is deleted successfully,
-     * or a ResponseEntity with a bad request status and an error message if an exception occurs
+     * @param userId the ID of the user to be deleted
+     * @param fn     the first name of the user
+     * @param sn     the second name of the user
+     * @param lfn    the last first name of the user
+     * @param lsn    the last second name of the user
+     * @return a response entity indicating the success of the delete operation
      */
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteUser(@RequestBody User user) {
-        userManager.delete(user);
-        return ResponseEntity.ok("User deleted successfully.");
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<RestResponse> deleteUser(
+            @PathVariable int userId,
+            @RequestParam String fn,
+            @RequestParam String sn,
+            @RequestParam String lfn,
+            @RequestParam String lsn) {
+        userManager.delete(new User(userId, fn, sn, lfn, lsn));
+        return buildResponse("User deleted successfully.", HttpStatus.OK);
     }
 
     /**
-     * Retrieves a user from the database based on the provided user object.
+     * Retrieves a user based on the user ID and query parameters.
      *
-     * @param user the user object to retrieve from the database
-     * @return a ResponseEntity containing the retrieved user if found,
-     * otherwise a ResponseEntity with a NOT_FOUND status code
-     * and a message indicating that the user was not found
-     * in the database
+     * @param userId the ID of the user to retrieve
+     * @param fn     the first name of the user
+     * @param sn     the second name of the user
+     * @param lfn    the last first name of the user
+     * @param lsn    the last second name of the user
+     * @return the retrieved user if found, or an error response
      */
-    @GetMapping("/get")
-    public ResponseEntity<?> getUser(@RequestBody User user) {
-        User retrievedUser = userManager.getUser(user);
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUser(
+            @PathVariable int userId,
+            @RequestParam String fn,
+            @RequestParam String sn,
+            @RequestParam String lfn,
+            @RequestParam String lsn) {
+        User retrievedUser = userManager.getUser(new User(userId, fn, sn, lfn, lsn));
         if (retrievedUser != null) {
             return ResponseEntity.ok(retrievedUser);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+            return buildResponse("User not found.", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -91,10 +111,10 @@ public class UserDatabaseController {
      * @param updateUser the request object containing the user data to be updated
      * @return the response entity indicating the status of the update operation
      */
-    @PutMapping("/update")
-    public ResponseEntity<String> updateUser(@RequestBody UpdateUserRequest updateUser) {
+    @PutMapping("")
+    public ResponseEntity<RestResponse> updateUser(@RequestBody UpdateUserRequest updateUser) {
         userManager.update(updateUser.getOldData(), updateUser.getNewData());
-        return ResponseEntity.ok("User updated successfully.");
+        return buildResponse("User updated successfully.", HttpStatus.OK);
     }
 
     /**
@@ -104,9 +124,9 @@ public class UserDatabaseController {
      * @return a ResponseEntity containing a list of User objects if the page is valid,
      * or a ResponseEntity with a BAD_REQUEST status and an error message if the page is invalid
      */
-    @GetMapping("/page")
-    public ResponseEntity<?> getUsersByPage(@RequestParam int page) {
-        List<User> users = userManager.getUsersByPage(page);
-        return ResponseEntity.ok(users);
+    @GetMapping("")
+    public ResponseEntity<Page> getUsersByPage(@RequestParam int page) {
+        Page usersPage = userManager.getUsersByPage(page);
+        return ResponseEntity.ok(usersPage);
     }
 }

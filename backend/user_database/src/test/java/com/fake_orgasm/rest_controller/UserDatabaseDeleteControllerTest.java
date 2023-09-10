@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.rest_controller.UserDatabaseController;
 import com.fake_orgasm.users_management.services.IUserManager;
@@ -63,8 +62,8 @@ public class UserDatabaseDeleteControllerTest {
      */
     private List<User> createUsers() {
         List<User> users = new ArrayList<>();
-        users.add(new User(13, "daniel", "espinoza", null, Category.VIP, "BOLIVIA"));
-        users.add(new User(14, "daniel", "andrade", null, Category.VIP, "CHILE"));
+        users.add(new User(13, "daniel", "thomas", "espinoza", "escalera"));
+        users.add(new User(14, "daniel", "andres", "becerra", "espinoza"));
 
         return users;
     }
@@ -79,11 +78,17 @@ public class UserDatabaseDeleteControllerTest {
         User validUser = createUsers().get(0);
         String validUserJson = objectMapper.writeValueAsString(validUser);
 
-        mockMvc.perform(delete(BASE_END_POINT + "/delete")
+        mockMvc.perform(delete(BASE_END_POINT + "/" + validUser.getId() + "?fn="
+                                + validUser.getFirstName() + "&sn="
+                                + validUser.getSecondName() + "&lfn="
+                                + validUser.getFirstLastName() + "&lsn="
+                                + validUser.getSecondLastName())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validUserJson))
                 .andExpect(status().isOk())
-                .andExpect(content().string("User deleted successfully."));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("User deleted successfully."))
+                .andExpect(jsonPath("$.status").value(200));
 
         verify(userManager).delete(any(User.class));
     }
@@ -102,7 +107,11 @@ public class UserDatabaseDeleteControllerTest {
                 .when(userManager)
                 .delete(any(User.class));
 
-        mockMvc.perform(delete(BASE_END_POINT + "/delete")
+        mockMvc.perform(delete(BASE_END_POINT + "/" + nonexistentUser.getId() + "?fn="
+                                + nonexistentUser.getFirstName() + "&sn="
+                                + nonexistentUser.getSecondName() + "&lfn="
+                                + nonexistentUser.getFirstLastName() + "&lsn="
+                                + nonexistentUser.getSecondLastName())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(nonexistentUserJson))
                 .andExpect(status().isNotFound())
@@ -127,7 +136,11 @@ public class UserDatabaseDeleteControllerTest {
                 .when(userManager)
                 .delete(any(User.class));
 
-        mockMvc.perform(delete(BASE_END_POINT + "/delete")
+        mockMvc.perform(delete(BASE_END_POINT + "/" + incompleteUser.getId() + "?fn="
+                                + incompleteUser.getFirstName() + "&sn="
+                                + incompleteUser.getSecondName() + "&lfn="
+                                + incompleteUser.getFirstLastName() + "&lsn="
+                                + incompleteUser.getSecondLastName())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(incompleteUserJson))
                 .andExpect(status().isBadRequest())

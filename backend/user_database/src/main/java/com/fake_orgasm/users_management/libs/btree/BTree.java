@@ -1,7 +1,6 @@
 package com.fake_orgasm.users_management.libs.btree;
 
 import com.fake_orgasm.users_management.repository.IBTreeRepository;
-import java.util.*;
 import lombok.Getter;
 
 /**
@@ -15,6 +14,7 @@ public class BTree<T extends Comparable<T>> {
      * The repository used by the BTree.
      */
     private IBTreeRepository<T> repository;
+
     /**
      * The indexer used by the BTree.
      */
@@ -28,7 +28,7 @@ public class BTree<T extends Comparable<T>> {
     /**
      * The order of the B-tree node.
      */
-    private final int order;
+    private int order;
     /**
      * The root node of the B-tree.
      */
@@ -128,7 +128,7 @@ public class BTree<T extends Comparable<T>> {
         }
         Node<T> node = search(root, key);
         if (node != null) {
-            int index = Utils.binarySearch(node, key);
+            int index = node.find(key);
             if (index != -1) {
                 return node.getKey(index);
             }
@@ -661,7 +661,7 @@ public class BTree<T extends Comparable<T>> {
      * @param node The node for which to find the predecessor key.
      * @return The predecessor key of the given node.
      */
-    public T findPredecessorKey(Node<T> node) {
+    private T findPredecessorKey(Node<T> node) {
         Node<T> nodeAux;
         while (!node.isLeaf()) {
             nodeAux = node.getChild(node.getSize());
@@ -695,6 +695,9 @@ public class BTree<T extends Comparable<T>> {
      * @param node the node to be loaded
      */
     private void uploadNodeToIndexer(Node<T> node) {
+        if (node == null) {
+            return;
+        }
         for (int i = 0; i < node.getSize(); i++) {
             indexer.add(node.getKey(i), node);
         }
@@ -706,7 +709,7 @@ public class BTree<T extends Comparable<T>> {
      * @param node The node for which to find the successor key.
      * @return The successor key of the given node.
      */
-    public T findSuccessorKey(Node<T> node) {
+    private T findSuccessorKey(Node<T> node) {
         Node<T> nodeAux;
         while (!node.isLeaf()) {
             nodeAux = node.getChild(0);

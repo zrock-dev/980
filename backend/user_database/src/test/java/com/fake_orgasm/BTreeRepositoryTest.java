@@ -1,9 +1,6 @@
 package com.fake_orgasm;
 
-import com.fake_orgasm.generator.flight_history_generator.Airport;
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.users_management.libs.btree.Node;
-import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
 import com.fake_orgasm.users_management.repository.IBTreeRepository;
@@ -104,16 +101,13 @@ public class BTreeRepositoryTest {
      */
     public List<Node<User>> getRandomNode(int number) {
         List<Node<User>> users = new ArrayList<>();
-        List<FlightHistory> flightHistories = getFlightHistories();
         LocalDate localDate = LocalDate.of(2004, 04, 25);
         for (int i = 0; i < number; i++) {
             Node<User> nodeTest = new Node<>(4);
-            User user = new User(12, "Jorge", "Oropeza", localDate, Category.VIP, "Bolivia");
-            user.setFlights(flightHistories);
-            User user2 = new User(31, "Jorge", "Zambrana", localDate, Category.VIP, "Bolivia");
-            user2.setFlights(flightHistories);
-            User user3 = new User(54, "Jorge", "Muris", localDate, Category.VIP, "Bolivia");
-            user3.setFlights(flightHistories);
+            User user = new User(12, "Jorge", "Oropeza", localDate, "Bolivia");
+            User user2 = new User(31, "Jorge", "Zambrana", localDate, "Bolivia");
+            User user3 = new User(54, "Jorge", "Muris", localDate, "Bolivia");
+
             nodeTest.setSize(3);
             nodeTest.setKey(0, user);
             nodeTest.setKey(1, user2);
@@ -122,7 +116,6 @@ public class BTreeRepositoryTest {
         }
         return users;
     }
-
     /**
      * This method tests the save of the size of the btree.
      */
@@ -142,21 +135,5 @@ public class BTreeRepositoryTest {
         int currentResult = userIBTreeRepository.getSizeBTree();
         int expectedResult = 10;
         Assertions.assertEquals(expectedResult, currentResult);
-    }
-    /**
-     * This method generate a list of flight histories.
-     *
-     * @return List of flight histories.
-     */
-    private static List<FlightHistory> getFlightHistories() {
-        Airport airport = new Airport("Bahama", "Bolivia", "active");
-        Airport airport2 = new Airport("Amazonas", "Bolivia", "active");
-        Airport airport3 = new Airport("BOA", "Bolivia", "active");
-        FlightHistory flightHistory = new FlightHistory(airport, airport2, Category.VIP);
-        FlightHistory flightHistory2 = new FlightHistory(airport2, airport3, Category.VIP);
-        List<FlightHistory> flightHistories = new ArrayList<>();
-        flightHistories.add(flightHistory);
-        flightHistories.add(flightHistory2);
-        return flightHistories;
     }
 }

@@ -1,0 +1,422 @@
+[
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9b7",
+    "name": "John F. Kennedy International Airport",
+    "country": "United States",
+    "state": "New York"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9b8",
+    "name": "Heathrow Airport",
+    "country": "United Kingdom",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9b9",
+    "name": "Narita International Airport",
+    "country": "Japan",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9ba",
+    "name": "Incheon International Airport",
+    "country": "South Korea",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9bb",
+    "name": "Kuala Lumpur International Airport",
+    "country": "Malaysia",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9bc",
+    "name": "Auckland Airport",
+    "country": "New Zealand",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9bd",
+    "name": "Leonardo da Vinci–Fiumicino Airport",
+    "country": "Italy",
+    "state": "Lazio"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9be",
+    "name": "Adolfo Suárez Madrid–Barajas Airport",
+    "country": "Spain",
+    "state": "Community of Madrid"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9bf",
+    "name": "Ninoy Aquino International Airport",
+    "country": "Philippines",
+    "state": "Metro Manila"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c0",
+    "name": "Jorge Chávez International Airport",
+    "country": "Peru",
+    "state": "Lima"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c1",
+    "name": "Tocumen International Airport",
+    "country": "Panama",
+    "state": "Panama Province"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c2",
+    "name": "King Abdulaziz International Airport",
+    "country": "Saudi Arabia",
+    "state": "Makkah Province"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c3",
+    "name": "Sabiha Gökçen International Airport",
+    "country": "Turkey",
+    "state": "Istanbul"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c4",
+    "name": "El Alto International Airport",
+    "country": "Bolivia",
+    "state": "La Paz"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c5",
+    "name": "Aeroparque Jorge Newbery",
+    "country": "Argentina",
+    "state": "Buenos Aires"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c6",
+    "name": "José Martí International Airport",
+    "country": "Cuba",
+    "state": "Havana"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c7",
+    "name": "Comalapa International Airport",
+    "country": "El Salvador",
+    "state": "San Salvador"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c8",
+    "name": "Jinnah International Airport",
+    "country": "Pakistan",
+    "state": "Sindh"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9c9",
+    "name": "Hazrat Shahjalal International Airport",
+    "country": "Bangladesh",
+    "state": "Dhaka"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9ca",
+    "name": "Katowice Airport",
+    "country": "Poland",
+    "state": "Silesian Voivodeship"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9cb",
+    "name": "Vaclav Havel Airport Prague",
+    "country": "Czech Republic",
+    "state": "Prague"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9cc",
+    "name": "Stockholm Arlanda Airport",
+    "country": "Sweden",
+    "state": "Stockholm"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9cd",
+    "name": "Dublin Airport",
+    "country": "Ireland",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9ce",
+    "name": "Keflavik International Airport",
+    "country": "Iceland",
+    "state": "Southern Peninsula"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9cf",
+    "name": "Zurich Airport",
+    "country": "Switzerland",
+    "state": "Zurich"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d0",
+    "name": "Cairo International Airport",
+    "country": "Egypt",
+    "state": "Cairo Governorate"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d1",
+    "name": "Jomo Kenyatta International Airport",
+    "country": "Kenya",
+    "state": "Nairobi"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d2",
+    "name": "Murtala Muhammed International Airport",
+    "country": "Nigeria",
+    "state": "Lagos"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d3",
+    "name": "Kotoka International Airport",
+    "country": "Ghana",
+    "state": "Greater Accra"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d4",
+    "name": "Houari Boumediene Airport",
+    "country": "Algeria",
+    "state": "Algiers"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d5",
+    "name": "Mohammed V International Airport",
+    "country": "Morocco",
+    "state": "Casablanca-Settat"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d6",
+    "name": "Beijing Capital International Airport",
+    "country": "China",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d7",
+    "name": "Dubai International Airport",
+    "country": "United Arab Emirates",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d8",
+    "name": "Charles de Gaulle Airport",
+    "country": "France",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9d9",
+    "name": "Sydney Kingsford Smith Airport",
+    "country": "Australia",
+    "state": "New South Wales"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9da",
+    "name": "Los Angeles International Airport",
+    "country": "United States",
+    "state": "California"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9db",
+    "name": "Shanghai Pudong International Airport",
+    "country": "China",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9dc",
+    "name": "Hong Kong International Airport",
+    "country": "Hong Kong",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9dd",
+    "name": "Gimpo International Airport",
+    "country": "South Korea",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9de",
+    "name": "Zvartnots International Airport",
+    "country": "Armenia",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9df",
+    "name": "Juba International Airport",
+    "country": "South Sudan",
+    "state": "Juba"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e0",
+    "name": "Antananarivo Ivato International Airport",
+    "country": "Madagascar",
+    "state": "Analamanga"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e1",
+    "name": "El Dorado International Airport",
+    "country": "Colombia",
+    "state": "Bogotá"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e2",
+    "name": "Murtala Muhammed International Airport",
+    "country": "Nigeria",
+    "state": "Lagos"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e3",
+    "name": "Quito International Airport",
+    "country": "Ecuador",
+    "state": "Pichincha"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e4",
+    "name": "Alejandro Velasco Astete International Airport",
+    "country": "Peru",
+    "state": "Cusco"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e5",
+    "name": "Tribhuvan International Airport",
+    "country": "Nepal",
+    "state": "Bagmati"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e6",
+    "name": "Lisbon Humberto Delgado Airport",
+    "country": "Portugal",
+    "state": "Lisbon"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e7",
+    "name": "Vienna International Airport",
+    "country": "Austria",
+    "state": "Vienna"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e8",
+    "name": "King Fahd International Airport",
+    "country": "Saudi Arabia",
+    "state": "Eastern Province"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9e9",
+    "name": "Boryspil International Airport",
+    "country": "Ukraine",
+    "state": "Kyiv"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9ea",
+    "name": "Pulkovo Airport",
+    "country": "Russia",
+    "state": "St. Petersburg"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9eb",
+    "name": "Hamad International Airport",
+    "country": "Qatar",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9ec",
+    "name": "Budapest Ferenc Liszt International Airport",
+    "country": "Hungary",
+    "state": "Central Hungary"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9ed",
+    "name": "Queen Alia International Airport",
+    "country": "Jordan",
+    "state": "Amman"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9ee",
+    "name": "Malta International Airport",
+    "country": "Malta",
+    "state": "Island of Malta"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9ef",
+    "name": "Ljubljana Jože Pučnik Airport",
+    "country": "Slovenia",
+    "state": "Central Slovenia"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f0",
+    "name": "Skopje Alexander the Great Airport",
+    "country": "North Macedonia",
+    "state": "Skopje"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f1",
+    "name": "Oslo Gardermoen Airport",
+    "country": "Norway",
+    "state": "Viken"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f2",
+    "name": "Sofia Airport",
+    "country": "Bulgaria",
+    "state": "Sofia City Province"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f3",
+    "name": "Cologne Bonn Airport",
+    "country": "Germany",
+    "state": "North Rhine-Westphalia"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f4",
+    "name": "Riga International Airport",
+    "country": "Latvia",
+    "state": "Riga"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f5",
+    "name": "Tirana International Airport",
+    "country": "Albania",
+    "state": "Tirana"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f6",
+    "name": "Copenhagen Airport",
+    "country": "Denmark",
+    "state": "Capital Region"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f7",
+    "name": "Bratislava Airport",
+    "country": "Slovakia",
+    "state": "Bratislava"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f8",
+    "name": "Larnaca International Airport",
+    "country": "Cyprus",
+    "state": ""
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9f9",
+    "name": "Helsinki Airport",
+    "country": "Finland",
+    "state": "Uusimaa"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9fa",
+    "name": "Zagreb Airport",
+    "country": "Croatia",
+    "state": "City of Zagreb"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9fb",
+    "name": "Chisinau International Airport",
+    "country": "Moldova",
+    "state": "Chisinau"
+  },
+  {
+    "id": "4d8eb5f2-1fe0-4f6d-8080-5bf14445e9fc",
+    "name": "Bucharest Henri Coandă International Airport",
+    "country": "Romania",
+    "state": "Ilfov"
+  }
+]

@@ -67,4 +67,18 @@ public class PerformanceBTreeTest {
         assertEquals(50, value1);
         assertEquals(999999, value2);
     }
+
+    /**
+     * Performance test method for insert and delete methods.
+     */
+    @Test
+    public void perTest() {
+        System.out.println("insertion execution");
+        testInsertSupportT(5);
+        testDeleteSupportT(4);
+        bTree.printTree();
+        Node<Integer> root = bTree.getRoot();
+        int value1 = root.getKey(0);
+        assertEquals(4, value1);
+    }
 }

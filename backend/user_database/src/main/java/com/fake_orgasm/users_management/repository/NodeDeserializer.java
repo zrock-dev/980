@@ -1,9 +1,6 @@
 package com.fake_orgasm.users_management.repository;
 
-import com.fake_orgasm.generator.flight_history_generator.Airport;
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.users_management.libs.btree.Node;
-import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -73,7 +70,7 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
      * objects, the data is obtained and User objects are created.
      *
      * @param usersNode JsonNode, contents the user list.
-     * @param mapper ObjectMapper, mapper for cast data.
+     * @param mapper    ObjectMapper, mapper for cast data.
      * @return User list saved;
      * @throws IOException Exception to input or output.
      */
@@ -88,51 +85,17 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
             user.setFirstLastName(userNode.get("firstLastName").asText());
             user.setSecondLastName(userNode.get("secondLastName").asText());
             user.setDateBirth(LocalDate.parse(userNode.get("dateBirth").asText(), dateFormat));
-            user.setCategory(mapper.readValue(userNode.get("category").traverse(), Category.class));
             user.setCountry(userNode.get("country").asText());
-            List<FlightHistory> arrayFlights = deserializeFlightsHistory(userNode.get("flights"), mapper);
-            user.setFlights(arrayFlights);
+
+            List<String> flights = new ArrayList<>();
+            String[] arrayFlights = deserializeArrayInt(userNode.get("flights"));
+            for (String currentFlight : arrayFlights) {
+                flights.add(currentFlight);
+            }
+            user.setFlights(flights);
             users.add(user);
         }
         return users;
-    }
-
-    /**
-     * Deserializes the flights history of the user represented in json.
-     * Through a JsonNode that represents a list, the data is deserialized in FlightHistory
-     * objects, the data is obtained and FlightHistory objects are created.
-     *
-     * @param flightsHistoryNode JsonNode, contents the flights history list.
-     * @param mapper ObjectMapper, mapper for cast data.
-     * @return FlightHistory list saved;
-     * @throws IOException Exception to input or output.
-     */
-    private List<FlightHistory> deserializeFlightsHistory(JsonNode flightsHistoryNode, ObjectMapper mapper)
-            throws IOException {
-        List<FlightHistory> flights = new ArrayList<>();
-        for (JsonNode cuurentHistory : flightsHistoryNode) {
-            Airport departureAirport = deserializeAirport(cuurentHistory.get("departureAirport"));
-            Airport destinationAirport = deserializeAirport(cuurentHistory.get("destinationAirport"));
-            Category category =
-                    mapper.readValue(cuurentHistory.get("ticketType").traverse(), Category.class);
-            FlightHistory flightHistory = new FlightHistory(departureAirport, destinationAirport, category);
-            flights.add(flightHistory);
-        }
-        return flights;
-    }
-
-    /**
-     * Deserializes a json node into an Airport.
-     *
-     * @param airportNode JsonNode to deserializes.
-     * @return Airport, object deserialized.
-     * @throws IOException Exception to input or output.
-     */
-    private Airport deserializeAirport(JsonNode airportNode) throws IOException {
-        String airportName = airportNode.get("airportName").asText();
-        String country = airportNode.get("country").asText();
-        String state = airportNode.get("state").asText();
-        return new Airport(airportName, country, state);
     }
 
     /**
@@ -141,10 +104,10 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
      * @param idChildrenNode JsonNode to deserializes.
      * @return int[], array deserialized.
      */
-    private int[] deserializeArrayInt(JsonNode idChildrenNode) {
-        int[] array = new int[idChildrenNode.size()];
+    private String[] deserializeArrayInt(JsonNode idChildrenNode) {
+        String[] array = new String[idChildrenNode.size()];
         for (int i = 0; i < idChildrenNode.size(); i++) {
-            array[i] = idChildrenNode.get(i).asInt();
+            array[i] = idChildrenNode.get(i).asText();
         }
         return array;
     }
@@ -158,7 +121,11 @@ public class NodeDeserializer extends JsonDeserializer<Node<User>> {
     private String[] deserializeArrayString(JsonNode idChildrenNode) {
         String[] array = new String[idChildrenNode.size()];
         for (int i = 0; i < idChildrenNode.size(); i++) {
-            array[i] = idChildrenNode.get(i).asText();
+            if (idChildrenNode.get(i).isTextual()) {
+                array[i] = idChildrenNode.get(i).asText();
+            } else {
+                array[i] = null;
+            }
         }
         return array;
     }
