@@ -2,6 +2,9 @@ package com.fake_orgasm.flight_generator;
 
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.utils.RandomFileReader;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -10,11 +13,11 @@ import java.util.UUID;
  * pools of countries and airport names.
  */
 public class AirportGenerator {
-
+    private final add Path currentDirectory = Paths.get("").toAbsolutePath();
     private final String countriesPath =
-            "/home/fundacion/Documents/ProyectoProgra4/DV_DV/980/backend/booking/src/main/resources/generation/country_pool.txt";
+            currentDirectory+"/backend/booking/src/main/resources/generation/country_pool.txt";
     private final String namesPath =
-            "/home/fundacion/Documents/ProyectoProgra4/DV_DV/980/backend/booking/src/main/resources/generation/airport_name_pool.txt";
+            currentDirectory+"/backend/booking/src/main/resources/generation/airport_name_pool.txt";
     private RandomFileReader countryReader;
     private RandomFileReader nameReader;
 
@@ -23,7 +26,7 @@ public class AirportGenerator {
      * readers for country and airport name pools.
      */
     public AirportGenerator() {
-        countryReader = new RandomFileReader(countriesPath, 100);
+       countryReader = new RandomFileReader(countriesPath, 100);
         nameReader = new RandomFileReader(namesPath, 200);
         loadReaders();
     }
