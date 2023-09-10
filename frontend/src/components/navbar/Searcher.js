@@ -44,7 +44,7 @@ const Searcher = () => {
 	};
 	const handleSearch = () => {
 		updateInputSearch(inputSearch); 
-		fetchData(inputSearch);
+		fetchData(inputSearch,1);
 	};
 
 	useEffect(() => {

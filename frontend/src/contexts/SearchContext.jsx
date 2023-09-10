@@ -11,16 +11,16 @@ export const SearchProvider = ({ children }) => {
     setInputSearch(text);
   };
   
-  const fetchData = async (searchText) => {
+  const fetchData = async (searchText, page) => {
     try {
       setIsFetching(true);
-      const url = `http://localhost:8080/api/users/search?name=${searchText}`;
+      const url = `http://localhost:8080/api/users/search?name=${searchText}&page=${page}`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
       const data = await response.json();
-      setSearchResults(data);
+      setSearchResults(data.elements);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {

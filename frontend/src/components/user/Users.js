@@ -3,7 +3,7 @@ import UserSearchOption from './UserSeach';
 import { useSearch } from '@/contexts/SearchContext';
 const Users = () => {
 	const { searchResults, inputSearch } = useSearch();
-	const firstResults = searchResults.slice(0, 20);
+	const firstResults = searchResults;
 
 	const centerDivStyle = {
     	display: 'flex',
@@ -32,7 +32,7 @@ const Users = () => {
 		<div>
 		  {searchResults.length > 0 ? (
 			<div>
-			  <p style={SearchTextStyle}>  Results found for: {inputSearch}</p>
+			  <p style={SearchTextStyle}>Results found for: {inputSearch}</p>
 			  {firstResults.map((user) => (
 				<div key={user.id}>
 				  <UserSearchOption
