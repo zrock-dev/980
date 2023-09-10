@@ -52,24 +52,11 @@ const UserSearchOption = ({idNum, firstName,secondName, lastName, secondLastName
     fontSize: '0.9rem',
   };
 
-  const idNumStyle = {
-    flex: '.1',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '1.5rem',
-    margin:'0',
-    padding:'0'
-  };
-
   const userURL = `/users/${idNum}?firstName=${firstName}&secondName=${secondName}&firstLastName=${lastName}&secondLastName=${secondLastName}`;
 
   return (
     <Link href={userURL}>
       <div style={userSearchOptionStyle} className="user-search-option">
-        <div style={idNumStyle}>
-        <span>{idNum}</span>
-        </div>
         <div style={biggerChildStyle} className="user-info">
           <span style={{ ...spanStyle, ...boldBiggerNameStyle }}>
           {firstName} {lastName} {secondName} {secondLastName}
