@@ -42,7 +42,7 @@ const CoinChangeForm = () => {
       </div>
       <img src="/coin_img.png" alt="Coin Changer" className='coin-image'/>
       <button onClick={() => handleButtonClick(amount)} className='main-button'>
-        Chage Coin
+        Change Coin
       </button>
     </div>
   );
