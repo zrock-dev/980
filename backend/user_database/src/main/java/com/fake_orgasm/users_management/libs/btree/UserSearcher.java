@@ -97,16 +97,32 @@ public class UserSearcher implements Callable<Set<User>> {
         }
         return false;
     }
-
+    /**
+     * Verify if the word matches.
+     *
+     * @param completeWord complete word.
+     * @param wordToMatch word to match.
+     * @return true if the word matches, false otherwise.
+     */
     private boolean verifyMatch(List<String> completeWord, List<String> wordToMatch) {
-        if (wordToMatch.size() > completeWord.size()) {
+        String completeWordString = getStringFromList(completeWord);
+        String wordToMatchString = getStringFromList(wordToMatch);
+        if (wordToMatchString.length() > completeWordString.length()) {
             return false;
         }
-        for (int i = 0; i < wordToMatch.size(); i++) {
-            if (!wordToMatch.get(i).equals(completeWord.get(i))) {
+        for (int i = 0; i < wordToMatchString.length(); i++) {
+            if (!(wordToMatchString.charAt(i) == (completeWordString.charAt(i)))) {
                 return false;
             }
         }
         return true;
+    }
+
+    private String getStringFromList(List<String> list) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String string : list) {
+            stringBuilder.append(string);
+        }
+        return stringBuilder.toString();
     }
 }

@@ -32,11 +32,17 @@ public class UserManager implements IUserManager {
         nameIndexer = new NameIndexer();
         userGenerator = new UserGenerator();
         bTree = new BTree<>(10, new BTreeRepository(), nameIndexer);
+        generateUsers(10000);
     }
 
-    private void generateUsers() {
+    /**
+     * Generates 10,000 users and inserts them into the BTree.
+     *
+     * @param numberToGenerate The number of users to generate.
+     */
+    public void generateUsers(int numberToGenerate) {
         User user;
-        for (int i = 0; i < 10_000; i++) {
+        for (int i = 0; i < numberToGenerate; i++) {
             user = makeUser();
             user.setFlights(new ArrayList<>());
             bTree.insert(user);
@@ -47,7 +53,7 @@ public class UserManager implements IUserManager {
      *
      * @return The newly created User object.
      */
-    public User makeUser() {
+    private User makeUser() {
         User user = userGenerator.make();
         return user;
     }
@@ -75,7 +81,7 @@ public class UserManager implements IUserManager {
 
         int totalPages = (totalResults + pageSize - 1) / pageSize;
 
-        if (page > totalPages) {
+        if (page > totalPages && page != 1) {
             throw new InvalidPageException("Invalid page number.");
         }
 
@@ -233,18 +239,31 @@ public class UserManager implements IUserManager {
                 current = null;
                 continue;
             } else {
-                keys.addAll(List.of(current.getKeys()));
-                if ((indexPage + 1) == page) {
-                    return new Page(totalUsers, keys.size(), keys, page - 1, totalPages - 1);
+                for (User user : castToUserList(current.getKeys())) {
+                    if (keys.size() == 20) {
+                        if ((indexPage + 1) == page) {
+                            return new Page(totalUsers, keys.size(), keys, page, totalPages);
+                        } else {
+                            indexPage++;
+                            keys = new ArrayList<>();
+                        }
+                    }
+                    keys.add(user);
                 }
-                indexPage++;
-                keys = new ArrayList<>();
             }
             counter.put(current.getId(), counter.get(current.getId()) + 1);
             numberChild = counter.get(current.getId());
             current = current.getChild(numberChild);
         }
         return null;
+    }
+
+    private List<User> castToUserList(Object[] users) {
+        List<User> listReturned = new ArrayList<>();
+        for (int i = 0; i < users.length; i++) {
+            listReturned.add((User) users[i]);
+        }
+        return listReturned;
     }
 
     /**

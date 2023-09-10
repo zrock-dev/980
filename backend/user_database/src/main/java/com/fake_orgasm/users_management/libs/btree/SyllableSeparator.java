@@ -14,7 +14,7 @@ public class SyllableSeparator {
         char[] chars = word.toCharArray();
         List<String> syllabus = new ArrayList<>();
         for (int i = 0; i < chars.length; i++) {
-            if (!isVocal(chars[i])) {
+            if (!isVocal(chars[i]) || i == 0) {
                 String syllable = cutSyllable(chars, i);
                 i += syllable.length() - 1;
                 syllabus.add(syllable);
@@ -33,9 +33,9 @@ public class SyllableSeparator {
     public static String cutSyllable(char[] word, int index) {
         StringBuilder syllable = new StringBuilder();
         syllable.append(word[index]);
-        index++;
         boolean syllableFinished = false;
-        boolean vocalFound = false;
+        boolean vocalFound = isVocal(word[index]);
+        index++;
         while (!syllableFinished) {
             if (word.length <= index) {
                 syllableFinished = true;
