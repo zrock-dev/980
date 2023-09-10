@@ -118,6 +118,12 @@ public class UserSearcher implements Callable<Set<User>> {
         return true;
     }
 
+    /**
+     * Get a string from a list.
+     *
+     * @param list list to get the string.
+     * @return string.
+     */
     private String getStringFromList(List<String> list) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String string : list) {

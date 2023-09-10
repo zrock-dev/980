@@ -19,7 +19,9 @@ public class BTree<T extends Comparable<T>> {
      * The indexer used by the BTree.
      */
     private Indexer<T> indexer;
-
+    /**
+     * The flag that indicates whether the B-tree is using an indexer.
+     */
     private boolean useIndexer;
     /**
      * The flag that indicates whether the B-tree is using a repository.
