@@ -2,10 +2,6 @@ name: Eureka Server 🏗️
 run-name: ${{ github.actor }} is executing the workflow ${{ github.workflow }}.
 
 on:
-  push:
-    branches:
-      - develop
-      - main
   pull_request:
     types:
       - opened
@@ -14,7 +10,7 @@ on:
       - develop
       - main
     paths:
-      - "backend/eureka_server"
+      - "backend/eureka_server/**"
   workflow_dispatch:
     
 
