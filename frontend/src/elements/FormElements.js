@@ -50,3 +50,37 @@ export const FormSelect = styled.select`
 	box-shadow: 0 5px 10px ${GRAYONE};
 	background-color: ${WHITE};
 `;
+
+export const ContainerStyle = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	position: relative;
+	padding: 10px;
+`;
+
+export const SelectStyle = styled.select`
+	width: 100%;
+	height: height;
+	border: 2px solid #0014ff;
+	padding: 15px;
+	position: relative;
+	margin-top: 20px;
+	border-radius: 5px;
+	background: transparent;
+	z-index: 1;
+	outline: none;
+	color: white;
+`;
+
+export const LabelStyle = styled.label`
+	font-size: 18px;
+	position: relative;
+	top: -60px;
+	left: 10px;
+	background: #4eb1ff;
+	padding: 0 5px;
+	z-index: 2;
+	color: white;
+	font-weight: bold;
+`;
