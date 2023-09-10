@@ -11,9 +11,7 @@ import com.fake_orgasm.users_management.repository.BTreeRepository;
 import com.fake_orgasm.users_management.services.exceptions.DuplicateUserException;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
 import com.fake_orgasm.users_management.services.exceptions.NonexistentUserException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -190,19 +188,43 @@ public class UserManager implements IUserManager {
      */
     @Override
     public List<User> getUsersByPage(int page) {
-        /* page++;
-        int pageSize = 20;
-        int totalUsers = users.size();
-        int totalPages = (totalUsers + pageSize - 1) / pageSize;
-
-        if (page < 1 || page > totalPages) {
-            throw new InvalidPageException("Invalid page number.");
+        Stack<Node<User>> stack = new Stack<>();
+        Node<User> current = bTree.getRoot();
+        Map<String, Integer> counter = new HashMap<>();
+        int numberChild;
+        List<User> keys = new ArrayList<>();
+        int indexPage = 0;
+        while (current != null || !stack.isEmpty()) {
+            while (current != null) {
+                if (!counter.containsKey(current.getId())) {
+                    counter.put(current.getId(), 0);
+                }
+                stack.push(current);
+                numberChild = counter.get(current.getId());
+                current = current.getChild(numberChild);
+            }
+            current = stack.pop();
+            int currentPosition = counter.get(current.getId());
+            int sizeChildren = current.getValidChildren() - 1;
+            if (currentPosition < sizeChildren) {
+                keys.add(current.getKey(counter.get(current.getId())));
+                stack.push(current);
+            } else if (currentPosition == sizeChildren && counter.get(current.getId()) != 0) {
+                current = null;
+                continue;
+            } else {
+                keys.addAll(List.of(current.getKeys()));
+                if ((indexPage + 1) == page) {
+                    return keys;
+                }
+                indexPage++;
+                keys = new ArrayList<>();
+            }
+            // Summing 1 to key
+            counter.put(current.getId(), counter.get(current.getId()) + 1);
+            numberChild = counter.get(current.getId());
+            current = current.getChild(numberChild);
         }
-
-        int startIndex = (page - 1) * pageSize;
-        int endIndex = Math.min(startIndex + pageSize, totalUsers);
-
-        return users.subList(startIndex, endIndex);*/
         return null;
     }
 

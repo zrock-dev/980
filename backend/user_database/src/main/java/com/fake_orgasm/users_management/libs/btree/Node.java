@@ -207,4 +207,19 @@ public class Node<T extends Comparable<T>> {
     public void setIdChild(int i, String id) {
         idChildren[i] = id;
     }
+
+    /**
+     * This method returns the number of valid children.
+     *
+     * @return the number of valid children.
+     */
+    public int getValidChildren() {
+        int validChildren = 0;
+        for (int i = 0; i < children.length; i++) {
+            if (children[i] != null) {
+                validChildren++;
+            }
+        }
+        return validChildren;
+    }
 }
