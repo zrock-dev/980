@@ -4,6 +4,7 @@ import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.flights_management.models.TicketJoined;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -220,7 +221,7 @@ public class TicketRepository {
      * @param page          The page of tickets to retrieve.
      * @return A list of TicketJoined objects containing ticket details.
      */
-    public Page findAllTicketsJoined(int userIdRequest, int page) {
+    public Page<TicketJoined> findAllTicketsJoined(int userIdRequest, int page) {
         String query = "SELECT Ticket.*, Flight.*, "
                 + "Airport.airportName AS sourceAirportName, Airport.country "
                 + "AS sourceCountry, Airport.stateName AS sourceState, "
@@ -239,7 +240,7 @@ public class TicketRepository {
         try {
             totalTickets = getTotalTicketsForUser(userIdRequest);
             if (totalTickets == 0) {
-                return new Page(0, 0, tickets, 0, 0);
+                return new Page<TicketJoined>(0, 0, tickets, 0, 0);
             }
             maxPage = (totalTickets + PAGINATION - 1) / PAGINATION;
 
@@ -290,13 +291,15 @@ public class TicketRepository {
                 destination = new Airport(destAirportName, destCountry, destState);
                 tickets.add(new TicketJoined(ticketId, flightId, arrivalNumber, category, date, source, destination));
             }
-
+            if (tickets.size() == 0) {
+                return new Page<TicketJoined>(0, 0, tickets, 0, 0);
+            }
             ps.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return new Page(totalTickets, tickets.size(), tickets, page - 1, maxPage - 1);
+        return new Page<TicketJoined>(totalTickets, tickets.size(), tickets, page - 1, maxPage - 1);
     }
 
     private int getTotalTicketsForUser(int userId) {

@@ -4,7 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fake_orgasm.flights_management.models.Airport;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fake_orgasm.flights_management.repository.AirportRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +23,9 @@ public class AirportGeneratorTest {
 
     @Test
     public void airportsNotNullGenerated() {
-        List<Airport> airports = airportGenerator.getAirportsRandomly(100);
+        ArrayList<Airport> airports = airportGenerator.getAirportsRandomly(100);
+        AirportRepository airportRepository = new AirportRepository();
+        airportRepository.create(airports);
         assertNotNull(airports);
     }
 

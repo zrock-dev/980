@@ -5,11 +5,14 @@ import static com.fake_orgasm.flights_management.rest_controller.utils.RestUtil.
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.FlightJoined;
 import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.models.TicketJoined;
 import com.fake_orgasm.flights_management.repository.Page;
 import com.fake_orgasm.flights_management.rest_controller.records.BookingRequest;
 import com.fake_orgasm.flights_management.services.IBookingService;
 import com.fake_orgasm.users_management.models.User;
+
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/booking")
 public class BookingRestController {
     private final IBookingService bookingService;
+    private Page<FlightJoined> flightJoined;
 
     /**
      * This is a constructor method that initializes the booking service.
@@ -117,7 +121,7 @@ public class BookingRestController {
      */
     @GetMapping("/flights")
     public ResponseEntity<?> getFlightsByPage(@RequestParam int page) {
-        Page flightJoined = bookingService.getFlightsJoined(page);
+        Page<FlightJoined> flightJoined = bookingService.getFlightsJoined(page);
         return ResponseEntity.ok(flightJoined);
     }
 
@@ -147,7 +151,7 @@ public class BookingRestController {
      */
     @GetMapping("/user-tickets/{userId}")
     public ResponseEntity<?> getTickets(@PathVariable int userId, @RequestParam int page) {
-        Page userTickets = bookingService.getUserTickets(userId, page);
+        Page<TicketJoined> userTickets = bookingService.getUserTickets(userId, page);
         return ResponseEntity.ok(userTickets);
     }
 

@@ -8,9 +8,11 @@ import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
 import com.fake_orgasm.users_management.models.User;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +38,7 @@ public class TicketsPriorityTest {
         Airport airport1 = new Airport(UUID.randomUUID().toString(), "source1", "Bolivia", "Cochabamba");
         Airport airport2 = new Airport(UUID.randomUUID().toString(), "destination", "Argentina", "Buenos Aries");
 
-        flight = new Flight(UUID.randomUUID().toString(), airport1.getId(), airport2.getId(), 100);
+        flight = new Flight(UUID.randomUUID().toString(), airport1.getId(), airport2.getId(), 100, 200);
 
         ticket1 =
                 new Ticket(UUID.randomUUID().toString(), 1, Category.FREQUENT_PASSENGER, user1.getId(), flight.getId());

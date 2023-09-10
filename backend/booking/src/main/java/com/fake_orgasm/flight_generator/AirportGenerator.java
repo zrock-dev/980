@@ -1,9 +1,12 @@
 package com.fake_orgasm.flight_generator;
 
+
+import com.fake_orgasm.BookingApplication;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.utils.RandomFileReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -12,9 +15,10 @@ import java.util.UUID;
  * pools of countries and airport names.
  */
 public class AirportGenerator {
-    private final Path currentDirectory = Paths.get("").toAbsolutePath();
-    private final String countriesPath = currentDirectory + "/src/main/resources/generation/country_pool.txt";
-    private final String namesPath = currentDirectory + "/src/main/resources/generation/airport_name_pool.txt";
+    private String srcPath = calculatePath();
+
+    private final String countriesPath = srcPath + "/src/main/resources/generation/country_pool.txt";
+    private final String namesPath = srcPath + "/src/main/resources/generation/airport_name_pool.txt";
     private RandomFileReader countryReader;
     private RandomFileReader nameReader;
 
@@ -59,5 +63,17 @@ public class AirportGenerator {
         }
 
         return airports;
+    }
+
+    /**
+     * This method calculates the path to the src directory.
+     *
+     * @return path to src directory.
+     */
+
+    private String calculatePath() {
+        File classLocation = new File(BookingApplication.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        String srcPath = classLocation.getAbsolutePath();
+        return srcPath.substring(0, srcPath.indexOf("booking") + 7);
     }
 }

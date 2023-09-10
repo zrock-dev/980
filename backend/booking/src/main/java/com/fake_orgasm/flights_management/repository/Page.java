@@ -12,5 +12,7 @@ import java.util.List;
  * @param elements      The list of tickets for the current page.
  * @param currentPage   The current page number.
  * @param totalPages    The total number of pages in the pagination.
+ * @param <T>           the type of elements in the list.
  */
-public record Page(int total, int amountPerPage, List<?> elements, int currentPage, int totalPages) {}
+public record Page<T>(int total, int amountPerPage, List<T> elements, int currentPage, int totalPages) {
+}

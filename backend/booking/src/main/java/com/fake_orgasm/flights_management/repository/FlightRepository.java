@@ -4,6 +4,7 @@ import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.FlightJoined;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -43,6 +44,7 @@ public class FlightRepository {
                     + "capacity INTEGER,"
                     + "tickets VARCHAR(10000),"
                     + "lastTicket VARCHAR(100),"
+                    + "price INTEGER,"
                     + "FOREIGN KEY (sourceId) REFERENCES Airport(id),"
                     + "FOREIGN KEY (destinationId) REFERENCES Airport(id));";
             statement.executeUpdate(query);
@@ -66,8 +68,8 @@ public class FlightRepository {
         }
         try {
             String query = "INSERT INTO Flight (id, sourceId, destinationId, "
-                    + "arrivalDate, capacity, tickets, lastTicket) "
-                    + "values (?, ?, ?, ?, ?, ?, ?)";
+                    + "arrivalDate, capacity, tickets, lastTicket, price) "
+                    + "values (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = database.getConnection().prepareStatement(query);
             ps.setString(1, flight.getId());
             ps.setString(2, flight.getSourceId());
@@ -76,6 +78,7 @@ public class FlightRepository {
             ps.setInt(5, flight.getCapacity());
             ps.setString(6, flight.getPriorityTickets());
             ps.setString(7, flight.getLastTicket());
+            ps.setInt(8, flight.getPrice());
             ps.execute();
             ps.close();
             wasSaved = true;
@@ -100,8 +103,8 @@ public class FlightRepository {
 
         try {
             String query = "INSERT INTO Flight"
-                    + " (id, sourceId, destinationId, arrivalDate, capacity, tickets, lastTicket) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    + " (id, sourceId, destinationId, arrivalDate, capacity, tickets, lastTicket, price) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             Connection connection = database.getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
 
@@ -114,6 +117,7 @@ public class FlightRepository {
                     ps.setInt(5, flight.getCapacity());
                     ps.setString(6, flight.getPriorityTickets());
                     ps.setString(7, flight.getLastTicket());
+                    ps.setInt(8, flight.getPrice());
                     ps.addBatch();
                 }
             }
@@ -145,7 +149,7 @@ public class FlightRepository {
             String lastTicket;
             Date arrivalDate;
             int capacity;
-
+            int price;
             while (rs.next()) {
                 id = rs.getString("id");
                 sourceId = rs.getString("sourceId");
@@ -154,7 +158,8 @@ public class FlightRepository {
                 capacity = rs.getInt("capacity");
                 ticketIds = rs.getString("tickets");
                 lastTicket = rs.getString("lastTicket");
-                searches.add(new Flight(id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket));
+                price = rs.getInt("price");
+                searches.add(new Flight(id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket, price));
             }
             ps.close();
             return searches;
@@ -175,7 +180,7 @@ public class FlightRepository {
      * @return A list of FlightJoined objects containing detailed
      * flight information for all available flights.
      */
-    public Page findAllFlightsJoined(int page) {
+    public Page<FlightJoined> findAllFlightsJoined(int page) {
         List<FlightJoined> flights = new ArrayList<>();
         String query = "SELECT Flight.*, Airport.airportName AS sourceAirportName, "
                 + "Airport.country AS sourceCountry, Airport.stateName AS sourceState, "
@@ -188,7 +193,7 @@ public class FlightRepository {
 
         int totalFlights = getTotalFlights();
         if (totalFlights == 0) {
-            return new Page(0, 0, flights, 0, 0);
+            return new Page<FlightJoined>(0, 0, flights, 0, 0);
         }
         int maxPage = (totalFlights + PAGINATION - 1) / PAGINATION;
         if (page < 1 || page > maxPage) {
@@ -217,6 +222,7 @@ public class FlightRepository {
             java.util.Date date;
             Airport source;
             Airport destination;
+            int price;
 
             while (rs.next()) {
                 flightId = rs.getString("id");
@@ -231,20 +237,29 @@ public class FlightRepository {
                 destAirportName = rs.getString("destAirportName");
                 destCountry = rs.getString("destCountry");
                 destState = rs.getString("destState");
+                price = rs.getInt("price");
 
                 source = new Airport(sourceAirportId, sourceAirportName, sourceCountry, sourceState);
                 destination = new Airport(destAirportId, destAirportName, destCountry, destState);
 
-                flights.add(new FlightJoined(flightId, source, destination, date, capacity, ticketIds));
+                flights.add(new FlightJoined(flightId, source, destination, date, capacity, ticketIds, price));
+            }
+            if (flights.size() == 0) {
+                return new Page<FlightJoined>(0, 0, flights, 0, 0);
             }
 
             ps.close();
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving flights", e);
         }
-        return new Page(totalFlights, flights.size(), flights, page - 1, maxPage - 1);
+        return new Page<FlightJoined>(totalFlights, flights.size(), flights, page - 1, maxPage - 1);
     }
 
+    /**
+     * Retrieves the total number of flights from the database.
+     *
+     * @return the total number of flights
+     */
     private int getTotalFlights() {
         String countQuery = "SELECT COUNT(*) FROM Flight;";
         try {
@@ -299,6 +314,7 @@ public class FlightRepository {
             Airport source;
             Airport destination;
             int capacity;
+            int price;
 
             if (rs.next()) {
                 sourceAirportName = rs.getString("sourceAirportName");
@@ -311,10 +327,10 @@ public class FlightRepository {
                 date = rs.getDate("arrivalDate");
                 capacity = rs.getInt("capacity");
                 ticketIds = rs.getString("tickets");
-
+                price = rs.getInt("price");
                 source = new Airport("", sourceAirportName, sourceCountry, sourceState);
                 destination = new Airport("", destAirportName, destCountry, destState);
-                return new FlightJoined(flightId, source, destination, date, capacity, ticketIds);
+                return new FlightJoined(flightId, source, destination, date, capacity, ticketIds, price);
             }
 
             ps.close();
@@ -338,7 +354,7 @@ public class FlightRepository {
             if (exists(id)) {
                 String lastTicket = flight.getLastTicket();
                 String query = "UPDATE Flight SET sourceId=?, destinationId=?, "
-                        + "arrivalDate=?, capacity=?, tickets=?, lastTicket=? WHERE id=?";
+                        + "arrivalDate=?, capacity=?, tickets=?, lastTicket=?, price=? WHERE id=?";
                 PreparedStatement ps = database.getConnection().prepareStatement(query);
                 ps.setString(1, flight.getSourceId());
                 ps.setString(2, flight.getDestinationId());
@@ -346,7 +362,8 @@ public class FlightRepository {
                 ps.setInt(4, flight.getCapacity());
                 ps.setString(5, flight.getPriorityTickets());
                 ps.setString(6, lastTicket);
-                ps.setString(7, id);
+                ps.setInt(7, flight.getPrice());
+                ps.setString(8, id);
                 int rowsUpdated = ps.executeUpdate();
                 ps.close();
 
@@ -382,9 +399,10 @@ public class FlightRepository {
                 int capacity = rs.getInt("capacity");
                 String ticketIds = rs.getString("tickets");
                 String lastTicket = rs.getString("lastTicket");
+                int price = rs.getInt("price");
                 Flight flight;
                 try {
-                    flight = new Flight(id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket);
+                    flight = new Flight(id, sourceId, destinationId, arrivalDate, capacity, ticketIds, lastTicket, price);
                 } catch (FlightCapacityException e) {
                     throw new RuntimeException(e);
                 }
