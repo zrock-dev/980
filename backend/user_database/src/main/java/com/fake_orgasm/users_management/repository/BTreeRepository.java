@@ -1,7 +1,5 @@
 package com.fake_orgasm.users_management.repository;
 
-import com.fake_orgasm.generator.flight_history_generator.Airport;
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
 import com.fake_orgasm.users_management.libs.btree.Node;
 import com.fake_orgasm.users_management.models.User;
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -81,7 +79,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
             jsonGenerator.writeFieldName("idChildren");
             jsonGenerator.writeStartArray();
             for (String currenId : node.getIdChildren()) {
-                jsonGenerator.writeNumber(currenId);
+                jsonGenerator.writeObject(currenId);
             }
             jsonGenerator.writeEndArray();
             jsonGenerator.writeBooleanField("leaf", node.isLeaf());
@@ -99,7 +97,7 @@ public class BTreeRepository implements IBTreeRepository<User> {
      * Write a user in the json generator that is passed as a parameter,
      * use the streaming approach by writing line by line the json.
      *
-     * @param user User to write in a json.
+     * @param user      User to write in a json.
      * @param generator JsonGenerator, json constructor.
      * @throws IOException exception if the deed fails.
      */
@@ -115,31 +113,11 @@ public class BTreeRepository implements IBTreeRepository<User> {
 
         generator.writeFieldName("flights");
         generator.writeStartArray();
-        for (FlightHistory currentFlightId : user.getFlights()) {
-            writeFlightHistory(currentFlightId, generator);
+        for (String currentFlightId : user.getFlights()) {
+            generator.writeString(currentFlightId);
         }
         generator.writeEndArray();
-        generator.writeStringField("category", user.getCategory().name());
         generator.writeStringField("country", user.getCountry());
-        generator.writeEndObject();
-    }
-
-    private void writeFlightHistory(FlightHistory flightHistory, JsonGenerator generator) throws IOException {
-        generator.writeStartObject();
-        generator.writeFieldName("departureAirport");
-        writeAirport(flightHistory.getDepartureAirport(), generator);
-        generator.writeFieldName("destinationAirport");
-        writeAirport(flightHistory.getDestinationAirport(), generator);
-        generator.writeStringField("ticketType", flightHistory.getTicketType().name());
-        generator.writeEndObject();
-    }
-
-    private void writeAirport(Airport airport, JsonGenerator generator) throws IOException {
-
-        generator.writeStartObject();
-        generator.writeStringField("airportName", airport.getAirportName());
-        generator.writeStringField("country", airport.getCountry());
-        generator.writeStringField("state", airport.getState());
         generator.writeEndObject();
     }
 
@@ -181,5 +159,25 @@ public class BTreeRepository implements IBTreeRepository<User> {
             }
         }
         return userNode;
+    }
+
+    /**
+     * Saves the size of the binary tree.
+     *
+     * @return true if the size is successfully saved, false otherwise
+     */
+    @Override
+    public boolean saveBTreeSize(int size) {
+        return false;
+    }
+
+    /**
+     * Retrieves the size of the binary tree.
+     *
+     * @return the size of the binary tree
+     */
+    @Override
+    public Integer readBTreeSize() {
+        return 0;
     }
 }

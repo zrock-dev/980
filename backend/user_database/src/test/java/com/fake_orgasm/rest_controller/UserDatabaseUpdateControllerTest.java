@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.rest_controller.UserDatabaseController;
 import com.fake_orgasm.users_management.rest_controller.records.UpdateUserRequest;
@@ -64,8 +63,8 @@ public class UserDatabaseUpdateControllerTest {
      */
     private List<User> createUsers() {
         List<User> users = new ArrayList<>();
-        users.add(new User(13, "daniel", "espinoza", null, Category.VIP, "BOLIVIA"));
-        users.add(new User(14, "daniel", "andrade", null, Category.VIP, "CHILE"));
+        users.add(new User(13, "daniel", "espinoza", "", ""));
+        users.add(new User(14, "daniel", "andrade", "", ""));
 
         return users;
     }
@@ -78,18 +77,19 @@ public class UserDatabaseUpdateControllerTest {
     @Test
     public void testUpdateUserSuccess() throws Exception {
         User existingUser = createUsers().get(0);
-        User updateUser =
-                new User(existingUser.getId(), "Updated", "User", null, Category.FREQUENT_PASSENGER, "CANADA");
+        User updateUser = new User(existingUser.getId(), "Updated", "User", "", "CANADA");
         UpdateUserRequest updateUserRequest = new UpdateUserRequest(existingUser, updateUser);
         String updateUserJson = objectMapper.writeValueAsString(updateUserRequest);
 
         when(userManager.update(any(User.class), any(User.class))).thenReturn(true);
 
-        mockMvc.perform(put(BASE_END_POINT + "/update")
+        mockMvc.perform(put(BASE_END_POINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateUserJson))
                 .andExpect(status().isOk())
-                .andExpect(content().string("User updated successfully."));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("User updated successfully."))
+                .andExpect(jsonPath("$.status").value(200));
 
         verify(userManager).update(any(User.class), any(User.class));
     }
@@ -101,14 +101,14 @@ public class UserDatabaseUpdateControllerTest {
      */
     @Test
     public void testUpdateNonexistentUser() throws Exception {
-        User nonexistentUser = new User(999, "nonexistent", "user", null, Category.VIP, "USA");
+        User nonexistentUser = new User(999, "nonexistent", "user", "non", "exist");
 
         UpdateUserRequest updateUserRequest = new UpdateUserRequest(nonexistentUser, nonexistentUser);
         String nonexistentUserJson = objectMapper.writeValueAsString(updateUserRequest);
         when(userManager.update(any(User.class), any(User.class)))
                 .thenThrow(new NonexistentUserException("User Object Not Exist"));
 
-        mockMvc.perform(put(BASE_END_POINT + "/update")
+        mockMvc.perform(put(BASE_END_POINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(nonexistentUserJson))
                 .andExpect(status().isNotFound())
@@ -126,14 +126,14 @@ public class UserDatabaseUpdateControllerTest {
      */
     @Test
     public void testUpdateUserWithIncompleteData() throws Exception {
-        User incompleteUser = new User(999, "incomplete", null, null, Category.VIP, "USA");
+        User incompleteUser = new User(999, "incomplete", "", "", "USA");
         UpdateUserRequest updateUserRequest = new UpdateUserRequest(incompleteUser, incompleteUser);
         String nonexistentUserJson = objectMapper.writeValueAsString(updateUserRequest);
 
         when(userManager.update(any(User.class), any(User.class)))
                 .thenThrow(new IncompleteUserException("User properties are incomplete."));
 
-        mockMvc.perform(put(BASE_END_POINT + "/update")
+        mockMvc.perform(put(BASE_END_POINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(nonexistentUserJson))
                 .andExpect(status().isBadRequest())

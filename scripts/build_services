@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Script: build_services
+# Description: This script builds Gradle projects using multiple 'gradlew' scripts found in a specified directory or its subdirectories.
+# Author: [Santiago C. Saavedra]
+# Date: [07/09/2023]
+
+home=$(pwd)
+for file in "$@"; do
+	file="$home/$file"
+	(
+		cd "$file" || exit 1
+		if ./gradlew -q build; then
+			echo "Build: $(basename "$(pwd)")"
+		else
+			printf "The following path failed to build: %s" "$file" >&2
+			exit 1
+		fi
+	)
+done
+exit 0

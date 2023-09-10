@@ -1,7 +1,5 @@
 package com.fake_orgasm.users_management.services;
 
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
-import com.fake_orgasm.generator.flight_history_generator.FlightHistoryGenerator;
 import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.services.exceptions.DuplicateUserException;
@@ -21,20 +19,20 @@ import org.springframework.stereotype.Service;
 public class UserManager implements IUserManager {
     private List<User> users;
     private UserGenerator userGenerator;
-    private FlightHistoryGenerator flightHistoryGenerator;
 
     /**
      * This is a constructor method to initialize the state of the class.
      */
     public UserManager() {
         userGenerator = new UserGenerator();
-        flightHistoryGenerator = FlightHistoryGenerator.getInstance();
         this.users = new ArrayList<>();
+        User user;
         for (int i = 0; i < 10_000; i++) {
-            this.users.add(makeUser());
+            user = makeUser();
+            user.setFlights(new ArrayList<>());
+            this.users.add(user);
         }
     }
-
 
     /**
      * Generates a new User object by utilizing the UserGenerator and FlightHistoryGenerator classes.
@@ -43,9 +41,6 @@ public class UserManager implements IUserManager {
      */
     private User makeUser() {
         User user = userGenerator.make();
-        FlightHistory history = flightHistoryGenerator.generateRandomFlightHistory();
-        user.addFlightHistory(history);
-        user.setCategory(history.getTicketType());
         return user;
     }
 
@@ -53,17 +48,41 @@ public class UserManager implements IUserManager {
      * Searches for users whose names contain the given name fragment.
      *
      * @param name The name fragment to search for.
+     * @param page the page of the results.
      * @return A list of User objects matching the search criteria.
      */
     @Override
-    public List<User> search(String name) {
+    public Page search(String name, int page) {
+        page++;
+        if (page < 1) {
+            throw new InvalidPageException("Invalid page number.");
+        }
+
         List<User> result = new ArrayList<>();
+
         users.forEach(user -> {
             if (user.getFullName().contains(name)) {
                 result.add(user);
             }
         });
-        return result;
+        int pageSize = 20;
+        int totalResults = result.size();
+        if (totalResults == 0) {
+            return new Page(0, 0, new ArrayList<>(), 0, 0);
+        }
+
+        int totalPages = (totalResults + pageSize - 1) / pageSize;
+
+        if (page > totalPages) {
+            throw new InvalidPageException("Invalid page number.");
+        }
+
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalResults);
+
+        List<User> usersForPage = result.subList(startIndex, endIndex);
+
+        return new Page(totalResults, usersForPage.size(), usersForPage, page - 1, totalPages - 1);
     }
 
     /**
@@ -173,20 +192,23 @@ public class UserManager implements IUserManager {
      * @return A list of User objects from the specified page.
      */
     @Override
-    public List<User> getUsersByPage(int page) {
+    public Page getUsersByPage(int page) {
         page++;
         int pageSize = 20;
         int totalUsers = users.size();
         int totalPages = (totalUsers + pageSize - 1) / pageSize;
 
+        if (totalUsers == 0) {
+            return new Page(0, 0, new ArrayList<>(), 0, 0);
+        }
         if (page < 1 || page > totalPages) {
             throw new InvalidPageException("Invalid page number.");
         }
 
         int startIndex = (page - 1) * pageSize;
         int endIndex = Math.min(startIndex + pageSize, totalUsers);
-
-        return users.subList(startIndex, endIndex);
+        List<User> sublist = users.subList(startIndex, endIndex);
+        return new Page(totalUsers, sublist.size(), sublist, page - 1, totalPages - 1);
     }
 
     /**

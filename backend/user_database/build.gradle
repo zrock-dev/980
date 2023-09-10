@@ -9,6 +9,19 @@ plugins {
 group = 'com.fake_orgasm'
 version = '0.0.1-SNAPSHOT-SERVER'
 
+application {
+	mainClass = 'com.fake_orgasm.UserDatabaseApplication'
+}
+
+java {
+	sourceCompatibility = '17'
+	jar {
+		manifest {
+			attributes 'Main-Class': application.mainClass
+		}
+	}
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
