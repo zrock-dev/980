@@ -2,7 +2,7 @@ package com.fake_orgasm.currency_exchange.rest_controller;
 
 import com.fake_orgasm.currency_exchange.models.DoubleMoney;
 import com.fake_orgasm.currency_exchange.services.MoneyExchanger;
-import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +44,7 @@ public class CurrencyExchangeController {
      * @return Process result.
      */
     @GetMapping("/bolivian")
-    public JSONObject getBolivianExchange(@RequestParam Double amount) {
+    public JSONArray getBolivianExchange(@RequestParam Double amount) {
         if (amount < 0 || amount > 1_000_000) {
             throw new RuntimeException("Amount must be greater than 0 and less than 1_000_000");
         }
@@ -59,7 +59,7 @@ public class CurrencyExchangeController {
      * @return Process result.
      */
     @GetMapping("/euro")
-    public JSONObject getEuroExchange(@RequestParam Double amount) {
+    public JSONArray getEuroExchange(@RequestParam Double amount) {
         if (amount < 0 || amount > 1_000_000) {
             throw new RuntimeException("Amount must be greater than 0 and less than 1_000_000");
         }
@@ -74,7 +74,7 @@ public class CurrencyExchangeController {
      * @return Process result.
      */
     @GetMapping("/dollar")
-    public JSONObject getDollarExchange(@RequestParam Double amount) {
+    public JSONArray getDollarExchange(@RequestParam Double amount) {
         if (amount < 0 || amount > 1_000_000) {
             throw new RuntimeException("Amount must be greater than 0 and less than 1_000_000");
         }

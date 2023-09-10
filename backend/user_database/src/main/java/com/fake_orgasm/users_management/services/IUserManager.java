@@ -1,7 +1,6 @@
 package com.fake_orgasm.users_management.services;
 
 import com.fake_orgasm.users_management.models.User;
-import java.util.List;
 
 /**
  * Defines the contract for managing user-related operations.
@@ -12,9 +11,10 @@ public interface IUserManager {
      * Searches for users whose names contain the given name fragment.
      *
      * @param name The name fragment to search for.
+     * @param page The page number from which to retrieve users.
      * @return A list of User objects matching the search criteria.
      */
-    List<User> search(String name);
+    Page search(String name, int page);
 
     /**
      * Creates a new user.
@@ -56,5 +56,5 @@ public interface IUserManager {
      * @param page The page number from which to retrieve users.
      * @return A list of User objects from the specified page.
      */
-    List<User> getUsersByPage(int page);
+    Page getUsersByPage(int page);
 }

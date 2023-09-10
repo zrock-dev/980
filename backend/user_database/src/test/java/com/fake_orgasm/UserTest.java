@@ -1,6 +1,5 @@
 package com.fake_orgasm;
 
-import com.fake_orgasm.users_management.models.Category;
 import com.fake_orgasm.users_management.models.User;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
@@ -13,11 +12,11 @@ public class UserTest {
     @Test
     public void compareToTest() {
         LocalDate localDate = LocalDate.of(2004, 04, 25);
-        User user1 = new User(123, "Jorge", "Heredia", localDate, Category.VIP, "Bolivia");
-        User user2 = new User(189, "Abraham", "Heredia", localDate, Category.VIP, "Bolivia");
-        User user3 = new User(173, "Jorge", "Arano", localDate, Category.VIP, "Bolivia");
-        User user4 = new User(321, "Jorge", "Heredia", localDate, Category.VIP, "Bolivia");
-        User user5 = new User(123, "Simon", "Lopez", localDate, Category.VIP, "Bolivia");
+        User user1 = new User(123, "Jorge", "Heredia", localDate, "Bolivia");
+        User user2 = new User(189, "Abraham", "Heredia", localDate, "Bolivia");
+        User user3 = new User(173, "Jorge", "Arano", localDate, "Bolivia");
+        User user4 = new User(321, "Jorge", "Heredia", localDate, "Bolivia");
+        User user5 = new User(123, "Simon", "Lopez", localDate, "Bolivia");
 
         boolean currentResult = user1.compareTo(user2) > 0;
         Assertions.assertTrue(currentResult);
