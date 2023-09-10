@@ -30,13 +30,10 @@ const EditUserForm = ({ user, fetchUserData }) => {
 			userEditing.secondName.length == 0
 				? ''
 				: `secondName=${userEditing.secondName}&`;
-		router.push(
-			`/users/${userEditing.id}?
-			firstName=${userEditing.firstName}&
-			${secondName}
-			firstLastName=${userEditing.firstLastName}&
-			secondLastName=${userEditing.secondLastName}`
-		);
+		const url = `/users/${user.id}?firstName=${userEditing.firstName}
+		&${secondName}firstLastName=${userEditing.firstLastName}
+		&secondLastName=${userEditing.secondLastName}`;
+		router.push(url);
 		fetchUserData();
 	};
 

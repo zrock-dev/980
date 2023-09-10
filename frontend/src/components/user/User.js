@@ -14,8 +14,8 @@ import {
 import { Subtitle, GeneralButton } from '@/elements/GeneralElements';
 import {
 	getFlagImage,
-	getUserInformation,
-	getUserTickets
+	getUrlWithUserParams,
+	getUserInformation
 } from '@/backend/UserRequest';
 import DeleteUserCheck from './DeleteUserCheck';
 import EditUserForm from './EditUserForm';
@@ -25,7 +25,7 @@ import UserFlightHistory from './UserFlightHistory';
 const User = ({ id }) => {
 	const router = useRouter();
 	const params = useSearchParams();
-	const [loading, setLoading] = useState(true);
+	const [isLoading, setLoading] = useState(true);
 	const [user, setUser] = useState(null);
 	const [flagImage, setFlagImage] = useState(null);
 
@@ -34,7 +34,7 @@ const User = ({ id }) => {
 	};
 
 	useEffect(() => {
-		if (loading) {
+		if (isLoading) {
 			const firstName = params.get('firstName');
 			let secondName = params.get('secondName');
 			secondName = secondName ? secondName : '';
@@ -62,7 +62,7 @@ const User = ({ id }) => {
 				redirectToMainPage();
 			}
 		}
-	}, [loading]);
+	}, [isLoading]);
 
 	useEffect(() => {
 		if (user) {
@@ -80,6 +80,16 @@ const User = ({ id }) => {
 		router.push('/');
 	};
 
+	const redirectToBooking = () => {
+		const secondName =
+			user.secondName.length == 0 ? '' : `secondName=${user.secondName}&`;
+		const url = `/booking?firstName=${user.firstName}
+		&${secondName}firstLastName=${user.firstLastName}
+		&secondLastName=${user.secondLastName}&country=${user.country}
+		&id=${user.id}&birthdate=${user.birthdate}`;
+		router.push(url);
+	};
+
 	const renderUserInformation = () => {
 		return (
 			<UserContainer>
@@ -95,7 +105,9 @@ const User = ({ id }) => {
 						<UserOptionContainer>
 							<EditUserForm user={user} fetchUserData={fetchUserData} />
 							<DeleteUserCheck user={user} />
-							<GeneralButton>Book flight</GeneralButton>
+							<GeneralButton onClick={redirectToBooking}>
+								Book flight
+							</GeneralButton>
 						</UserOptionContainer>
 					</UserTopContainer>
 					<Subtitle>
@@ -126,7 +138,7 @@ const User = ({ id }) => {
 		);
 	};
 
-	return loading ? <Loader iconSize="80px" /> : renderUserInformation();
+	return isLoading ? <Loader iconSize="80px" /> : renderUserInformation();
 };
 
 export default User;
