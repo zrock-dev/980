@@ -1,10 +1,17 @@
-const DateInput = ({ label, text, width, height, onChangeText }) => {
+const DateInput = ({
+	label,
+	value,
+	name,
+	width = '100%',
+	height = '40px',
+	onChange
+}) => {
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'flex-start',
 		position: 'relative',
-		padding: '10px'
+		padding: '10px',
 	};
 
 	const inputStyle = {
@@ -16,7 +23,7 @@ const DateInput = ({ label, text, width, height, onChangeText }) => {
 		marginTop: '20px',
 		borderRadius: '5px',
 		background: 'transparent',
-		color: 'white'
+		color: 'white',
 	};
 
 	const labelStyle = {
@@ -35,11 +42,13 @@ const DateInput = ({ label, text, width, height, onChangeText }) => {
 		<div style={containerStyle}>
 			<input
 				type="date"
-				value={new Date(text).toISOString().split('T')[0]}
+				name={name}
+				value={value}
 				style={inputStyle}
 				onChange={(e) => {
-					onChangeText(e.target.value);
+					onChange(e);
 				}}
+				required
 			/>
 			<label style={labelStyle}>{label}</label>
 		</div>
