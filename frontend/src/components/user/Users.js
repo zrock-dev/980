@@ -1,16 +1,19 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import UserSearchOption from './UserSeach';
 import { useSearch } from '@/contexts/SearchContext';
 const Users = () => {
-	const { searchResults, inputSearch } = useSearch();
-	const firstResults = searchResults;
 	const itemsPerPage = 6;
-	const [currentPage, setCurrentPage] = useState(1);
+	const { searchResults, inputSearch, isFetching, currentPage,fetchData, setCurrentPage } = useSearch();
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
-	const displayedResults = searchResults.slice(startIndex, endIndex);
+	const displayedResults = searchResults ? searchResults.slice(startIndex, endIndex) : [];
+	useEffect(() => {
+		fetchData(inputSearch, currentPage);
+	}, [currentPage]);
+	
+	
 
 	const centerDivStyle = {
     	display: 'flex',
@@ -47,25 +50,34 @@ const Users = () => {
 		cursor: "pointer",
 		borderRadius: "10px",
 		fontSize: "14px"
-	}
+	};
 
-	  const handleNextPage = () => {
-		setCurrentPage(currentPage + 1);
+	const centerDiv = {
+    	textAlign: 'center',
+  	};
+	const handlePrevPage = () => {
+		const prevPage = currentPage - 1;
+		setCurrentPage(prevPage);
 	  };
 	
-	  const handlePrevPage = () => {
-		setCurrentPage(currentPage - 1);
+	  const handleNextPage = () => {
+		const nextPage = currentPage + 1;
+		setCurrentPage(nextPage);
 	  };
+	
 
 	  return (
 		<div>
-		  {searchResults.length > 0 ? (
+		  { inputSearch.length >=1 && searchResults != null && searchResults.length > 0? (
 			<div>
 				<p style={SearchTextStyle}>Results found for: {inputSearch}</p>
+
+				
 				{displayedResults.map((user) => (
 					<div key={user.id}>
 					<UserSearchOption
 						key={user.id}
+						idNum={user.id}
 						firstName={user.firstName}
 						secondName={user.secondName}
 						lastName={user.firstLastName}
@@ -76,7 +88,7 @@ const Users = () => {
 					/>
 					</div>
 				))}
-				<div>
+				<div style={centerDiv}>
 					{currentPage > 1 && (
 					<button style={buttonStyle} onClick={handlePrevPage}>Previous</button>
 					)}
@@ -86,10 +98,10 @@ const Users = () => {
 				</div>
 			</div>
 		  ) : (
-			<div style={centerDivStyle}>
-			  <p style={boldBigTextStyle}>No search results available.</p>
-			  <img src='/not-found-img.png' alt='results not found' style={imgStyle} />
-			</div>
+			<div  style={centerDivStyle}>
+			<p style={boldBigTextStyle}>No search results available.</p>
+			<img src='/not-found-img.png' alt='results not found' style={imgStyle} />
+		  </div>
 		  )}
 		</div>
 	  );
