@@ -3,9 +3,7 @@ package com.fake_orgasm.flights_management.services;
 import com.fake_orgasm.flights_management.exceptions.UserNotFoundException;
 import com.fake_orgasm.flights_management.services.records.UpdateRequest;
 import com.fake_orgasm.users_management.models.User;
-
 import java.util.List;
-
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -42,8 +40,7 @@ public class RestClient {
         String url = BASE_URL + "/search?name=" + name;
 
         ResponseEntity<List<User>> response =
-                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
-                });
+                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
 
         List<User> usersFound = response.getBody();
         return usersFound;
