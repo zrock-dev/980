@@ -86,7 +86,7 @@ const User = ({ id }) => {
 		const url = `/booking?firstName=${user.firstName}
 		&${secondName}firstLastName=${user.firstLastName}
 		&secondLastName=${user.secondLastName}&country=${user.country}
-		&id=${user.id}&birthdate=${user.birthdate}`;
+		&id=${user.id}&birthdate=${user.dateBirth}`;
 		router.push(url);
 	};
 
@@ -97,10 +97,7 @@ const User = ({ id }) => {
 					<UserTopContainer>
 						<div>
 							{flagImage && <UserFlagImage src={flagImage} alt="" />}
-							<UserName>
-								{user.firstName} {user.secondName} {user.firstLastName}{' '}
-								{user.secondLastName}
-							</UserName>
+							<UserName>{user.fullName}</UserName>
 						</div>
 						<UserOptionContainer>
 							<EditUserForm user={user} fetchUserData={fetchUserData} />
@@ -119,7 +116,7 @@ const User = ({ id }) => {
 						</span>
 						<span>
 							<b>Age:</b>{' '}
-							{differenceInYears(new Date(), new Date(user.birthdate))} years
+							{differenceInYears(new Date(), new Date(user.dateBirth))} years
 							old
 						</span>
 						<span>
@@ -129,10 +126,7 @@ const User = ({ id }) => {
 				</UserInfoContainer>
 				<UserInfoContainer>
 					<Subtitle size={'24px'}>Flight history</Subtitle>
-					<UserFlightHistory
-						ticketIds={user.flights}
-						fetchUserData={fetchUserData}
-					/>
+					<UserFlightHistory user={user} fetchUserData={fetchUserData} />
 				</UserInfoContainer>
 			</UserContainer>
 		);

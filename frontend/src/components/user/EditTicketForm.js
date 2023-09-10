@@ -39,7 +39,7 @@ const EditTicketForm = ({
 	};
 
 	return (
-		<OptionContainer>
+		<OptionContainer maxWidth={'500px'}>
 			<OptionTopContainer>
 				<Subtitle>
 					#{ticket.number} - {format(new Date(ticket.date), 'dd-MMM-yyyy')}
@@ -97,7 +97,7 @@ const EditTicketForm = ({
 						<option value="Frecuent passager">FRECUENT PASSAGER</option>
 						<option value="Regular passager">REGULAR PASSAGER</option>
 					</FormSelect>
-					<SecondaryText maxWidth={'280px'}>
+					<SecondaryText>
 						You can still change the category of this flight, the category and
 						price will change. Your arrival number will not be affected.
 					</SecondaryText>
@@ -117,7 +117,7 @@ const EditTicketForm = ({
 			) : (
 				<>
 					<Subtitle>{ticket.category} category</Subtitle>
-					<SecondaryText maxWidth={'300px'}>
+					<SecondaryText>
 						The flight has already left, thank you for your purchase and trust
 						in us.
 					</SecondaryText>

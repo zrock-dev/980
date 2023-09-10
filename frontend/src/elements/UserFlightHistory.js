@@ -27,7 +27,9 @@ export const UserFLightContainer = styled.button`
 
 export const UserFlightAirports = styled.div`
 	display: flex;
+	align-items: start;
 	gap: 20px;
+	width: 100%;
 
 	& span {
 		text-align: left;
@@ -78,4 +80,23 @@ export const FlightCategoryContainer = styled.div`
 
 	margin-top: 30px;
 	max-width: 350px;
+`;
+
+export const EmptyFlightHistory = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+
+	margin-top: 40px;
+	width: 100%;
+
+	& span {
+		font-size: 20px;
+		font-weight: 700;
+		text-transform: capitalize;
+		font-style: italic;
+		color: ${GRAYONE};
+	}
 `;

@@ -44,7 +44,7 @@ const EditUserForm = ({ user, fetchUserData }) => {
 			user.secondName === userEditing.secondName &&
 			user.firstLastName === userEditing.firstLastName &&
 			user.secondLastName === userEditing.secondLastName &&
-			user.birthdate.toString() === userEditing.birthdate.toString() &&
+			user.dateBirth.toString() === userEditing.dateBirth.toString() &&
 			user.country === userEditing.country
 		) {
 			setUserChanged(false);
@@ -113,7 +113,7 @@ const EditUserForm = ({ user, fetchUserData }) => {
 							</FormSubContainer>
 							<FieldForm
 								type={'date'}
-								value={userEditing.birthdate}
+								value={userEditing.dateBirth}
 								title={'Birthdate'}
 								name={'birthdate'}
 								changeField={changeField}

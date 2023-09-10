@@ -12,14 +12,27 @@ import { OptionContainer, OptionTopContainer } from '@/elements/UserOptions';
 import { RED } from '@/styles/colors';
 import Xmark from '@/icons/Xmark';
 import { useRouter } from 'next/navigation';
+import { deleteUser } from '@/backend/UserRequest';
 
 const DeleteUserCheck = ({ user }) => {
 	const [isDeleting, setDeleting] = useState(false);
 	const router = useRouter();
 
-	const deleteUser = () => {
+	const check = () => {
+		deleteUser(
+			user.id,
+			user.firstName,
+			user.secondName,
+			user.firstLastName,
+			user.secondLastName
+		)
+			.then(() => {
+				router.push('/users');
+			})
+			.catch(() => {
+				alert('error');
+			});
 		// request to send the userEditing data to update user
-		router.push('/users');
 	};
 
 	return (
@@ -50,7 +63,7 @@ const DeleteUserCheck = ({ user }) => {
 							will be permanently deleted. In addition, your flights will be
 							permanently canceled and eliminated.
 						</SecondaryText>
-						<GeneralButton onClick={deleteUser} color={RED} width={'150px'}>
+						<GeneralButton onClick={check} color={RED} width={'150px'}>
 							Delete
 						</GeneralButton>
 					</OptionContainer>

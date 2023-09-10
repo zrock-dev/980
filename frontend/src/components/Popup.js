@@ -9,7 +9,8 @@ const Popup = ({
 	right = 'calc(50% - 22.5%)',
 	width = 'auto',
 	animation = 'appear',
-	isCenter = true
+	isCenter = true,
+	isCustom = false
 }) => {
 	const handleCloseModal = (event) => {
 		event.target.id === 'overlay' && onClose();
@@ -27,6 +28,7 @@ const Popup = ({
 					isCenter={isCenter}
 					width={width}
 					animation={animation}
+					isCustom={isCustom}
 				>
 					{children != undefined && children}
 				</PopupContainer>

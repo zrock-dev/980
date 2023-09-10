@@ -7,6 +7,7 @@ export const OptionContainer = styled.div`
 	gap: 15px;
 
 	padding: 30px;
+	max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'auto')};
 
 	border-radius: 20px;
 	transition: all ease 250ms;
