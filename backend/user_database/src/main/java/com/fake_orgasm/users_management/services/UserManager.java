@@ -34,12 +34,20 @@ public class UserManager implements IUserManager {
         nameIndexer = new NameIndexer();
         userGenerator = new UserGenerator();
         bTree = new BTree<>(10, new BTreeRepository(), nameIndexer);
-        flightHistoryGenerator = FlightHistoryGenerator.getInstance();
+        generateUsers(10000);
     }
 
-    private void generateUsers() {
-        for (int i = 0; i < 100_000; i++) {
-            create(makeUser());
+    /**
+     * Generates 10,000 users and inserts them into the BTree.
+     *
+     * @param numberToGenerate The number of users to generate.
+     */
+    public void generateUsers(int numberToGenerate) {
+        User user;
+        for (int i = 0; i < numberToGenerate; i++) {
+            user = makeUser();
+            user.setFlights(new ArrayList<>());
+            bTree.insert(user);
         }
     }
     /**
@@ -47,7 +55,7 @@ public class UserManager implements IUserManager {
      *
      * @return The newly created User object.
      */
-    public User makeUser() {
+    private User makeUser() {
         User user = userGenerator.make();
         FlightHistory history = flightHistoryGenerator.generateRandomFlightHistory();
         user.addFlightHistory(history);
@@ -62,15 +70,23 @@ public class UserManager implements IUserManager {
      * @return A list of User objects matching the search criteria.
      */
     @Override
-    public List<User> search(String name) {
-        List<User> users = new ArrayList<>();
-        Set<User> userSet = nameIndexer.search(name);
-        for (User user : userSet) {
-            if (users.size() < 20) {
-                users.add(user);
-            } else {
-                break;
-            }
+    public Page search(String name, int page) {
+        page++;
+        if (page < 1) {
+            throw new InvalidPageException("Invalid page number.");
+        }
+        List<User> result = new ArrayList<>();
+        result.addAll(nameIndexer.search(name));
+        int pageSize = 20;
+        int totalResults = result.size();
+        if (totalResults == 0) {
+            return new Page(0, 0, new ArrayList<>(), 0, 0);
+        }
+
+        int totalPages = (totalResults + pageSize - 1) / pageSize;
+
+        if (page > totalPages && page != 1) {
+            throw new InvalidPageException("Invalid page number.");
         }
         return users;
     }
@@ -213,12 +229,20 @@ public class UserManager implements IUserManager {
                 current = null;
                 continue;
             } else {
-                keys.addAll(List.of(current.getKeys()));
-                if ((indexPage + 1) == page) {
-                    return keys;
+(??)                keys.addAll(List.of(current.getKeys()));
+(??)                if ((indexPage + 1) == page) {
+(??)                    return keys;
+(??)                for (User user : castToUserList(current.getKeys())) {
+(??)                    if (keys.size() == 20) {
+(??)                        if ((indexPage + 1) == page) {
+(??)                            return new Page(totalUsers, keys.size(), keys, page, totalPages);
+(??)                        } else {
+(??)                            indexPage++;
+(??)                            keys = new ArrayList<>();
+(??)                        }
+(??)                    }
+(??)                    keys.add(user);
                 }
-                indexPage++;
-                keys = new ArrayList<>();
             }
             // Summing 1 to key
             counter.put(current.getId(), counter.get(current.getId()) + 1);
@@ -226,6 +250,14 @@ public class UserManager implements IUserManager {
             current = current.getChild(numberChild);
         }
         return null;
+    }
+
+    private List<User> castToUserList(Object[] users) {
+        List<User> listReturned = new ArrayList<>();
+        for (int i = 0; i < users.length; i++) {
+            listReturned.add((User) users[i]);
+        }
+        return listReturned;
     }
 
     /**

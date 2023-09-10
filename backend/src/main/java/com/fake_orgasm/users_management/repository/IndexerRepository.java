@@ -15,6 +15,15 @@ public class IndexerRepository {
     private static final String PATH_INDEXER_DATA_BASE = "users/indexer";
 
     /**
+     * Constructor of the class.
+     */
+    public IndexerRepository() {
+        File dir = new File(PATH_INDEXER_DATA_BASE);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+    }
+    /**
      * Save a node in the secondary memory.
      *
      * @param key  key to save;
