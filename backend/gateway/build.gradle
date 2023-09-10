@@ -37,6 +37,11 @@ dependencies {
 
 	testImplementation(platform('org.junit:junit-bom:5.10.0'))
 	testImplementation('org.junit.jupiter:junit-jupiter')
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.apache.httpcomponents.client5:httpclient5'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
 dependencyManagement {
 	imports {
