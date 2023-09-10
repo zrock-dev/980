@@ -1,14 +1,12 @@
 package com.fake_orgasm.flights_management.exceptions;
 
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * This class is a util class that contains methods for the RestResponse class.
@@ -64,6 +62,12 @@ public class RequestExceptionsHandler {
         return new ResponseEntity<>(error, status);
     }
 
+    /**
+     * This method handles the exception of type HttpClientErrorException.
+     *
+     * @param e the HttpClientErrorException
+     * @return a ResponseEntity containing a RestResponse with the error details.
+     */
     @ExceptionHandler(value = HttpClientErrorException.class)
     public ResponseEntity<RestResponse> handleException(HttpClientErrorException e) {
         HttpStatus status = (HttpStatus) e.getStatusCode();
@@ -80,7 +84,6 @@ public class RequestExceptionsHandler {
      * @param input the input string to extract the message from
      * @return the extracted message if found, otherwise "Http Client Error"
      */
-
     private static String extractMessage(String input) {
         Pattern pattern = Pattern.compile("\"message\":\"(.*?)\"");
         Matcher matcher = pattern.matcher(input);

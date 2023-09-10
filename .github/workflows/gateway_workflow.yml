@@ -2,12 +2,6 @@ name: Gateway Workflow 🏗️
 run-name: ${{ github.actor }} is executing the workflow ${{ github.workflow }}.
 
 on:
-  push:
-    branches:
-      - develop
-      - main
-    paths:
-      - "backend/gateway"
   pull_request:
     types:
       - opened
@@ -15,6 +9,9 @@ on:
     branches:
       - develop
       - main
+    paths:
+      - "backend/gateway/**"
+  workflow_dispatch:
 
 jobs:
   build:

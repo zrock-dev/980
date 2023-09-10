@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * The UserDatabaseController class handles the REST API endpoints related to user management.
  * It provides functionality to create, update, delete, and retrieve user data from the database.
  */
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/users")
 public class UserDatabaseController {

@@ -24,8 +24,10 @@ public class FlightGeneratorHandlerTest {
     private static Random random;
     private static User user = new User(1234, "Luiggy", "Mamani Condori", LocalDate.of(1992, 1, 20), "Bolivia");
     private static Flight flight;
+
     @MockBean
     private EurekaClient eurekaClient;
+
     private static Ticket ticket;
     private static BookingService bookService = new BookingService();
     private static FlightGeneratorHandler generator = new FlightGeneratorHandler();
