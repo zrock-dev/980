@@ -6,7 +6,11 @@ const SearchContext = createContext();
 export const SearchProvider = ({ children }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-
+  const [inputSearch, setInputSearch] = useState('');
+  const updateInputSearch = (text) => {
+    setInputSearch(text);
+  };
+  
   const fetchData = async (searchText) => {
     try {
       setIsFetching(true);
@@ -25,9 +29,11 @@ export const SearchProvider = ({ children }) => {
   };
 
   return (
-    <SearchContext.Provider value={{ searchResults, fetchData, isFetching }}>
-      {children}
-    </SearchContext.Provider>
+  <SearchContext.Provider value={{ searchResults, fetchData, isFetching, inputSearch, updateInputSearch }}>
+    {children}
+  </SearchContext.Provider>
+
+
   );
 };
 

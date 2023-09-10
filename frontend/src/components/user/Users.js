@@ -2,7 +2,7 @@
 import UserSearchOption from './UserSeach';
 import { useSearch } from '@/contexts/SearchContext';
 const Users = () => {
-	const { searchResults } = useSearch();
+	const { searchResults, inputSearch } = useSearch();
 	const firstResults = searchResults.slice(0, 20);
 
 	const centerDivStyle = {
@@ -16,6 +16,11 @@ const Users = () => {
 	const boldBigTextStyle = {
     	fontWeight: 'bold',
     	fontSize: '2rem',
+		marginLeft: '2rem',
+  	};
+	  const SearchTextStyle = {
+    	fontSize: '1.5rem',
+		marginLeft: '2rem',
   	};
 
   	const imgStyle = {
@@ -23,31 +28,34 @@ const Users = () => {
 	    marginTop: '1rem',
   	};
 
-  	return (
-	    <div>
-      	{searchResults.length > 0 ? (
-	        firstResults.map((user) => (
-          	<div key={user.id}>
-	            <UserSearchOption
-              	key={user.id}
-              	firstName={user.firstName}
-				secondName={user.secondName}
-              	lastName={user.firstLastName}
-				secondLastName={user.secondLastName}
-              	year={user.dateBirth}
-              	category={user.category}
-              	country={user.country}
-            	/>
-          	</div>
-        	))
-      	) : (
-		<div style={centerDivStyle}>
-			<p style={boldBigTextStyle}>No search results available.</p>
-			<img src='/not-found-img.png' alt='results not found' style={imgStyle} />
+	  return (
+		<div>
+		  {searchResults.length > 0 ? (
+			<div>
+			  <p style={SearchTextStyle}>  Results found for: {inputSearch}</p>
+			  {firstResults.map((user) => (
+				<div key={user.id}>
+				  <UserSearchOption
+					key={user.id}
+					firstName={user.firstName}
+					secondName={user.secondName}
+					lastName={user.firstLastName}
+					secondLastName={user.secondLastName}
+					year={user.dateBirth}
+					category={user.category}
+					country={user.country}
+				  />
+				</div>
+			  ))}
+			</div>
+		  ) : (
+			<div style={centerDivStyle}>
+			  <p style={boldBigTextStyle}>No search results available.</p>
+			  <img src='/not-found-img.png' alt='results not found' style={imgStyle} />
+			</div>
+		  )}
 		</div>
-    	  )}
-    </div>
-  );
+	  );
 };
 
 export default Users;

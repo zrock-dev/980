@@ -7,12 +7,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useSearch } from '@/contexts/SearchContext'; 
 
 const Searcher = () => {
-	const { searchText, setSearchText } = useSearch();
 	const searchContainer = useRef(null);
 	const suggestionsContainer = useRef(null);
 	const [inputSearch, setInputSearch] = useState('');
 	const [suggestions, setSuggestions] = useState([]);
-	const { fetchData, isFetching } = useSearch();
+	const { fetchData, isFetching, updateInputSearch } = useSearch();
 
 	const showSuggestions = () => {
 		if (searchContainer.current && suggestionsContainer.current) {
@@ -44,6 +43,7 @@ const Searcher = () => {
 		);
 	};
 	const handleSearch = () => {
+		updateInputSearch(inputSearch); 
 		fetchData(inputSearch);
 	};
 
