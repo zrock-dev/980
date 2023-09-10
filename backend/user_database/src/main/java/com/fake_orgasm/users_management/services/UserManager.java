@@ -82,7 +82,7 @@ public class UserManager implements IUserManager {
 
         List<User> usersForPage = result.subList(startIndex, endIndex);
 
-        return new Page(totalResults, usersForPage.size(), usersForPage, page, totalPages);
+        return new Page(totalResults, usersForPage.size(), usersForPage, page - 1, totalPages - 1);
     }
 
     /**
@@ -208,7 +208,7 @@ public class UserManager implements IUserManager {
         int startIndex = (page - 1) * pageSize;
         int endIndex = Math.min(startIndex + pageSize, totalUsers);
         List<User> sublist = users.subList(startIndex, endIndex);
-        return new Page(totalUsers, sublist.size(), sublist, page, totalPages);
+        return new Page(totalUsers, sublist.size(), sublist, page - 1, totalPages - 1);
     }
 
     /**

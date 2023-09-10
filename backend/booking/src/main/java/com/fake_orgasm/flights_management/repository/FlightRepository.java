@@ -1,11 +1,9 @@
 package com.fake_orgasm.flights_management.repository;
 
-
 import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.FlightJoined;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
