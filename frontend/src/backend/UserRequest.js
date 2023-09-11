@@ -41,8 +41,16 @@ export const getFlagImage = async (countryName) => {
 };
 
 export const editUser = async (oldData, newData) => {
+	console.log({
+		oldData: oldData,
+		newData: {
+			...newData, id: parseInt(newData.id)
+		}
+	})
 	return await axios.put(`${CLIENT_DOMAIN}/api/users/`, {
-		oldData,
-		newData
+		oldData: oldData,
+		newData: {
+			...newData, id: parseInt(newData.id)
+		}
 	});
 };
