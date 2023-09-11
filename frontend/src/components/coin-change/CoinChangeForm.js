@@ -11,14 +11,22 @@ const CoinChangeForm = ({
 
   const handleMoneyAmountChange = (event) => {
     let value = event.target.value;
-     if (value.length > 8) {
-       return;
-     }
+    let lengthValue = value.length;
+    let index = value.indexOf(".");
+    let validation = 2;
+
+    if (index != -1 && lengthValue - index > validation) {
+      return;
+    }
+
+    if (value.length > 8) {
+      return;
+    }
 
     if (value === "") {
       setMoneyAmountValue("");
     } else if (/^\d*\.?\d*$/.test(value)) {
-      if (parseFloat(value) >= 1 && parseFloat(value) < 10000) {
+      if (parseFloat(value) >= 1 && parseFloat(value) < 100000) {
         setMoneyAmountValue(value);
       }
     }

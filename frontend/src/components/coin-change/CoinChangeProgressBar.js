@@ -25,7 +25,7 @@ const ProgressBar = ({ coinContext }) => {
       <h2 className="progress-title">Progress Bar</h2>
       <div className="progress-bar">
         {console.log(coinContext)}
-        {coinContext  &&
+        {coinContext &&
           coinContext.map((coin, index) => (
             <div
               className="progress"
@@ -35,7 +35,7 @@ const ProgressBar = ({ coinContext }) => {
                 backgroundColor: colors[index],
               }}
             >
-              {coin.percentage.toFixed(2)}%
+              {coin.percentage.toFixed(2)}%{" "}
             </div>
           ))}
       </div>

@@ -17,10 +17,8 @@ public class Dollars {
      */
     public static Collection<DoubleMoney> getDollarsMoneys() {
         return new ArrayList<>(List.of(
-                new DoubleMoney(0.01),
-                new DoubleMoney(0.05),
                 new DoubleMoney(0.1),
-                new DoubleMoney(0.25),
+                new DoubleMoney(0.2),
                 new DoubleMoney(0.5),
                 new DoubleMoney(1.0),
                 new DoubleMoney(2.0),
