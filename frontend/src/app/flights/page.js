@@ -1,7 +1,7 @@
-import Flights from "@/components/booking/flights/Flights";
+import FlightsManager from "@/components/booking/flights/FlightsManager";
 
 const FlightsPage = () => {
-    return <Flights/>
+    return <FlightsManager/>
 }
 
 export default FlightsPage
