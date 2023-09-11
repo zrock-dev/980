@@ -3,7 +3,7 @@ testing_attempts=15
 testing_wait_interval=5
 executed_attempts=0
 while [ $executed_attempts -lt $testing_attempts ]; do
-	if curl -s --head http://localhost:8080/api/currency-exchange/dollar?amount=99.99 | grep "HTTP/1.1 200 OK"; then
+	if curl -s --head http://localhost:8080/api/currency-exchange/dollar?amount=99.99 | grep "HTTP/1.1 200"; then
 		echo "Sucess"
 		exit 0
 	fi
