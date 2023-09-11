@@ -208,7 +208,7 @@ public class UserManager implements IUserManager {
     public Page getUsersByPage(int page) {
         int totalUsers = bTree.getSize();
         int totalPages = totalUsers / 20;
-        if (page < 1 || page > totalPages) {
+        if (page < 0 || page > totalPages) {
             throw new InvalidPageException("Invalid page number.");
         }
         if (totalUsers == 0) {
@@ -241,7 +241,7 @@ public class UserManager implements IUserManager {
             } else {
                 for (User user : castToUserList(current.getKeys())) {
                     if (keys.size() == 20) {
-                        if ((indexPage + 1) == page) {
+                        if ((indexPage) == page) {
                             return new Page(totalUsers, keys.size(), keys, page, totalPages);
                         } else {
                             indexPage++;
