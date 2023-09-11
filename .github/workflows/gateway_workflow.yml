@@ -1,0 +1,81 @@
+name: Gateway Workflow 🏗️ 
+run-name: ${{ github.actor }} is executing the workflow ${{ github.workflow }}.
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - develop
+      - main
+    paths:
+      - "backend/gateway/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build
+    runs-on:  ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17' 
+          cache: 'gradle'
+
+      - name: Building
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend/gateway
+          ./gradlew build -x test -x check --no-daemon
+
+  test:
+    name: test
+    needs: build
+    runs-on:  ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17' 
+          cache: 'gradle'
+
+      - name: Testing 
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend/gateway
+          ./gradlew test -x check --no-daemon
+
+  check:
+    name: code_analysis 
+    runs-on: ubuntu-latest
+    needs: test 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17' 
+          cache: 'gradle'
+
+      - name: Static Code Analysis 
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend/gateway
+          ./gradlew --no-daemon checkStyleMain spotlessCheck -x checkStyleTest -x test build 
+

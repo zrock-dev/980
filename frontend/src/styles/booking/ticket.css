@@ -1,0 +1,32 @@
+
+.ticket {
+    background: linear-gradient(to right, #f9f9f9, #e6e6e6);
+    padding: 15px;
+    margin: 15px;
+    border: 2px dashed #d9d9d9;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-priority {
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: #78909c;
+}
+
+.ticket-priority.VIP {
+    background-color: #f06292;
+    color: white;
+}
+
+.ticket-priority.FREQUENT_PASSENGER {
+    background-color: #ff9800;
+    color: white;
+}
+
+.ticket-priority.REGULAR_PASSENGER {
+    background-color: #4caf50;
+    color: white;
+}

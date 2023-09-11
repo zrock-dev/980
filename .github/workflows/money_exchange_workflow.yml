@@ -1,0 +1,118 @@
+name: Money Exchange 🏗️ 
+run-name: ${{ github.actor }} is executing the workflow ${{ github.workflow }}.
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - develop
+      - main
+    paths:
+      - "backend/money_exchange/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build
+    runs-on:  ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17' 
+          cache: 'gradle'
+
+      - name: Building
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend/money_exchange
+          ./gradlew build -x test -x check --no-daemon
+
+  test:
+    name: test
+    needs: build
+    runs-on:  ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17' 
+          cache: 'gradle'
+
+      - name: Testing 
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend/money_exchange
+          ./gradlew test -x check --no-daemon
+
+  check:
+    name: code_analysis 
+    runs-on: ubuntu-latest
+    needs: test 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17' 
+          cache: 'gradle'
+
+      - name: Static Code Analysis 
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd backend/money_exchange
+          ./gradlew --no-daemon checkStyleMain spotlessCheck -x checkStyleTest -x test build 
+
+  service_integration:
+    name: service_integration
+    runs-on: ubuntu-latest
+    needs: check
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+         distribution: 'temurin'
+         java-version: '17'
+         cache: 'gradle'
+
+    - name: Money Exchange Integration testing
+      id: integration_testing
+      working-directory: ${{ github.workspace }}
+      run: |
+          exit_code=0
+          ./services_testing/money_exchange/service_startup
+          if ! ./services_testing/money_exchange/simple_test; then
+            echo "Test failed"
+            exit_code=1
+          fi
+
+          ./scripts/utils -k
+          exit $exit_code
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: fake_orgasm_app_logs-${{ github.sha }}
+        path: logs
+      if: always()
+            

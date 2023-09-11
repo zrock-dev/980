@@ -1,7 +1,5 @@
 package com.fake_orgasm.users_management.services;
 
-import com.fake_orgasm.generator.flight_history_generator.FlightHistory;
-import com.fake_orgasm.generator.flight_history_generator.FlightHistoryGenerator;
 import com.fake_orgasm.generator.user_generator.UserGenerator;
 import com.fake_orgasm.users_management.libs.btree.BTree;
 import com.fake_orgasm.users_management.libs.btree.NameIndexer;
@@ -10,6 +8,7 @@ import com.fake_orgasm.users_management.models.User;
 import com.fake_orgasm.users_management.repository.BTreeRepository;
 import com.fake_orgasm.users_management.services.exceptions.DuplicateUserException;
 import com.fake_orgasm.users_management.services.exceptions.IncompleteUserException;
+import com.fake_orgasm.users_management.services.exceptions.InvalidPageException;
 import com.fake_orgasm.users_management.services.exceptions.NonexistentUserException;
 import java.util.*;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserManager implements IUserManager {
     private UserGenerator userGenerator;
-    private FlightHistoryGenerator flightHistoryGenerator;
 
     private NameIndexer nameIndexer;
     private static BTree<User> bTree;
@@ -57,9 +55,6 @@ public class UserManager implements IUserManager {
      */
     private User makeUser() {
         User user = userGenerator.make();
-        FlightHistory history = flightHistoryGenerator.generateRandomFlightHistory();
-        user.addFlightHistory(history);
-        user.setCategory(history.getTicketType());
         return user;
     }
 
@@ -67,6 +62,7 @@ public class UserManager implements IUserManager {
      * Searches for users whose names contain the given name fragment.
      *
      * @param name The name fragment to search for.
+     * @param page the page of the results.
      * @return A list of User objects matching the search criteria.
      */
     @Override
@@ -85,10 +81,16 @@ public class UserManager implements IUserManager {
 
         int totalPages = (totalResults + pageSize - 1) / pageSize;
 
-        if (page > totalPages && page != 1) {
+        if (page > totalPages) {
             throw new InvalidPageException("Invalid page number.");
         }
-        return users;
+
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalResults);
+
+        List<User> usersForPage = result.subList(startIndex, endIndex);
+
+        return new Page(totalResults, usersForPage.size(), usersForPage, page - 1, totalPages - 1);
     }
 
     /**
@@ -106,7 +108,6 @@ public class UserManager implements IUserManager {
         if (!isUserComplete(user)) {
             throw new IncompleteUserException("User properties are incomplete.");
         }
-
         if (bTree.getSize() > 0 && bTree.searchKey(user) != null) {
             throw new DuplicateUserException("User already exists.");
         }
@@ -182,7 +183,6 @@ public class UserManager implements IUserManager {
                 userToUpdate.setFirstLastName(updateUser.getFirstLastName());
                 userToUpdate.setSecondLastName(updateUser.getSecondLastName());
                 userToUpdate.setDateBirth(updateUser.getDateBirth());
-                userToUpdate.setCategory(updateUser.getCategory());
                 userToUpdate.setCountry(updateUser.getCountry());
                 Node<User> nodeChanged = bTree.search(bTree.getRoot(), userToUpdate);
                 bTree.getRepository().save(nodeChanged);
@@ -237,32 +237,18 @@ public class UserManager implements IUserManager {
                 current = null;
                 continue;
             } else {
-(??)(??)                keys.addAll(List.of(current.getKeys()));
-(??)(??)                if ((indexPage + 1) == page) {
-(??)(??)                    return keys;
-(??)(??)                for (User user : castToUserList(current.getKeys())) {
-(??)(??)                    if (keys.size() == 20) {
-(??)(??)                        if ((indexPage + 1) == page) {
-(??)(??)                            return new Page(totalUsers, keys.size(), keys, page, totalPages);
-(??)(??)                        } else {
-(??)(??)                            indexPage++;
-(??)(??)                            keys = new ArrayList<>();
-(??)(??)                        }
-(??)(??)                    }
-(??)(??)                    keys.add(user);
-(??)                for (User user : castToUserList(current.getKeys())) {
-(??)                    if (keys.size() == 20) {
-(??)                        if ((indexPage) == page) {
-(??)                            return new Page(totalUsers, keys.size(), keys, page, totalPages);
-(??)                        } else {
-(??)                            indexPage++;
-(??)                            keys = new ArrayList<>();
-(??)                        }
-(??)                    }
-(??)                    keys.add(user);
+                for (User user : castToUserList(current.getKeys())) {
+                    if (keys.size() == 20) {
+                        if ((indexPage) == page) {
+                            return new Page(totalUsers, keys.size(), keys, page, totalPages);
+                        } else {
+                            indexPage++;
+                            keys = new ArrayList<>();
+                        }
+                    }
+                    keys.add(user);
                 }
             }
-            // Summing 1 to key
             counter.put(current.getId(), counter.get(current.getId()) + 1);
             numberChild = counter.get(current.getId());
             current = current.getChild(numberChild);
