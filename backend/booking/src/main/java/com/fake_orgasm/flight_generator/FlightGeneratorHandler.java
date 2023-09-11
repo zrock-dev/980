@@ -71,7 +71,6 @@ public class FlightGeneratorHandler {
         this.airportRepository = new AirportRepository();
         this.flightRepository = new FlightRepository();
         this.ticketRepository = new TicketRepository();
-
         airportRepository.createTable();
         flightRepository.createTable();
         ticketRepository.createTable();
@@ -172,7 +171,7 @@ public class FlightGeneratorHandler {
     private void calculateAmounts(int usersSize, int ticketsByUser) {
         amountTickets = (usersSize * ticketsByUser);
         amountFlights = amountTickets / Flight.MIN_CAPACITY;
-        amountAirports = amountFlights / 2;
+        amountAirports = amountFlights + 2;
 
         if (amountFlights <= 0) {
             amountFlights = usersSize / 2;
@@ -186,6 +185,9 @@ public class FlightGeneratorHandler {
      * @param users The list of users to update.
      */
     private void updateUsers(List<User> users) {
+        if (restClient == null) {
+            return;
+        }
         for (User user : users) {
             restClient.updateUserData(user, user);
         }

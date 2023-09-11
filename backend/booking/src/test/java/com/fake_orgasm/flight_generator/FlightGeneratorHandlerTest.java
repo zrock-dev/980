@@ -7,15 +7,20 @@ import com.fake_orgasm.flights_management.models.Airport;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.Flight;
 import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.repository.AirportRepository;
+import com.fake_orgasm.flights_management.repository.FlightRepository;
+import com.fake_orgasm.flights_management.repository.Page;
+import com.fake_orgasm.flights_management.repository.TicketRepository;
 import com.fake_orgasm.flights_management.services.BookingService;
-import com.fake_orgasm.flights_management.services.EurekaClient;
+import com.fake_orgasm.flights_management.services.RestClient;
 import com.fake_orgasm.users_management.models.User;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootTest
 public class FlightGeneratorHandlerTest {
@@ -25,10 +30,8 @@ public class FlightGeneratorHandlerTest {
     private static User user = new User(1234, "Luiggy", "Mamani Condori", LocalDate.of(1992, 1, 20), "Bolivia");
     private static Flight flight;
 
-    @MockBean
-    private EurekaClient eurekaClient;
-
     private static Ticket ticket;
+    private static List<Ticket> tickets;
     private static BookingService bookService = new BookingService();
     private static FlightGeneratorHandler generator = new FlightGeneratorHandler();
 
@@ -81,35 +84,39 @@ public class FlightGeneratorHandlerTest {
         assertEquals(amountTicketByUser, randomUser.getFlights().size());
     }
 
-    //    @Test
-    //    public void generateAndDelete() {
-    //        boolean isProduction = false;
-    //        if (!isProduction) {
-    //            // generate data
-    //            deleteAllData();
-    //            generateAndSave();
-    //            showData();
-    //
-    //            // booking process
-    //            booking(Category.VIP);
-    //            editBooking(Category.REGULAR_PASSENGER.getType());
-    //            cancelBooking();
-    //
-    //            booking(Category.REGULAR_PASSENGER);
-    //            editBooking(Category.VIP.getType());
-    //            cancelBooking();
-    //
-    //            booking(Category.FREQUENT_PASSENGER);
-    //            editBooking(Category.REGULAR_PASSENGER.getType());
-    //            cancelBooking();
-    //
-    //            // delete all data generated
-    //            deleteAllData();
-    //        }
-    //    }
+    @Test
+    public void generateAndDelete() {
+        generator = new FlightGeneratorHandler(
+                new RestClient(new RestTemplate()),
+                new AirportRepository(),
+                new FlightRepository(),
+                new TicketRepository());
+        boolean isProduction = false;
+        if (!isProduction) {
+            // deleteAllData();
+            long startTime = System.currentTimeMillis();
+            // generateAndSave();
 
-    public static void generateAndSave() {
-        generator.generateTicketsAndSave(users, 5);
+            long endTime = System.currentTimeMillis();
+            System.out.println(endTime - startTime);
+            // showData();
+        }
+    }
+
+    public void generateAndSave() {
+        RestClient restClient = new RestClient(new RestTemplate());
+        Page<User> page = restClient.getPage(0);
+        int totalPages = page.totalPages();
+        int pageSize = 20;
+        int totalThreads = (totalPages + pageSize - 1) / pageSize;
+        ExecutorService executor = Executors.newFixedThreadPool(totalThreads);
+        for (int i = 0; i < 1; i++) {
+            int from = i * pageSize;
+            int to = Math.min((i + 1) * pageSize, totalPages);
+            executor.execute(new RestGenerator(from, to));
+        }
+        executor.shutdown();
+        while (!executor.isTerminated()) {}
     }
 
     public static void deleteAllData() {
