@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.fake_orgasm.BTreeRepositoryTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-09-07T13:59:23" hostname="fundalap-nh81" time="0.769">
-  <properties/>
-  <testcase name="insertNodeTest()" classname="com.fake_orgasm.BTreeRepositoryTest" time="0.146"/>
-  <testcase name="deleteNodeTest()" classname="com.fake_orgasm.BTreeRepositoryTest" time="0.01"/>
-  <testcase name="getNodeByIdTest()" classname="com.fake_orgasm.BTreeRepositoryTest" time="0.599"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

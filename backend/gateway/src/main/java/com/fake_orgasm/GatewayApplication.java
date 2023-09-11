@@ -21,6 +21,11 @@ public class GatewayApplication {
         SpringApplication.run(GatewayApplication.class, args);
     }
 
+    /**
+     * This method configure the cors server.
+     *
+     * @return cors configured.
+     */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

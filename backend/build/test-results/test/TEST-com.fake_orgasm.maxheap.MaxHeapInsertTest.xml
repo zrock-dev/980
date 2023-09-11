@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.fake_orgasm.maxheap.MaxHeapInsertTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-09-07T13:59:33" hostname="fundalap-nh81" time="0.003">
-  <properties/>
-  <testcase name="testDoubleExchanges()" classname="com.fake_orgasm.maxheap.MaxHeapInsertTest" time="0.002"/>
-  <testcase name="testIntegersExchanges()" classname="com.fake_orgasm.maxheap.MaxHeapInsertTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

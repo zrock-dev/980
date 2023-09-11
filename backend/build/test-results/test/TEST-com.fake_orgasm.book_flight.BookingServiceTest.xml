@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.fake_orgasm.book_flight.BookingServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-09-07T13:59:24" hostname="fundalap-nh81" time="0.419">
-  <properties/>
-  <testcase name="testBookingService()" classname="com.fake_orgasm.book_flight.BookingServiceTest" time="0.393"/>
-  <testcase name="flightCancellationTest()" classname="com.fake_orgasm.book_flight.BookingServiceTest" time="0.01"/>
-  <testcase name="cancelABooking()" classname="com.fake_orgasm.book_flight.BookingServiceTest" time="0.004"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
