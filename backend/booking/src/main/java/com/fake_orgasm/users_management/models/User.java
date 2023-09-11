@@ -178,7 +178,6 @@ public class User implements Comparable<User> {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        System.out.println("I'm diferent");
 
         User userToCompare = (User) object;
         return this.id == userToCompare.getId();

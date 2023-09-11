@@ -1,6 +1,7 @@
 package com.fake_orgasm.flights_management.services;
 
 import com.fake_orgasm.flights_management.exceptions.UserNotFoundException;
+import com.fake_orgasm.flights_management.repository.Page;
 import com.fake_orgasm.flights_management.services.records.UpdateRequest;
 import com.fake_orgasm.users_management.models.User;
 import java.util.List;
@@ -104,8 +105,26 @@ public class RestClient {
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();
         } else if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
-            System.out.println(response.getStatusCode());
             return createUser(user) ? user : null;
+        } else {
+            throw new RuntimeException("Unexpected status code: " + response.getStatusCode());
+        }
+    }
+
+    /**
+     * Retrieves a specific page of User objects from the API.
+     *
+     * @param page the page number to retrieve
+     * @return the Page<User> object representing the requested page
+     */
+    public Page<User> getPage(int page) {
+        String url = BASE_URL + "?page=" + page;
+
+        ResponseEntity<Page<User>> response =
+                restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Page<User>>() {});
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return response.getBody();
         } else {
             throw new RuntimeException("Unexpected status code: " + response.getStatusCode());
         }
