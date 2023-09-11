@@ -18,6 +18,8 @@ import { differenceInDays, format } from 'date-fns';
 import { useState } from 'react';
 import DeleteTicketCheck from './DeleteTicketCheck';
 import { editBooking } from '@/backend/BookingRequest';
+import Link from 'next/link';
+import JetFighterUp from '@/icons/JetFighterUp';
 
 const EditTicketForm = ({
 	onClose,
@@ -44,6 +46,10 @@ const EditTicketForm = ({
 			<OptionTopContainer>
 				<Subtitle>
 					#{ticket.number} - {format(new Date(ticket.date), 'dd-MMM-yyyy')}
+					{' - '}
+					<Link href={`/flights/${ticket.flightId}`}>
+						<JetFighterUp />
+					</Link>
 				</Subtitle>
 				<button onClick={onClose}>
 					<Xmark />
