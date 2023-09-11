@@ -203,7 +203,15 @@ public class UserManager implements IUserManager {
      * @return A list of User objects from the specified page.
      */
     @Override
-    public List<User> getUsersByPage(int page) {
+    public Page getUsersByPage(int page) {
+        int totalUsers = bTree.getSize();
+        int totalPages = totalUsers / 20;
+        if (page < 0 || page > totalPages) {
+            throw new InvalidPageException("Invalid page number.");
+        }
+        if (totalUsers == 0) {
+            return new Page(0, 0, new ArrayList<>(), 0, 0);
+        }
         Stack<Node<User>> stack = new Stack<>();
         Node<User> current = bTree.getRoot();
         Map<String, Integer> counter = new HashMap<>();
@@ -229,12 +237,22 @@ public class UserManager implements IUserManager {
                 current = null;
                 continue;
             } else {
-(??)                keys.addAll(List.of(current.getKeys()));
-(??)                if ((indexPage + 1) == page) {
-(??)                    return keys;
+(??)(??)                keys.addAll(List.of(current.getKeys()));
+(??)(??)                if ((indexPage + 1) == page) {
+(??)(??)                    return keys;
+(??)(??)                for (User user : castToUserList(current.getKeys())) {
+(??)(??)                    if (keys.size() == 20) {
+(??)(??)                        if ((indexPage + 1) == page) {
+(??)(??)                            return new Page(totalUsers, keys.size(), keys, page, totalPages);
+(??)(??)                        } else {
+(??)(??)                            indexPage++;
+(??)(??)                            keys = new ArrayList<>();
+(??)(??)                        }
+(??)(??)                    }
+(??)(??)                    keys.add(user);
 (??)                for (User user : castToUserList(current.getKeys())) {
 (??)                    if (keys.size() == 20) {
-(??)                        if ((indexPage + 1) == page) {
+(??)                        if ((indexPage) == page) {
 (??)                            return new Page(totalUsers, keys.size(), keys, page, totalPages);
 (??)                        } else {
 (??)                            indexPage++;
