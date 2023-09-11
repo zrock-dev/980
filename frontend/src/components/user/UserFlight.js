@@ -21,15 +21,13 @@ const UserFlight = ({ ticket, fetchUserData }) => {
 	const [destinationFlag, setDestinationFlag] = useState(null);
 
 	useEffect(() => {
-		if (ticket) {
-			getFlagImage(ticket.source.country).then((image) => {
-				setSourceFlag(image);
-			});
-			getFlagImage(ticket.destination.country).then((image) => {
-				setDestinationFlag(image);
-			});
-		}
-	}, []);
+		getFlagImage(ticket.source.country).then((image) => {
+			setSourceFlag(image);
+		});
+		getFlagImage(ticket.destination.country).then((image) => {
+			setDestinationFlag(image);
+		});
+	}, [ticket]);
 
 	return (
 		ticket && (
@@ -67,7 +65,7 @@ const UserFlight = ({ ticket, fetchUserData }) => {
 					</UserFlightAirports>
 					<UserFlightInformation>
 						<UserFlightDate>
-							<b>{ticket.category}</b>
+							<b>{ticket.priority}</b>
 							<span>{format(new Date(ticket.date), 'dd-MMM-yyyy')}</span>
 						</UserFlightDate>
 						{ticket.price && <FlightPrice>{ticket.price} Bs</FlightPrice>}
