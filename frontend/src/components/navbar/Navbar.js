@@ -27,6 +27,11 @@ const Navbar = () => {
 					selected={pathname.includes('/users')}
 				/>
 				<NavOption
+					route={'/booking'}
+					title={'Booking'}
+					selected={pathname.includes('/booking')}
+				/>
+				<NavOption
 					route={'/coin-change'}
 					title={'Coin change'}
 					selected={pathname === '/coin-change'}

@@ -8,9 +8,9 @@ const FlightsManager = () => {
     const router = useRouter()
 
     const handleButtonClick = (element) => {
-        if (element.available) {
-            router.push(`/booking?flight=${element.id}`)
-        }
+        // if (element.available) {
+        //     router.push(`/booking?flight=${element.id}`)
+        // }
     };
 
     return (
