@@ -1,0 +1,44 @@
+/* styles.css */
+
+.card-button {
+    position: relative;
+    border: none;
+    padding: 15px; /* Reduced padding */
+    margin: 20px;
+    background-color: #008080;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    overflow: hidden;
+}
+
+.card-button::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 5px solid #008080;
+    border-radius: 20px;
+}
+
+.card-button:hover {
+    background-color: #007070;
+    border-color: #007070;
+}
+
+.card-button .card-text {
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    font-size: 20px; /* Smaller font size */
+    color: #ffffff;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.card-button .destination {
+    font-size: 16px; /* Smaller font size for destination text */
+    color: #f0f0f0;
+    margin-top: 5px;
+}

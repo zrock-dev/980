@@ -1,0 +1,30 @@
+
+.app-container {
+    display: flex;
+    align-items: center;
+}
+
+.left-side-container,
+.right-side-container {
+    flex: 1;
+    padding: 10px;
+    max-height: 100vh;
+    overflow-y: auto;
+    display: flex;
+}
+
+.right-side-container {
+    flex-direction: column;
+    align-items: center;
+}
+
+.side-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.separator {
+    border-left: 2px dashed #333333;
+}
