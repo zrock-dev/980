@@ -16,22 +16,22 @@ const Users = () => {
 	useEffect(() => {
 		fetchData(inputSearch, currentPage);
 	}, [currentPage]);
-	
-	useEffect(() => {
-		const fetchBackendUsers = async (page) => {
-		  try {
-			const url = `http://localhost:8080/api/users?page=${page}`;
-			const response = await fetch(url);
-			if (!response.ok) {
-			  throw new Error('Failed to fetch backend users');
-			}
-			const users = await response.json();
-			setFetchedUsers(users.elements);
-		  } catch (error) {
-			console.error('Error fetching backend users:', error);
+
+	const fetchBackendUsers = async (page) => {
+		try {
+		  const url = `http://localhost:8080/api/users?page=${page}`;
+		  const response = await fetch(url);
+		  if (!response.ok) {
+			throw new Error('Failed to fetch backend users');
 		  }
-		};
-	
+		  const users = await response.json();
+		  setFetchedUsers((prevUsers) => [...prevUsers, ...users.elements]);
+		} catch (error) {
+		  console.error('Error fetching backend users:', error);
+		}
+	  };
+	  
+	useEffect(() => {
 		fetchBackendUsers(0);
 	  }, []);
 
@@ -47,11 +47,11 @@ const Users = () => {
 		}
 	  };
 	  const handleNextFetchedUsersPage = () => {
-		const maxPage = Math.ceil(fetchedUsers.length / itemsPerPage);
-		if (fetchedUsersPage < maxPage) {
-		  setFetchedUsersPage(fetchedUsersPage + 1);
-		}
+		const nextPage = fetchedUsersPage + 1;
+		setFetchedUsersPage(nextPage);
+		fetchBackendUsers(nextPage);
 	  };
+	  
 	
 
 	const centerDivStyle = {
