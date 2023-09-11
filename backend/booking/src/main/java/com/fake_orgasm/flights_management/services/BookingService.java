@@ -1,10 +1,7 @@
 package com.fake_orgasm.flights_management.services;
 
 import com.fake_orgasm.flights_management.exceptions.UserNotFoundException;
-import com.fake_orgasm.flights_management.models.Category;
-import com.fake_orgasm.flights_management.models.Flight;
-import com.fake_orgasm.flights_management.models.FlightJoined;
-import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.models.*;
 import com.fake_orgasm.flights_management.repository.*;
 import com.fake_orgasm.users_management.models.User;
 import java.util.List;
@@ -188,7 +185,7 @@ public class BookingService implements IBookingService {
      * and associated airports for the specified page.
      */
     @Override
-    public Page getFlightsJoined(int page) {
+    public Page<FlightJoined> getFlightsJoined(int page) {
         return flightRepository.findAllFlightsJoined(page + 1);
     }
 
@@ -222,7 +219,7 @@ public class BookingService implements IBookingService {
      * and associated flight and airport information for the specified user and page.
      */
     @Override
-    public Page getUserTickets(int userId, int page) {
+    public Page<TicketJoined> getUserTickets(int userId, int page) {
         return ticketRepository.findAllTicketsJoined(userId, page + 1);
     }
 

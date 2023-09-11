@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/Application.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/flight_generator/AirportGenerator.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/flight_generator/FlightGeneratorHandler.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/flight_generator/FlightGenerator.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/flight_generator/TicketGenerator.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/user_generator/DateGenerator.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/user_generator/UserNameGenerator.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/user_generator/UserGenerator.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/user_generator/CitizenIdentificationGenerator.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/user_generator/combinatory_parts/CoreWorker.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/user_generator/combinatory_parts/Worker.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/user_generator/combinatory_parts/Piece.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/user_generator/combinatory_parts/Administrator.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/generator_backbone/GeneratorBackbone.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/generator_backbone/GeneratorUI.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/generator_backbone/utils/InputValidator.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/utils/FileReader.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/utils/RandomFileReader.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/generator/utils/Notifiable.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/exceptions/FlightCapacityException.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/services/IBookingService.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/services/BookingService.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/services/ServiceConfiguration.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/AirportRepository.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/FlightRepository.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/schemas/Schemable.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/schemas/FlightSchema.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/schemas/AirportSchema.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/schemas/TicketSchema.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/requesters/SourceJson.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/requesters/IJsonRequester.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/requesters/JsonRequester.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/FlightDatabase.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/repository/TicketRepository.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/models/Flight.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/models/Ticket.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/models/Airport.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/models/Category.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/models/FlightJoined.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/flights_management/models/TicketJoined.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/currency_exchange/libs/maxheap/MaxHeap.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/currency_exchange/services/MoneyExchanger.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/currency_exchange/models/IMoneySubtracted.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/currency_exchange/models/ExchangeRates.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/currency_exchange/models/IntegerMoney.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/libs/btree/Node.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/libs/btree/Utils.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/libs/btree/BTree.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/services/exceptions/InvalidPageException.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/services/exceptions/IncompleteUserException.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/services/IUserManagement.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/services/ServiceConfiguration.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/repository/NodeDeserializer.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/repository/BTreeRepository.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/repository/IBTreeRepository.java">
+</file>
+<file name="/home/fundacion/College/4Semester/Programming/980/backend/src/main/java/com/fake_orgasm/users_management/models/User.java">
+</file>
+</checkstyle>

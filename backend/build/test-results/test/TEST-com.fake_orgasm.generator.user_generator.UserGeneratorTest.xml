@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.fake_orgasm.generator.user_generator.UserGeneratorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-09-07T13:59:28" hostname="fundalap-nh81" time="0.143">
+  <properties/>
+  <testcase name="simpleGeneration()" classname="com.fake_orgasm.generator.user_generator.UserGeneratorTest" time="0.143"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

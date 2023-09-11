@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Description: This script packages and combines binary distributions from specified folders into a single tar file.
+# Author: [Santiago C. Saavedra]
+# Date: [07/09/2023]
+
+
+packaging_dir="binaries"
+if ! [ -d "$packaging_dir" ]; then
+	mkdir "$packaging_dir"
+fi
+
+for folder in "$@"; do
+	folder_path="$folder/build/distributions/"
+
+	if [ -d "$folder_path" ]; then
+		find "$folder_path" -type f -name "*boot*.tar" -exec tar -xf {} -C "$folder_path" \;
+		bin_path=$(find "$folder_path" -type d -name "bin" -exec dirname {} \;)
+		if ! cp -r "$bin_path" "$packaging_dir"; then
+			echo "Copy operation failed" >&2
+			exit 1
+		fi
+		echo "Extracted bin from $folder"
+	else
+		printf "Path: %s does not exist\n" "$folder_path" >&2
+		exit 1
+	fi
+done
+
+printf "Binaries extracted in dir: %s\n" "$(realpath $packaging_dir)"
+exit 0

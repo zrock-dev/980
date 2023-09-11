@@ -36,7 +36,7 @@ public class TicketsPriorityTest {
         Airport airport1 = new Airport(UUID.randomUUID().toString(), "source1", "Bolivia", "Cochabamba");
         Airport airport2 = new Airport(UUID.randomUUID().toString(), "destination", "Argentina", "Buenos Aries");
 
-        flight = new Flight(UUID.randomUUID().toString(), airport1.getId(), airport2.getId(), 100);
+        flight = new Flight(UUID.randomUUID().toString(), airport1.getId(), airport2.getId(), 100, 200);
 
         ticket1 =
                 new Ticket(UUID.randomUUID().toString(), 1, Category.FREQUENT_PASSENGER, user1.getId(), flight.getId());
