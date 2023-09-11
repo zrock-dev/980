@@ -16,7 +16,6 @@ import Xmark from '@/icons/Xmark';
 import Loader from '../Loader';
 import { differenceInDays, format } from 'date-fns';
 import { useState } from 'react';
-import { RED } from '@/styles/colors';
 import DeleteTicketCheck from './DeleteTicketCheck';
 
 const EditTicketForm = ({
@@ -26,7 +25,7 @@ const EditTicketForm = ({
 	destinationFlag,
 	fetchUserData
 }) => {
-	const [category, setCategory] = useState(ticket.category);
+	const [category, setCategory] = useState(ticket.priority);
 
 	const deleteTicket = async () => {
 		// request to delete the ticket
@@ -93,21 +92,18 @@ const EditTicketForm = ({
 						value={category}
 						onChange={(e) => setCategory(e.target.value)}
 					>
-						<option value="Vip">VIP</option>
-						<option value="Frecuent passager">FRECUENT PASSAGER</option>
-						<option value="Regular passager">REGULAR PASSAGER</option>
+						<option value="VIP">VIP</option>
+						<option value="FREQUENT_PASSENGER">FREQUENT PASSENGER</option>
+						<option value="REGULAR_PASSENGER">REGULAR PASSENGER</option>
 					</FormSelect>
 					<SecondaryText>
 						You can still change the category of this flight, the category and
 						price will change. Your arrival number will not be affected.
 					</SecondaryText>
 					<ButtonsContainer>
-						<DeleteTicketCheck
-							ticket={ticket}
-							fetchUserData={fetchUserData}
-						/>
+						<DeleteTicketCheck ticket={ticket} fetchUserData={fetchUserData} />
 						<GeneralButton
-							disabled={category === ticket.category}
+							disabled={category === ticket.priority}
 							onClick={updateTicket}
 						>
 							Save
@@ -116,7 +112,7 @@ const EditTicketForm = ({
 				</>
 			) : (
 				<>
-					<Subtitle>{ticket.category} category</Subtitle>
+					<Subtitle>{ticket.priority} CATEGORY</Subtitle>
 					<SecondaryText>
 						The flight has already left, thank you for your purchase and trust
 						in us.

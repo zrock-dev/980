@@ -21,6 +21,7 @@ const FieldForm = ({ type, value, title, name, changeField }) => {
 				value={getValue()}
 				name={name}
 				onChange={(event) => changeField(event)}
+				required
 			/>
 		</FormInputContainer>
 	);

@@ -12,11 +12,7 @@ import {
 	UserFlagImage
 } from '@/elements/User';
 import { Subtitle, GeneralButton } from '@/elements/GeneralElements';
-import {
-	getFlagImage,
-	getUrlWithUserParams,
-	getUserInformation
-} from '@/backend/UserRequest';
+import { getFlagImage, getUserInformation } from '@/backend/UserRequest';
 import DeleteUserCheck from './DeleteUserCheck';
 import EditUserForm from './EditUserForm';
 import { differenceInYears } from 'date-fns';

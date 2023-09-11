@@ -46,7 +46,7 @@ export const NavOptionRoute = styled(Link)`
 	&::before {
 		content: '   ';
 		position: absolute;
-		top: -500%;
+		top: -600%;
 		left: 50%;
 
 		height: 5vh;
@@ -59,7 +59,7 @@ export const NavOptionRoute = styled(Link)`
 	&:hover {
 		color: ${BLUE};
 		&::before {
-			top: -240%;
+			top: -300%;
 		}
 	}
 
@@ -68,7 +68,7 @@ export const NavOptionRoute = styled(Link)`
 		css`
 			color: ${BLUE};
 			&::before {
-				top: -240%;
+				top: -300%;
 			}
 		`}
 `;

@@ -1,19 +1,45 @@
 import { GRAYONE, GRAYTWO } from '@/styles/colors';
 import styled from '@emotion/styled';
 
+export const FlightHistoryMainContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+
+	margin: auto;
+	max-height: 60vh;
+	padding-top: 20px;
+`;
+
 export const FlightHistoryContainer = styled.div`
 	display: flex;
 	gap: 35px;
 	flex-wrap: wrap;
+	overflow-y: auto;
 
-	padding-top: 25px;
+	padding: 20px;
+
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: ${GRAYTWO};
+		border-radius: 20px;
+	}
 `;
 
 export const UserFLightContainer = styled.button`
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 	gap: 30px;
 
+	width: 320px;
 	padding: 20px;
 
 	border-radius: 20px;
