@@ -32,7 +32,7 @@ const ListSide = ({currentFlightId}) => {
     if (!currentFlightId) {
         return (
             <div>
-                Nice calves bro
+                Please choose a flight
             </div>
         )
     }

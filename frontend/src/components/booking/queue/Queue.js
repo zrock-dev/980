@@ -1,9 +1,9 @@
 'use client'
 
-import FlightsSide from "@/components/booking/utils/FlightList";
+import FlightsSide from "@/components/booking/queue/FlightList";
 import ListSide from "@/components/booking/queue/ListSide";
 import {useState} from "react";
-import '../../../styles/booking/queue.css'
+import '@/styles/booking/queue.css'
 
 const Queue = () => {
     const [currentFlightId, setCurrentFlightId] = useState()

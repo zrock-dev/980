@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import {requestAvailableFlights} from '@/backend/FlightsAPI';
-import '../../../styles/booking/flight-item-card.css'
+import '@/styles/booking/flight/column-card-item.css'
 
 const Card = ({ source, destination, handler, payload }) => {
     return (
