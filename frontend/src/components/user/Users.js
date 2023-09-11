@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import UserSearchOption from './UserSeach';
 import { useSearch } from '@/contexts/SearchContext';
+import Loader from '../Loader';
 const Users = () => {
 	const itemsPerPage = 6;
 	const { searchResults, inputSearch, currentPage,fetchData, setCurrentPage } = useSearch();
@@ -198,40 +199,41 @@ const Users = () => {
 		  ) : (
 
 			<div>
-			{charging ? (
-			  <p>Simple paragraph to be displayed when the condition is not met</p>
+			{fetchedUsers.length < 1 ? (
+				<Loader withAbsolute={false} />
 			) : (
-				fetchedUsersPerPage.map((user) => (
-					<div key={user.id}>
-					  <UserSearchOption
-						key={user.id}
-						idNum={user.id}
-						firstName={user.firstName}
-						secondName={user.secondName}
-						lastName={user.firstLastName}
-						secondLastName={user.secondLastName}
-						year={user.dateBirth}
-						category={user.category}
-						country={user.country}
-					  />
+				<div>
+					{fetchedUsersPerPage.map((user) => (
+						<div key={user.id}>
+						<UserSearchOption
+							key={user.id}
+							idNum={user.id}
+							firstName={user.firstName}
+							secondName={user.secondName}
+							lastName={user.firstLastName}
+							secondLastName={user.secondLastName}
+							year={user.dateBirth}
+							category={user.category}
+							country={user.country}
+						/>
+						</div>
+					))}
+					<div style={fixedPaginationStyle}>
+						{fetchedUsersPage > 1 && (
+						<button style={buttonStyle} onClick={handlePrevFetchedUsersPage}>
+							Previous
+						</button>
+						)}
+						<span style={spanStyle}>{backendUserIndex}</span>
+						{fetchedUsersPage < Math.ceil(fetchedUsers.length / itemsPerPage) && (
+						<button style={buttonStyle} onClick={handleNextFetchedUsersPage}>
+							Next
+						</button>
+						)}
 					</div>
-				  )
-				  )
+				</div>
 			)}
-			<div style={fixedPaginationStyle}>
-			  {fetchedUsersPage > 1 && (
-				<button style={buttonStyle} onClick={handlePrevFetchedUsersPage}>
-				  Previous
-				</button>
-			  )}
-			  <span style={spanStyle}>{backendUserIndex}</span>
-			  {fetchedUsersPage < Math.ceil(fetchedUsers.length / itemsPerPage) && (
-				<button style={buttonStyle} onClick={handleNextFetchedUsersPage}>
-				  Next
-				</button>
-			  )}
 			</div>
-		  </div>
 		  
       )}
     </div>
