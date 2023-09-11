@@ -4,14 +4,11 @@ import Coin from "./Coin";
 const coinTypes = new Map();
 
 coinTypes["Bs"] = [
-  0.10, 0.20, 0.50, 1.00, 2.00, 5.00, 10.00, 20.00, 50.00, 100.00, 200.00,
+  0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0,
 ];
-coinTypes["$"] = [
-  0.01, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0,
-];
+coinTypes["$"] = [0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0];
 coinTypes["€"] = [
-  0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0,
-  200.0, 500.0,
+  0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0,
 ];
 
 const CoinChangeOperationDisplayer = ({
@@ -49,7 +46,7 @@ const CoinChangeOperationDisplayer = ({
           <div className="coin-image-group">
             {console.log(moneyJson)}
             {!moneyJson &&
-              coinTypes[moneyType].map((coin,index) => (
+              coinTypes[moneyType].map((coin, index) => (
                 <Coin
                   value={coin.toFixed(1)}
                   key={index}
