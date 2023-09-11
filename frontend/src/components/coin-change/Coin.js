@@ -1,10 +1,13 @@
-function Coin({ value, key, type, amount }) {
+import Image from "next/image";
+
+function Coin({ value, type, amount }) {
+  const src = value < 1 ? `/${value}cent${type}.png` : `/${value}${type}.png`;
+
   return (
     <div className="coin">
-      <div className="coinImg" keyId={key}>
-        {value}
-      </div>
-      <div className="coinRepeated">{amount && `x ${amount}`}</div>
+      {console.log(src)}
+      <Image src={src} width={150} height={100} alt={`${value} ${type}`} />
+      {amount && <div className="coinRepeated">x {amount}</div>}
     </div>
   );
 }
