@@ -41,6 +41,10 @@ button {
 	background-color: transparent;
 }
 
+option {
+	color: #000 !important;
+}
+
 @keyframes showModal {
 	0% {
 		opacity: 0;
