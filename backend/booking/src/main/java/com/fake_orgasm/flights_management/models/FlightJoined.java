@@ -22,6 +22,7 @@ public class FlightJoined {
     private boolean isAvailable;
     private String ticketIds;
     private List<Ticket> tickets;
+    private int price;
 
     /**
      * This method constructs a new FlightJoined instance with the specified details.
@@ -32,14 +33,17 @@ public class FlightJoined {
      * @param date        The date of the flight's departure.
      * @param capacity    The maximum capacity of the flight.
      * @param ticketIds   A comma-separated string of ticket IDs associated with the flight.
+     * @param price       The price of the flight.
      */
-    public FlightJoined(String id, Airport source, Airport destination, Date date, int capacity, String ticketIds) {
+    public FlightJoined(
+            String id, Airport source, Airport destination, Date date, int capacity, String ticketIds, int price) {
         this.id = id;
         this.source = source;
         this.destination = destination;
         this.date = date;
         this.capacity = capacity;
         this.ticketIds = ticketIds;
+        this.price = price;
     }
 
     /**

@@ -4,6 +4,7 @@ import com.fake_orgasm.flights_management.exceptions.FlightCapacityException;
 import com.fake_orgasm.flights_management.models.Category;
 import com.fake_orgasm.flights_management.models.FlightJoined;
 import com.fake_orgasm.flights_management.models.Ticket;
+import com.fake_orgasm.flights_management.models.TicketJoined;
 import com.fake_orgasm.flights_management.repository.Page;
 import com.fake_orgasm.users_management.models.User;
 import java.util.List;
@@ -72,7 +73,7 @@ public interface IBookingService {
      * @return A list of FlightJoined objects containing flight details
      * and associated airports for the specified page.
      */
-    Page getFlightsJoined(int page);
+    Page<FlightJoined> getFlightsJoined(int page);
 
     /**
      * This method retrieves detailed information about a specific flight,
@@ -97,7 +98,7 @@ public interface IBookingService {
      * @return A list of TicketJoined objects containing ticket details
      * and associated flight and airport information for the specified user and page.
      */
-    Page getUserTickets(int userId, int page);
+    Page<TicketJoined> getUserTickets(int userId, int page);
 
     /**
      * This method deletes all tickets associated with a specific user.
