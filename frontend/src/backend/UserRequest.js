@@ -33,7 +33,7 @@ export const getUserInformation = async (
 	return response;
 	// return {
 	// 	data: {
-	// 		id: 12345678,
+	// 		id: 1234,
 	// 		firstName: 'Luiggy',
 	// 		secondName: '',
 	// 		firstLastName: 'Mamani',
@@ -62,7 +62,7 @@ export const deleteUser = async (
 export const getUserTickets = async (userId, page) => {
 	// replace this for fetch peticion
 	return await axios.get(
-		`http://localhost:8080/api/booking/user-tickets/${userId}?page=0`
+		`http://localhost:8080/api/booking/user-tickets/${userId}?page=${page}`
 	);
 	// console.log(response);
 	// return {
@@ -70,7 +70,7 @@ export const getUserTickets = async (userId, page) => {
 	// 		{
 	// 			id: 'unique-ticket1',
 	// 			number: 1,
-	// 			category: 'Vip',
+	// 			priority: 'VIP',
 	// 			date: '2023-09-10T13:28:06.419Z',
 	// 			flightId: 'flightid1',
 	// 			price: 1500,
@@ -88,7 +88,7 @@ export const getUserTickets = async (userId, page) => {
 	// 		{
 	// 			id: 'unique-ticket2',
 	// 			number: 2,
-	// 			category: 'Regular passager',
+	// 			priority: 'Regular passager',
 	// 			date: '2023-09-30T13:28:06.419Z',
 	// 			flightId: 'flightid1',
 	// 			price: 3500,
