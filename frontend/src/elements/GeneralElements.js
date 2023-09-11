@@ -1,4 +1,12 @@
-import { BLACKTWO, BLUE, GRAYONE, GRAYTWO, WHITE } from '@/styles/colors';
+import {
+	BLACKONE,
+	BLACKTWO,
+	BLUE,
+	GRAYONE,
+	GRAYTWO,
+	LIGHTBLUE,
+	WHITE
+} from '@/styles/colors';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
@@ -89,4 +97,40 @@ export const ButtonsContainer = styled.div`
 	display: flex;
 	align-items: end;
 	gap: 10px;
+`;
+
+export const PaginationContainer = styled.div`
+	display: flex;
+	background-color: #e9e9e9;
+	gap: 10px;
+
+	border-radius: 20px;
+	padding: 0 25px 0 25px;
+
+	transition: all ease 250ms;
+`;
+
+export const PaginationButton = styled.button`
+	padding: 10px 15px 10px 15px;
+	border-radius: 10px;
+
+	font-size: 16px;
+	font-weight: 700;
+	background-color: transparent;
+	color: ${BLACKONE};
+	transition: all ease 250ms;
+
+	${(props) =>
+		props.selected === true &&
+		css`
+			color: ${WHITE};
+			background-color: ${BLUE};
+			box-shadow: 0 0 20px ${LIGHTBLUE};
+		`}
+
+	&:hover {
+		color: ${WHITE};
+		background-color: ${BLUE};
+		box-shadow: 0 0 20px ${LIGHTBLUE};
+	}
 `;
