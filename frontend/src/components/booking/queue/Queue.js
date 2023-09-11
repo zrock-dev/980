@@ -3,6 +3,7 @@
 import FlightsSide from "@/components/booking/utils/FlightList";
 import ListSide from "@/components/booking/queue/ListSide";
 import {useState} from "react";
+import '../../../styles/booking/queue.css'
 
 const Queue = () => {
     const [currentFlightId, setCurrentFlightId] = useState()
@@ -12,16 +13,19 @@ const Queue = () => {
     };
 
     return (
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-            <div style={{flex: 1}}>
-                <ListSide
-                    currentFlightId={currentFlightId}
-                />
+        <div className="app-container">
+            <div className="left-side-container">
+                <h2>Ticket List</h2>
+                <div className="side-content">
+                    <ListSide currentFlightId={currentFlightId} />
+                </div>
             </div>
-            <div style={{flex: 1, borderLeft: '1px solid black', padding: '10px'}}>
-                <FlightsSide
-                    handleButtonClick={handleButtonClick}
-                />
+            <div className="separator"></div>
+            <div className="right-side-container">
+                <h2>Flight List</h2>
+                <div className="side-content">
+                    <FlightsSide handleButtonClick={handleButtonClick} />
+                </div>
             </div>
         </div>
     );

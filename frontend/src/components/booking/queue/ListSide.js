@@ -2,19 +2,19 @@
 
 import {useEffect, useState} from "react";
 import {requestTickets} from "@/backend/FlightsAPI";
+import '../../../styles/booking/ticket.css'
 
 const Ticket = ({userId, priority}) => {
-   return(
-       <div>
-           <div>
-               User: {userId}
-           </div>
-           <div>
-               priority: {priority}
-           </div>
-           <br/>
-       </div>
-   )
+    return (
+        <div className="ticket">
+            <div className="ticket-user">
+                User ID: {userId}
+            </div>
+            <div className={`ticket-priority ${priority}`}>
+                Priority: {priority}
+            </div>
+        </div>
+    )
 }
 
 const ListSide = ({currentFlightId}) => {
@@ -22,14 +22,14 @@ const ListSide = ({currentFlightId}) => {
 
     useEffect(() => {
         let promise = requestTickets(currentFlightId)
-        if (promise){
+        if (promise) {
             promise.then(function (data) {
                 setTickets(data);
             })
         }
     }, [currentFlightId]);
 
-    if (!currentFlightId){
+    if (!currentFlightId) {
         return (
             <div>
                 Nice calves bro
@@ -39,10 +39,8 @@ const ListSide = ({currentFlightId}) => {
 
     return (
         <div>
-            <h2>Ticket List</h2>
-            <br/>
             {tickets.map((ticket) => (
-                <Ticket key={ticket.id} userId={ticket.userId} priority={ticket.priority} />
+                <Ticket key={ticket.id} userId={ticket.userId} priority={ticket.priority}/>
             ))}
         </div>
     );

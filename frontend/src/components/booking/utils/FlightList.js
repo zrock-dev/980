@@ -2,6 +2,20 @@
 
 import React, {useEffect, useState} from 'react';
 import {requestAvailableFlights} from '@/backend/FlightsAPI';
+import '../../../styles/booking/flight-item-card.css'
+
+const Card = ({ source, destination, handler, payload }) => {
+    return (
+        <button className="card-button" onClick={() => handler(payload)}>
+            <div className="card-text">
+                from {source}
+            </div>
+            <div className="destination">
+                to {destination}
+            </div>
+        </button>
+    );
+};
 
 const Flights = ({handleButtonClick}) => {
     const [elements, setElements] = useState([]);
@@ -26,12 +40,12 @@ const Flights = ({handleButtonClick}) => {
         <div>
             {elements.map((element, index) => (
                 <div key={index}>
-                    <button onClick={() => handleButtonClick(element)}>
-                        from {element.source.name} to {element.destination.name}
-                    </button>
-                    <br/>
-                    <br/>
-                    <br/>
+                    <Card
+                        source={element.source.name}
+                        destination={element.destination.name}
+                        handler={handleButtonClick}
+                        payload={element}
+                    />
                 </div>
             ))}
         </div>
