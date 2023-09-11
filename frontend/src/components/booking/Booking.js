@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Flights from './Flights';
 import { booking } from '@/backend/BookingRequest';
 
+
 const categoryList = [
 	{ label: 'VIP', value: 'VIP' },
 	{ label: 'REGULAR PASSENGER', value: 'REGULAR_PASSENGER' },
