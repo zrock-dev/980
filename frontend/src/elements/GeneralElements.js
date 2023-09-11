@@ -134,3 +134,9 @@ export const PaginationButton = styled.button`
 		box-shadow: 0 0 20px ${LIGHTBLUE};
 	}
 `;
+
+export const Separator = styled.div`
+	height: 70vh;
+	width: 1px;
+	background-color: ${GRAYTWO};
+`;
