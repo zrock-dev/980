@@ -1,0 +1,35 @@
+{
+  "id" : "TestNode2",
+  "size" : 3,
+  "order" : 4,
+  "keys" : [ {
+    "id" : 12,
+    "firstName" : "Jorge",
+    "secondName" : null,
+    "firstLastName" : "Oropeza",
+    "secondLastName" : null,
+    "dateBirth" : "2004-04-25",
+    "flights" : [ "9cbc9984-5afa-45a9-ad63-59b15ae64988", "6b18d5fc-19da-4de1-9548-3f25e2b374c2" ],
+    "country" : "Bolivia"
+  }, {
+    "id" : 31,
+    "firstName" : "Jorge",
+    "secondName" : null,
+    "firstLastName" : "Zambrana",
+    "secondLastName" : null,
+    "dateBirth" : "2004-04-25",
+    "flights" : [ "9cbc9984-5afa-45a9-ad63-59b15ae64988", "6b18d5fc-19da-4de1-9548-3f25e2b374c2" ],
+    "country" : "Bolivia"
+  }, {
+    "id" : 54,
+    "firstName" : "Jorge",
+    "secondName" : null,
+    "firstLastName" : "Muris",
+    "secondLastName" : null,
+    "dateBirth" : "2004-04-25",
+    "flights" : [ "9cbc9984-5afa-45a9-ad63-59b15ae64988", "6b18d5fc-19da-4de1-9548-3f25e2b374c2" ],
+    "country" : "Bolivia"
+  } ],
+  "idChildren" : [ null, null, null, null, null, null, null, null ],
+  "leaf" : true
+}
