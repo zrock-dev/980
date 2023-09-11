@@ -18,25 +18,39 @@ const Users = () => {
 
 	useEffect(() => {
 		fetchData(inputSearch, currentPage);
-	}, [currentPage]);
+	}, []);
 
-	const fetchBackendUsers = async (page) => {
+	const fetchBackendUsers = async () => {
 		try {
-		  const url = `http://localhost:8080/api/users?page=${page}`;
-		  const response = await fetch(url);
-		  if (!response.ok) {
-			throw new Error('Failed to fetch backend users');
-		  }
-		  const users = await response.json();
-		  setFetchedUsers((prevUsers) => [...prevUsers, ...users.elements]);
+		  let allUsers = [];
+		  let cPage = 0;
+		  let totalPages = 1;
+	  
+		  do {
+			if(cPage <= totalPages){
+				const url = `http://localhost:8080/api/users?page=${cPage}`;
+				const response = await fetch(url);
+		  
+				if (!response.ok) {
+				  throw new Error('Failed to fetch backend users');
+				}
+		  
+				const userData = await response.json();
+				allUsers = [...allUsers, ...userData.elements];
+				totalPages = userData.totalPages;
+				cPage++;
+			}
+			
+		  } while (cPage <= totalPages);
+	  
+		  setFetchedUsers(allUsers);
 		} catch (error) {
 		  console.error('Error fetching backend users:', error);
 		}
 	  };
-	  
 	useEffect(() => {
-		fetchBackendUsers(0);
-	  }, []);
+		fetchBackendUsers();
+	}, []); 
 
 	  useEffect(() => {
 		const start = (fetchedUsersPage - 1) * itemsPerPage;
@@ -108,6 +122,19 @@ const Users = () => {
 	const centerDiv = {
     	textAlign: 'center',
   	};
+
+	const fixedPaginationStyle = {
+	position: 'fixed',
+	bottom: '20px',
+	left: '50%',
+	transform: 'translateX(-50%)',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	zIndex: '1',
+	};
+	  
+	
 	const handlePrevPage = () => {
 		const prevPage = currentPage - 1;
 		setCurrentPage(prevPage);
@@ -183,7 +210,7 @@ const Users = () => {
               />
             </div>
           ))}
-			<div style={centerDiv}>
+			<div style={fixedPaginationStyle}>
 			{fetchedUsersPage > 1 && (
 				<button style={buttonStyle} onClick={handlePrevFetchedUsersPage}>Previous</button>
 			)}
