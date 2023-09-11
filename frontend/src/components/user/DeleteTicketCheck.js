@@ -11,16 +11,19 @@ import {
 import { OptionContainer, OptionTopContainer } from '@/elements/UserOptions';
 import { RED } from '@/styles/colors';
 import Xmark from '@/icons/Xmark';
+import { deleteBooking } from '@/backend/BookingRequest';
 
-const DeleteTicketCheck = ({
-	ticket,
-	fetchUserData
-}) => {
+const DeleteTicketCheck = ({ user, ticket, fetchUserData }) => {
 	const [isDeleting, setDeleting] = useState(false);
 
 	const deleteTicket = () => {
-		// request to send the userEditing data to update user
-		fetchUserData();
+		deleteBooking(user, ticket.id)
+			.then(() => {
+				fetchUserData();
+			})
+			.catch((error) => {
+				alert(error.message);
+			});
 	};
 
 	return (

@@ -1,5 +1,1 @@
-import { axios } from 'axios';
-
-export const api = axios.create({
-	baseURL: 'http://localhost:9999'
-});
+export const CLIENT_DOMAIN = 'http://localhost:8080';

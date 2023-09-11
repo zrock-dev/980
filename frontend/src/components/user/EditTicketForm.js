@@ -17,24 +17,26 @@ import Loader from '../Loader';
 import { differenceInDays, format } from 'date-fns';
 import { useState } from 'react';
 import DeleteTicketCheck from './DeleteTicketCheck';
+import { editBooking } from '@/backend/BookingRequest';
 
 const EditTicketForm = ({
 	onClose,
 	ticket,
 	sourceFlag,
 	destinationFlag,
-	fetchUserData
+	fetchUserData,
+	user
 }) => {
 	const [category, setCategory] = useState(ticket.priority);
 
-	const deleteTicket = async () => {
-		// request to delete the ticket
-		fetchUserData();
-	};
-
 	const updateTicket = async () => {
-		// request to edit the ticket
-		fetchUserData();
+		editBooking(ticket.id, category)
+			.then(() => {
+				fetchUserData();
+			})
+			.catch((error) => {
+				alert(error.message);
+			});
 	};
 
 	return (
@@ -101,7 +103,11 @@ const EditTicketForm = ({
 						price will change. Your arrival number will not be affected.
 					</SecondaryText>
 					<ButtonsContainer>
-						<DeleteTicketCheck ticket={ticket} fetchUserData={fetchUserData} />
+						<DeleteTicketCheck
+							user={user}
+							ticket={ticket}
+							fetchUserData={fetchUserData}
+						/>
 						<GeneralButton
 							disabled={category === ticket.priority}
 							onClick={updateTicket}

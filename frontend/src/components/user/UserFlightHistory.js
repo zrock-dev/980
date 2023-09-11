@@ -32,7 +32,7 @@ const UserFlightHistory = ({ user, fetchUserData }) => {
 				const { currentPage, totalPages, elements } = response.data;
 				setPageData({
 					currentPage,
-					totalPages : totalPages + 1,
+					totalPages: totalPages + 1,
 					elements
 				});
 			})
@@ -64,7 +64,11 @@ const UserFlightHistory = ({ user, fetchUserData }) => {
 			<FlightHistoryMainContainer>
 				<FlightHistoryContainer>
 					{pageData.elements.map((ticket) => (
-						<UserFlight ticket={ticket} fetchUserData={fetchUserData} />
+						<UserFlight
+							user={user}
+							ticket={ticket}
+							fetchUserData={fetchUserData}
+						/>
 					))}
 				</FlightHistoryContainer>
 				{pageData.totalPages > 0 && (

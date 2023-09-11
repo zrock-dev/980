@@ -9,6 +9,7 @@ import Xmark from '@/icons/Xmark';
 import { FormContainer, FormSubContainer } from '@/elements/FormElements';
 import FieldForm from './FieldForm';
 import { useRouter } from 'next/navigation';
+import { editUser } from '@/backend/UserRequest';
 
 const EditUserForm = ({ user, fetchUserData }) => {
 	const router = useRouter();
@@ -25,16 +26,21 @@ const EditUserForm = ({ user, fetchUserData }) => {
 	};
 
 	const summit = () => {
-		// request to send the userEditing data to update user
-		const secondName =
-			userEditing.secondName.length == 0
-				? ''
-				: `secondName=${userEditing.secondName}&`;
-		const url = `/users/${user.id}?firstName=${userEditing.firstName}
-		&${secondName}firstLastName=${userEditing.firstLastName}
-		&secondLastName=${userEditing.secondLastName}`;
-		router.push(url);
-		fetchUserData();
+		editUser(user, userEditing)
+			.then(() => {
+				const secondName =
+					userEditing.secondName.length == 0
+						? ''
+						: `secondName=${userEditing.secondName}&`;
+				const url = `/users/${user.id}?firstName=${userEditing.firstName}
+			&${secondName}firstLastName=${userEditing.firstLastName}
+			&secondLastName=${userEditing.secondLastName}`;
+				router.push(url);
+				fetchUserData();
+			})
+			.catch((error) => {
+				alert(error.message);
+			});
 	};
 
 	useEffect(() => {
