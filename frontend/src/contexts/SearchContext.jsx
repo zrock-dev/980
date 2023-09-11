@@ -1,4 +1,5 @@
 'use client'
+import { CLIENT_DOMAIN } from '@/backend/Requester';
 import { createContext, useContext, useState } from 'react';
 
 const SearchContext = createContext();
@@ -13,7 +14,7 @@ export const SearchProvider = ({ children }) => {
   
   const fetchData = async (searchText, page) => {
     try {
-      const url = `http://localhost:8080/api/users/search?name=${searchText}&page=${page}`;
+      const url = `${CLIENT_DOMAIN}/api/users/search?name=${searchText}&page=${page}`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch data');

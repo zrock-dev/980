@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import UserSearchOption from './UserSeach';
 import { useSearch } from '@/contexts/SearchContext';
 import Loader from '../Loader';
+import { CLIENT_DOMAIN } from '@/backend/Requester';
 const Users = () => {
 	const itemsPerPage = 6;
 	const { searchResults, inputSearch, currentPage,fetchData, setCurrentPage } = useSearch();
@@ -30,7 +31,7 @@ const Users = () => {
 	  
 		  do {
 			if(cPage <= totalPages){
-				const url = `http://localhost:8080/api/users?page=${cPage}`;
+				const url = `${CLIENT_DOMAIN}/api/users?page=${cPage}`;
 				const response = await fetch(url);
 		  
 				if (!response.ok) {

@@ -41,8 +41,36 @@ export const getFlagImage = async (countryName) => {
 };
 
 export const editUser = async (oldData, newData) => {
-	return await axios.put(`${CLIENT_DOMAIN}/api/users/`, {
-		oldData,
-		newData
+	return await axios.put(`${CLIENT_DOMAIN}/api/users`, {
+		oldData: {
+			id: parseInt(oldData.id),
+			firstName: oldData.firstName,
+			secondName: oldData.secondName,
+			firstLastName: oldData.firstLastName,
+			secondLastName: oldData.secondLastName,
+			dateBirth: oldData.dateBirth,
+			flights: oldData.flights,
+			country: oldData.country,
+			fullName:
+				oldData.firstName +
+				oldData.secondName +
+				oldData.firstLastName +
+				oldData.secondLastName
+		},
+		newData: {
+			id: parseInt(newData.id),
+			firstName: newData.firstName,
+			secondName: newData.secondName,
+			firstLastName: newData.firstLastName,
+			secondLastName: newData.secondLastName,
+			dateBirth: newData.dateBirth,
+			flights: newData.flights,
+			country: newData.country,
+			fullName:
+				newData.firstName +
+				newData.secondName +
+				newData.firstLastName +
+				newData.secondLastName
+		}
 	});
 };
