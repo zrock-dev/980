@@ -8,6 +8,9 @@ const Users = () => {
 	const [fetchedUsers, setFetchedUsers] = useState([]);
 	const [fetchedUsersPage, setFetchedUsersPage] = useState(1);
 	const [fetchedUsersPerPage, setFetchedUsersPerPage] = useState([]);
+	const [backendUserIndex, setBackendUserIndex] = useState(1);
+	const [searchUserIndex, setSearchUserIndex] = useState(1);
+	
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
@@ -44,12 +47,23 @@ const Users = () => {
 	  const handlePrevFetchedUsersPage = () => {
 		if (fetchedUsersPage > 1) {
 		  setFetchedUsersPage(fetchedUsersPage - 1);
+		  setBackendUserIndex(backendUserIndex-1)
 		}
 	  };
 	  const handleNextFetchedUsersPage = () => {
 		const nextPage = fetchedUsersPage + 1;
 		setFetchedUsersPage(nextPage);
 		fetchBackendUsers(nextPage);
+		setBackendUserIndex(backendUserIndex+1)
+	  };
+
+	  const spanStyle = {
+		border: '2px solid black',
+		borderRadius: '10%',
+		backgroundColor: '#f0f0f0',
+		fontWeight: 'bold',
+		margin: '1rem',
+		padding: '0.5rem',
 	  };
 	  
 	
@@ -77,7 +91,7 @@ const Users = () => {
 	    marginTop: '1rem',
   	};
 	const buttonStyle = {
-		marginLeft: "auto",
+		marginLeft: "1rem",
 		backgroundColor: "var(--blackone)",
 		color: "var(--white)",
 		fontWeight: "700",
@@ -97,11 +111,13 @@ const Users = () => {
 	const handlePrevPage = () => {
 		const prevPage = currentPage - 1;
 		setCurrentPage(prevPage);
+		setSearchUserIndex(searchUserIndex-1)
 	  };
 	
 	  const handleNextPage = () => {
 		const nextPage = currentPage + 1;
 		setCurrentPage(nextPage);
+		setSearchUserIndex(searchUserIndex+1)
 	  };
 	
 
@@ -133,6 +149,9 @@ const Users = () => {
 					  Previous
 					</button>
 				  )}
+				  <span style={spanStyle}>
+					{searchUserIndex}
+				  </span>
 				  {endIndex < searchResults.length && (
 					<button style={buttonStyle} onClick={handleNextPage}>
 					  Next
@@ -164,14 +183,17 @@ const Users = () => {
               />
             </div>
           ))}
-          <div style={centerDiv}>
-            {fetchedUsersPage > 1 && (
-              <button style={buttonStyle} onClick={handlePrevFetchedUsersPage}>Previous</button>
-            )}
-            {fetchedUsersPage < Math.ceil(fetchedUsers.length / itemsPerPage) && (
-              <button style={buttonStyle} onClick={handleNextFetchedUsersPage}>Next</button>
-            )}
-          </div>
+			<div style={centerDiv}>
+			{fetchedUsersPage > 1 && (
+				<button style={buttonStyle} onClick={handlePrevFetchedUsersPage}>Previous</button>
+			)}
+			<span style={spanStyle}>
+				{backendUserIndex}
+			</span>
+			{fetchedUsersPage < Math.ceil(fetchedUsers.length / itemsPerPage) && (
+				<button style={buttonStyle} onClick={handleNextFetchedUsersPage}>Next</button>
+			)}
+			</div>
         </div>
       )}
     </div>
