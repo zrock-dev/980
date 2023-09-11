@@ -27,8 +27,8 @@ jobs:
       - name: build services 
         working-directory: ${{ github.workspace }}
         run: |
-          ./scripts/build_services backend/*
-          ./scripts/extract_binaries backend/*
+          ./scripts/build_services backend/booking backend/eureka_server backend/gateway  backend/money_exchange  backend/user_database
+          ./scripts/extract_binaries backend/booking backend/eureka_server backend/gateway backend/money_exchange  backend/user_database
 
       - name: pack services 
         working-directory: ${{ github.workspace }}
