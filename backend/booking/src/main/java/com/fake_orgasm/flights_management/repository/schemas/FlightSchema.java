@@ -10,7 +10,8 @@ public enum FlightSchema implements Schemable {
     DESTINATION_ID("destinationId"),
     DATE("date"),
     CAPACITY("capacity"),
-    TICKETS("tickets");
+    TICKETS("tickets"),
+    PRICE("price");
 
     private final String file;
 
