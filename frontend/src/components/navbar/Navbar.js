@@ -41,6 +41,11 @@ const Navbar = () => {
 					title={'Flights'}
 					selected={pathname === '/flights'}
 				/>
+				<NavOption
+					route={'/queue'}
+					title={'Queue'}
+					selected={pathname === '/queue'}
+				/>
 			</NavbarOptionContainer>
 			<Searcher />
 		</NavbarContainer>

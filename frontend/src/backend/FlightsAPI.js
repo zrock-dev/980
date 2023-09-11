@@ -28,7 +28,24 @@ async function requestFlight(flightId){
     }
 }
 
+function requestTickets(flightId){
+    if (!flightId){
+        return undefined
+    }
+
+    return axios({
+        method: "GET",
+        url: `${baseURL}/tickets/${flightId}`,
+        responseType: "json"
+    }).then(function (response){
+        return response.data
+    }).catch(function (error){
+        console.error(error.message)
+    })
+}
+
 module.exports = {
     requestAvailableFlights: requestAvailableFlights,
     requestFlight: requestFlight,
+    requestTickets: requestTickets,
 }
