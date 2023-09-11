@@ -10,7 +10,7 @@ const Users = () => {
 	const [fetchedUsersPerPage, setFetchedUsersPerPage] = useState([]);
 	const [backendUserIndex, setBackendUserIndex] = useState(1);
 	const [searchUserIndex, setSearchUserIndex] = useState(1);
-	
+	const [charging, isCharging] = useState(false)
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
@@ -25,6 +25,7 @@ const Users = () => {
 		  let allUsers = [];
 		  let cPage = 0;
 		  let totalPages = 1;
+		  isCharging(true)
 	  
 		  do {
 			if(cPage <= totalPages){
@@ -44,6 +45,7 @@ const Users = () => {
 		  } while (cPage <= totalPages);
 	  
 		  setFetchedUsers(allUsers);
+		  isCharging(false)
 		} catch (error) {
 		  console.error('Error fetching backend users:', error);
 		}
@@ -145,6 +147,7 @@ const Users = () => {
 		const nextPage = currentPage + 1;
 		setCurrentPage(nextPage);
 		setSearchUserIndex(searchUserIndex+1)
+		fetchData(inputSearch, nextPage)
 	  };
 	
 
@@ -194,34 +197,42 @@ const Users = () => {
 			)
 		  ) : (
 
-		<div>
-          {fetchedUsersPerPage.map((user) => (
-            <div key={user.id}>
-              <UserSearchOption
-                key={user.id}
-                idNum={user.id}
-                firstName={user.firstName}
-                secondName={user.secondName}
-                lastName={user.firstLastName}
-                secondLastName={user.secondLastName}
-                year={user.dateBirth}
-                category={user.category}
-                country={user.country}
-              />
-            </div>
-          ))}
+			<div>
+			{charging ? (
+			  <p>Simple paragraph to be displayed when the condition is not met</p>
+			) : (
+				fetchedUsersPerPage.map((user) => (
+					<div key={user.id}>
+					  <UserSearchOption
+						key={user.id}
+						idNum={user.id}
+						firstName={user.firstName}
+						secondName={user.secondName}
+						lastName={user.firstLastName}
+						secondLastName={user.secondLastName}
+						year={user.dateBirth}
+						category={user.category}
+						country={user.country}
+					  />
+					</div>
+				  )
+				  )
+			)}
 			<div style={fixedPaginationStyle}>
-			{fetchedUsersPage > 1 && (
-				<button style={buttonStyle} onClick={handlePrevFetchedUsersPage}>Previous</button>
-			)}
-			<span style={spanStyle}>
-				{backendUserIndex}
-			</span>
-			{fetchedUsersPage < Math.ceil(fetchedUsers.length / itemsPerPage) && (
-				<button style={buttonStyle} onClick={handleNextFetchedUsersPage}>Next</button>
-			)}
+			  {fetchedUsersPage > 1 && (
+				<button style={buttonStyle} onClick={handlePrevFetchedUsersPage}>
+				  Previous
+				</button>
+			  )}
+			  <span style={spanStyle}>{backendUserIndex}</span>
+			  {fetchedUsersPage < Math.ceil(fetchedUsers.length / itemsPerPage) && (
+				<button style={buttonStyle} onClick={handleNextFetchedUsersPage}>
+				  Next
+				</button>
+			  )}
 			</div>
-        </div>
+		  </div>
+		  
       )}
     </div>
   );
