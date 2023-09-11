@@ -1,40 +1,58 @@
 const CoinChangeForm = ({
-                            moneyAmount,
-                            moneyType,
-                            setMoneyAmountValue,
-                            setMoneyTypeValue,
-                            requestMoneyExchange}) => {
-
+  moneyAmount,
+  moneyType,
+  setMoneyAmountValue,
+  setMoneyTypeValue,
+  requestMoneyExchange,
+}) => {
   const handleMoneyTypeChange = (event) => {
-      setMoneyTypeValue(event.target.value)
+    setMoneyTypeValue(event.target.value);
   };
 
+  const handleMoneyAmountChange = (event) => {
+    let value = event.target.value;
+     if (value.length > 8) {
+       return;
+     }
 
-  const handleMoneyAmountChange = (event) =>{
-      setMoneyAmountValue(event.target.value)
+    if (value === "") {
+      setMoneyAmountValue("");
+    } else if (/^\d*\.?\d*$/.test(value)) {
+      if (parseFloat(value) >= 1 && parseFloat(value) < 10000) {
+        setMoneyAmountValue(value);
+      }
+    }
   };
-
 
   return (
-    <div className='form-container'>
-      <h2 className='form-title'>Coin Changer</h2>
-      <label htmlFor="currency" className='label'>What currency?</label>
-      <select id="currency" value={moneyType} onChange={handleMoneyTypeChange} className='select_input'>
-        <option value="dollar">Dollar</option>
-        <option value="bolivian">Bolivian</option>
-        <option value="euro">Euro</option>
+    <div className="form-container">
+      <h2 className="form-title">Coin Changer</h2>
+      <label htmlFor="currency" className="label">
+        What currency?
+      </label>
+      <select
+        id="currency"
+        value={moneyType}
+        onChange={handleMoneyTypeChange}
+        className="select_input"
+      >
+        <option value="$">Dollar</option>
+        <option value="Bs">Bolivian</option>
+        <option value="€">Euro</option>
       </select>
-      <label htmlFor="amount" className='label'>How much?</label>
+      <label htmlFor="amount" className="label">
+        How much?
+      </label>
       <input
-        type="number"
+        type="text"
         id="amount"
         min={0}
         value={moneyAmount}
-        className='text_input'
+        className="text_input"
         onChange={handleMoneyAmountChange}
       />
-      <img src="/coin_img.png" alt="Coin Changer" className='coin-image'/>
-      <button onClick={requestMoneyExchange} className='main-button'>
+      <img src="/coin_img.png" alt="Coin Changer" className="coin-image" />
+      <button onClick={requestMoneyExchange} className="main-button">
         Change Coin
       </button>
     </div>

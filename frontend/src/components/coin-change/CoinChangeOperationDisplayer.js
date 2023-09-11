@@ -1,8 +1,39 @@
-import ProgressBar from './CoinChangeProgressBar';
-const CoinChangeOperationDisplayer = ({moneyAmount, moneyType, moneyJson}) => {
-    return (
-      <div className="coin-change-operation-main-container">
-        <div className='coin-change-operation-results'>
+import { useState } from "react";
+import ProgressBar from "./CoinChangeProgressBar";
+import Coin from "./Coin";
+const coinTypes = new Map();
+
+coinTypes["Bs"] = [
+  0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0,
+];
+coinTypes["$"] = [
+  0.01, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0,
+];
+coinTypes["€"] = [
+  0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0,
+  200.0, 500.0,
+];
+
+const CoinChangeOperationDisplayer = ({
+  moneyAmount,
+  moneyType,
+  moneyJson,
+}) => {
+  const handleTotalCoins = () => {
+    if (!moneyJson) {
+      return coinTypes[moneyType].length;
+    } else {
+      let amount = 0;
+      for (let money of moneyJson) {
+        amount += money.quantity;
+      }
+      return amount;
+    }
+  };
+
+  return (
+    <div className="coin-change-operation-main-container">
+      <div className="coin-change-operation-results">
         <h2 className="coin-change-title">Coin Changed</h2>
         <div className="coin-details">
           <div className="coin-amount">
@@ -11,43 +42,38 @@ const CoinChangeOperationDisplayer = ({moneyAmount, moneyType, moneyJson}) => {
           </div>
           <div className="total-coins">
             <span className="coins">Total Coins</span>
-            <span className="total">6</span>
+            <span className="total">{handleTotalCoins()}</span>
           </div>
         </div>
-          <div className="coin-images">
-            <div className="coin-image-group">
-              <div className="coin-image-result">
-                <img src="/coin1.png" alt="Image 1" />
-                <p>x1</p>
-              </div>
-              <div className="coin-image-result">
-                <img src="/coin2.png" alt="Image 2" />
-                <p>x1</p>
-              </div>
-              <div className="coin-image-result">
-                <img src="/coin3.png" alt="Image 3" />
-                <p>x1</p>
-              </div>
-            </div>
-            <div className="coin-image-group">
-              <div className="coin-image-result">
-                <img src="/coin5.png" alt="Image 4" />
-                <p>x1</p>
-              </div>
-              <div className="coin-image-result">
-                <img src="/coin10.png" alt="Image 5" />
-                <p>x1</p>
-              </div>
-              <div className="coin-image-result">
-                <img src="/coin100.png" alt="Image 6" />
-                <p>x1</p>
-              </div>
-            </div>
+        <div className="coin-images">
+          <div className="coin-image-group">
+            {console.log(moneyJson)}
+            {!moneyJson &&
+              coinTypes[moneyType].map((coin, index) => (
+                <Coin
+                  value={coin.value}
+                  key={index}
+                  type={moneyType}
+                  amount={coin.quanrity}
+                />
+              ))}
+            {moneyJson &&
+              moneyJson.map((coin, index) => {
+                return (
+                  <Coin
+                    value={coin.value}
+                    key={index + 1200}
+                    type={moneyType}
+                    amount={coin.quantity}
+                  />
+                );
+              })}
           </div>
-          <ProgressBar coinContext ={moneyJson}/>
         </div>
+        {moneyJson && <ProgressBar coinContext={moneyJson} />}
       </div>
-    );
-  }
-  
-  export default CoinChangeOperationDisplayer;
+    </div>
+  );
+};
+
+export default CoinChangeOperationDisplayer;
