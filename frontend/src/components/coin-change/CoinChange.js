@@ -32,6 +32,7 @@ const CoinChange = () => {
 	await fetch(url).then((result) => {
       result.json().then((data) => {
         data.sort((a, b) => b.quantity - a.quantity);
+        console.log(data);
         setMoneyJson(data);
       });
     });

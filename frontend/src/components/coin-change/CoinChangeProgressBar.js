@@ -24,18 +24,18 @@ const ProgressBar = ({ coinContext }) => {
     <div className="progress-bar-container">
       <h2 className="progress-title">Progress Bar</h2>
       <div className="progress-bar">
-        {console.log(coinContext)}
         {coinContext &&
           coinContext.map((coin, index) => (
             <div
-              className="progress"
+              className="progress tooltip-ex"
               key={index}
               style={{
                 width: `${coin.percentage}%`,
                 backgroundColor: colors[index],
               }}
             >
-              {coin.percentage.toFixed(2)}%{" "}
+              {coin.percentage.toFixed(2)}%
+              <span class="tooltip-ex-text tooltip-ex-top">{coin.value}</span>
             </div>
           ))}
       </div>

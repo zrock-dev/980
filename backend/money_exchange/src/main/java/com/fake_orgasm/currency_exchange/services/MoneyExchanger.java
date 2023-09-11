@@ -74,7 +74,7 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
         processQuantityRatesOnMap(value);
         for (T exchangeValue : exchangesMap.keySet()) {
             JSONObject moneyObject = new JSONObject();
-            int moneyQuantity = exchangesMap.get(exchangeValue);
+            double moneyQuantity = exchangesMap.get(exchangeValue);
             moneyObject.put("value", exchangeValue.toString());
             moneyObject.put("quantity", moneyQuantity);
             moneyObject.put("percentage", getPercentage(this.totalMoneyQuantity, moneyQuantity));
@@ -109,7 +109,7 @@ public class MoneyExchanger<T extends IMoneySubtracted<T>> implements IMoneyExch
      *
      * @return Percentage represented respecting big amount.
      */
-    private double getPercentage(int total, int percentage) {
+    private double getPercentage(double total, double percentage) {
         return percentage * 100 / total;
     }
 

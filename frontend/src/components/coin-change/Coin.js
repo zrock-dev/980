@@ -5,7 +5,7 @@ function Coin({ value, type, amount }) {
 
   return (
     <div className="coin">
-      <Image src={src} width={150} height={100} alt={`${value} ${type}`} />
+      <Image src={src} width={210} height={120} alt={`${value} ${type}`} />
       {amount && <div className="coinRepeated">x {amount}</div>}
     </div>
   );

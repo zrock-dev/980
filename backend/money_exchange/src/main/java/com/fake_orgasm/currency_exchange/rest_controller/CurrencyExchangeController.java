@@ -42,7 +42,7 @@ public class CurrencyExchangeController {
      * @return Process result.
      */
     @GetMapping("/bolivian")
-    public JSONArray getBolivianExchange(@RequestParam Double amount) {
+    public JSONArray getBolivianExchange(@RequestParam double amount) {
         if (amount < 0 || amount > 1_000_000) {
             throw new RuntimeException("Amount must be greater than 0 and less than 1_000_000");
         }
@@ -57,7 +57,7 @@ public class CurrencyExchangeController {
      * @return Process result.
      */
     @GetMapping("/euro")
-    public JSONArray getEuroExchange(@RequestParam Double amount) {
+    public JSONArray getEuroExchange(@RequestParam double amount) {
         if (amount < 0 || amount > 1_000_000) {
             throw new RuntimeException("Amount must be greater than 0 and less than 1_000_000");
         }
@@ -72,7 +72,7 @@ public class CurrencyExchangeController {
      * @return Process result.
      */
     @GetMapping("/dollar")
-    public JSONArray getDollarExchange(@RequestParam Double amount) {
+    public JSONArray getDollarExchange(@RequestParam double amount) {
         if (amount < 0 || amount > 1_000_000) {
             throw new RuntimeException("Amount must be greater than 0 and less than 1_000_000");
         }
